@@ -1,20 +1,73 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Package, Eye } from "lucide-react";
+import { toast } from 'sonner';
 
 const Dashboard = () => {
-  // Mock data
-  const requests = [
-    {
-      id: "REQ001",
-      device: "Apple MacBook Pro 2021",
-      price: 45000,
-      status: "Pickup Scheduled",
-      date: "2025-10-07",
-    },
-  ];
+  const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
+  const [sellRequests, setSellRequests] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      navigate('/auth?redirect=/dashboard');
+    }
+  }, [user, authLoading, navigate]);
+
+  useEffect(() => {
+    if (user) {
+      fetchSellRequests();
+    }
+  }, [user]);
+
+  const fetchSellRequests = async () => {
+    const { data, error } = await supabase
+      .from('sell_requests')
+      .select(`
+        *,
+        models (
+          name,
+          series (
+            name,
+            brands (name)
+          )
+        )
+      `)
+      .eq('user_id', user?.id)
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      toast.error('Failed to load requests');
+      console.error(error);
+    } else {
+      setSellRequests(data || []);
+    }
+    setLoading(false);
+  };
+
+  if (authLoading || loading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 flex items-center justify-center">
+          <p>Loading...</p>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  const getStatusLabel = (status: string) => {
+    return status.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -27,29 +80,47 @@ const Dashboard = () => {
           <div className="space-y-6">
             <Card className="p-6">
               <h2 className="text-xl font-semibold mb-4">Active Sell Requests</h2>
-              {requests.length > 0 ? (
+              {sellRequests.length > 0 ? (
                 <div className="space-y-4">
-                  {requests.map((request) => (
+                  {sellRequests.map((request) => (
                     <div
                       key={request.id}
                       className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 p-4 rounded-lg border"
                     >
                       <div>
-                        <p className="font-semibold">{request.device}</p>
-                        <p className="text-sm text-muted-foreground">Request ID: {request.id}</p>
-                        <p className="text-sm text-muted-foreground">Date: {request.date}</p>
+                        <p className="font-semibold">
+                          {request.models?.series?.brands?.name} {request.models?.series?.name}
+                        </p>
+                        <p className="text-sm text-muted-foreground">{request.models?.name}</p>
+                        <p className="text-sm text-muted-foreground">
+                          Request ID: {request.id.slice(0, 8)}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          Date: {new Date(request.created_at).toLocaleDateString()}
+                        </p>
                       </div>
                       <div className="flex items-center gap-4">
                         <div className="text-right">
-                          <p className="font-bold text-primary">₹{request.price.toLocaleString()}</p>
-                          <Badge>{request.status}</Badge>
+                          <p className="font-bold text-primary">₹{request.estimated_price.toLocaleString()}</p>
+                          <Badge>{getStatusLabel(request.status)}</Badge>
                         </div>
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => navigate(`/track/${request.id}`)}
+                        >
+                          <Eye className="mr-2 h-4 w-4" />
+                          Track
+                        </Button>
                       </div>
                     </div>
                   ))}
                 </div>
               ) : (
-                <p className="text-muted-foreground">No active requests</p>
+                <div className="text-center py-8">
+                  <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <p className="text-muted-foreground">No active requests</p>
+                </div>
               )}
             </Card>
 
@@ -60,7 +131,7 @@ const Dashboard = () => {
           </div>
 
           <div className="mt-8 text-center">
-            <Button variant="cta" size="lg" onClick={() => window.location.href = "/sell"}>
+            <Button variant="cta" size="lg" onClick={() => navigate("/sell")}>
               Sell Another Device
             </Button>
           </div>
