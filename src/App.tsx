@@ -7,7 +7,8 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import Home from "./pages/Home";
 import Sell from "./pages/Sell";
 import Dashboard from "./pages/Dashboard";
-import Admin from "./pages/Admin";
+import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/AdminDashboard";
 import Auth from "./pages/Auth";
 import Track from "./pages/Track";
 import NotFound from "./pages/NotFound";
@@ -25,7 +26,8 @@ const App = () => (
             <Route path="/" element={<Home />} />
             <Route path="/sell" element={<Sell />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin" element={<AdminLogin />} />
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/track/:id" element={<Track />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

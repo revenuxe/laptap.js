@@ -31,9 +31,6 @@ const Header = () => {
           {user && <Link to="/dashboard" className="text-sm font-medium hover:text-primary transition-colors">
               Dashboard
             </Link>}
-          {isAdmin && <Link to="/admin" className="text-sm font-medium hover:text-primary transition-colors">
-              Admin
-            </Link>}
         </nav>
 
         <div className="flex items-center gap-4">
@@ -58,7 +55,7 @@ const Header = () => {
                   <DropdownMenuItem onClick={() => navigate("/dashboard")}>
                     Dashboard
                   </DropdownMenuItem>
-                  {isAdmin && <DropdownMenuItem onClick={() => navigate("/admin")}>
+                  {isAdmin && <DropdownMenuItem onClick={() => navigate("/admin/dashboard")}>
                       Admin Panel
                     </DropdownMenuItem>}
                   <DropdownMenuSeparator />
