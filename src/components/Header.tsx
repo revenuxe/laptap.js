@@ -3,26 +3,19 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { LogOut, User } from "lucide-react";
 import laptopLogo from "@/assets/laptop_logo.webp";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 const Header = () => {
   const navigate = useNavigate();
-  const { user, signOut, isAdmin } = useAuth();
-
+  const {
+    user,
+    signOut,
+    isAdmin
+  } = useAuth();
   const handleSignOut = async () => {
     await signOut();
     navigate("/");
   };
-
-  return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+  return <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-20 items-center justify-between">
         <Link to="/" className="flex items-center space-x-2">
           <img src={laptopLogo} alt="Laptap Logo" className="h-12" />
@@ -35,30 +28,21 @@ const Header = () => {
           <Link to="/sell" className="text-sm font-medium hover:text-primary transition-colors">
             Sell Device
           </Link>
-          {user && (
-            <Link to="/dashboard" className="text-sm font-medium hover:text-primary transition-colors">
+          {user && <Link to="/dashboard" className="text-sm font-medium hover:text-primary transition-colors">
               Dashboard
-            </Link>
-          )}
-          {isAdmin && (
-            <Link to="/admin" className="text-sm font-medium hover:text-primary transition-colors">
+            </Link>}
+          {isAdmin && <Link to="/admin" className="text-sm font-medium hover:text-primary transition-colors">
               Admin
-            </Link>
-          )}
+            </Link>}
         </nav>
 
         <div className="flex items-center gap-4">
-          {!user ? (
-            <>
+          {!user ? <>
               <Button variant="outline" onClick={() => navigate("/auth")}>
                 Login
               </Button>
-              <Button variant="cta" size="lg" onClick={() => navigate("/sell")}>
-                Sell Now
-              </Button>
-            </>
-          ) : (
-            <>
+              
+            </> : <>
               <Button variant="cta" size="lg" onClick={() => navigate("/sell")}>
                 Sell Now
               </Button>
@@ -74,11 +58,9 @@ const Header = () => {
                   <DropdownMenuItem onClick={() => navigate("/dashboard")}>
                     Dashboard
                   </DropdownMenuItem>
-                  {isAdmin && (
-                    <DropdownMenuItem onClick={() => navigate("/admin")}>
+                  {isAdmin && <DropdownMenuItem onClick={() => navigate("/admin")}>
                       Admin Panel
-                    </DropdownMenuItem>
-                  )}
+                    </DropdownMenuItem>}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleSignOut}>
                     <LogOut className="mr-2 h-4 w-4" />
@@ -86,12 +68,9 @@ const Header = () => {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-            </>
-          )}
+            </>}
         </div>
       </div>
-    </header>
-  );
+    </header>;
 };
-
 export default Header;
