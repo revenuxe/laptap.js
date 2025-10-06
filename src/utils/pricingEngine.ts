@@ -1,3 +1,5 @@
+import { Database } from '@/integrations/supabase/types';
+
 interface PricingRules {
   age_brackets: Record<string, number>;
   condition_factors: Record<string, number>;
