@@ -7,6 +7,7 @@ import { calculateDynamicPrice, getConditionLabel } from "@/utils/dynamicPricing
 import { sellRequestSchema } from "@/lib/validationSchemas";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Loader from "@/components/Loader";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -28,6 +29,7 @@ const Sell = () => {
   
   const [step, setStep] = useState<Step>(initialCategory ? "brand" : "category");
   const [loading, setLoading] = useState(false);
+  const [transitionLoading, setTransitionLoading] = useState(false);
   
   // Form data
   const [category, setCategory] = useState<"laptop" | "desktop" | "">(initialCategory || "");
@@ -227,23 +229,35 @@ const Sell = () => {
   };
 
   const handleBrandSelect = (brandId: string) => {
+    setTransitionLoading(true);
     setSelectedBrand(brandId);
     setSelectedSeries("");
     setSelectedModel(null);
-    setStep("series");
-    window.scrollTo(0, 0);
+    setTimeout(() => {
+      setStep("series");
+      setTransitionLoading(false);
+      window.scrollTo(0, 0);
+    }, 800);
   };
 
   const handleSeriesSelect = (seriesId: string) => {
+    setTransitionLoading(true);
     setSelectedSeries(seriesId);
     setSelectedModel(null);
-    setStep("model");
-    window.scrollTo(0, 0);
+    setTimeout(() => {
+      setStep("model");
+      setTransitionLoading(false);
+      window.scrollTo(0, 0);
+    }, 800);
   };
 
   const handleModelSelect = (model: any) => {
+    setTransitionLoading(true);
     setSelectedModel(model);
-    window.scrollTo(0, 0);
+    setTimeout(() => {
+      setTransitionLoading(false);
+      window.scrollTo(0, 0);
+    }, 800);
   };
 
   const handleCalculatePrice = async () => {
@@ -252,10 +266,14 @@ const Sell = () => {
       return;
     }
 
+    setTransitionLoading(true);
     await calculateRealTimePrice();
     setOfferExpired(false);
-    setStep("price");
-    window.scrollTo(0, 0);
+    setTimeout(() => {
+      setStep("price");
+      setTransitionLoading(false);
+      window.scrollTo(0, 0);
+    }, 800);
   };
 
   const handleConfirmPrice = () => {
@@ -336,6 +354,8 @@ const Sell = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
+      
+      {(loading || transitionLoading) && <Loader />}
       
       <main className="flex-1 py-12 md:py-20">
         <div className="container max-w-4xl">
