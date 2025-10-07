@@ -23,8 +23,8 @@ const features = [
   },
   {
     icon: Clock,
-    title: "Fast Payment",
-    description: "Receive payment within 24 hours of device verification directly to your account",
+    title: "Instant Payment",
+    description: "Receive instant payment after device verification directly to your account",
   },
   {
     icon: CheckCircle,

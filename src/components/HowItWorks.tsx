@@ -22,8 +22,8 @@ const steps = [
   {
     icon: Banknote,
     number: "04",
-    title: "Receive Payment",
-    description: "Get paid within 24 hours after our experts verify your device",
+    title: "Receive Instant Payment",
+    description: "Get paid instantly after our experts verify your device",
   },
 ];
 

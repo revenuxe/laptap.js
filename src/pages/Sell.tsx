@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Laptop, Monitor, ChevronRight, Loader2, TrendingUp, Zap } from "lucide-react";
+import { Laptop, Monitor, ChevronRight, Loader2, TrendingUp, Zap, Search } from "lucide-react";
 import { toast } from "sonner";
 import { CountdownTimer } from "@/components/CountdownTimer";
 
@@ -69,6 +69,11 @@ const Sell = () => {
   
   const [address, setAddress] = useState("");
   const [pincode, setPincode] = useState("");
+  
+  // Search states
+  const [brandSearch, setBrandSearch] = useState("");
+  const [seriesSearch, setSeriesSearch] = useState("");
+  const [modelSearch, setModelSearch] = useState("");
 
   // Restore form state from sessionStorage after auth redirect
   useEffect(() => {
@@ -369,8 +374,25 @@ const Sell = () => {
           {step === "brand" && (
             <div className="space-y-6">
               <h2 className="text-xl font-semibold text-center">Select Brand</h2>
+              
+              {/* Search Bar */}
+              <div className="max-w-md mx-auto">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    type="text"
+                    placeholder="Search brands..."
+                    value={brandSearch}
+                    onChange={(e) => setBrandSearch(e.target.value)}
+                    className="pl-10"
+                  />
+                </div>
+              </div>
+
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                {brands.map((brand) => (
+                {brands
+                  .filter(brand => brand.name.toLowerCase().includes(brandSearch.toLowerCase()))
+                  .map((brand) => (
                   <Card
                     key={brand.id}
                     className="cursor-pointer p-4 hover:border-primary hover:shadow-lg transition-all"
@@ -399,8 +421,25 @@ const Sell = () => {
           {step === "series" && (
             <div className="space-y-6">
               <h2 className="text-xl font-semibold text-center">Select Series</h2>
+              
+              {/* Search Bar */}
+              <div className="max-w-md mx-auto">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    type="text"
+                    placeholder="Search series..."
+                    value={seriesSearch}
+                    onChange={(e) => setSeriesSearch(e.target.value)}
+                    className="pl-10"
+                  />
+                </div>
+              </div>
+
               <div className="grid grid-cols-2 gap-4">
-                {seriesList.map((series) => (
+                {seriesList
+                  .filter(series => series.name.toLowerCase().includes(seriesSearch.toLowerCase()))
+                  .map((series) => (
                   <Card
                     key={series.id}
                     className="cursor-pointer p-4 hover:border-primary hover:shadow-lg transition-all"
@@ -429,8 +468,25 @@ const Sell = () => {
           {step === "model" && !selectedModel && (
             <div className="space-y-6">
               <h2 className="text-xl font-semibold text-center">Select Model</h2>
+              
+              {/* Search Bar */}
+              <div className="max-w-md mx-auto">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    type="text"
+                    placeholder="Search models..."
+                    value={modelSearch}
+                    onChange={(e) => setModelSearch(e.target.value)}
+                    className="pl-10"
+                  />
+                </div>
+              </div>
+
               <div className="grid grid-cols-2 gap-4">
-                {models.map((model) => (
+                {models
+                  .filter(model => model.name.toLowerCase().includes(modelSearch.toLowerCase()))
+                  .map((model) => (
                   <Card
                     key={model.id}
                     className="cursor-pointer p-4 hover:border-primary hover:shadow-lg transition-all"

@@ -32,7 +32,7 @@ const Hero = () => {
           
           <p className="mb-8 text-lg text-muted-foreground md:text-xl max-w-2xl mx-auto">
             Get the best price for your device with instant quotes, free doorstep pickup, 
-            and secure payment within 24 hours.
+            and instant secure payment.
           </p>
 
           {/* Search bar */}

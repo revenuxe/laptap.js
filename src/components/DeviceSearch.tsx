@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
-import { Search } from 'lucide-react';
+import { Search, Laptop } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface Brand {
@@ -12,15 +12,28 @@ interface Brand {
   logo_url: string | null;
 }
 
+interface Model {
+  id: string;
+  name: string;
+  series: {
+    name: string;
+    brands: {
+      name: string;
+    };
+  };
+}
+
 export function DeviceSearch() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [brands, setBrands] = useState<Brand[]>([]);
-  const [filteredBrands, setFilteredBrands] = useState<Brand[]>([]);
+  const [models, setModels] = useState<Model[]>([]);
+  const [filteredModels, setFilteredModels] = useState<Model[]>([]);
   const [showResults, setShowResults] = useState(false);
 
   useEffect(() => {
     loadBrands();
+    loadModels();
   }, []);
 
   async function loadBrands() {
@@ -33,19 +46,48 @@ export function DeviceSearch() {
     }
   }
 
+  async function loadModels() {
+    const { data } = await supabase
+      .from('models')
+      .select(`
+        id,
+        name,
+        series (
+          name,
+          brands (
+            name
+          )
+        )
+      `)
+      .eq('active', true);
+    
+    if (data) {
+      setModels(data as Model[]);
+    }
+  }
+
   const handleSearch = (value: string) => {
     setSearchQuery(value);
-    if (value.trim() && brands.length > 0) {
+    if (value.trim() && models.length > 0) {
       const query = value.toLowerCase();
-      const filtered = brands.filter(brand => 
-        brand.name.toLowerCase().includes(query)
+      const filtered = models.filter(model => 
+        model.name.toLowerCase().includes(query) ||
+        model.series.name.toLowerCase().includes(query) ||
+        model.series.brands.name.toLowerCase().includes(query)
       ).slice(0, 5);
-      setFilteredBrands(filtered);
+      setFilteredModels(filtered);
       setShowResults(true);
     } else {
       setShowResults(false);
-      setFilteredBrands([]);
+      setFilteredModels([]);
     }
+  };
+
+  const handleModelClick = (model: Model) => {
+    // Navigate to sell page with model preselected
+    navigate(`/sell?category=laptop&model=${model.id}`);
+    setSearchQuery('');
+    setShowResults(false);
   };
 
   const handleBrandClick = (brandId: string) => {
@@ -70,34 +112,29 @@ export function DeviceSearch() {
       {showResults && (
         <Card className="absolute top-full mt-2 w-full z-50 max-h-96 overflow-auto shadow-lg">
           <div className="p-4">
-            {filteredBrands.length > 0 ? (
+            {filteredModels.length > 0 ? (
               <div className="space-y-2">
-                <p className="text-sm font-semibold text-muted-foreground mb-3">Brands</p>
-                {filteredBrands.map(brand => (
+                <p className="text-sm font-semibold text-muted-foreground mb-3">Models</p>
+                {filteredModels.map(model => (
                   <div
-                    key={brand.id}
-                    onClick={() => handleBrandClick(brand.id)}
+                    key={model.id}
+                    onClick={() => handleModelClick(model)}
                     className="flex items-center gap-3 p-3 rounded-lg hover:bg-accent cursor-pointer transition-colors"
                   >
-                    {brand.logo_url && (
-                      <div className="w-10 h-10 flex items-center justify-center bg-muted rounded overflow-hidden">
-                        <img 
-                          src={brand.logo_url.startsWith('http') ? brand.logo_url : supabase.storage.from('brand-logos').getPublicUrl(brand.logo_url).data.publicUrl}
-                          alt={brand.name}
-                          className="w-full h-full object-contain"
-                          onError={(e) => e.currentTarget.style.display = 'none'}
-                        />
-                      </div>
-                    )}
+                    <div className="w-10 h-10 flex items-center justify-center bg-primary/10 rounded">
+                      <Laptop className="h-5 w-5 text-primary" />
+                    </div>
                     <div>
-                      <p className="font-medium">{brand.name}</p>
-                      <p className="text-sm text-muted-foreground">Laptop Brand</p>
+                      <p className="font-medium">{model.name}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {model.series.brands.name} {model.series.name}
+                      </p>
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-center text-muted-foreground py-6">No results found</p>
+              <p className="text-center text-muted-foreground py-6">No models found</p>
             )}
           </div>
         </Card>
