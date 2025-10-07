@@ -574,12 +574,18 @@ const Sell = () => {
                 <h2 className="text-2xl font-semibold mb-2">Does your device function properly?</h2>
                 <p className="text-muted-foreground">Please choose appropriate condition to get accurate quote</p>
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
                   { id: "keyboard", label: "Keyboard not working; key(s) missing/not working" },
                   { id: "cd_dvd", label: "CD/DVD Drive not working" },
                   { id: "touchpad", label: "Touchpad not working; Left/Right click faulty" },
-                  { id: "battery", label: "Battery dead, backup < 60 mins, health < 80%, cycle count > 500" }
+                  { id: "battery", label: "Battery dead, backup < 60 mins, health < 80%, cycle count > 500" },
+                  { id: "ports", label: "USB/HDMI ports not working" },
+                  { id: "wifi", label: "WiFi/Bluetooth not working" },
+                  { id: "speakers", label: "Speakers/Audio not working" },
+                  { id: "webcam", label: "Webcam/Microphone not working" },
+                  { id: "overheating", label: "Device overheating issues" },
+                  { id: "display", label: "Display flickering or dim" }
                 ].map((issue) => (
                   <Card
                     key={issue.id}
@@ -781,11 +787,11 @@ const Sell = () => {
             <Card className="p-8 max-w-md mx-auto">
               <h2 className="text-xl font-semibold mb-4 text-center">Your Final Quote</h2>
               
-              <div className="my-12 text-center">
-                <div className="inline-block rounded-3xl bg-gradient-to-br from-primary/20 to-primary/5 px-12 py-10 border-2 border-primary/20">
-                  <p className="text-sm text-muted-foreground mb-2">You will receive</p>
-                  <p className="text-6xl font-bold text-primary">₹{estimatedPrice.toLocaleString()}</p>
-                  <p className="text-sm text-muted-foreground mt-2">Final price for your device</p>
+              <div className="my-8 sm:my-12 text-center">
+                <div className="inline-block rounded-2xl sm:rounded-3xl bg-gradient-to-br from-primary/20 to-primary/5 px-6 py-6 sm:px-12 sm:py-10 border-2 border-primary/20">
+                  <p className="text-xs sm:text-sm text-muted-foreground mb-2">You will receive</p>
+                  <p className="text-3xl sm:text-4xl md:text-6xl font-bold text-primary break-words">₹{estimatedPrice.toLocaleString()}</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground mt-2">Final price for your device</p>
                 </div>
               </div>
 

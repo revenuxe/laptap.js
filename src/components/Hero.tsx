@@ -1,19 +1,10 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Laptop, Monitor, Search, TrendingUp, Shield, Zap } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Laptop, Monitor, Shield, TrendingUp, Zap } from "lucide-react";
+import { DeviceSearch } from "@/components/DeviceSearch";
 
 const Hero = () => {
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/sell?search=${encodeURIComponent(searchQuery)}`);
-    }
-  };
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-background via-muted/20 to-background py-20 md:py-32">
@@ -45,21 +36,9 @@ const Hero = () => {
           </p>
 
           {/* Search bar */}
-          <form onSubmit={handleSearch} className="mb-12 mx-auto max-w-2xl">
-            <div className="relative flex items-center gap-2 rounded-2xl border-2 border-border bg-background p-2 shadow-lg transition-all hover:border-primary focus-within:border-primary">
-              <Search className="ml-3 h-5 w-5 text-muted-foreground" />
-              <Input
-                type="text"
-                placeholder="Search for your device model (e.g., MacBook Pro M1, Dell XPS 15)..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="border-0 bg-transparent text-base focus-visible:ring-0 focus-visible:ring-offset-0"
-              />
-              <Button type="submit" variant="cta" size="lg" className="rounded-xl">
-                Get Quote
-              </Button>
-            </div>
-          </form>
+          <div className="mb-12">
+            <DeviceSearch />
+          </div>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
