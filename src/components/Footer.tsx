@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import laptopLogo from "@/assets/laptop_logo.webp";
-
 const Footer = () => {
-  return (
-    <footer className="border-t bg-muted/30 py-12 md:py-16">
+  return <footer className="border-t bg-muted/30 py-12 md:py-16">
       <div className="container">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           <div className="space-y-4">
@@ -47,11 +45,7 @@ const Footer = () => {
                   My Dashboard
                 </Link>
               </li>
-              <li>
-                <Link to="/admin" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Admin Panel
-                </Link>
-              </li>
+              
             </ul>
           </div>
 
@@ -81,8 +75,6 @@ const Footer = () => {
           <p>&copy; {new Date().getFullYear()} Laptap. All rights reserved.</p>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
