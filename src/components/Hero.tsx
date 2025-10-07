@@ -2,12 +2,9 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Laptop, Monitor, Shield, TrendingUp, Zap } from "lucide-react";
 import { DeviceSearch } from "@/components/DeviceSearch";
-
 const Hero = () => {
   const navigate = useNavigate();
-
-  return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-background via-muted/20 to-background py-20 md:py-32">
+  return <section className="relative overflow-hidden bg-gradient-to-b from-background via-muted/20 to-background md:py-32 py-[20px]">
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-20 left-10 h-72 w-72 rounded-full bg-primary/5 blur-3xl" />
@@ -68,10 +65,7 @@ const Hero = () => {
 
           {/* Category cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
-            <div
-              className="group cursor-pointer rounded-3xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-8 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50"
-              onClick={() => navigate("/sell?category=laptop")}
-            >
+            <div className="group cursor-pointer rounded-3xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-8 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50" onClick={() => navigate("/sell?category=laptop")}>
               <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
                 <Laptop className="h-8 w-8 text-primary" />
               </div>
@@ -81,10 +75,7 @@ const Hero = () => {
               </p>
             </div>
             
-            <div
-              className="group cursor-pointer rounded-3xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-8 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50"
-              onClick={() => navigate("/sell?category=desktop")}
-            >
+            <div className="group cursor-pointer rounded-3xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-8 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50" onClick={() => navigate("/sell?category=desktop")}>
               <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
                 <Monitor className="h-8 w-8 text-primary" />
               </div>
@@ -96,8 +87,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Hero;
