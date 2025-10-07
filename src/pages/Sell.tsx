@@ -16,7 +16,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Laptop, Monitor, ChevronRight, Loader2, TrendingUp, Zap } from "lucide-react";
 import { toast } from "sonner";
-import { PriceBreakdown } from "@/components/PriceBreakdown";
 import { CountdownTimer } from "@/components/CountdownTimer";
 
 type Step = "category" | "brand" | "series" | "model" | "switch_on" | "config" | "additional" | "functionality" | "screen_condition" | "age" | "physical_condition" | "accessories" | "price" | "confirm";
@@ -480,16 +479,16 @@ const Sell = () => {
 
           {/* System Configuration */}
           {step === "config" && (
-            <Card className="p-8 max-w-2xl mx-auto space-y-6">
-              <div className="text-center mb-6">
-                <h2 className="text-2xl font-semibold mb-2">Select the system configuration of your device?</h2>
-                <p className="text-muted-foreground">Please select your device system configuration</p>
+            <Card className="p-4 md:p-8 max-w-2xl mx-auto space-y-4 md:space-y-6">
+              <div className="text-center mb-4 md:mb-6">
+                <h2 className="text-xl md:text-2xl font-semibold mb-2">Select the system configuration of your device?</h2>
+                <p className="text-sm md:text-base text-muted-foreground">Please select your device system configuration</p>
               </div>
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <Label className="text-lg font-semibold mb-3 block">Processor</Label>
+                  <Label className="text-base md:text-lg font-semibold mb-2 md:mb-3 block">Processor</Label>
                   <Select value={config.cpu} onValueChange={(v) => setConfig({ ...config, cpu: v })}>
-                    <SelectTrigger className="bg-background h-14 text-lg">
+                    <SelectTrigger className="bg-background h-12 md:h-14 text-sm md:text-lg">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-background z-50">
@@ -508,9 +507,9 @@ const Sell = () => {
                   </Select>
                 </div>
                 <div>
-                  <Label className="text-lg font-semibold mb-3 block">RAM</Label>
+                  <Label className="text-base md:text-lg font-semibold mb-2 md:mb-3 block">RAM</Label>
                   <Select value={config.ram} onValueChange={(v) => setConfig({ ...config, ram: v })}>
-                    <SelectTrigger className="bg-background h-14 text-lg">
+                    <SelectTrigger className="bg-background h-12 md:h-14 text-sm md:text-lg">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-background z-50">
@@ -523,9 +522,9 @@ const Sell = () => {
                   </Select>
                 </div>
                 <div>
-                  <Label className="text-lg font-semibold mb-3 block">Hard Disk</Label>
+                  <Label className="text-base md:text-lg font-semibold mb-2 md:mb-3 block">Hard Disk</Label>
                   <Select value={config.storage} onValueChange={(v) => setConfig({ ...config, storage: v })}>
-                    <SelectTrigger className="bg-background h-14 text-lg">
+                    <SelectTrigger className="bg-background h-12 md:h-14 text-sm md:text-lg">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-background z-50">
@@ -540,7 +539,7 @@ const Sell = () => {
                   </Select>
                 </div>
               </div>
-              <Button variant="cta" className="w-full" onClick={() => { setStep("additional"); window.scrollTo(0, 0); }}>
+              <Button variant="cta" className="w-full text-sm md:text-base" onClick={() => { setStep("additional"); window.scrollTo(0, 0); }}>
                 Continue <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
             </Card>
@@ -548,11 +547,11 @@ const Sell = () => {
 
           {/* Additional Features */}
           {step === "additional" && (
-            <Card className="p-8 max-w-2xl mx-auto space-y-6">
-              <div className="text-center mb-6">
-                <p className="text-muted-foreground mb-2">Please select your device additional features</p>
+            <Card className="p-4 md:p-8 max-w-2xl mx-auto space-y-4 md:space-y-6">
+              <div className="text-center mb-4 md:mb-6">
+                <p className="text-sm md:text-base text-muted-foreground mb-2">Please select your device additional features</p>
               </div>
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
                   <Label className="text-lg font-semibold mb-3 block">Screen Size</Label>
                   <p className="text-sm text-muted-foreground mb-3">Check your device's screen size</p>
@@ -657,56 +656,56 @@ const Sell = () => {
 
           {/* Screen Condition */}
           {step === "screen_condition" && (
-            <Card className="p-8 max-w-2xl mx-auto space-y-6">
-              <div className="text-center mb-6">
-                <h2 className="text-2xl font-semibold mb-2">Select the screen condition of your device?</h2>
-                <p className="text-muted-foreground">The better condition your device is in, we will pay you more</p>
+            <Card className="p-4 md:p-8 max-w-2xl mx-auto space-y-4 md:space-y-6">
+              <div className="text-center mb-4 md:mb-6">
+                <h2 className="text-xl md:text-2xl font-semibold mb-2">Select the screen condition of your device?</h2>
+                <p className="text-sm md:text-base text-muted-foreground">The better condition your device is in, we will pay you more</p>
               </div>
               <RadioGroup value={screenCondition} onValueChange={setScreenCondition}>
-                <Card className={`p-6 cursor-pointer transition-all ${screenCondition === "flawless" ? 'border-primary' : ''}`}>
-                  <div className="flex items-center space-x-3">
-                    <RadioGroupItem value="flawless" id="screen_flawless" />
-                    <div className="flex-1">
-                      <Label htmlFor="screen_flawless" className="text-lg cursor-pointer block font-semibold mb-1">Flawless</Label>
-                      <p className="text-sm text-muted-foreground">No scratches on screen</p>
-                      <p className="text-sm text-muted-foreground">No Lines/Dents/Discoloration/Cracks</p>
+                <Card className={`p-4 md:p-6 cursor-pointer transition-all ${screenCondition === "flawless" ? 'border-primary' : ''}`}>
+                  <div className="flex items-start space-x-3">
+                    <RadioGroupItem value="flawless" id="screen_flawless" className="mt-1 flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <Label htmlFor="screen_flawless" className="text-base md:text-lg cursor-pointer block font-semibold mb-1">Flawless</Label>
+                      <p className="text-xs md:text-sm text-muted-foreground">No scratches on screen</p>
+                      <p className="text-xs md:text-sm text-muted-foreground">No Lines/Dents/Discoloration/Cracks</p>
                     </div>
                   </div>
                 </Card>
-                <Card className={`p-6 cursor-pointer transition-all ${screenCondition === "good" ? 'border-primary' : ''}`}>
-                  <div className="flex items-center space-x-3">
-                    <RadioGroupItem value="good" id="screen_good" />
-                    <div className="flex-1">
-                      <Label htmlFor="screen_good" className="text-lg cursor-pointer block font-semibold mb-1">Good</Label>
-                      <p className="text-sm text-muted-foreground">Major scratches on screen</p>
-                      <p className="text-sm text-muted-foreground">No Lines/Dents/Discoloration/ Crack(s) on Screen</p>
+                <Card className={`p-4 md:p-6 cursor-pointer transition-all ${screenCondition === "good" ? 'border-primary' : ''}`}>
+                  <div className="flex items-start space-x-3">
+                    <RadioGroupItem value="good" id="screen_good" className="mt-1 flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <Label htmlFor="screen_good" className="text-base md:text-lg cursor-pointer block font-semibold mb-1">Good</Label>
+                      <p className="text-xs md:text-sm text-muted-foreground">Major scratches on screen</p>
+                      <p className="text-xs md:text-sm text-muted-foreground">No Lines/Dents/Discoloration/Cracks</p>
                     </div>
                   </div>
                 </Card>
-                <Card className={`p-6 cursor-pointer transition-all ${screenCondition === "average" ? 'border-primary' : ''}`}>
-                  <div className="flex items-center space-x-3">
-                    <RadioGroupItem value="average" id="screen_average" />
-                    <div className="flex-1">
-                      <Label htmlFor="screen_average" className="text-lg cursor-pointer block font-semibold mb-1">Average</Label>
-                      <p className="text-sm text-muted-foreground">1-2 spots on screen/display</p>
-                      <p className="text-sm text-muted-foreground">Minor Discoloration on Screen</p>
-                      <p className="text-sm text-muted-foreground">No Line/Dents/Crack(s) on Screen</p>
+                <Card className={`p-4 md:p-6 cursor-pointer transition-all ${screenCondition === "average" ? 'border-primary' : ''}`}>
+                  <div className="flex items-start space-x-3">
+                    <RadioGroupItem value="average" id="screen_average" className="mt-1 flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <Label htmlFor="screen_average" className="text-base md:text-lg cursor-pointer block font-semibold mb-1">Average</Label>
+                      <p className="text-xs md:text-sm text-muted-foreground">1-2 spots on screen/display</p>
+                      <p className="text-xs md:text-sm text-muted-foreground">Minor Discoloration on Screen</p>
+                      <p className="text-xs md:text-sm text-muted-foreground">No Lines/Dents/Cracks</p>
                     </div>
                   </div>
                 </Card>
-                <Card className={`p-6 cursor-pointer transition-all ${screenCondition === "damaged" ? 'border-primary' : ''}`}>
-                  <div className="flex items-center space-x-3">
-                    <RadioGroupItem value="damaged" id="screen_damaged" />
-                    <div className="flex-1">
-                      <Label htmlFor="screen_damaged" className="text-lg cursor-pointer block font-semibold mb-1">Damaged</Label>
-                      <p className="text-sm text-muted-foreground">Heavy signs of usage</p>
-                      <p className="text-sm text-muted-foreground">Screen touch not working</p>
-                      <p className="text-sm text-muted-foreground">Lines/ Discoloration/ blur/ Cracked or broken on screen</p>
+                <Card className={`p-4 md:p-6 cursor-pointer transition-all ${screenCondition === "damaged" ? 'border-primary' : ''}`}>
+                  <div className="flex items-start space-x-3">
+                    <RadioGroupItem value="damaged" id="screen_damaged" className="mt-1 flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <Label htmlFor="screen_damaged" className="text-base md:text-lg cursor-pointer block font-semibold mb-1">Damaged</Label>
+                      <p className="text-xs md:text-sm text-muted-foreground">Heavy signs of usage</p>
+                      <p className="text-xs md:text-sm text-muted-foreground">Screen touch not working</p>
+                      <p className="text-xs md:text-sm text-muted-foreground">Lines/Discoloration/blur/Cracked screen</p>
                     </div>
                   </div>
                 </Card>
               </RadioGroup>
-              <Button variant="cta" className="w-full" onClick={() => { setStep("age"); window.scrollTo(0, 0); }}>
+              <Button variant="cta" className="w-full text-sm md:text-base" onClick={() => { setStep("age"); window.scrollTo(0, 0); }}>
                 Continue <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
             </Card>
@@ -848,16 +847,16 @@ const Sell = () => {
 
           {/* Price Display with Marketing */}
           {step === "price" && (
-            <div className="max-w-3xl mx-auto space-y-6">
+            <div className="max-w-3xl mx-auto space-y-4 px-4">
               {/* Marketing Banner */}
               {!offerExpired && (
-                <Card className="p-6 bg-gradient-to-br from-primary/10 to-primary/5 border-primary/30">
-                  <div className="flex items-center justify-between gap-4 flex-wrap">
+                <Card className="p-4 md:p-6 bg-gradient-to-br from-primary/10 to-primary/5 border-primary/30">
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
                     <div className="flex items-center gap-3">
-                      <Zap className="h-6 w-6 text-primary animate-pulse" />
-                      <div>
-                        <p className="font-semibold text-lg">Limited Time Offer!</p>
-                        <p className="text-sm text-muted-foreground">This price is valid for:</p>
+                      <Zap className="h-5 w-5 md:h-6 md:w-6 text-primary animate-pulse flex-shrink-0" />
+                      <div className="text-center sm:text-left">
+                        <p className="font-semibold text-base md:text-lg">Limited Time Offer!</p>
+                        <p className="text-xs md:text-sm text-muted-foreground">This price is valid for:</p>
                       </div>
                     </div>
                     <CountdownTimer 
@@ -872,24 +871,24 @@ const Sell = () => {
               )}
 
               {/* Main Price Display */}
-              <Card className="p-8 text-center">
-                <h2 className="text-2xl font-semibold mb-6">Your Final Quote</h2>
+              <Card className="p-4 md:p-8 text-center">
+                <h2 className="text-lg md:text-2xl font-semibold mb-4 md:mb-6">Your Final Quote</h2>
                 
                 {/* Displayed Price (with bonus) */}
                 {!offerExpired && (
-                  <div className="mb-6">
-                    <div className="inline-block rounded-3xl bg-gradient-to-br from-primary/20 to-primary/5 px-12 py-10 border-2 border-primary/20">
-                      <p className="text-sm text-muted-foreground mb-2">Special Offer Price</p>
-                      <p className="text-5xl md:text-6xl font-bold text-primary">₹{displayedPrice.toLocaleString()}</p>
+                  <div className="mb-4 md:mb-6">
+                    <div className="inline-block rounded-2xl md:rounded-3xl bg-gradient-to-br from-primary/20 to-primary/5 px-6 py-6 md:px-12 md:py-10 border-2 border-primary/20">
+                      <p className="text-xs md:text-sm text-muted-foreground mb-2">Special Offer Price</p>
+                      <p className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary break-words">₹{displayedPrice.toLocaleString()}</p>
                     </div>
                     
                     {/* Marketing Message */}
-                    <div className="mt-6 p-4 bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg">
+                    <div className="mt-4 md:mt-6 p-3 md:p-4 bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg">
                       <div className="flex items-center justify-center gap-2 mb-2">
-                        <TrendingUp className="h-5 w-5 text-green-600" />
-                        <p className="font-semibold text-green-700 dark:text-green-400">You're Getting the Best Deal!</p>
+                        <TrendingUp className="h-4 w-4 md:h-5 md:w-5 text-green-600 flex-shrink-0" />
+                        <p className="font-semibold text-sm md:text-base text-green-700 dark:text-green-400">You're Getting the Best Deal!</p>
                       </div>
-                      <p className="text-sm text-green-700 dark:text-green-400">
+                      <p className="text-xs md:text-sm text-green-700 dark:text-green-400">
                         That's <span className="font-bold">₹{marketingBonus.toLocaleString()} more</span> than what Cashify and other buyers typically offer!
                       </p>
                       <p className="text-xs text-green-600 dark:text-green-500 mt-1">
@@ -901,47 +900,42 @@ const Sell = () => {
 
                 {/* Expired - Show Actual Price */}
                 {offerExpired && (
-                  <div className="mb-6">
-                    <div className="inline-block rounded-3xl bg-muted px-12 py-10 border-2">
-                      <p className="text-sm text-muted-foreground mb-2">Standard Price</p>
-                      <p className="text-5xl md:text-6xl font-bold">₹{estimatedPrice.toLocaleString()}</p>
+                  <div className="mb-4 md:mb-6">
+                    <div className="inline-block rounded-2xl md:rounded-3xl bg-muted px-6 py-6 md:px-12 md:py-10 border-2">
+                      <p className="text-xs md:text-sm text-muted-foreground mb-2">Standard Price</p>
+                      <p className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold break-words">₹{estimatedPrice.toLocaleString()}</p>
                     </div>
-                    <p className="text-sm text-muted-foreground mt-4">
+                    <p className="text-xs md:text-sm text-muted-foreground mt-4">
                       The limited-time bonus has expired
                     </p>
                   </div>
                 )}
 
                 {/* Actual Payment Info */}
-                <div className="p-4 bg-muted/30 rounded-lg mb-6">
-                  <p className="text-sm font-semibold mb-2">Payment Details</p>
-                  <div className="flex justify-between items-center text-sm">
+                <div className="p-3 md:p-4 bg-muted/30 rounded-lg mb-4 md:mb-6">
+                  <p className="text-xs md:text-sm font-semibold mb-2">Payment Details</p>
+                  <div className="flex justify-between items-center text-xs md:text-sm gap-2">
                     <span>Amount you'll receive:</span>
-                    <span className="font-bold text-lg">₹{estimatedPrice.toLocaleString()}</span>
+                    <span className="font-bold text-base md:text-lg">₹{estimatedPrice.toLocaleString()}</span>
                   </div>
                   {!offerExpired && marketingBonus > 0 && (
-                    <div className="flex justify-between items-center text-xs text-muted-foreground mt-1">
+                    <div className="flex justify-between items-center text-xs text-muted-foreground mt-1 gap-2">
                       <span>Marketing bonus displayed:</span>
                       <span>+₹{marketingBonus.toLocaleString()}</span>
                     </div>
                   )}
                 </div>
 
-                <Button variant="cta" className="w-full mb-3" onClick={handleConfirmPrice}>
+                <Button variant="cta" className="w-full mb-3 text-sm md:text-base" onClick={handleConfirmPrice}>
                   Accept Offer & Continue <ChevronRight className="ml-2 h-4 w-4" />
                 </Button>
-                <Button variant="ghost" className="w-full" onClick={() => setStep("accessories")}>
+                <Button variant="ghost" className="w-full text-sm md:text-base" onClick={() => setStep("accessories")}>
                   Modify Details
                 </Button>
               </Card>
 
-              {/* Price Breakdown */}
-              {priceBreakdown && (
-                <PriceBreakdown breakdown={priceBreakdown} />
-              )}
-
               {/* Disclaimer */}
-              <Card className="p-4 bg-muted/20">
+              <Card className="p-3 md:p-4 bg-muted/20">
                 <p className="text-xs text-center text-muted-foreground">
                   * This is an estimated quote based on the information provided. The final price will be confirmed after physical inspection of your device. Our team will verify the device condition, specifications, and functionality before confirming payment.
                 </p>
