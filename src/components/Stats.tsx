@@ -3,18 +3,18 @@ import { Users, Package, DollarSign, Star } from "lucide-react";
 const stats = [
   {
     icon: Users,
-    value: "50,000+",
+    value: "500+",
     label: "Happy Customers",
   },
   {
     icon: Package,
-    value: "75,000+",
+    value: "1000+",
     label: "Devices Sold",
   },
   {
     icon: DollarSign,
-    value: "$10M+",
-    label: "Paid to Customers",
+    value: "7+",
+    label: "Years Industry Expert",
   },
   {
     icon: Star,
