@@ -64,6 +64,32 @@ const Track = () => {
     };
 
     fetchSellRequest();
+
+    // Set up realtime subscription for status updates
+    const channel = supabase
+      .channel(`sell_request_${id}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'sell_requests',
+          filter: `id=eq.${id}`,
+        },
+        (payload) => {
+          console.log('Realtime status update:', payload);
+          setSellRequest((prev: any) => ({
+            ...prev,
+            ...payload.new,
+          }));
+          toast.success('Order status updated');
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, [id, user]);
 
   if (loading || authLoading) {

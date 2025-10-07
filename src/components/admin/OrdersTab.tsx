@@ -6,10 +6,13 @@ import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { toast } from 'sonner';
 import { Eye } from 'lucide-react';
+import { OrderDetailsDialog } from './OrderDetailsDialog';
 
 export function OrdersTab() {
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedOrder, setSelectedOrder] = useState<any>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   useEffect(() => {
     fetchOrders();
@@ -104,7 +107,14 @@ export function OrdersTab() {
                   {new Date(order.created_at).toLocaleDateString()}
                 </TableCell>
                 <TableCell>
-                  <Button variant="ghost" size="sm">
+                  <Button 
+                    variant="ghost" 
+                    size="sm"
+                    onClick={() => {
+                      setSelectedOrder(order);
+                      setDialogOpen(true);
+                    }}
+                  >
                     <Eye className="h-4 w-4" />
                   </Button>
                 </TableCell>
@@ -113,6 +123,16 @@ export function OrdersTab() {
           </TableBody>
         </Table>
       </div>
+
+      {selectedOrder && (
+        <OrderDetailsDialog
+          order={selectedOrder}
+          open={dialogOpen}
+          onOpenChange={setDialogOpen}
+          onOrderUpdated={fetchOrders}
+          onOrderDeleted={fetchOrders}
+        />
+      )}
     </Card>
   );
 }
