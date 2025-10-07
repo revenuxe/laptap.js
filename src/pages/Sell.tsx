@@ -183,7 +183,6 @@ const Sell = () => {
 
   const handleModelSelect = (model: any) => {
     setSelectedModel(model);
-    setStep("switch_on");
     window.scrollTo(0, 0);
   };
 
@@ -328,11 +327,11 @@ const Sell = () => {
                     onClick={() => handleBrandSelect(brand.id)}
                   >
                     {brand.logo_url && (
-                      <div className="aspect-square mb-2 flex items-center justify-center overflow-hidden rounded-md bg-muted">
+                      <div className="aspect-square mb-2 flex items-center justify-center overflow-hidden rounded-md bg-muted p-3">
                         <img 
                           src={brand.logo_url.startsWith('http') ? brand.logo_url : supabase.storage.from('brand-logos').getPublicUrl(brand.logo_url).data.publicUrl}
                           alt={brand.name}
-                          className="h-full w-full object-contain"
+                          className="h-3/4 w-3/4 object-contain"
                           onError={(e) => {
                             e.currentTarget.style.display = 'none';
                           }}
@@ -377,7 +376,7 @@ const Sell = () => {
           )}
 
           {/* Model Selection */}
-          {step === "model" && (
+          {step === "model" && !selectedModel && (
             <div className="space-y-6">
               <h2 className="text-xl font-semibold text-center">Select Model</h2>
               <div className="grid grid-cols-2 gap-4">
@@ -405,6 +404,43 @@ const Sell = () => {
                 ))}
               </div>
             </div>
+          )}
+
+          {/* Model Selected - Show Base Price */}
+          {step === "model" && selectedModel && (
+            <Card className="p-6 md:p-8 max-w-2xl mx-auto space-y-6">
+              <div className="text-center">
+                <h2 className="text-xl md:text-2xl font-semibold mb-4">{selectedModel.name}</h2>
+                {selectedModel.thumbnail_url && (
+                  <div className="w-32 h-32 md:w-40 md:h-40 mx-auto mb-6 overflow-hidden rounded-lg bg-muted">
+                    <img 
+                      src={selectedModel.thumbnail_url.startsWith('http') ? selectedModel.thumbnail_url : supabase.storage.from('model-thumbnails').getPublicUrl(selectedModel.thumbnail_url).data.publicUrl}
+                      alt={selectedModel.name}
+                      className="h-full w-full object-cover"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  </div>
+                )}
+                <div className="mb-6">
+                  <p className="text-muted-foreground mb-2">Base Price</p>
+                  <p className="text-3xl md:text-4xl font-bold text-primary">
+                    ₹{parseFloat(selectedModel.base_price).toLocaleString()}
+                  </p>
+                </div>
+                <p className="text-sm text-muted-foreground mb-6">
+                  This is the starting price. The final quote will be based on your device's condition and specifications.
+                </p>
+              </div>
+              <Button 
+                variant="cta" 
+                className="w-full"
+                onClick={() => { setStep("switch_on"); window.scrollTo(0, 0); }}
+              >
+                Evaluate Now <ChevronRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Card>
           )}
 
           {/* Switch On Check */}
