@@ -23,13 +23,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const checkAdminRole = async (): Promise<boolean> => {
-    if (!user) return false;
+  const checkAdminRole = async (userId?: string): Promise<boolean> => {
+    // Get current session if no userId provided
+    const currentUserId = userId || user?.id;
+    if (!currentUserId) return false;
     
     const { data, error } = await supabase
       .from('user_roles')
       .select('role')
-      .eq('user_id', user.id)
+      .eq('user_id', currentUserId)
       .eq('role', 'admin')
       .maybeSingle();
 
@@ -46,7 +48,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         // Check admin role after state update
         if (session?.user) {
           setTimeout(async () => {
-            const isAdminUser = await checkAdminRole();
+            const isAdminUser = await checkAdminRole(session.user.id);
             setIsAdmin(isAdminUser);
           }, 0);
         } else {
@@ -62,7 +64,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       
       if (session?.user) {
         setTimeout(async () => {
-          const isAdminUser = await checkAdminRole();
+          const isAdminUser = await checkAdminRole(session.user.id);
           setIsAdmin(isAdminUser);
           setLoading(false);
         }, 0);

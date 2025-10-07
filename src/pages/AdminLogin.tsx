@@ -10,7 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
-  const { signIn, user, isAdmin } = useAuth();
+  const { signIn, user, isAdmin, checkAdminRole } = useAuth();
   const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,18 +36,17 @@ const AdminLogin = () => {
           variant: "destructive",
         });
       } else {
-        // Wait a bit for isAdmin to update
-        setTimeout(() => {
-          if (isAdmin) {
-            navigate("/admin/dashboard");
-          } else {
-            toast({
-              title: "Access Denied",
-              description: "You don't have admin privileges",
-              variant: "destructive",
-            });
-          }
-        }, 500);
+        // Check admin role directly after login
+        const adminCheck = await checkAdminRole();
+        if (adminCheck) {
+          navigate("/admin/dashboard");
+        } else {
+          toast({
+            title: "Access Denied",
+            description: "You don't have admin privileges",
+            variant: "destructive",
+          });
+        }
       }
     } catch (error) {
       toast({
