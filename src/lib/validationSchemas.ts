@@ -96,12 +96,12 @@ export const validateImageFile = (file: File | null): { valid: boolean; error?: 
   if (!file) return { valid: true }; // Optional
   
   const maxSize = 5 * 1024 * 1024; // 5MB
-  const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+  const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/svg+xml"];
   
   if (!allowedTypes.includes(file.type)) {
     return { 
       valid: false, 
-      error: "Only JPEG, PNG, and WebP images are allowed" 
+      error: "Only JPEG, JPG, PNG, WebP, and SVG images are allowed" 
     };
   }
   

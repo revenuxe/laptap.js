@@ -306,9 +306,12 @@ const Sell = () => {
                     {brand.logo_url && (
                       <div className="aspect-square mb-2 flex items-center justify-center overflow-hidden rounded-md bg-muted">
                         <img 
-                          src={supabase.storage.from('brand-logos').getPublicUrl(brand.logo_url).data.publicUrl}
+                          src={brand.logo_url.startsWith('http') ? brand.logo_url : supabase.storage.from('brand-logos').getPublicUrl(brand.logo_url).data.publicUrl}
                           alt={brand.name}
                           className="h-full w-full object-contain"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
                         />
                       </div>
                     )}
@@ -333,9 +336,12 @@ const Sell = () => {
                     {series.image_url && (
                       <div className="aspect-square mb-3 overflow-hidden rounded-md bg-muted">
                         <img 
-                          src={supabase.storage.from('series-images').getPublicUrl(series.image_url).data.publicUrl}
+                          src={series.image_url.startsWith('http') ? series.image_url : supabase.storage.from('series-images').getPublicUrl(series.image_url).data.publicUrl}
                           alt={series.name}
                           className="h-full w-full object-cover"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
                         />
                       </div>
                     )}
@@ -360,9 +366,12 @@ const Sell = () => {
                     {model.thumbnail_url && (
                       <div className="aspect-square mb-3 overflow-hidden rounded-md bg-muted">
                         <img 
-                          src={supabase.storage.from('model-thumbnails').getPublicUrl(model.thumbnail_url).data.publicUrl}
+                          src={model.thumbnail_url.startsWith('http') ? model.thumbnail_url : supabase.storage.from('model-thumbnails').getPublicUrl(model.thumbnail_url).data.publicUrl}
                           alt={model.name}
                           className="h-full w-full object-cover"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
                         />
                       </div>
                     )}
