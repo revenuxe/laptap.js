@@ -24,9 +24,12 @@ export function DeviceSearch() {
   }, []);
 
   async function loadBrands() {
-    const result = await supabase.from('brands').select('id, name, logo_url').eq('category', 'laptop') as any;
-    if (result.data) {
-      setBrands(result.data);
+    const { data } = await (supabase
+      .from('brands')
+      .select('id, name, logo_url') as any);
+    
+    if (data) {
+      setBrands(data as Brand[]);
     }
   }
 
