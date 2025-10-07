@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { seriesSchema, validateImageFile } from "@/lib/validationSchemas";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -148,6 +149,22 @@ export function SeriesManager() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate inputs
+    const validation = seriesSchema.safeParse({ name, brandId });
+    if (!validation.success) {
+      const errors = validation.error.errors.map(e => e.message).join(', ');
+      toast.error(errors);
+      return;
+    }
+
+    // Validate image file
+    const fileValidation = validateImageFile(imageFile);
+    if (!fileValidation.valid) {
+      toast.error(fileValidation.error);
+      return;
+    }
+    
     if (editingSeries) {
       updateMutation.mutate();
     } else {

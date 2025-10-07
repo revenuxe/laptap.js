@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { modelSchema, validateImageFile } from "@/lib/validationSchemas";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -196,6 +197,28 @@ export function ModelsManager() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate inputs
+    const validation = modelSchema.safeParse({ 
+      name, 
+      seriesId, 
+      basePrice, 
+      description, 
+      sku 
+    });
+    if (!validation.success) {
+      const errors = validation.error.errors.map(e => e.message).join(', ');
+      toast.error(errors);
+      return;
+    }
+
+    // Validate image file
+    const fileValidation = validateImageFile(thumbnailFile);
+    if (!fileValidation.valid) {
+      toast.error(fileValidation.error);
+      return;
+    }
+    
     if (editingModel) {
       updateMutation.mutate();
     } else {

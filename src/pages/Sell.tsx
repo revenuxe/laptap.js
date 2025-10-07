@@ -4,6 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Database } from "@/integrations/supabase/types";
 import { calculatePrice } from "@/utils/pricingEngine";
+import { sellRequestSchema } from "@/lib/validationSchemas";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -211,8 +212,11 @@ const Sell = () => {
       return;
     }
 
-    if (!address || !pincode) {
-      toast.error('Please provide address and pincode');
+    // Validate inputs
+    const validation = sellRequestSchema.safeParse({ address, pincode });
+    if (!validation.success) {
+      const errors = validation.error.errors.map(e => e.message).join(', ');
+      toast.error(errors);
       return;
     }
 
