@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Database } from "@/integrations/supabase/types";
-import { calculatePrice } from "@/utils/pricingEngine";
+import { calculateDynamicPrice, getConditionLabel } from "@/utils/dynamicPricingEngine";
 import { sellRequestSchema } from "@/lib/validationSchemas";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -14,8 +14,10 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Laptop, Monitor, ChevronRight, Loader2 } from "lucide-react";
+import { Laptop, Monitor, ChevronRight, Loader2, TrendingUp, Zap } from "lucide-react";
 import { toast } from "sonner";
+import { PriceBreakdown } from "@/components/PriceBreakdown";
+import { CountdownTimer } from "@/components/CountdownTimer";
 
 type Step = "category" | "brand" | "series" | "model" | "switch_on" | "config" | "additional" | "functionality" | "screen_condition" | "age" | "physical_condition" | "accessories" | "price" | "confirm";
 
@@ -59,9 +61,11 @@ const Sell = () => {
     has_graphics_card: "no",
   });
   
-  const [pricingRules, setPricingRules] = useState<any>(null);
   const [estimatedPrice, setEstimatedPrice] = useState(0);
+  const [displayedPrice, setDisplayedPrice] = useState(0);
+  const [marketingBonus, setMarketingBonus] = useState(0);
   const [priceBreakdown, setPriceBreakdown] = useState<any>(null);
+  const [offerExpired, setOfferExpired] = useState(false);
   
   const [address, setAddress] = useState("");
   const [pincode, setPincode] = useState("");
@@ -87,10 +91,12 @@ const Sell = () => {
     }
   }, [selectedSeries]);
 
-  // Fetch pricing rules
+  // Real-time price calculation as user makes selections
   useEffect(() => {
-    fetchPricingRules();
-  }, []);
+    if (selectedModel && selectedBrand) {
+      calculateRealTimePrice();
+    }
+  }, [selectedModel, ageMonths, physicalCondition, screenCondition, functionalityIssues, config]);
 
   const fetchBrands = async () => {
     const { data: categoryData } = await supabase
@@ -146,18 +152,38 @@ const Sell = () => {
     }
   };
 
-  const fetchPricingRules = async () => {
-    const { data, error } = await supabase
-      .from('pricing_rules')
-      .select('*')
-      .eq('is_global', true)
+  const calculateRealTimePrice = async () => {
+    if (!selectedModel || !selectedBrand) return;
+
+    // Get brand name
+    const { data: brandData } = await supabase
+      .from('brands')
+      .select('name')
+      .eq('id', selectedBrand)
       .single();
 
-    if (error) {
-      console.error('Failed to load pricing rules:', error);
-    } else {
-      setPricingRules(data);
-    }
+    if (!brandData) return;
+
+    const result = calculateDynamicPrice(
+      parseFloat(selectedModel.base_price),
+      brandData.name,
+      ageMonths,
+      physicalCondition,
+      screenCondition,
+      functionalityIssues,
+      {
+        cpu: config.cpu,
+        ram: config.ram,
+        storage: config.storage,
+        gpu: config.has_graphics_card === 'yes' ? 'dedicated' : 'integrated',
+        screen_size: config.screen_size,
+      }
+    );
+
+    setEstimatedPrice(result.finalPriceActual);
+    setDisplayedPrice(result.displayedPrice);
+    setMarketingBonus(result.marketingBonus);
+    setPriceBreakdown(result.breakdown);
   };
 
   const handleCategorySelect = (selected: "laptop" | "desktop") => {
@@ -186,37 +212,14 @@ const Sell = () => {
     window.scrollTo(0, 0);
   };
 
-  const handleCalculatePrice = () => {
-    if (!selectedModel || !pricingRules) {
-      toast.error('Missing model or pricing data');
+  const handleCalculatePrice = async () => {
+    if (!selectedModel || !selectedBrand) {
+      toast.error('Missing model or brand data');
       return;
     }
 
-    // Determine overall condition based on functionality, screen, and physical condition
-    let overallCondition = "good";
-    if (functionalityIssues.length > 2 || physicalCondition === "below_average") {
-      overallCondition = "faulty";
-    } else if (functionalityIssues.length > 0 || physicalCondition === "average" || screenCondition === "damaged") {
-      overallCondition = "average";
-    } else if (screenCondition === "average") {
-      overallCondition = "good";
-    } else if (physicalCondition === "good" && screenCondition === "good") {
-      overallCondition = "excellent";
-    } else if (physicalCondition === "flawless" && screenCondition === "good") {
-      overallCondition = "like_new";
-    }
-
-    const calculation = calculatePrice(
-      parseFloat(selectedModel.base_price),
-      ageMonths,
-      overallCondition,
-      accessories,
-      config,
-      pricingRules
-    );
-
-    setEstimatedPrice(calculation.finalPrice);
-    setPriceBreakdown(calculation.breakdown);
+    await calculateRealTimePrice();
+    setOfferExpired(false);
     setStep("price");
     window.scrollTo(0, 0);
   };
@@ -494,8 +497,13 @@ const Sell = () => {
                       <SelectItem value="i5">Intel Core i5</SelectItem>
                       <SelectItem value="i7">Intel Core i7</SelectItem>
                       <SelectItem value="i9">Intel Core i9</SelectItem>
+                      <SelectItem value="ryzen_3">AMD Ryzen 3</SelectItem>
+                      <SelectItem value="ryzen_5">AMD Ryzen 5</SelectItem>
+                      <SelectItem value="ryzen_7">AMD Ryzen 7</SelectItem>
+                      <SelectItem value="ryzen_9">AMD Ryzen 9</SelectItem>
                       <SelectItem value="m1">Apple M1</SelectItem>
                       <SelectItem value="m2">Apple M2</SelectItem>
+                      <SelectItem value="m3">Apple M3</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -510,6 +518,7 @@ const Sell = () => {
                       <SelectItem value="8gb">8GB</SelectItem>
                       <SelectItem value="16gb">16GB</SelectItem>
                       <SelectItem value="32gb">32GB</SelectItem>
+                      <SelectItem value="64gb">64GB</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -520,9 +529,11 @@ const Sell = () => {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-background z-50">
+                      <SelectItem value="128_ssd">128GB SSD</SelectItem>
                       <SelectItem value="256_ssd">256GB SSD</SelectItem>
                       <SelectItem value="512_ssd">512GB SSD</SelectItem>
                       <SelectItem value="1tb_ssd">1TB SSD</SelectItem>
+                      <SelectItem value="2tb_ssd">2TB SSD</SelectItem>
                       <SelectItem value="500_hdd">500GB HDD</SelectItem>
                       <SelectItem value="1tb_hdd">1TB HDD</SelectItem>
                     </SelectContent>
@@ -613,15 +624,15 @@ const Sell = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
                   { id: "keyboard", label: "Keyboard not working; key(s) missing/not working" },
-                  { id: "cd_dvd", label: "CD/DVD Drive not working" },
-                  { id: "touchpad", label: "Touchpad not working; Left/Right click faulty" },
+                  { id: "trackpad", label: "Trackpad not working; Left/Right click faulty" },
                   { id: "battery", label: "Battery dead, backup < 60 mins, health < 80%, cycle count > 500" },
                   { id: "ports", label: "USB/HDMI ports not working" },
                   { id: "wifi", label: "WiFi/Bluetooth not working" },
                   { id: "speakers", label: "Speakers/Audio not working" },
                   { id: "webcam", label: "Webcam/Microphone not working" },
                   { id: "overheating", label: "Device overheating issues" },
-                  { id: "display", label: "Display flickering or dim" }
+                  { id: "display_flickering", label: "Display flickering or dim" },
+                  { id: "hinge", label: "Hinge damage or loose" }
                 ].map((issue) => (
                   <Card
                     key={issue.id}
@@ -652,6 +663,16 @@ const Sell = () => {
                 <p className="text-muted-foreground">The better condition your device is in, we will pay you more</p>
               </div>
               <RadioGroup value={screenCondition} onValueChange={setScreenCondition}>
+                <Card className={`p-6 cursor-pointer transition-all ${screenCondition === "flawless" ? 'border-primary' : ''}`}>
+                  <div className="flex items-center space-x-3">
+                    <RadioGroupItem value="flawless" id="screen_flawless" />
+                    <div className="flex-1">
+                      <Label htmlFor="screen_flawless" className="text-lg cursor-pointer block font-semibold mb-1">Flawless</Label>
+                      <p className="text-sm text-muted-foreground">No scratches on screen</p>
+                      <p className="text-sm text-muted-foreground">No Lines/Dents/Discoloration/Cracks</p>
+                    </div>
+                  </div>
+                </Card>
                 <Card className={`p-6 cursor-pointer transition-all ${screenCondition === "good" ? 'border-primary' : ''}`}>
                   <div className="flex items-center space-x-3">
                     <RadioGroupItem value="good" id="screen_good" />
@@ -702,19 +723,25 @@ const Sell = () => {
                 <Card className={`p-6 cursor-pointer transition-all ${ageMonths <= 12 ? 'border-primary' : ''}`}>
                   <div className="flex items-center space-x-3">
                     <RadioGroupItem value="6" id="age_1" />
-                    <Label htmlFor="age_1" className="text-lg cursor-pointer flex-1">Less than 1 year (in warranty)</Label>
+                    <Label htmlFor="age_1" className="text-lg cursor-pointer flex-1">Less than 1 year</Label>
                   </div>
                 </Card>
-                <Card className={`p-6 cursor-pointer transition-all ${ageMonths > 12 && ageMonths <= 36 ? 'border-primary' : ''}`}>
+                <Card className={`p-6 cursor-pointer transition-all ${ageMonths > 12 && ageMonths <= 24 ? 'border-primary' : ''}`}>
                   <div className="flex items-center space-x-3">
-                    <RadioGroupItem value="24" id="age_2" />
-                    <Label htmlFor="age_2" className="text-lg cursor-pointer flex-1">Between 1 and 3 years</Label>
+                    <RadioGroupItem value="18" id="age_2" />
+                    <Label htmlFor="age_2" className="text-lg cursor-pointer flex-1">1-2 years</Label>
+                  </div>
+                </Card>
+                <Card className={`p-6 cursor-pointer transition-all ${ageMonths > 24 && ageMonths <= 36 ? 'border-primary' : ''}`}>
+                  <div className="flex items-center space-x-3">
+                    <RadioGroupItem value="30" id="age_3" />
+                    <Label htmlFor="age_3" className="text-lg cursor-pointer flex-1">2-3 years</Label>
                   </div>
                 </Card>
                 <Card className={`p-6 cursor-pointer transition-all ${ageMonths > 36 ? 'border-primary' : ''}`}>
                   <div className="flex items-center space-x-3">
-                    <RadioGroupItem value="48" id="age_3" />
-                    <Label htmlFor="age_3" className="text-lg cursor-pointer flex-1">More than 3 years</Label>
+                    <RadioGroupItem value="48" id="age_4" />
+                    <Label htmlFor="age_4" className="text-lg cursor-pointer flex-1">More than 3 years</Label>
                   </div>
                 </Card>
               </RadioGroup>
@@ -791,6 +818,7 @@ const Sell = () => {
               <div className="text-center mb-6">
                 <h2 className="text-2xl font-semibold mb-2">Available Accessories</h2>
                 <p className="text-muted-foreground">Select all accessories you have with the device</p>
+                <p className="text-xs text-muted-foreground mt-2 italic">Note: Accessories are tracked for verification but do not affect the price</p>
               </div>
               <div className="space-y-3">
                 {Object.keys(accessories).map((key) => (
@@ -818,32 +846,107 @@ const Sell = () => {
             </Card>
           )}
 
-          {/* Price Display */}
+          {/* Price Display with Marketing */}
           {step === "price" && (
-            <Card className="p-8 max-w-md mx-auto">
-              <h2 className="text-xl font-semibold mb-4 text-center">Your Final Quote</h2>
-              
-              <div className="my-8 sm:my-12 text-center">
-                <div className="inline-block rounded-2xl sm:rounded-3xl bg-gradient-to-br from-primary/20 to-primary/5 px-6 py-6 sm:px-12 sm:py-10 border-2 border-primary/20">
-                  <p className="text-xs sm:text-sm text-muted-foreground mb-2">You will receive</p>
-                  <p className="text-3xl sm:text-4xl md:text-6xl font-bold text-primary break-words">₹{estimatedPrice.toLocaleString()}</p>
-                  <p className="text-xs sm:text-sm text-muted-foreground mt-2">Final price for your device</p>
+            <div className="max-w-3xl mx-auto space-y-6">
+              {/* Marketing Banner */}
+              {!offerExpired && (
+                <Card className="p-6 bg-gradient-to-br from-primary/10 to-primary/5 border-primary/30">
+                  <div className="flex items-center justify-between gap-4 flex-wrap">
+                    <div className="flex items-center gap-3">
+                      <Zap className="h-6 w-6 text-primary animate-pulse" />
+                      <div>
+                        <p className="font-semibold text-lg">Limited Time Offer!</p>
+                        <p className="text-sm text-muted-foreground">This price is valid for:</p>
+                      </div>
+                    </div>
+                    <CountdownTimer 
+                      durationMinutes={15} 
+                      onExpire={() => {
+                        setOfferExpired(true);
+                        setDisplayedPrice(estimatedPrice);
+                      }}
+                    />
+                  </div>
+                </Card>
+              )}
+
+              {/* Main Price Display */}
+              <Card className="p-8 text-center">
+                <h2 className="text-2xl font-semibold mb-6">Your Final Quote</h2>
+                
+                {/* Displayed Price (with bonus) */}
+                {!offerExpired && (
+                  <div className="mb-6">
+                    <div className="inline-block rounded-3xl bg-gradient-to-br from-primary/20 to-primary/5 px-12 py-10 border-2 border-primary/20">
+                      <p className="text-sm text-muted-foreground mb-2">Special Offer Price</p>
+                      <p className="text-5xl md:text-6xl font-bold text-primary">₹{displayedPrice.toLocaleString()}</p>
+                    </div>
+                    
+                    {/* Marketing Message */}
+                    <div className="mt-6 p-4 bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg">
+                      <div className="flex items-center justify-center gap-2 mb-2">
+                        <TrendingUp className="h-5 w-5 text-green-600" />
+                        <p className="font-semibold text-green-700 dark:text-green-400">You're Getting the Best Deal!</p>
+                      </div>
+                      <p className="text-sm text-green-700 dark:text-green-400">
+                        That's <span className="font-bold">₹{marketingBonus.toLocaleString()} more</span> than what Cashify and other buyers typically offer!
+                      </p>
+                      <p className="text-xs text-green-600 dark:text-green-500 mt-1">
+                        Our competitive analysis shows this is {Math.round((marketingBonus / displayedPrice) * 100)}% above market average
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Expired - Show Actual Price */}
+                {offerExpired && (
+                  <div className="mb-6">
+                    <div className="inline-block rounded-3xl bg-muted px-12 py-10 border-2">
+                      <p className="text-sm text-muted-foreground mb-2">Standard Price</p>
+                      <p className="text-5xl md:text-6xl font-bold">₹{estimatedPrice.toLocaleString()}</p>
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-4">
+                      The limited-time bonus has expired
+                    </p>
+                  </div>
+                )}
+
+                {/* Actual Payment Info */}
+                <div className="p-4 bg-muted/30 rounded-lg mb-6">
+                  <p className="text-sm font-semibold mb-2">Payment Details</p>
+                  <div className="flex justify-between items-center text-sm">
+                    <span>Amount you'll receive:</span>
+                    <span className="font-bold text-lg">₹{estimatedPrice.toLocaleString()}</span>
+                  </div>
+                  {!offerExpired && marketingBonus > 0 && (
+                    <div className="flex justify-between items-center text-xs text-muted-foreground mt-1">
+                      <span>Marketing bonus displayed:</span>
+                      <span>+₹{marketingBonus.toLocaleString()}</span>
+                    </div>
+                  )}
                 </div>
-              </div>
 
-              <div className="space-y-3 mb-6 p-4 bg-muted/30 rounded-lg">
-                <p className="text-sm text-center text-muted-foreground">
-                  This is an estimated quote. Final price will be confirmed after physical inspection of the device.
+                <Button variant="cta" className="w-full mb-3" onClick={handleConfirmPrice}>
+                  Accept Offer & Continue <ChevronRight className="ml-2 h-4 w-4" />
+                </Button>
+                <Button variant="ghost" className="w-full" onClick={() => setStep("accessories")}>
+                  Modify Details
+                </Button>
+              </Card>
+
+              {/* Price Breakdown */}
+              {priceBreakdown && (
+                <PriceBreakdown breakdown={priceBreakdown} />
+              )}
+
+              {/* Disclaimer */}
+              <Card className="p-4 bg-muted/20">
+                <p className="text-xs text-center text-muted-foreground">
+                  * This is an estimated quote based on the information provided. The final price will be confirmed after physical inspection of your device. Our team will verify the device condition, specifications, and functionality before confirming payment.
                 </p>
-              </div>
-
-              <Button variant="cta" className="w-full" onClick={handleConfirmPrice}>
-                Accept & Continue <ChevronRight className="ml-2 h-4 w-4" />
-              </Button>
-              <Button variant="ghost" className="w-full mt-2" onClick={() => setStep("accessories")}>
-                Go Back
-              </Button>
-            </Card>
+              </Card>
+            </div>
           )}
 
           {/* Confirmation & Address */}
