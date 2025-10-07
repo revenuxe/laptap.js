@@ -158,6 +158,7 @@ const Sell = () => {
   const handleCategorySelect = (selected: "laptop" | "desktop") => {
     setCategory(selected);
     setStep("brand");
+    window.scrollTo(0, 0);
   };
 
   const handleBrandSelect = (brandId: string) => {
@@ -165,17 +166,20 @@ const Sell = () => {
     setSelectedSeries("");
     setSelectedModel(null);
     setStep("series");
+    window.scrollTo(0, 0);
   };
 
   const handleSeriesSelect = (seriesId: string) => {
     setSelectedSeries(seriesId);
     setSelectedModel(null);
     setStep("model");
+    window.scrollTo(0, 0);
   };
 
   const handleModelSelect = (model: any) => {
     setSelectedModel(model);
     setStep("details");
+    window.scrollTo(0, 0);
   };
 
   const handleCalculatePrice = () => {
@@ -196,6 +200,7 @@ const Sell = () => {
     setEstimatedPrice(calculation.finalPrice);
     setPriceBreakdown(calculation.breakdown);
     setStep("price");
+    window.scrollTo(0, 0);
   };
 
   const handleConfirmPrice = () => {
@@ -204,6 +209,7 @@ const Sell = () => {
       return;
     }
     setStep("confirm");
+    window.scrollTo(0, 0);
   };
 
   const handleSubmitRequest = async () => {
