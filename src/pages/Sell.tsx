@@ -294,10 +294,19 @@ const Sell = () => {
                 {brands.map((brand) => (
                   <Card
                     key={brand.id}
-                    className="cursor-pointer p-6 hover:border-primary hover:shadow-lg transition-all text-center"
+                    className="cursor-pointer p-4 hover:border-primary hover:shadow-lg transition-all"
                     onClick={() => handleBrandSelect(brand.id)}
                   >
-                    <h3 className="font-semibold">{brand.name}</h3>
+                    {brand.logo_url && (
+                      <div className="aspect-square mb-2 flex items-center justify-center overflow-hidden rounded-md bg-muted">
+                        <img 
+                          src={supabase.storage.from('brand-logos').getPublicUrl(brand.logo_url).data.publicUrl}
+                          alt={brand.name}
+                          className="h-full w-full object-contain"
+                        />
+                      </div>
+                    )}
+                    <h3 className="font-semibold text-center text-sm">{brand.name}</h3>
                   </Card>
                 ))}
               </div>
@@ -308,14 +317,23 @@ const Sell = () => {
           {step === "series" && (
             <div className="space-y-6">
               <h2 className="text-xl font-semibold text-center">Select Series</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-4">
                 {seriesList.map((series) => (
                   <Card
                     key={series.id}
-                    className="cursor-pointer p-6 hover:border-primary hover:shadow-lg transition-all"
+                    className="cursor-pointer p-4 hover:border-primary hover:shadow-lg transition-all"
                     onClick={() => handleSeriesSelect(series.id)}
                   >
-                    <h3 className="font-semibold text-center">{series.name}</h3>
+                    {series.image_url && (
+                      <div className="aspect-square mb-3 overflow-hidden rounded-md bg-muted">
+                        <img 
+                          src={supabase.storage.from('series-images').getPublicUrl(series.image_url).data.publicUrl}
+                          alt={series.name}
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                    )}
+                    <h3 className="font-semibold text-center text-sm">{series.name}</h3>
                   </Card>
                 ))}
               </div>
@@ -326,20 +344,24 @@ const Sell = () => {
           {step === "model" && (
             <div className="space-y-6">
               <h2 className="text-xl font-semibold text-center">Select Model</h2>
-              <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
                 {models.map((model) => (
                   <Card
                     key={model.id}
-                    className="cursor-pointer p-6 hover:border-primary hover:shadow-lg transition-all"
+                    className="cursor-pointer p-4 hover:border-primary hover:shadow-lg transition-all"
                     onClick={() => handleModelSelect(model)}
                   >
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <h3 className="font-semibold">{model.name}</h3>
-                        <p className="text-sm text-muted-foreground">Base Price: ₹{parseFloat(model.base_price).toLocaleString()}</p>
+                    {model.thumbnail_url && (
+                      <div className="aspect-square mb-3 overflow-hidden rounded-md bg-muted">
+                        <img 
+                          src={supabase.storage.from('model-thumbnails').getPublicUrl(model.thumbnail_url).data.publicUrl}
+                          alt={model.name}
+                          className="h-full w-full object-cover"
+                        />
                       </div>
-                      <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                    </div>
+                    )}
+                    <h3 className="font-semibold text-sm mb-1">{model.name}</h3>
+                    <p className="text-xs text-muted-foreground">₹{parseFloat(model.base_price).toLocaleString()}</p>
                   </Card>
                 ))}
               </div>
