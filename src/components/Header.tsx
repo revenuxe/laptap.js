@@ -28,6 +28,12 @@ const Header = () => {
           <Link to="/sell" className="text-sm font-medium hover:text-primary transition-colors">
             Sell Device
           </Link>
+          <Link to="/about" className="text-sm font-medium hover:text-primary transition-colors">
+            About
+          </Link>
+          <Link to="/blog" className="text-sm font-medium hover:text-primary transition-colors">
+            Blog
+          </Link>
           {user && <Link to="/dashboard" className="text-sm font-medium hover:text-primary transition-colors">
               Dashboard
             </Link>}

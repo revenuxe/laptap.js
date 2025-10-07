@@ -1,3 +1,12 @@
+# Robots.txt for Laptap - SEO Optimized
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /auth/
+Disallow: /track/
+
+# Specific bots
 User-agent: Googlebot
 Allow: /
 
@@ -10,5 +19,5 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
-Allow: /
+# Sitemap
+Sitemap: https://laptap.in/sitemap.xml

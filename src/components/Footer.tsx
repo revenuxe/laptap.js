@@ -25,8 +25,8 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/warranty" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Warranty Policy
+                <Link to="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Blog
                 </Link>
               </li>
             </ul>
@@ -45,7 +45,11 @@ const Footer = () => {
                   My Dashboard
                 </Link>
               </li>
-              
+              <li>
+                <Link to="/track/order" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Track Order
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -60,11 +64,6 @@ const Footer = () => {
               <li>
                 <Link to="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
                   Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link to="/refund" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Refund Policy
                 </Link>
               </li>
             </ul>

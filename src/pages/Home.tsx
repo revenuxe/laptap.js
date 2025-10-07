@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
@@ -9,18 +10,55 @@ import Footer from "@/components/Footer";
 
 const Home = () => {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1">
-        <Hero />
-        <Stats />
-        <Features />
-        <HowItWorks />
-        <ProcessSteps />
-        <TrustSignals />
-      </main>
-      <Footer />
-    </div>
+    <>
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "How do I sell my laptop to Laptap?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Simply select your device, get an instant quote, schedule a pickup, and receive instant payment after verification. Our technicians will come to your doorstep for free pickup."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How quickly will I receive payment?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "You receive instant payment immediately after our technicians verify your device during pickup. We support multiple payment methods including UPI, bank transfer, and digital wallets."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is doorstep pickup available?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes, we offer free same-day doorstep pickup across Bangalore. Our verified technicians will come to your location at your preferred time."
+                }
+              }
+            ]
+          })}
+        </script>
+      </Helmet>
+
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1">
+          <Hero />
+          <Stats />
+          <Features />
+          <HowItWorks />
+          <ProcessSteps />
+          <TrustSignals />
+        </main>
+        <Footer />
+      </div>
+    </>
   );
 };
 
