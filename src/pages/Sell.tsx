@@ -53,6 +53,7 @@ const Sell = () => {
   });
   const [config, setConfig] = useState({
     cpu: "i5",
+    generation: "",
     ram: "8gb",
     storage: "256_ssd",
     gpu: "integrated",
@@ -68,6 +69,35 @@ const Sell = () => {
   
   const [address, setAddress] = useState("");
   const [pincode, setPincode] = useState("");
+
+  // Restore form state from sessionStorage after auth redirect
+  useEffect(() => {
+    const savedState = sessionStorage.getItem('sellFormState');
+    if (savedState && user) {
+      try {
+        const state = JSON.parse(savedState);
+        setCategory(state.category);
+        setSelectedBrand(state.selectedBrand);
+        setSelectedSeries(state.selectedSeries);
+        setSelectedModel(state.selectedModel);
+        setSwitchesOn(state.switchesOn);
+        setAgeMonths(state.ageMonths);
+        setScreenCondition(state.screenCondition);
+        setPhysicalCondition(state.physicalCondition);
+        setFunctionalityIssues(state.functionalityIssues);
+        setAccessories(state.accessories);
+        setConfig(state.config);
+        setEstimatedPrice(state.estimatedPrice);
+        setDisplayedPrice(state.displayedPrice);
+        setMarketingBonus(state.marketingBonus);
+        setStep('confirm'); // Go directly to confirm step
+        sessionStorage.removeItem('sellFormState'); // Clear saved state
+        toast.success('Welcome back! Please complete your booking.');
+      } catch (e) {
+        console.error('Failed to restore form state:', e);
+      }
+    }
+  }, [user]);
 
   // Fetch brands when category is selected
   useEffect(() => {
@@ -225,6 +255,24 @@ const Sell = () => {
 
   const handleConfirmPrice = () => {
     if (!user) {
+      // Save form state before redirecting to auth
+      const formState = {
+        category,
+        selectedBrand,
+        selectedSeries,
+        selectedModel,
+        switchesOn,
+        ageMonths,
+        screenCondition,
+        physicalCondition,
+        functionalityIssues,
+        accessories,
+        config,
+        estimatedPrice,
+        displayedPrice,
+        marketingBonus,
+      };
+      sessionStorage.setItem('sellFormState', JSON.stringify(formState));
       navigate(`/auth?redirect=/sell`);
       return;
     }
@@ -487,7 +535,7 @@ const Sell = () => {
               <div className="space-y-4 md:space-y-6">
                 <div>
                   <Label className="text-base md:text-lg font-semibold mb-2 md:mb-3 block">Processor</Label>
-                  <Select value={config.cpu} onValueChange={(v) => setConfig({ ...config, cpu: v })}>
+                  <Select value={config.cpu} onValueChange={(v) => setConfig({ ...config, cpu: v, generation: "" })}>
                     <SelectTrigger className="bg-background h-12 md:h-14 text-sm md:text-lg">
                       <SelectValue />
                     </SelectTrigger>
@@ -503,6 +551,53 @@ const Sell = () => {
                       <SelectItem value="m1">Apple M1</SelectItem>
                       <SelectItem value="m2">Apple M2</SelectItem>
                       <SelectItem value="m3">Apple M3</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label className="text-base md:text-lg font-semibold mb-2 md:mb-3 block">Generation</Label>
+                  <Select value={config.generation} onValueChange={(v) => setConfig({ ...config, generation: v })}>
+                    <SelectTrigger className="bg-background h-12 md:h-14 text-sm md:text-lg">
+                      <SelectValue placeholder="Select generation" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background z-50">
+                      {config.cpu.startsWith('i') && (
+                        <>
+                          <SelectItem value="1st">1st Generation</SelectItem>
+                          <SelectItem value="2nd">2nd Generation</SelectItem>
+                          <SelectItem value="3rd">3rd Generation</SelectItem>
+                          <SelectItem value="4th">4th Generation</SelectItem>
+                          <SelectItem value="5th">5th Generation</SelectItem>
+                          <SelectItem value="6th">6th Generation</SelectItem>
+                          <SelectItem value="7th">7th Generation</SelectItem>
+                          <SelectItem value="8th">8th Generation</SelectItem>
+                          <SelectItem value="9th">9th Generation</SelectItem>
+                          <SelectItem value="10th">10th Generation</SelectItem>
+                          <SelectItem value="11th">11th Generation</SelectItem>
+                          <SelectItem value="12th">12th Generation</SelectItem>
+                          <SelectItem value="13th">13th Generation</SelectItem>
+                          <SelectItem value="14th">14th Generation</SelectItem>
+                        </>
+                      )}
+                      {config.cpu.startsWith('ryzen') && (
+                        <>
+                          <SelectItem value="2000">2000 Series</SelectItem>
+                          <SelectItem value="3000">3000 Series</SelectItem>
+                          <SelectItem value="4000">4000 Series</SelectItem>
+                          <SelectItem value="5000">5000 Series</SelectItem>
+                          <SelectItem value="6000">6000 Series</SelectItem>
+                          <SelectItem value="7000">7000 Series</SelectItem>
+                          <SelectItem value="8000">8000 Series</SelectItem>
+                        </>
+                      )}
+                      {config.cpu.startsWith('m') && (
+                        <>
+                          <SelectItem value="base">Base</SelectItem>
+                          <SelectItem value="pro">Pro</SelectItem>
+                          <SelectItem value="max">Max</SelectItem>
+                          <SelectItem value="ultra">Ultra</SelectItem>
+                        </>
+                      )}
                     </SelectContent>
                   </Select>
                 </div>
