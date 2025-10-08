@@ -372,13 +372,6 @@ export type Database = {
             referencedRelation: "models"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "sell_requests_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
         ]
       }
       series: {

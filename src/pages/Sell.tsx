@@ -44,7 +44,7 @@ const Sell = () => {
   const [switchesOn, setSwitchesOn] = useState<boolean | null>(null);
   const [ageMonths, setAgeMonths] = useState<number>(6);
   const [screenCondition, setScreenCondition] = useState("good");
-  const [physicalCondition, setPhysicalCondition] = useState("good");
+  const [physicalCondition, setPhysicalCondition] = useState<"like_new" | "excellent" | "good" | "average" | "faulty">("good");
   const [functionalityIssues, setFunctionalityIssues] = useState<string[]>([]);
   const [accessories, setAccessories] = useState({
     box: false,
@@ -319,35 +319,49 @@ const Sell = () => {
 
     setLoading(true);
 
-    const { data, error } = await supabase
-      .from('sell_requests')
-      .insert({
-        user_id: user.id,
-        model_id: selectedModel.id,
-        age_months: ageMonths,
-        condition: physicalCondition as Database['public']['Enums']['device_condition'],
-        accessories: accessories as any,
-        config: {
-          ...config,
-          screen_condition: screenCondition,
-          functionality_issues: functionalityIssues,
-          switches_on: switchesOn,
-        } as any,
-        estimated_price: estimatedPrice,
-        address,
-        pincode,
-      })
-      .select()
-      .single();
+    try {
+      const { data, error } = await supabase
+        .from('sell_requests')
+        .insert({
+          user_id: user.id,
+          model_id: selectedModel.id,
+          age_months: ageMonths,
+          condition: physicalCondition as Database['public']['Enums']['device_condition'],
+          accessories: accessories as any,
+          config: {
+            ...config,
+            screen_condition: screenCondition,
+            functionality_issues: functionalityIssues,
+            switches_on: switchesOn,
+          } as any,
+          estimated_price: estimatedPrice,
+          address,
+          pincode,
+        })
+        .select()
+        .single();
 
-    setLoading(false);
+      setLoading(false);
 
-    if (error) {
-      toast.error('Failed to create request');
-      console.error(error);
-    } else {
+      if (error) {
+        console.error('Supabase error:', error);
+        toast.error(error.message || 'Failed to create request. Please try again.');
+        return;
+      }
+
+      if (!data) {
+        toast.error('Failed to create request. Please try again.');
+        return;
+      }
+
+      // Clear session storage after successful submission
+      sessionStorage.removeItem('sellFormState');
       toast.success('Request created successfully!');
       navigate(`/track/${data.id}`);
+    } catch (err) {
+      console.error('Unexpected error:', err);
+      toast.error('An unexpected error occurred. Please try again.');
+      setLoading(false);
     }
   };
 
@@ -833,12 +847,22 @@ const Sell = () => {
                 <p className="text-sm md:text-base text-muted-foreground">The better condition your device is in, we will pay you more</p>
               </div>
               <RadioGroup value={screenCondition} onValueChange={setScreenCondition}>
-                <Card className={`p-4 md:p-6 cursor-pointer transition-all ${screenCondition === "flawless" ? 'border-primary' : ''}`}>
+                <Card className={`p-4 md:p-6 cursor-pointer transition-all ${screenCondition === "like_new" ? 'border-primary' : ''}`}>
                   <div className="flex items-start space-x-3">
-                    <RadioGroupItem value="flawless" id="screen_flawless" className="mt-1 flex-shrink-0" />
+                    <RadioGroupItem value="like_new" id="screen_like_new" className="mt-1 flex-shrink-0" />
                     <div className="flex-1 min-w-0">
-                      <Label htmlFor="screen_flawless" className="text-base md:text-lg cursor-pointer block font-semibold mb-1">Flawless</Label>
+                      <Label htmlFor="screen_like_new" className="text-base md:text-lg cursor-pointer block font-semibold mb-1">Like New</Label>
                       <p className="text-xs md:text-sm text-muted-foreground">No scratches on screen</p>
+                      <p className="text-xs md:text-sm text-muted-foreground">No Lines/Dents/Discoloration/Cracks</p>
+                    </div>
+                  </div>
+                </Card>
+                <Card className={`p-4 md:p-6 cursor-pointer transition-all ${screenCondition === "excellent" ? 'border-primary' : ''}`}>
+                  <div className="flex items-start space-x-3">
+                    <RadioGroupItem value="excellent" id="screen_excellent" className="mt-1 flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <Label htmlFor="screen_excellent" className="text-base md:text-lg cursor-pointer block font-semibold mb-1">Excellent</Label>
+                      <p className="text-xs md:text-sm text-muted-foreground">Very minimal scratches if any</p>
                       <p className="text-xs md:text-sm text-muted-foreground">No Lines/Dents/Discoloration/Cracks</p>
                     </div>
                   </div>
@@ -864,11 +888,11 @@ const Sell = () => {
                     </div>
                   </div>
                 </Card>
-                <Card className={`p-4 md:p-6 cursor-pointer transition-all ${screenCondition === "damaged" ? 'border-primary' : ''}`}>
+                <Card className={`p-4 md:p-6 cursor-pointer transition-all ${screenCondition === "faulty" ? 'border-primary' : ''}`}>
                   <div className="flex items-start space-x-3">
-                    <RadioGroupItem value="damaged" id="screen_damaged" className="mt-1 flex-shrink-0" />
+                    <RadioGroupItem value="faulty" id="screen_faulty" className="mt-1 flex-shrink-0" />
                     <div className="flex-1 min-w-0">
-                      <Label htmlFor="screen_damaged" className="text-base md:text-lg cursor-pointer block font-semibold mb-1">Damaged</Label>
+                      <Label htmlFor="screen_faulty" className="text-base md:text-lg cursor-pointer block font-semibold mb-1">Faulty</Label>
                       <p className="text-xs md:text-sm text-muted-foreground">Heavy signs of usage</p>
                       <p className="text-xs md:text-sm text-muted-foreground">Screen touch not working</p>
                       <p className="text-xs md:text-sm text-muted-foreground">Lines/Discoloration/blur/Cracked screen</p>
@@ -928,14 +952,25 @@ const Sell = () => {
                 <h2 className="text-2xl font-semibold mb-2">Select the physical condition of your device?</h2>
                 <p className="text-muted-foreground">The better condition your device is in, we will pay you more</p>
               </div>
-              <RadioGroup value={physicalCondition} onValueChange={setPhysicalCondition}>
-                <Card className={`p-6 cursor-pointer transition-all ${physicalCondition === "flawless" ? 'border-primary' : ''}`}>
+              <RadioGroup value={physicalCondition} onValueChange={(value) => setPhysicalCondition(value as typeof physicalCondition)}>
+                <Card className={`p-6 cursor-pointer transition-all ${physicalCondition === "like_new" ? 'border-primary' : ''}`}>
                   <div className="flex items-center space-x-3">
-                    <RadioGroupItem value="flawless" id="phys_flawless" />
+                    <RadioGroupItem value="like_new" id="phys_like_new" />
                     <div className="flex-1">
-                      <Label htmlFor="phys_flawless" className="text-lg cursor-pointer block font-semibold mb-1">Flawless</Label>
+                      <Label htmlFor="phys_like_new" className="text-lg cursor-pointer block font-semibold mb-1">Like New</Label>
                       <p className="text-sm text-muted-foreground">No scratches on the device</p>
                       <p className="text-sm text-muted-foreground">No signs of usage on the device</p>
+                      <p className="text-sm text-muted-foreground">No dents or cracks on the device</p>
+                    </div>
+                  </div>
+                </Card>
+                <Card className={`p-6 cursor-pointer transition-all ${physicalCondition === "excellent" ? 'border-primary' : ''}`}>
+                  <div className="flex items-center space-x-3">
+                    <RadioGroupItem value="excellent" id="phys_excellent" />
+                    <div className="flex-1">
+                      <Label htmlFor="phys_excellent" className="text-lg cursor-pointer block font-semibold mb-1">Excellent</Label>
+                      <p className="text-sm text-muted-foreground">Very minimal signs of use</p>
+                      <p className="text-sm text-muted-foreground">Very minor scratches if any</p>
                       <p className="text-sm text-muted-foreground">No dents or cracks on the device</p>
                     </div>
                   </div>
@@ -963,11 +998,11 @@ const Sell = () => {
                     </div>
                   </div>
                 </Card>
-                <Card className={`p-6 cursor-pointer transition-all ${physicalCondition === "below_average" ? 'border-primary' : ''}`}>
+                <Card className={`p-6 cursor-pointer transition-all ${physicalCondition === "faulty" ? 'border-primary' : ''}`}>
                   <div className="flex items-center space-x-3">
-                    <RadioGroupItem value="below_average" id="phys_below" />
+                    <RadioGroupItem value="faulty" id="phys_faulty" />
                     <div className="flex-1">
-                      <Label htmlFor="phys_below" className="text-lg cursor-pointer block font-semibold mb-1">Below Average</Label>
+                      <Label htmlFor="phys_faulty" className="text-lg cursor-pointer block font-semibold mb-1">Faulty</Label>
                       <p className="text-sm text-muted-foreground">Physical damage on device</p>
                       <p className="text-sm text-muted-foreground">Multiple scratches or dents on device</p>
                       <p className="text-sm text-muted-foreground">Broken hinges on device panel</p>
