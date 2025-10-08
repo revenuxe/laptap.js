@@ -6,6 +6,7 @@ import HowItWorks from "@/components/HowItWorks";
 import Stats from "@/components/Stats";
 import ProcessSteps from "@/components/ProcessSteps";
 import TrustSignals from "@/components/TrustSignals";
+import { BrandsSection } from "@/components/BrandsSection";
 import Footer from "@/components/Footer";
 
 const Home = () => {
@@ -51,6 +52,7 @@ const Home = () => {
         <main className="flex-1">
           <Hero />
           <Stats />
+          <BrandsSection />
           <Features />
           <HowItWorks />
           <ProcessSteps />

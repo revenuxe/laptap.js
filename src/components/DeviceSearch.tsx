@@ -16,7 +16,9 @@ interface Model {
   id: string;
   name: string;
   series: {
+    id: string;
     name: string;
+    brand_id: string;
     brands: {
       name: string;
     };
@@ -53,7 +55,9 @@ export function DeviceSearch() {
         id,
         name,
         series (
+          id,
           name,
+          brand_id,
           brands (
             name
           )
@@ -83,9 +87,9 @@ export function DeviceSearch() {
     }
   };
 
-  const handleModelClick = (model: Model) => {
-    // Navigate to sell page with model preselected
-    navigate(`/sell?category=laptop&model=${model.id}`);
+  const handleModelClick = async (model: Model) => {
+    // Navigate with all required params to pre-fill the form
+    navigate(`/sell?category=laptop&brand=${model.series.brand_id}&series=${model.series.id}&model=${model.id}`);
     setSearchQuery('');
     setShowResults(false);
   };

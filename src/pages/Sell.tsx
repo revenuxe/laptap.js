@@ -26,19 +26,29 @@ const Sell = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const initialCategory = searchParams.get("category") as "laptop" | "desktop" | null;
+  const initialBrand = searchParams.get("brand");
+  const initialSeries = searchParams.get("series");
+  const initialModelId = searchParams.get("model");
   
-  const [step, setStep] = useState<Step>(initialCategory ? "brand" : "category");
+  const [step, setStep] = useState<Step>(
+    initialModelId ? "switch_on" : 
+    initialSeries ? "model" : 
+    initialBrand ? "series" : 
+    initialCategory ? "brand" : 
+    "category"
+  );
   const [loading, setLoading] = useState(false);
   const [transitionLoading, setTransitionLoading] = useState(false);
   
   // Form data
   const [category, setCategory] = useState<"laptop" | "desktop" | "">(initialCategory || "");
   const [brands, setBrands] = useState<any[]>([]);
-  const [selectedBrand, setSelectedBrand] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState(initialBrand || "");
   const [seriesList, setSeriesList] = useState<any[]>([]);
-  const [selectedSeries, setSelectedSeries] = useState("");
+  const [selectedSeries, setSelectedSeries] = useState(initialSeries || "");
   const [models, setModels] = useState<any[]>([]);
   const [selectedModel, setSelectedModel] = useState<any>(null);
+  const [preloadingModel, setPreloadingModel] = useState(!!initialModelId);
   
   // Device details
   const [switchesOn, setSwitchesOn] = useState<boolean | null>(null);
@@ -76,6 +86,31 @@ const Sell = () => {
   const [brandSearch, setBrandSearch] = useState("");
   const [seriesSearch, setSeriesSearch] = useState("");
   const [modelSearch, setModelSearch] = useState("");
+
+  // Load pre-selected model from URL params
+  useEffect(() => {
+    if (initialModelId && preloadingModel) {
+      loadPreselectedModel();
+    }
+  }, [initialModelId, preloadingModel]);
+
+  const loadPreselectedModel = async () => {
+    try {
+      const { data: modelData } = await supabase
+        .from('models')
+        .select('*')
+        .eq('id', initialModelId)
+        .single();
+      
+      if (modelData) {
+        setSelectedModel(modelData);
+        setPreloadingModel(false);
+      }
+    } catch (e) {
+      console.error('Failed to load preselected model:', e);
+      setPreloadingModel(false);
+    }
+  };
 
   // Restore form state from sessionStorage after auth redirect
   useEffect(() => {
