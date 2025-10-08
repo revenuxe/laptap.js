@@ -19,28 +19,60 @@ export function OrdersTab() {
   }, []);
 
   const fetchOrders = async () => {
-    const { data, error } = await supabase
-      .from('sell_requests')
-      .select(`
-        *,
-        models (
-          name,
-          series (
+    try {
+      // Fetch sell requests with models data
+      const { data: sellRequestsData, error: sellRequestsError } = await supabase
+        .from('sell_requests')
+        .select(`
+          *,
+          models (
             name,
-            brands (name)
+            series (
+              name,
+              brands (name)
+            )
           )
-        ),
-        profiles (full_name, email)
-      `)
-      .order('created_at', { ascending: false });
+        `)
+        .order('created_at', { ascending: false });
 
-    if (error) {
+      if (sellRequestsError) throw sellRequestsError;
+
+      if (!sellRequestsData || sellRequestsData.length === 0) {
+        setOrders([]);
+        setLoading(false);
+        return;
+      }
+
+      // Get unique user IDs
+      const userIds = [...new Set(sellRequestsData.map(sr => sr.user_id))];
+
+      // Fetch profiles for these users
+      const { data: profilesData, error: profilesError } = await supabase
+        .from('profiles')
+        .select('id, full_name, email')
+        .in('id', userIds);
+
+      if (profilesError) throw profilesError;
+
+      // Create a map of profiles by user_id
+      const profilesMap = new Map(
+        (profilesData || []).map(profile => [profile.id, profile])
+      );
+
+      // Combine the data
+      const ordersWithProfiles = sellRequestsData.map(order => ({
+        ...order,
+        profiles: profilesMap.get(order.user_id) || null
+      }));
+
+      setOrders(ordersWithProfiles);
+    } catch (error) {
       toast.error('Failed to fetch orders');
-      console.error(error);
-    } else {
-      setOrders(data || []);
+      console.error('Error fetching orders:', error);
+      setOrders([]);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const getStatusColor = (status: string) => {
