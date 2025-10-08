@@ -47,12 +47,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         
         // Check admin role after state update
         if (session?.user) {
+          setLoading(true);
           setTimeout(async () => {
             const isAdminUser = await checkAdminRole(session.user.id);
             setIsAdmin(isAdminUser);
+            setLoading(false);
           }, 0);
         } else {
           setIsAdmin(false);
+          setLoading(false);
         }
       }
     );
