@@ -25,21 +25,6 @@ const features = [{
   description: "Professional device inspection to ensure fair and accurate pricing"
 }];
 const Features = () => {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {features.map((feature, index) => {
-        const Icon = feature.icon;
-        return (
-          <div key={index} className="text-center">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-primary/10 mb-4">
-              <Icon className="w-6 h-6 text-primary" />
-            </div>
-            <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
-            <p className="text-muted-foreground">{feature.description}</p>
-          </div>
-        );
-      })}
-    </div>
-  );
+  return;
 };
 export default Features;
