@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -10,21 +10,34 @@ import { useToast } from "@/hooks/use-toast";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
-  const { signIn, user, isAdmin, checkAdminRole } = useAuth();
+  const { signIn, user, isAdmin, loading: authLoading } = useAuth();
   const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const loginAttemptRef = useRef(false);
 
   useEffect(() => {
-    if (user && isAdmin) {
-      navigate("/admin/dashboard");
+    // Only check after a login attempt and auth is no longer loading
+    if (loginAttemptRef.current && !authLoading) {
+      if (user && isAdmin) {
+        navigate("/admin/dashboard");
+      } else if (user && !isAdmin) {
+        toast({
+          title: "Access Denied",
+          description: "You don't have admin privileges",
+          variant: "destructive",
+        });
+        setLoading(false);
+        loginAttemptRef.current = false;
+      }
     }
-  }, [user, isAdmin, navigate]);
+  }, [user, isAdmin, authLoading, navigate, toast]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    loginAttemptRef.current = true;
 
     try {
       const { error } = await signIn(email, password);
@@ -35,27 +48,19 @@ const AdminLogin = () => {
           description: error.message,
           variant: "destructive",
         });
-      } else {
-        // Check admin role directly after login
-        const adminCheck = await checkAdminRole();
-        if (adminCheck) {
-          navigate("/admin/dashboard");
-        } else {
-          toast({
-            title: "Access Denied",
-            description: "You don't have admin privileges",
-            variant: "destructive",
-          });
-        }
+        setLoading(false);
+        loginAttemptRef.current = false;
       }
+      // Don't set loading to false on success - let useEffect handle navigation
+      // This prevents the "no admin privilege" flash
     } catch (error) {
       toast({
         title: "Error",
         description: "An unexpected error occurred",
         variant: "destructive",
       });
-    } finally {
       setLoading(false);
+      loginAttemptRef.current = false;
     }
   };
 
