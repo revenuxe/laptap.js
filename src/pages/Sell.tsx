@@ -31,7 +31,7 @@ const Sell = () => {
   const initialModelId = searchParams.get("model");
   
   const [step, setStep] = useState<Step>(
-    initialModelId ? "switch_on" : 
+    initialModelId ? "price" : 
     initialSeries ? "model" : 
     initialBrand ? "series" : 
     initialCategory ? "brand" : 
