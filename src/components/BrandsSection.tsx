@@ -50,7 +50,7 @@ export function BrandsSection() {
   }
 
   const handleBrandClick = (brandId: string) => {
-    navigate(`/sell?category=laptop&brand=${brandId}`);
+    navigate(`/sell/laptop/${brandId}`);
   };
 
   if (loading || brands.length === 0) return null;
@@ -105,7 +105,7 @@ export function BrandsSection() {
         <div className="text-center">
           <Button
             size="lg"
-            onClick={() => navigate('/sell')}
+            onClick={() => navigate('/sell/laptop')}
             className="group"
           >
             View All Brands

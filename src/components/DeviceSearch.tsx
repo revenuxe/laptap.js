@@ -94,14 +94,16 @@ export function DeviceSearch() {
   };
 
   const handleModelClick = async (model: Model) => {
-    // Navigate with all required params to pre-fill the form
-    navigate(`/sell?category=laptop&brand=${model.series.brand_id}&series=${model.series.id}&model=${model.id}`);
+    // Navigate to SEO-friendly URL
+    const brandName = model.series.brands.name.toLowerCase().replace(/\s+/g, '-');
+    const modelSlug = model.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+    navigate(`/sell-old-${brandName}-${modelSlug}`);
     setSearchQuery('');
     setShowResults(false);
   };
 
   const handleBrandClick = (brandId: string) => {
-    navigate(`/sell?category=laptop&brand=${brandId}`);
+    navigate(`/sell/laptop/${brandId}`);
     setSearchQuery('');
     setShowResults(false);
   };

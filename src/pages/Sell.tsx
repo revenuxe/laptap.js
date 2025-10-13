@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams, Navigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Database } from "@/integrations/supabase/types";
 import { calculateDynamicPrice, getConditionLabel } from "@/utils/dynamicPricingEngine";
 import { sellRequestSchema } from "@/lib/validationSchemas";
+import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Loader from "@/components/Loader";
@@ -22,13 +23,27 @@ import { CountdownTimer } from "@/components/CountdownTimer";
 type Step = "category" | "brand" | "series" | "model" | "switch_on" | "config" | "additional" | "functionality" | "screen_condition" | "age" | "physical_condition" | "accessories" | "price" | "confirm";
 
 const Sell = () => {
+  const params = useParams();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const initialCategory = searchParams.get("category") as "laptop" | "desktop" | null;
-  const initialBrand = searchParams.get("brand");
-  const initialSeries = searchParams.get("series");
-  const initialModelId = searchParams.get("model");
+  
+  // Handle old query param URLs - redirect to new format
+  const oldCategory = searchParams.get("category");
+  const oldBrand = searchParams.get("brand");
+  const oldSeries = searchParams.get("series");
+  const oldModel = searchParams.get("model");
+  
+  // Get params from URL (new format)
+  const categoryParam = params.category as "laptop" | "desktop" | undefined;
+  const brandSlug = params.brand;
+  const modelSlug = params.slug;
+  
+  // Determine initial values (prioritize new format, fallback to old)
+  const initialCategory = categoryParam || (oldCategory as "laptop" | "desktop" | null);
+  const initialBrand = oldBrand;
+  const initialSeries = oldSeries;
+  const initialModelId = oldModel;
   
   const [step, setStep] = useState<Step>(
     initialModelId ? "model" : 
@@ -86,13 +101,92 @@ const Sell = () => {
   const [brandSearch, setBrandSearch] = useState("");
   const [seriesSearch, setSeriesSearch] = useState("");
   const [modelSearch, setModelSearch] = useState("");
+  
+  // SEO state
+  const [seoData, setSeoData] = useState({
+    title: "Sell Your Laptop or Desktop | Get Best Price - Laptap.in",
+    description: "Sell your old laptop or desktop on Laptap.in. Get instant quotes, free doorstep pickup, and immediate payment. Best prices guaranteed.",
+    ogImage: "https://laptap.in/og-image.jpg"
+  });
 
-  // Load pre-selected model from URL params
+  // Handle redirects from old URLs and load data from slugs
   useEffect(() => {
-    if (initialModelId && preloadingModel) {
+    if (oldCategory && !categoryParam) {
+      // Redirect old query param URLs to new format
+      let newUrl = `/sell/${oldCategory}`;
+      if (oldBrand) {
+        // We need to fetch brand slug, but for now just use ID
+        newUrl += `/${oldBrand}`;
+      }
+      navigate(newUrl, { replace: true });
+      return;
+    }
+    
+    if (brandSlug && !selectedBrand) {
+      // Load brand from slug
+      loadBrandFromSlug(brandSlug);
+    }
+    
+    if (modelSlug) {
+      // Load model from slug
+      loadModelFromSlug(modelSlug);
+    } else if (initialModelId && preloadingModel) {
       loadPreselectedModel();
     }
-  }, [initialModelId, preloadingModel]);
+  }, [categoryParam, brandSlug, modelSlug, oldCategory, oldBrand, initialModelId, preloadingModel]);
+  
+  // Update SEO when selections change
+  useEffect(() => {
+    updateSEO();
+  }, [category, selectedBrand, selectedModel, brands, seriesList]);
+
+  const loadBrandFromSlug = async (slug: string) => {
+    try {
+      const { data: brandData } = await supabase
+        .from('brands')
+        .select('*')
+        .eq('id', slug)
+        .single();
+      
+      if (brandData) {
+        setSelectedBrand(brandData.id);
+      }
+    } catch (e) {
+      console.error('Failed to load brand from slug:', e);
+    }
+  };
+  
+  const loadModelFromSlug = async (slug: string) => {
+    try {
+      // Parse slug to extract brand and model
+      // Format: dell-inspiron-15 or dell-latitude-7490
+      const parts = slug.split('-');
+      
+      const { data: models } = await supabase
+        .from('models')
+        .select('*, series(*, brands(*))')
+        .eq('active', true);
+      
+      if (models && models.length > 0) {
+        // Find best matching model
+        const matchedModel = models.find(m => {
+          const modelSlugified = m.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+          return slug.includes(modelSlugified) || modelSlugified.includes(slug);
+        });
+        
+        if (matchedModel) {
+          setCategory((matchedModel.series as any).brands.category_id === 'laptop' ? 'laptop' : 'desktop');
+          setSelectedBrand((matchedModel.series as any).brand_id);
+          setSelectedSeries(matchedModel.series_id);
+          setSelectedModel(matchedModel);
+          setPreloadingModel(false);
+        }
+      }
+    } catch (e) {
+      console.error('Failed to load model from slug:', e);
+      setPreloadingModel(false);
+    }
+  };
 
   const loadPreselectedModel = async () => {
     try {
@@ -110,6 +204,32 @@ const Sell = () => {
       console.error('Failed to load preselected model:', e);
       setPreloadingModel(false);
     }
+  };
+  
+  const updateSEO = async () => {
+    let title = "Sell Your Laptop or Desktop | Get Best Price - Laptap.in";
+    let description = "Sell your old laptop or desktop on Laptap.in. Get instant quotes, free doorstep pickup, and immediate payment. Best prices guaranteed.";
+    
+    if (selectedModel) {
+      const brandName = brands.find(b => b.id === selectedBrand)?.name || '';
+      const seriesName = seriesList.find(s => s.id === selectedSeries)?.name || '';
+      title = `Sell Old ${brandName} ${selectedModel.name} | Best Price - Laptap.in`;
+      description = `Get the best price for your used ${brandName} ${selectedModel.name} on Laptap.in. Free doorstep pickup, instant payment, and hassle-free selling process.`;
+    } else if (selectedBrand) {
+      const brandName = brands.find(b => b.id === selectedBrand)?.name || '';
+      title = `Sell Old ${brandName} ${category ? category.charAt(0).toUpperCase() + category.slice(1) : 'Device'} | Laptap.in`;
+      description = `Sell your old ${brandName} ${category || 'device'} on Laptap.in. Get instant quotes, free pickup, and immediate payment for your ${brandName} devices.`;
+    } else if (category) {
+      const catName = category.charAt(0).toUpperCase() + category.slice(1);
+      title = `Sell Old ${catName} Online | Best Price Guaranteed - Laptap.in`;
+      description = `Sell your old ${category} for the best price on Laptap.in. Free doorstep pickup, instant quotes, and immediate payment. All ${category} brands accepted.`;
+    }
+    
+    setSeoData({
+      title,
+      description,
+      ogImage: selectedModel?.thumbnail_url || "https://laptap.in/og-image.jpg"
+    });
   };
 
   // Restore form state from sessionStorage after auth redirect
@@ -265,6 +385,7 @@ const Sell = () => {
   const handleCategorySelect = (selected: "laptop" | "desktop") => {
     setCategory(selected);
     setStep("brand");
+    navigate(`/sell/${selected}`, { replace: true });
     window.scrollTo(0, 0);
   };
 
@@ -273,6 +394,12 @@ const Sell = () => {
     setSelectedBrand(brandId);
     setSelectedSeries("");
     setSelectedModel(null);
+    
+    // Update URL
+    if (category) {
+      navigate(`/sell/${category}/${brandId}`, { replace: true });
+    }
+    
     setTimeout(() => {
       setStep("series");
       setTransitionLoading(false);
@@ -291,9 +418,15 @@ const Sell = () => {
     }, 800);
   };
 
-  const handleModelSelect = (model: any) => {
+  const handleModelSelect = async (model: any) => {
     setTransitionLoading(true);
     setSelectedModel(model);
+    
+    // Update URL with SEO-friendly slug
+    const brandName = brands.find(b => b.id === selectedBrand)?.name.toLowerCase().replace(/\s+/g, '-') || '';
+    const modelSlug = model.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+    navigate(`/sell-old-${brandName}-${modelSlug}`, { replace: true });
+    
     setTimeout(() => {
       setTransitionLoading(false);
       window.scrollTo(0, 0);
@@ -336,7 +469,8 @@ const Sell = () => {
         marketingBonus,
       };
       sessionStorage.setItem('sellFormState', JSON.stringify(formState));
-      navigate(`/auth?redirect=/sell`);
+      sessionStorage.setItem('sellFormRedirect', window.location.pathname);
+      navigate(`/auth?redirect=${encodeURIComponent(window.location.pathname)}`);
       return;
     }
     setStep("confirm");
@@ -407,6 +541,19 @@ const Sell = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>{seoData.title}</title>
+        <meta name="description" content={seoData.description} />
+        <meta property="og:title" content={seoData.title} />
+        <meta property="og:description" content={seoData.description} />
+        <meta property="og:image" content={seoData.ogImage} />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={seoData.title} />
+        <meta name="twitter:description" content={seoData.description} />
+        <meta name="twitter:image" content={seoData.ogImage} />
+        <link rel="canonical" href={`https://laptap.in${window.location.pathname}`} />
+      </Helmet>
       <Header />
       
       {(loading || transitionLoading) && <Loader />}
