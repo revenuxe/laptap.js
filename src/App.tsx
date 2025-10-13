@@ -30,7 +30,6 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <BrowserRouter>
             <ScrollToTop />
             <PageLoader />
             <Routes>
@@ -60,7 +59,6 @@ const App = () => (
               {/* ⚠️ Keep this at the very end */}
               <Route path="*" element={<NotFound />} />
             </Routes>
-          </BrowserRouter>
         </TooltipProvider>
       </AuthProvider>
     </HelmetProvider>
