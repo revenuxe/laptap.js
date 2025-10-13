@@ -45,15 +45,10 @@ const Sell = () => {
   const initialSeries = oldSeries;
   const initialModelId = oldModel;
   
-  const [step, setStep] = useState<Step>(
-    initialModelId ? "model" : 
-    initialSeries ? "model" : 
-    initialBrand ? "series" : 
-    initialCategory ? "brand" : 
-    "category"
-  );
+  const [step, setStep] = useState<Step>("category");
   const [loading, setLoading] = useState(false);
   const [transitionLoading, setTransitionLoading] = useState(false);
+  const [loadingFromSlug, setLoadingFromSlug] = useState(!!modelSlug || !!brandSlug);
   
   // Form data
   const [category, setCategory] = useState<"laptop" | "desktop" | "">(initialCategory || "");
@@ -111,79 +106,114 @@ const Sell = () => {
 
   // Handle redirects from old URLs and load data from slugs
   useEffect(() => {
-    if (oldCategory && !categoryParam) {
-      // Redirect old query param URLs to new format
-      let newUrl = `/sell/${oldCategory}`;
-      if (oldBrand) {
-        // We need to fetch brand slug, but for now just use ID
-        newUrl += `/${oldBrand}`;
+    const loadData = async () => {
+      if (oldCategory && !categoryParam) {
+        // Redirect old query param URLs to new format
+        let newUrl = `/sell/${oldCategory}`;
+        if (oldBrand) {
+          const { data: brandData } = await supabase
+            .from('brands')
+            .select('slug')
+            .eq('id', oldBrand)
+            .single();
+          if (brandData?.slug) {
+            newUrl += `/${brandData.slug}`;
+          }
+        }
+        navigate(newUrl, { replace: true });
+        return;
       }
-      navigate(newUrl, { replace: true });
-      return;
-    }
+      
+      if (brandSlug && !selectedBrand && categoryParam) {
+        await loadBrandFromSlug(brandSlug, categoryParam);
+      } else if (initialCategory && !categoryParam) {
+        setCategory(initialCategory);
+        setStep(initialBrand ? "series" : "brand");
+      }
+      
+      if (modelSlug) {
+        await loadModelFromSlug(modelSlug);
+      } else if (initialModelId && preloadingModel) {
+        loadPreselectedModel();
+      }
+      
+      // Set initial step based on what's loaded
+      if (modelSlug) {
+        // Will be handled by loadModelFromSlug
+      } else if (brandSlug || initialBrand) {
+        setStep("series");
+      } else if (categoryParam || initialCategory) {
+        setStep("brand");
+      }
+    };
     
-    if (brandSlug && !selectedBrand) {
-      // Load brand from slug
-      loadBrandFromSlug(brandSlug);
-    }
-    
-    if (modelSlug) {
-      // Load model from slug
-      loadModelFromSlug(modelSlug);
-    } else if (initialModelId && preloadingModel) {
-      loadPreselectedModel();
-    }
-  }, [categoryParam, brandSlug, modelSlug, oldCategory, oldBrand, initialModelId, preloadingModel]);
+    loadData();
+  }, []);
   
   // Update SEO when selections change
   useEffect(() => {
     updateSEO();
   }, [category, selectedBrand, selectedModel, brands, seriesList]);
 
-  const loadBrandFromSlug = async (slug: string) => {
+  const loadBrandFromSlug = async (slug: string, cat: string) => {
     try {
       const { data: brandData } = await supabase
         .from('brands')
         .select('*')
-        .eq('id', slug)
+        .eq('slug', slug)
         .single();
       
       if (brandData) {
         setSelectedBrand(brandData.id);
+        setCategory(cat as "laptop" | "desktop");
+        setLoadingFromSlug(false);
       }
     } catch (e) {
       console.error('Failed to load brand from slug:', e);
+      setLoadingFromSlug(false);
     }
   };
   
   const loadModelFromSlug = async (slug: string) => {
+    setLoadingFromSlug(true);
     try {
-      // Parse slug to extract brand and model
-      // Format: dell-inspiron-15 or dell-latitude-7490
-      const parts = slug.split('-');
+      // Parse slug: sell-old-brand-model-name -> brand-model-name
+      const parts = slug.toLowerCase().split('-');
       
+      // Try to find exact match by searching models with their brand and series data
       const { data: models } = await supabase
         .from('models')
         .select('*, series(*, brands(*))')
         .eq('active', true);
       
       if (models && models.length > 0) {
-        // Find best matching model
+        // Find best matching model by constructing slug from brand + model name
         const matchedModel = models.find(m => {
+          const brandSlug = (m.series as any).brands.slug || (m.series as any).brands.name.toLowerCase().replace(/\s+/g, '-');
           const modelSlugified = m.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-          return slug.includes(modelSlugified) || modelSlugified.includes(slug);
+          const fullSlug = `${brandSlug}-${modelSlugified}`;
+          return slug === fullSlug;
         });
         
         if (matchedModel) {
-          setCategory((matchedModel.series as any).brands.category_id === 'laptop' ? 'laptop' : 'desktop');
-          setSelectedBrand((matchedModel.series as any).brand_id);
+          const seriesData = matchedModel.series as any;
+          const brandData = seriesData.brands;
+          
+          setCategory('laptop'); // Default to laptop, could be improved
+          setSelectedBrand(seriesData.brand_id);
           setSelectedSeries(matchedModel.series_id);
           setSelectedModel(matchedModel);
+          setStep("model");
+          setLoadingFromSlug(false);
           setPreloadingModel(false);
+        } else {
+          console.error('No matching model found for slug:', slug);
+          setLoadingFromSlug(false);
         }
       }
     } catch (e) {
       console.error('Failed to load model from slug:', e);
+      setLoadingFromSlug(false);
       setPreloadingModel(false);
     }
   };
@@ -299,7 +329,7 @@ const Sell = () => {
     if (categoryData) {
       const { data, error } = await supabase
         .from('brands')
-        .select('*')
+        .select('*, slug')
         .eq('category_id', categoryData.id)
         .order('name');
 
@@ -315,7 +345,7 @@ const Sell = () => {
   const fetchSeries = async () => {
     const { data, error } = await supabase
       .from('series')
-      .select('*')
+      .select('*, slug')
       .eq('brand_id', selectedBrand)
       .order('name');
 
@@ -395,9 +425,10 @@ const Sell = () => {
     setSelectedSeries("");
     setSelectedModel(null);
     
-    // Update URL
-    if (category) {
-      navigate(`/sell/${category}/${brandId}`, { replace: true });
+    // Update URL with brand slug
+    const brand = brands.find(b => b.id === brandId);
+    if (category && brand?.slug) {
+      navigate(`/sell/${category}/${brand.slug}`, { replace: true });
     }
     
     setTimeout(() => {
@@ -422,10 +453,11 @@ const Sell = () => {
     setTransitionLoading(true);
     setSelectedModel(model);
     
-    // Update URL with SEO-friendly slug
-    const brandName = brands.find(b => b.id === selectedBrand)?.name.toLowerCase().replace(/\s+/g, '-') || '';
+    // Update URL with SEO-friendly slug using brand slug
+    const brand = brands.find(b => b.id === selectedBrand);
+    const brandSlug = brand?.slug || brand?.name.toLowerCase().replace(/\s+/g, '-') || '';
     const modelSlug = model.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-    navigate(`/sell-old-${brandName}-${modelSlug}`, { replace: true });
+    navigate(`/sell-old-${brandSlug}-${modelSlug}`, { replace: true });
     
     setTimeout(() => {
       setTransitionLoading(false);
@@ -556,7 +588,7 @@ const Sell = () => {
       </Helmet>
       <Header />
       
-      {(loading || transitionLoading) && <Loader />}
+      {(loading || transitionLoading || loadingFromSlug) && <Loader />}
       
       <main className="flex-1 py-12 md:py-20">
         <div className="container max-w-4xl">

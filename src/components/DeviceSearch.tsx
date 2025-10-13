@@ -10,6 +10,7 @@ interface Brand {
   id: string;
   name: string;
   logo_url: string | null;
+  slug?: string;
 }
 
 interface Model {
@@ -21,6 +22,7 @@ interface Model {
     brand_id: string;
     brands: {
       name: string;
+      slug?: string;
     };
   };
 }
@@ -41,7 +43,7 @@ export function DeviceSearch() {
   async function loadBrands() {
     const { data } = await (supabase
       .from('brands')
-      .select('id, name, logo_url') as any);
+      .select('id, name, logo_url, slug') as any);
     
     if (data) {
       setBrands(data as Brand[]);
@@ -59,7 +61,8 @@ export function DeviceSearch() {
           name,
           brand_id,
           brands (
-            name
+            name,
+            slug
           )
         )
       `)
@@ -94,16 +97,17 @@ export function DeviceSearch() {
   };
 
   const handleModelClick = async (model: Model) => {
-    // Navigate to SEO-friendly URL
-    const brandName = model.series.brands.name.toLowerCase().replace(/\s+/g, '-');
+    // Navigate to SEO-friendly URL using brand slug
+    const brandSlug = model.series.brands.slug || model.series.brands.name.toLowerCase().replace(/\s+/g, '-');
     const modelSlug = model.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-    navigate(`/sell-old-${brandName}-${modelSlug}`);
+    navigate(`/sell-old-${brandSlug}-${modelSlug}`);
     setSearchQuery('');
     setShowResults(false);
   };
 
-  const handleBrandClick = (brandId: string) => {
-    navigate(`/sell/laptop/${brandId}`);
+  const handleBrandClick = (brand: any) => {
+    const slug = brand.slug || brand.id;
+    navigate(`/sell/laptop/${slug}`);
     setSearchQuery('');
     setShowResults(false);
   };
@@ -159,7 +163,7 @@ export function DeviceSearch() {
             key={brand.id}
             variant="outline"
             size="sm"
-            onClick={() => handleBrandClick(brand.id)}
+            onClick={() => handleBrandClick(brand)}
             className="rounded-full"
           >
             {brand.name}
