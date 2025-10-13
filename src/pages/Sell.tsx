@@ -603,12 +603,12 @@ const Sell = () => {
                     />
                   </div>
                 )}
-                <div className="mb-6">
-                  <p className="text-muted-foreground mb-2">Base Price</p>
-                  <p className="text-3xl md:text-4xl font-bold text-primary">
-                    ₹{parseFloat(selectedModel.base_price).toLocaleString()}
-                  </p>
-                </div>
+              <div className="mb-6">
+                <p className="text-muted-foreground mb-2">Get Upto</p>
+                <p className="text-3xl md:text-4xl font-bold text-primary">
+                  ₹{parseFloat(selectedModel.base_price).toLocaleString()}
+                </p>
+              </div>
                 <p className="text-sm text-muted-foreground mb-6">
                   This is the starting price. The final quote will be based on your device's condition and specifications.
                 </p>
