@@ -177,13 +177,10 @@ const Sell = () => {
   const loadModelFromSlug = async (slug: string) => {
     setLoadingFromSlug(true);
     try {
-      // Parse slug: sell-old-brand-model-name -> brand-model-name
-      const parts = slug.toLowerCase().split('-');
-      
       // Try to find exact match by searching models with their brand and series data
       const { data: models } = await supabase
         .from('models')
-        .select('*, series(*, brands(*))')
+        .select('*, series(*, brands(*, categories(*)))')
         .eq('active', true);
       
       if (models && models.length > 0) {
@@ -198,23 +195,47 @@ const Sell = () => {
         if (matchedModel) {
           const seriesData = matchedModel.series as any;
           const brandData = seriesData.brands;
+          const categoryData = brandData.categories;
           
-          setCategory('laptop'); // Default to laptop, could be improved
+          // Set all required state
+          const categorySlug = categoryData?.slug || 'laptop';
+          setCategory(categorySlug as "laptop" | "desktop");
           setSelectedBrand(seriesData.brand_id);
           setSelectedSeries(matchedModel.series_id);
           setSelectedModel(matchedModel);
+          
+          // Fetch brands and series for the category
+          const { data: brandsData } = await supabase
+            .from('brands')
+            .select('*, slug')
+            .eq('category_id', brandData.category_id)
+            .order('name');
+          if (brandsData) setBrands(brandsData);
+          
+          const { data: seriesListData } = await supabase
+            .from('series')
+            .select('*, slug')
+            .eq('brand_id', seriesData.brand_id)
+            .order('name');
+          if (seriesListData) setSeriesList(seriesListData);
+          
           setStep("model");
           setLoadingFromSlug(false);
           setPreloadingModel(false);
         } else {
           console.error('No matching model found for slug:', slug);
           setLoadingFromSlug(false);
+          navigate('/404', { replace: true });
         }
+      } else {
+        setLoadingFromSlug(false);
+        navigate('/404', { replace: true });
       }
     } catch (e) {
       console.error('Failed to load model from slug:', e);
       setLoadingFromSlug(false);
       setPreloadingModel(false);
+      navigate('/404', { replace: true });
     }
   };
 
