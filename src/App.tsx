@@ -41,7 +41,7 @@ const App = () => (
               <Route path="/sell/:category/:brand/:slug" element={<Sell />} />
 
               {/* ✅ SEO-friendly route for slugs like /sell-old-apple-macbook-air-m3-2024 */}
-              <Route path="/sell-old-:slug" element={<Sell />} />
+             <Route path="/sell-old-:slug/*" element={<Sell />} />
 
               {/* ✅ Other main routes */}
               <Route path="/dashboard" element={<Dashboard />} />
