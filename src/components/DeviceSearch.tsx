@@ -10,7 +10,6 @@ interface Brand {
   id: string;
   name: string;
   logo_url: string | null;
-  slug?: string;
 }
 
 interface Model {
@@ -22,7 +21,6 @@ interface Model {
     brand_id: string;
     brands: {
       name: string;
-      slug?: string;
     };
   };
 }
@@ -43,7 +41,7 @@ export function DeviceSearch() {
   async function loadBrands() {
     const { data } = await (supabase
       .from('brands')
-      .select('id, name, logo_url, slug') as any);
+      .select('id, name, logo_url') as any);
     
     if (data) {
       setBrands(data as Brand[]);
@@ -61,8 +59,7 @@ export function DeviceSearch() {
           name,
           brand_id,
           brands (
-            name,
-            slug
+            name
           )
         )
       `)
@@ -97,17 +94,14 @@ export function DeviceSearch() {
   };
 
   const handleModelClick = async (model: Model) => {
-    // Navigate to SEO-friendly URL using brand slug
-    const brandSlug = model.series.brands.slug || model.series.brands.name.toLowerCase().replace(/\s+/g, '-');
-    const modelSlug = model.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-    navigate(`/sell-old-${brandSlug}-${modelSlug}`);
+    // Navigate with all required params to pre-fill the form
+    navigate(`/sell?category=laptop&brand=${model.series.brand_id}&series=${model.series.id}&model=${model.id}`);
     setSearchQuery('');
     setShowResults(false);
   };
 
-  const handleBrandClick = (brand: any) => {
-    const slug = brand.slug || brand.id;
-    navigate(`/sell/laptop/${slug}`);
+  const handleBrandClick = (brandId: string) => {
+    navigate(`/sell?category=laptop&brand=${brandId}`);
     setSearchQuery('');
     setShowResults(false);
   };
@@ -163,7 +157,7 @@ export function DeviceSearch() {
             key={brand.id}
             variant="outline"
             size="sm"
-            onClick={() => handleBrandClick(brand)}
+            onClick={() => handleBrandClick(brand.id)}
             className="rounded-full"
           >
             {brand.name}

@@ -30,20 +30,12 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner />
+          <BrowserRouter>
             <ScrollToTop />
             <PageLoader />
             <Routes>
-              {/* ✅ Main routes */}
               <Route path="/" element={<Home />} />
               <Route path="/sell" element={<Sell />} />
-              <Route path="/sell/:category" element={<Sell />} />
-              <Route path="/sell/:category/:brand" element={<Sell />} />
-              <Route path="/sell/:category/:brand/:slug" element={<Sell />} />
-
-              {/* ✅ SEO-friendly route for slugs like /sell-old-apple-macbook-air-m3-2024 */}
-             <Route path="/sell-old-:slug/*" element={<Sell />} />
-
-              {/* ✅ Other main routes */}
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/admin" element={<AdminLogin />} />
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
@@ -55,10 +47,10 @@ const App = () => (
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<Blog />} />
-
-              {/* ⚠️ Keep this at the very end */}
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
+          </BrowserRouter>
         </TooltipProvider>
       </AuthProvider>
     </HelmetProvider>
@@ -66,4 +58,3 @@ const App = () => (
 );
 
 export default App;
-

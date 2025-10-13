@@ -33,7 +33,7 @@ export function BrandsSection() {
       if (categoryData) {
         const { data } = await supabase
           .from('brands')
-          .select('id, name, logo_url, category_id, slug')
+          .select('id, name, logo_url, category_id')
           .eq('category_id', categoryData.id)
           .order('name')
           .limit(8);
@@ -49,8 +49,8 @@ export function BrandsSection() {
     }
   }
 
-  const handleBrandClick = (brand: any) => {
-    navigate(`/sell/laptop/${brand.slug || brand.id}`);
+  const handleBrandClick = (brandId: string) => {
+    navigate(`/sell?category=laptop&brand=${brandId}`);
   };
 
   if (loading || brands.length === 0) return null;
@@ -72,7 +72,7 @@ export function BrandsSection() {
             <Card
               key={brand.id}
               className="cursor-pointer p-6 hover:border-primary hover:shadow-lg transition-all group"
-              onClick={() => handleBrandClick(brand)}
+              onClick={() => handleBrandClick(brand.id)}
             >
               {brand.logo_url ? (
                 <div className="aspect-square flex items-center justify-center overflow-hidden rounded-md bg-background p-4">
@@ -105,7 +105,7 @@ export function BrandsSection() {
         <div className="text-center">
           <Button
             size="lg"
-            onClick={() => navigate('/sell/laptop')}
+            onClick={() => navigate('/sell')}
             className="group"
           >
             View All Brands
