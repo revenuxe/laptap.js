@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Pencil, Trash2, Plus, Upload } from "lucide-react";
 import { toast } from "sonner";
 
@@ -16,6 +17,7 @@ export function BrandsManager() {
   const [editingBrand, setEditingBrand] = useState<any>(null);
   const [name, setName] = useState("");
   const [country, setCountry] = useState("");
+  const [categoryId, setCategoryId] = useState("");
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoUrl, setLogoUrl] = useState("");
   const queryClient = useQueryClient();
@@ -25,6 +27,18 @@ export function BrandsManager() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("brands")
+        .select("*, categories(name)")
+        .order("name");
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const { data: categories } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("categories")
         .select("*")
         .order("name");
       if (error) throw error;
@@ -53,7 +67,7 @@ export function BrandsManager() {
     mutationFn: async () => {
       const { data, error } = await supabase
         .from("brands")
-        .insert({ name, country, logo_url: logoUrl })
+        .insert({ name, country, category_id: categoryId || null, logo_url: logoUrl })
         .select()
         .single();
 
@@ -91,7 +105,7 @@ export function BrandsManager() {
 
       const { error } = await supabase
         .from("brands")
-        .update({ name, country, logo_url: finalLogoUrl })
+        .update({ name, country, category_id: categoryId || null, logo_url: finalLogoUrl })
         .eq("id", editingBrand.id);
 
       if (error) throw error;
@@ -124,6 +138,7 @@ export function BrandsManager() {
   const resetForm = () => {
     setName("");
     setCountry("");
+    setCategoryId("");
     setLogoFile(null);
     setLogoUrl("");
     setEditingBrand(null);
@@ -133,6 +148,7 @@ export function BrandsManager() {
     setEditingBrand(brand);
     setName(brand.name);
     setCountry(brand.country || "");
+    setCategoryId(brand.category_id || "");
     setLogoUrl(brand.logo_url || "");
     setOpen(true);
   };
@@ -196,6 +212,21 @@ export function BrandsManager() {
                 />
               </div>
               <div>
+                <Label htmlFor="category">Category *</Label>
+                <Select value={categoryId} onValueChange={setCategoryId} required>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories?.map((category) => (
+                      <SelectItem key={category.id} value={category.id}>
+                        {category.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
                 <Label htmlFor="logo">Logo Image</Label>
                 <Input
                   id="logo"
@@ -223,6 +254,7 @@ export function BrandsManager() {
               <TableRow>
                 <TableHead>Logo</TableHead>
                 <TableHead>Name</TableHead>
+                <TableHead>Category</TableHead>
                 <TableHead>Country</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
@@ -236,6 +268,7 @@ export function BrandsManager() {
                     )}
                   </TableCell>
                   <TableCell>{brand.name}</TableCell>
+                  <TableCell>{brand.categories?.name || "-"}</TableCell>
                   <TableCell>{brand.country || "-"}</TableCell>
                   <TableCell className="text-right space-x-2">
                     <Button size="sm" variant="outline" onClick={() => handleEdit(brand)}>
