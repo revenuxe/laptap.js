@@ -212,14 +212,19 @@ const Sell = () => {
       .from('models')
       .select('*')
       .eq('series_id', selectedSeries)
-      .eq('active', true)
-      .order('name');
+      .eq('active', true);
 
     if (error) {
       toast.error('Failed to load models');
       console.error(error);
     } else {
-      setModels(data || []);
+      // Sort by year (newest first), extracting year from model name
+      const sortedModels = (data || []).sort((a, b) => {
+        const yearA = parseInt(a.name.match(/\b(19|20)\d{2}\b/)?.[0] || '0');
+        const yearB = parseInt(b.name.match(/\b(19|20)\d{2}\b/)?.[0] || '0');
+        return yearB - yearA; // Descending order (newest first)
+      });
+      setModels(sortedModels);
     }
   };
 

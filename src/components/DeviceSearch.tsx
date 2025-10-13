@@ -66,7 +66,13 @@ export function DeviceSearch() {
       .eq('active', true);
     
     if (data) {
-      setModels(data as Model[]);
+      // Sort by year (newest first), extracting year from model name
+      const sortedModels = (data as Model[]).sort((a, b) => {
+        const yearA = parseInt(a.name.match(/\b(19|20)\d{2}\b/)?.[0] || '0');
+        const yearB = parseInt(b.name.match(/\b(19|20)\d{2}\b/)?.[0] || '0');
+        return yearB - yearA; // Descending order (newest first)
+      });
+      setModels(sortedModels);
     }
   }
 
