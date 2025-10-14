@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MessageCircle, X } from "lucide-react";
 
 const WhatsAppFloat = () => {
   const [showPopup, setShowPopup] = useState(false);
-  const whatsappNumber = "919876543210"; // Replace with actual WhatsApp number
+  const whatsappNumber = "919886285028";
   const message = "Hi! I want to sell my device.";
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowPopup(true);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleWhatsAppClick = () => {
     const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
@@ -37,8 +45,6 @@ const WhatsAppFloat = () => {
           {/* WhatsApp Button */}
           <button
             onClick={handleWhatsAppClick}
-            onMouseEnter={() => setShowPopup(true)}
-            onMouseLeave={() => setShowPopup(false)}
             className="bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group"
             aria-label="Contact us on WhatsApp"
           >

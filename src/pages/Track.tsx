@@ -124,9 +124,9 @@ const Track = () => {
       await generateInvoice({
         orderId: sellRequest.id.slice(0, 8),
         date: new Date(sellRequest.created_at).toLocaleDateString('en-IN'),
-        customerName: sellRequest.customer_name,
-        customerEmail: sellRequest.customer_email,
-        customerPhone: sellRequest.customer_phone,
+        customerName: sellRequest.config?.customer_name || sellRequest.profiles?.full_name || 'Customer',
+        customerEmail: sellRequest.profiles?.email || 'N/A',
+        customerPhone: sellRequest.config?.customer_mobile || sellRequest.profiles?.phone || 'N/A',
         address: sellRequest.address,
         pincode: sellRequest.pincode,
         deviceModel: sellRequest.models?.name || "",

@@ -73,6 +73,8 @@ const Sell = () => {
   
   const [address, setAddress] = useState("");
   const [pincode, setPincode] = useState("");
+  const [customerName, setCustomerName] = useState("");
+  const [customerMobile, setCustomerMobile] = useState("");
   
   // Search states
   const [brandSearch, setBrandSearch] = useState("");
@@ -183,6 +185,14 @@ const Sell = () => {
       } catch (e) {
         console.error('Failed to restore form state:', e);
       }
+    }
+  }, [user]);
+
+  // Pre-fill customer name from user email
+  useEffect(() => {
+    if (user && !customerName) {
+      const name = user.user_metadata?.full_name || user.email?.split('@')[0] || '';
+      setCustomerName(name);
     }
   }, [user]);
 
@@ -404,6 +414,16 @@ const Sell = () => {
     }
 
     // Validate inputs
+    if (!customerName.trim()) {
+      toast.error('Please enter your name');
+      return;
+    }
+
+    if (!customerMobile.trim() || !/^[6-9]\d{9}$/.test(customerMobile)) {
+      toast.error('Please enter a valid 10-digit mobile number');
+      return;
+    }
+
     const validation = sellRequestSchema.safeParse({ address, pincode });
     if (!validation.success) {
       const errors = validation.error.errors.map(e => e.message).join(', ');
@@ -427,6 +447,8 @@ const Sell = () => {
             screen_condition: screenCondition,
             functionality_issues: functionalityIssues,
             switches_on: switchesOn,
+            customer_name: customerName,
+            customer_mobile: customerMobile,
           } as any,
           estimated_price: estimatedPrice,
           address,
@@ -1292,30 +1314,54 @@ const Sell = () => {
           {/* Confirmation & Address */}
           {step === "confirm" && (
             <Card className="p-8 max-w-md mx-auto">
-              <h2 className="text-xl font-semibold mb-6">Pickup Address</h2>
+              <h2 className="text-xl font-semibold mb-6">Complete Your Booking</h2>
               <div className="space-y-4">
                 <div>
-                  <Label htmlFor="address">Full Address</Label>
+                  <Label htmlFor="customer_name">Full Name *</Label>
+                  <Input
+                    id="customer_name"
+                    placeholder="Enter your full name"
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="customer_mobile">Mobile Number *</Label>
+                  <Input
+                    id="customer_mobile"
+                    placeholder="10-digit mobile number"
+                    value={customerMobile}
+                    onChange={(e) => setCustomerMobile(e.target.value)}
+                    maxLength={10}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="address">Full Address *</Label>
                   <Input
                     id="address"
                     placeholder="Street, Area, Landmark"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
+                    required
                   />
                 </div>
                 <div>
-                  <Label htmlFor="pincode">Pincode</Label>
+                  <Label htmlFor="pincode">Pincode *</Label>
                   <Input
                     id="pincode"
                     placeholder="e.g., 560001"
                     value={pincode}
                     onChange={(e) => setPincode(e.target.value)}
+                    maxLength={6}
+                    required
                   />
                 </div>
                 <div className="rounded-lg bg-muted/50 p-4 text-sm">
-                  <p className="font-semibold mb-2">Summary</p>
+                  <p className="font-semibold mb-2">Order Summary</p>
                   <p>Device: {selectedModel?.name}</p>
-                  <p>Estimated: ₹{estimatedPrice.toLocaleString()}</p>
+                  <p>Estimated Price: ₹{estimatedPrice.toLocaleString()}</p>
                 </div>
                 <Button
                   variant="cta"
