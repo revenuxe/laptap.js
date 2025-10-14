@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Database } from "@/integrations/supabase/types";
 import { calculateDynamicPrice, getConditionLabel } from "@/utils/dynamicPricingEngine";
 import { sellRequestSchema } from "@/lib/validationSchemas";
+import { generateInvoice } from "@/utils/invoiceGenerator";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Loader from "@/components/Loader";
@@ -214,65 +215,77 @@ const Sell = () => {
   }, [selectedModel, ageMonths, physicalCondition, screenCondition, functionalityIssues, config]);
 
   const fetchBrands = async () => {
-    const { data: categoryData } = await supabase
-      .from('categories')
-      .select('id')
-      .eq('slug', category)
-      .single();
+    try {
+      const { data: categoryData } = await supabase
+        .from('categories')
+        .select('id')
+        .eq('slug', category)
+        .single();
 
-    if (categoryData) {
-      const { data, error } = await supabase
-        .from('brands')
-        .select('*')
-        .eq('category_id', categoryData.id)
-        .order('name');
+      if (categoryData) {
+        const { data, error } = await supabase
+          .from('brands')
+          .select('id, name, slug, logo_url, category_id')
+          .eq('category_id', categoryData.id)
+          .order('name');
 
-      if (error) {
-        toast.error('Failed to load brands');
-        console.error(error);
-      } else {
-        setBrands(data || []);
+        if (error) {
+          toast.error('Failed to load brands');
+          console.error(error);
+        } else {
+          setBrands(data || []);
+        }
       }
+    } catch (error) {
+      console.error('Error fetching brands:', error);
     }
   };
 
   const fetchSeries = async () => {
     if (!selectedBrand) return;
     
-    const { data, error } = await supabase
-      .from('series')
-      .select('*')
-      .eq('brand_id', selectedBrand.id)
-      .order('name');
+    try {
+      const { data, error } = await supabase
+        .from('series')
+        .select('id, name, slug, brand_id, image_url')
+        .eq('brand_id', selectedBrand.id)
+        .order('name');
 
-    if (error) {
-      toast.error('Failed to load series');
-      console.error(error);
-    } else {
-      setSeriesList(data || []);
+      if (error) {
+        toast.error('Failed to load series');
+        console.error(error);
+      } else {
+        setSeriesList(data || []);
+      }
+    } catch (error) {
+      console.error('Error fetching series:', error);
     }
   };
 
   const fetchModels = async () => {
     if (!selectedSeries) return;
     
-    const { data, error } = await supabase
-      .from('models')
-      .select('*')
-      .eq('series_id', selectedSeries.id)
-      .eq('active', true);
+    try {
+      const { data, error } = await supabase
+        .from('models')
+        .select('id, name, slug, series_id, base_price, thumbnail_url, description, active')
+        .eq('series_id', selectedSeries.id)
+        .eq('active', true);
 
-    if (error) {
-      toast.error('Failed to load models');
-      console.error(error);
-    } else {
-      // Sort by year (newest first), extracting year from model name
-      const sortedModels = (data || []).sort((a, b) => {
-        const yearA = parseInt(a.name.match(/\b(19|20)\d{2}\b/)?.[0] || '0');
-        const yearB = parseInt(b.name.match(/\b(19|20)\d{2}\b/)?.[0] || '0');
-        return yearB - yearA; // Descending order (newest first)
-      });
-      setModels(sortedModels);
+      if (error) {
+        toast.error('Failed to load models');
+        console.error(error);
+      } else {
+        // Sort by year (newest first), extracting year from model name
+        const sortedModels = (data || []).sort((a, b) => {
+          const yearA = parseInt(a.name.match(/\b(19|20)\d{2}\b/)?.[0] || '0');
+          const yearB = parseInt(b.name.match(/\b(19|20)\d{2}\b/)?.[0] || '0');
+          return yearB - yearA; // Descending order (newest first)
+        });
+        setModels(sortedModels);
+      }
+    } catch (error) {
+      console.error('Error fetching models:', error);
     }
   };
 
@@ -316,7 +329,7 @@ const Sell = () => {
       navigate(`/sell/${category}/${brand.slug}`);
       setTransitionLoading(false);
       window.scrollTo(0, 0);
-    }, 800);
+    }, 300);
   };
 
   const handleSeriesSelect = (series: any) => {
@@ -327,7 +340,7 @@ const Sell = () => {
       navigate(`/sell/${category}/${selectedBrand.slug}/${series.slug}`);
       setTransitionLoading(false);
       window.scrollTo(0, 0);
-    }, 800);
+    }, 300);
   };
 
   const handleModelSelect = (model: any) => {
@@ -337,7 +350,7 @@ const Sell = () => {
       navigate(`/sell/${category}/${selectedBrand.slug}/${selectedSeries.slug}/${model.slug}`);
       setTransitionLoading(false);
       window.scrollTo(0, 0);
-    }, 800);
+    }, 300);
   };
 
   const handleCalculatePrice = async () => {
@@ -353,7 +366,7 @@ const Sell = () => {
       setStep("price");
       setTransitionLoading(false);
       window.scrollTo(0, 0);
-    }, 800);
+    }, 300);
   };
 
   const handleConfirmPrice = () => {
@@ -437,7 +450,33 @@ const Sell = () => {
 
       // Clear session storage after successful submission
       sessionStorage.removeItem('sellFormState');
-      toast.success('Request created successfully!');
+      
+      // Generate and download invoice
+      try {
+        await generateInvoice({
+          orderId: data.id,
+          date: new Date().toLocaleDateString('en-IN', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          }),
+          customerName: user.user_metadata?.full_name || user.email?.split('@')[0] || 'Customer',
+          customerEmail: user.email || '',
+          customerPhone: user.user_metadata?.phone || 'N/A',
+          address: address,
+          pincode: pincode,
+          deviceModel: selectedModel.name,
+          deviceBrand: selectedBrand.name,
+          deviceSeries: selectedSeries.name,
+          condition: getConditionLabel(physicalCondition),
+          estimatedPrice: estimatedPrice,
+        });
+      } catch (invoiceError) {
+        console.error('Invoice generation error:', invoiceError);
+        // Don't block the flow if invoice fails
+      }
+      
+      toast.success('Booking successful! Invoice is downloading...');
       navigate(`/track/${data.id}`);
     } catch (err) {
       console.error('Unexpected error:', err);

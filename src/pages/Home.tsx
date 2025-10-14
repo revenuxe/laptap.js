@@ -8,6 +8,7 @@ import ProcessSteps from "@/components/ProcessSteps";
 import TrustSignals from "@/components/TrustSignals";
 import { BrandsSection } from "@/components/BrandsSection";
 import Footer from "@/components/Footer";
+import WhatsAppFloat from "@/components/WhatsAppFloat";
 
 const Home = () => {
   return (
@@ -59,6 +60,7 @@ const Home = () => {
           <TrustSignals />
         </main>
         <Footer />
+        <WhatsAppFloat />
       </div>
     </>
   );
