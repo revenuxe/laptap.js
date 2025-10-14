@@ -792,19 +792,38 @@ const Sell = () => {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-background z-50">
-                      <SelectItem value="i3">Intel Core i3</SelectItem>
-                      <SelectItem value="i5">Intel Core i5</SelectItem>
-                      <SelectItem value="i7">Intel Core i7</SelectItem>
-                      <SelectItem value="i9">Intel Core i9</SelectItem>
-                      <SelectItem value="ryzen_3">AMD Ryzen 3</SelectItem>
-                      <SelectItem value="ryzen_5">AMD Ryzen 5</SelectItem>
-                      <SelectItem value="ryzen_7">AMD Ryzen 7</SelectItem>
-                      <SelectItem value="ryzen_9">AMD Ryzen 9</SelectItem>
-                      <SelectItem value="m1">Apple M1</SelectItem>
-                      <SelectItem value="m2">Apple M2</SelectItem>
-                      <SelectItem value="m3">Apple M3</SelectItem>
-                      <SelectItem value="m4_pro">Apple M4 Pro</SelectItem>
-                      <SelectItem value="m4_max">Apple M4 Max</SelectItem>
+                     {/* Intel Processors */}
+    <SelectItem value="i3">Intel Core i3</SelectItem>
+    <SelectItem value="i5">Intel Core i5</SelectItem>
+    <SelectItem value="i7">Intel Core i7</SelectItem>
+    <SelectItem value="i9">Intel Core i9</SelectItem>
+
+    {/* AMD Processors */}
+    <SelectItem value="ryzen_3">AMD Ryzen 3</SelectItem>
+    <SelectItem value="ryzen_5">AMD Ryzen 5</SelectItem>
+    <SelectItem value="ryzen_7">AMD Ryzen 7</SelectItem>
+    <SelectItem value="ryzen_9">AMD Ryzen 9</SelectItem>
+
+    {/* Apple Silicon Processors */}
+    <SelectItem value="m1">Apple M1</SelectItem>
+    <SelectItem value="m1_pro">Apple M1 Pro</SelectItem>
+    <SelectItem value="m1_max">Apple M1 Max</SelectItem>
+    <SelectItem value="m1_ultra">Apple M1 Ultra</SelectItem>
+
+    <SelectItem value="m2">Apple M2</SelectItem>
+    <SelectItem value="m2_pro">Apple M2 Pro</SelectItem>
+    <SelectItem value="m2_max">Apple M2 Max</SelectItem>
+    <SelectItem value="m2_ultra">Apple M2 Ultra</SelectItem>
+
+    <SelectItem value="m3">Apple M3</SelectItem>
+    <SelectItem value="m3_pro">Apple M3 Pro</SelectItem>
+    <SelectItem value="m3_max">Apple M3 Max</SelectItem>
+    <SelectItem value="m3_ultra">Apple M3 Ultra</SelectItem>
+
+    <SelectItem value="m4">Apple M4</SelectItem>
+    <SelectItem value="m4_pro">Apple M4 Pro</SelectItem>
+    <SelectItem value="m4_max">Apple M4 Max</SelectItem>
+    <SelectItem value="m4_ultra">Apple M4 Ultra</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
