@@ -106,6 +106,8 @@ const SPEC_ADDITIONS: Record<string, number> = {
   'cpu_m1': 0.05,
   'cpu_m2': 0.05,
   'cpu_m3': 0.05,
+  'cpu_m4_pro': 0.05,
+  'cpu_m4_max': 0.05,
   
   // RAM
   'ram_4gb': -0.05,
@@ -213,8 +215,8 @@ export function calculateDynamicPrice(
   // 7. Competitive Check - ensure we're competitive
   // Simulating competitor prices (in production, this would be fetched from API/database)
   const competitorPrice = basePrice * 0.4; // Assuming competitors offer ~40% of base price
-  const competitiveBonus = Math.max(0, competitorPrice + 1000 - priceAfterSpecs);
-  const finalPriceActual = Math.max(priceAfterSpecs, competitorPrice + 1000);
+  const competitiveBonus = Math.max(0, competitorPrice + 500 - priceAfterSpecs);
+  const finalPriceActual = Math.max(priceAfterSpecs, competitorPrice + 500);
 
   // 8. Marketing Bonus Calculation (for display purposes)
   let marketingBonus = 0;

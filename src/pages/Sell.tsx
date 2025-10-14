@@ -803,6 +803,8 @@ const Sell = () => {
                       <SelectItem value="m1">Apple M1</SelectItem>
                       <SelectItem value="m2">Apple M2</SelectItem>
                       <SelectItem value="m3">Apple M3</SelectItem>
+                      <SelectItem value="m4_pro">Apple M4 Pro</SelectItem>
+                      <SelectItem value="m4_max">Apple M4 Max</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
