@@ -117,8 +117,9 @@ export function OrdersTab() {
                 </TableCell>
                 <TableCell>
                   <div className="text-sm">
-                    <div className="font-medium">{order.profiles?.full_name || 'Unknown'}</div>
-                    <div className="text-muted-foreground">{order.profiles?.email}</div>
+                    <div className="font-medium">{order.config?.customerName || order.profiles?.full_name || 'Unknown'}</div>
+                    <div className="text-muted-foreground">{order.config?.customerMobile || order.profiles?.phone}</div>
+                    <div className="text-xs text-muted-foreground">{order.profiles?.email}</div>
                   </div>
                 </TableCell>
                 <TableCell>

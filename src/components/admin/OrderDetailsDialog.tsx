@@ -112,9 +112,9 @@ export function OrderDetailsDialog({
             <div>
               <h3 className="font-semibold mb-2">Customer Information</h3>
               <div className="space-y-1 text-sm">
-                <p><strong>Name:</strong> {order.profiles?.full_name || 'N/A'}</p>
+                <p><strong>Name:</strong> {order.config?.customerName || order.profiles?.full_name || 'N/A'}</p>
                 <p><strong>Email:</strong> {order.profiles?.email || 'N/A'}</p>
-                <p><strong>Phone:</strong> {order.profiles?.phone || 'N/A'}</p>
+                <p><strong>Phone:</strong> {order.config?.customerMobile || order.profiles?.phone || 'N/A'}</p>
               </div>
             </div>
 
