@@ -1278,7 +1278,7 @@ const Sell = () => {
                         <p className="font-semibold text-sm md:text-base text-green-700 dark:text-green-400">You're Getting the Best Deal!</p>
                       </div>
                       <p className="text-xs md:text-sm text-green-700 dark:text-green-400">
-                        That's <span className="font-bold">₹{marketingBonus.toLocaleString()} more</span> than what Cashify and other buyers typically offer!
+                        That's <span className="font-bold">₹{marketingBonus.toLocaleString()} more</span> than other buyers typically offer!
                       </p>
                       <p className="text-xs text-green-600 dark:text-green-500 mt-1">
                         Our competitive analysis shows this is {Math.round((marketingBonus / displayedPrice) * 100)}% above market average
