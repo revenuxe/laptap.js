@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Database } from "@/integrations/supabase/types";
@@ -22,33 +23,23 @@ import { CountdownTimer } from "@/components/CountdownTimer";
 type Step = "category" | "brand" | "series" | "model" | "switch_on" | "config" | "additional" | "functionality" | "screen_condition" | "age" | "physical_condition" | "accessories" | "price" | "confirm";
 
 const Sell = () => {
-  const [searchParams] = useSearchParams();
+  const params = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const initialCategory = searchParams.get("category") as "laptop" | "desktop" | null;
-  const initialBrand = searchParams.get("brand");
-  const initialSeries = searchParams.get("series");
-  const initialModelId = searchParams.get("model");
   
-  const [step, setStep] = useState<Step>(
-    initialModelId ? "model" : 
-    initialSeries ? "model" : 
-    initialBrand ? "series" : 
-    initialCategory ? "brand" : 
-    "category"
-  );
+  const [step, setStep] = useState<Step>("category");
   const [loading, setLoading] = useState(false);
   const [transitionLoading, setTransitionLoading] = useState(false);
+  const [loadingFromSlug, setLoadingFromSlug] = useState(false);
   
   // Form data
-  const [category, setCategory] = useState<"laptop" | "desktop" | "">(initialCategory || "");
+  const [category, setCategory] = useState<"laptop" | "desktop" | "">("" );
   const [brands, setBrands] = useState<any[]>([]);
-  const [selectedBrand, setSelectedBrand] = useState(initialBrand || "");
+  const [selectedBrand, setSelectedBrand] = useState<any>(null);
   const [seriesList, setSeriesList] = useState<any[]>([]);
-  const [selectedSeries, setSelectedSeries] = useState(initialSeries || "");
+  const [selectedSeries, setSelectedSeries] = useState<any>(null);
   const [models, setModels] = useState<any[]>([]);
   const [selectedModel, setSelectedModel] = useState<any>(null);
-  const [preloadingModel, setPreloadingModel] = useState(!!initialModelId);
   
   // Device details
   const [switchesOn, setSwitchesOn] = useState<boolean | null>(null);
@@ -87,28 +78,81 @@ const Sell = () => {
   const [seriesSearch, setSeriesSearch] = useState("");
   const [modelSearch, setModelSearch] = useState("");
 
-  // Load pre-selected model from URL params
+  // Load data from URL params on mount
   useEffect(() => {
-    if (initialModelId && preloadingModel) {
-      loadPreselectedModel();
-    }
-  }, [initialModelId, preloadingModel]);
+    loadFromUrlParams();
+  }, [params.category, params.brand, params.series, params.model]);
 
-  const loadPreselectedModel = async () => {
+  const loadFromUrlParams = async () => {
+    setLoadingFromSlug(true);
+    
     try {
-      const { data: modelData } = await supabase
-        .from('models')
-        .select('*')
-        .eq('id', initialModelId)
-        .single();
-      
-      if (modelData) {
-        setSelectedModel(modelData);
-        setPreloadingModel(false);
+      // Load category
+      if (params.category) {
+        const cat = params.category as "laptop" | "desktop";
+        setCategory(cat);
+        
+        // Load brand if in URL
+        if (params.brand) {
+          const { data: brandData, error: brandError } = await supabase
+            .from('brands')
+            .select('*')
+            .eq('slug', params.brand)
+            .maybeSingle();
+          
+          if (brandData && !brandError) {
+            setSelectedBrand(brandData);
+            
+            // Load series if in URL
+            if (params.series) {
+              const { data: seriesData, error: seriesError } = await supabase
+                .from('series')
+                .select('*')
+                .eq('slug', params.series)
+                .eq('brand_id', brandData.id)
+                .maybeSingle();
+              
+              if (seriesData && !seriesError) {
+                setSelectedSeries(seriesData);
+                
+                // Load model if in URL
+                if (params.model) {
+                  const { data: modelData, error: modelError } = await supabase
+                    .from('models')
+                    .select('*')
+                    .eq('slug', params.model)
+                    .eq('series_id', seriesData.id)
+                    .maybeSingle();
+                  
+                  if (modelData && !modelError) {
+                    setSelectedModel(modelData);
+                    setStep("switch_on");
+                  } else {
+                    setStep("model");
+                  }
+                } else {
+                  setStep("model");
+                }
+              } else {
+                setStep("series");
+              }
+            } else {
+              setStep("series");
+            }
+          } else {
+            setStep("brand");
+          }
+        } else {
+          setStep("brand");
+        }
+      } else {
+        setStep("category");
       }
-    } catch (e) {
-      console.error('Failed to load preselected model:', e);
-      setPreloadingModel(false);
+    } catch (error) {
+      console.error('Error loading from URL:', error);
+      setStep("category");
+    } finally {
+      setLoadingFromSlug(false);
     }
   };
 
@@ -143,21 +187,21 @@ const Sell = () => {
 
   // Fetch brands when category is selected
   useEffect(() => {
-    if (category) {
+    if (category && !params.brand) {
       fetchBrands();
     }
   }, [category]);
 
   // Fetch series when brand is selected
   useEffect(() => {
-    if (selectedBrand) {
+    if (selectedBrand && !params.series) {
       fetchSeries();
     }
   }, [selectedBrand]);
 
   // Fetch models when series is selected
   useEffect(() => {
-    if (selectedSeries) {
+    if (selectedSeries && !params.model) {
       fetchModels();
     }
   }, [selectedSeries]);
@@ -193,10 +237,12 @@ const Sell = () => {
   };
 
   const fetchSeries = async () => {
+    if (!selectedBrand) return;
+    
     const { data, error } = await supabase
       .from('series')
       .select('*')
-      .eq('brand_id', selectedBrand)
+      .eq('brand_id', selectedBrand.id)
       .order('name');
 
     if (error) {
@@ -208,10 +254,12 @@ const Sell = () => {
   };
 
   const fetchModels = async () => {
+    if (!selectedSeries) return;
+    
     const { data, error } = await supabase
       .from('models')
       .select('*')
-      .eq('series_id', selectedSeries)
+      .eq('series_id', selectedSeries.id)
       .eq('active', true);
 
     if (error) {
@@ -231,18 +279,9 @@ const Sell = () => {
   const calculateRealTimePrice = async () => {
     if (!selectedModel || !selectedBrand) return;
 
-    // Get brand name
-    const { data: brandData } = await supabase
-      .from('brands')
-      .select('name')
-      .eq('id', selectedBrand)
-      .single();
-
-    if (!brandData) return;
-
     const result = calculateDynamicPrice(
       parseFloat(selectedModel.base_price),
-      brandData.name,
+      selectedBrand.name,
       ageMonths,
       physicalCondition,
       screenCondition,
@@ -264,28 +303,28 @@ const Sell = () => {
 
   const handleCategorySelect = (selected: "laptop" | "desktop") => {
     setCategory(selected);
-    setStep("brand");
+    navigate(`/sell/${selected}`);
     window.scrollTo(0, 0);
   };
 
-  const handleBrandSelect = (brandId: string) => {
+  const handleBrandSelect = (brand: any) => {
     setTransitionLoading(true);
-    setSelectedBrand(brandId);
-    setSelectedSeries("");
+    setSelectedBrand(brand);
+    setSelectedSeries(null);
     setSelectedModel(null);
     setTimeout(() => {
-      setStep("series");
+      navigate(`/sell/${category}/${brand.slug}`);
       setTransitionLoading(false);
       window.scrollTo(0, 0);
     }, 800);
   };
 
-  const handleSeriesSelect = (seriesId: string) => {
+  const handleSeriesSelect = (series: any) => {
     setTransitionLoading(true);
-    setSelectedSeries(seriesId);
+    setSelectedSeries(series);
     setSelectedModel(null);
     setTimeout(() => {
-      setStep("model");
+      navigate(`/sell/${category}/${selectedBrand.slug}/${series.slug}`);
       setTransitionLoading(false);
       window.scrollTo(0, 0);
     }, 800);
@@ -295,6 +334,7 @@ const Sell = () => {
     setTransitionLoading(true);
     setSelectedModel(model);
     setTimeout(() => {
+      navigate(`/sell/${category}/${selectedBrand.slug}/${selectedSeries.slug}/${model.slug}`);
       setTransitionLoading(false);
       window.scrollTo(0, 0);
     }, 800);
@@ -336,7 +376,8 @@ const Sell = () => {
         marketingBonus,
       };
       sessionStorage.setItem('sellFormState', JSON.stringify(formState));
-      navigate(`/auth?redirect=/sell`);
+      sessionStorage.setItem('sellFormRedirect', window.location.pathname);
+      navigate(`/auth?redirect=${encodeURIComponent(window.location.pathname)}`);
       return;
     }
     setStep("confirm");
@@ -405,11 +446,56 @@ const Sell = () => {
     }
   };
 
+  // Dynamic SEO meta tags
+  const getMetaTitle = () => {
+    if (selectedModel && selectedBrand && selectedSeries) {
+      return `Sell ${selectedBrand.name} ${selectedSeries.name} ${selectedModel.name} | Laptap.in`;
+    }
+    if (selectedSeries && selectedBrand) {
+      return `Sell ${selectedBrand.name} ${selectedSeries.name} | Laptap.in`;
+    }
+    if (selectedBrand) {
+      return `Sell ${selectedBrand.name} ${category === 'laptop' ? 'Laptop' : 'Desktop'} | Laptap.in`;
+    }
+    if (category) {
+      return `Sell ${category === 'laptop' ? 'Laptop' : 'Desktop'} | Get Instant Quote | Laptap.in`;
+    }
+    return 'Sell Your Laptop or Desktop | Laptap.in';
+  };
+
+  const getMetaDescription = () => {
+    if (selectedModel && selectedBrand && selectedSeries) {
+      return `Get the best price for your used ${selectedBrand.name} ${selectedSeries.name} ${selectedModel.name} on Laptap.in. Free pickup and instant payment. Sell now!`;
+    }
+    if (selectedSeries && selectedBrand) {
+      return `Sell your ${selectedBrand.name} ${selectedSeries.name} for the best price on Laptap.in. Free doorstep pickup and instant secure payment.`;
+    }
+    if (selectedBrand) {
+      return `Sell your ${selectedBrand.name} ${category} for the best price. Get instant quotes, free pickup, and secure payment on Laptap.in.`;
+    }
+    if (category) {
+      return `Sell your ${category} for the best price. Get instant quotes, free doorstep pickup, and instant secure payment on Laptap.in.`;
+    }
+    return 'Sell your laptop or desktop for the best price. Get instant quotes, free pickup, and instant payment on Laptap.in.';
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>{getMetaTitle()}</title>
+        <meta name="description" content={getMetaDescription()} />
+        <meta property="og:title" content={getMetaTitle()} />
+        <meta property="og:description" content={getMetaDescription()} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://laptap.in${window.location.pathname}`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={getMetaTitle()} />
+        <meta name="twitter:description" content={getMetaDescription()} />
+      </Helmet>
+      
       <Header />
       
-      {(loading || transitionLoading) && <Loader />}
+      {(loading || transitionLoading || loadingFromSlug) && <Loader />}
       
       <main className="flex-1 py-12 md:py-20">
         <div className="container max-w-4xl">
@@ -470,7 +556,7 @@ const Sell = () => {
                   <Card
                     key={brand.id}
                     className="cursor-pointer p-4 hover:border-primary hover:shadow-lg transition-all"
-                    onClick={() => handleBrandSelect(brand.id)}
+                    onClick={() => handleBrandSelect(brand)}
                   >
                     {brand.logo_url && (
                       <div className="aspect-square mb-2 flex items-center justify-center overflow-hidden rounded-md bg-muted p-3">
@@ -517,7 +603,7 @@ const Sell = () => {
                   <Card
                     key={series.id}
                     className="cursor-pointer p-4 hover:border-primary hover:shadow-lg transition-all"
-                    onClick={() => handleSeriesSelect(series.id)}
+                    onClick={() => handleSeriesSelect(series)}
                   >
                     {series.image_url && (
                       <div className="aspect-square mb-3 overflow-hidden rounded-md bg-muted">

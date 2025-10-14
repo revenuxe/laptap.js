@@ -39,10 +39,10 @@ const Hero = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Button variant="cta" size="lg" onClick={() => navigate("/sell")} className="min-w-[200px]">
+            <Button variant="cta" size="lg" onClick={() => navigate("/sell/laptop")} className="min-w-[200px]">
               Sell Now
             </Button>
-            <Button variant="outline" size="lg" onClick={() => navigate("/sell")} className="min-w-[200px]">
+            <Button variant="outline" size="lg" onClick={() => navigate("/sell/laptop")} className="min-w-[200px]">
               Get Instant Quote
             </Button>
           </div>
@@ -65,7 +65,7 @@ const Hero = () => {
 
           {/* Category cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
-            <div className="group cursor-pointer rounded-3xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-8 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50" onClick={() => navigate("/sell?category=laptop")}>
+            <div className="group cursor-pointer rounded-3xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-8 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50" onClick={() => navigate("/sell/laptop")}>
               <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
                 <Laptop className="h-8 w-8 text-primary" />
               </div>
@@ -75,7 +75,7 @@ const Hero = () => {
               </p>
             </div>
             
-            <div className="group cursor-pointer rounded-3xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-8 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50" onClick={() => navigate("/sell?category=desktop")}>
+            <div className="group cursor-pointer rounded-3xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-8 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50" onClick={() => navigate("/sell/desktop")}>
               <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
                 <Monitor className="h-8 w-8 text-primary" />
               </div>

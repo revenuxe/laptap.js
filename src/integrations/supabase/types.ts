@@ -49,6 +49,7 @@ export type Database = {
           id: string
           logo_url: string | null
           name: string
+          slug: string | null
           updated_at: string | null
         }
         Insert: {
@@ -58,6 +59,7 @@ export type Database = {
           id?: string
           logo_url?: string | null
           name: string
+          slug?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -67,6 +69,7 @@ export type Database = {
           id?: string
           logo_url?: string | null
           name?: string
+          slug?: string | null
           updated_at?: string | null
         }
         Relationships: [
@@ -117,6 +120,7 @@ export type Database = {
           name: string
           series_id: string
           sku: string | null
+          slug: string | null
           thumbnail_url: string | null
           updated_at: string | null
         }
@@ -130,6 +134,7 @@ export type Database = {
           name: string
           series_id: string
           sku?: string | null
+          slug?: string | null
           thumbnail_url?: string | null
           updated_at?: string | null
         }
@@ -143,6 +148,7 @@ export type Database = {
           name?: string
           series_id?: string
           sku?: string | null
+          slug?: string | null
           thumbnail_url?: string | null
           updated_at?: string | null
         }
@@ -381,6 +387,7 @@ export type Database = {
           id: string
           image_url: string | null
           name: string
+          slug: string | null
           updated_at: string | null
         }
         Insert: {
@@ -389,6 +396,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           name: string
+          slug?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -397,6 +405,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           name?: string
+          slug?: string | null
           updated_at?: string | null
         }
         Relationships: [
@@ -435,6 +444,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      generate_slug: {
+        Args: { name: string }
+        Returns: string
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

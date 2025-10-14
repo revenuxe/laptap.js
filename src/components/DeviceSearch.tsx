@@ -10,17 +10,21 @@ interface Brand {
   id: string;
   name: string;
   logo_url: string | null;
+  slug: string;
 }
 
 interface Model {
   id: string;
   name: string;
+  slug: string;
   series: {
     id: string;
     name: string;
+    slug: string;
     brand_id: string;
     brands: {
       name: string;
+      slug: string;
     };
   };
 }
@@ -41,7 +45,7 @@ export function DeviceSearch() {
   async function loadBrands() {
     const { data } = await (supabase
       .from('brands')
-      .select('id, name, logo_url') as any);
+      .select('id, name, logo_url, slug') as any);
     
     if (data) {
       setBrands(data as Brand[]);
@@ -54,12 +58,15 @@ export function DeviceSearch() {
       .select(`
         id,
         name,
+        slug,
         series (
           id,
           name,
+          slug,
           brand_id,
           brands (
-            name
+            name,
+            slug
           )
         )
       `)
@@ -94,14 +101,14 @@ export function DeviceSearch() {
   };
 
   const handleModelClick = async (model: Model) => {
-    // Navigate with all required params to pre-fill the form
-    navigate(`/sell?category=laptop&brand=${model.series.brand_id}&series=${model.series.id}&model=${model.id}`);
+    // Navigate with hierarchical slug-based URL
+    navigate(`/sell/laptop/${model.series.brands.slug}/${model.series.slug}/${model.slug}`);
     setSearchQuery('');
     setShowResults(false);
   };
 
-  const handleBrandClick = (brandId: string) => {
-    navigate(`/sell?category=laptop&brand=${brandId}`);
+  const handleBrandClick = (brandSlug: string) => {
+    navigate(`/sell/laptop/${brandSlug}`);
     setSearchQuery('');
     setShowResults(false);
   };
@@ -157,7 +164,7 @@ export function DeviceSearch() {
             key={brand.id}
             variant="outline"
             size="sm"
-            onClick={() => handleBrandClick(brand.id)}
+            onClick={() => handleBrandClick(brand.slug)}
             className="rounded-full"
           >
             {brand.name}

@@ -10,6 +10,7 @@ interface Brand {
   name: string;
   logo_url: string | null;
   category_id: string;
+  slug: string;
 }
 
 export function BrandsSection() {
@@ -33,7 +34,7 @@ export function BrandsSection() {
       if (categoryData) {
         const { data } = await supabase
           .from('brands')
-          .select('id, name, logo_url, category_id')
+          .select('id, name, logo_url, category_id, slug')
           .eq('category_id', categoryData.id)
           .order('name')
           .limit(8);
@@ -49,8 +50,8 @@ export function BrandsSection() {
     }
   }
 
-  const handleBrandClick = (brandId: string) => {
-    navigate(`/sell?category=laptop&brand=${brandId}`);
+  const handleBrandClick = (brandSlug: string) => {
+    navigate(`/sell/laptop/${brandSlug}`);
   };
 
   if (loading || brands.length === 0) return null;
@@ -72,7 +73,7 @@ export function BrandsSection() {
             <Card
               key={brand.id}
               className="cursor-pointer p-6 hover:border-primary hover:shadow-lg transition-all group"
-              onClick={() => handleBrandClick(brand.id)}
+              onClick={() => handleBrandClick(brand.slug)}
             >
               {brand.logo_url ? (
                 <div className="aspect-square flex items-center justify-center overflow-hidden rounded-md bg-background p-4">
@@ -105,7 +106,7 @@ export function BrandsSection() {
         <div className="text-center">
           <Button
             size="lg"
-            onClick={() => navigate('/sell')}
+            onClick={() => navigate('/sell/laptop')}
             className="group"
           >
             View All Brands
