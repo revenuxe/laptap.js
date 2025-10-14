@@ -126,7 +126,7 @@ const Sell = () => {
                   
                   if (modelData && !modelError) {
                     setSelectedModel(modelData);
-                    setStep("switch_on");
+                    setStep("model"); // Show "Get Upto" price page first
                   } else {
                     setStep("model");
                   }
