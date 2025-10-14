@@ -309,8 +309,12 @@ export const generateInvoice = async (data: InvoiceData) => {
         </div>
         
         <div class="footer">
+          <p style="background: #fff3cd; padding: 15px; border-radius: 6px; border-left: 4px solid #ffc107; margin-bottom: 20px; color: #856404;">
+            <strong>Disclaimer:</strong> This is not a sales invoice. This is just a booking invoice with reference number. 
+            Sales invoice will be shared once the device is picked up.
+          </p>
           <p><strong>Laptap.in</strong> - Your Trusted Device Selling Platform</p>
-          <p>Contact: support@laptap.in | Phone: +91 98765 43210</p>
+          <p>Contact: laptap.in@gmail.com</p>
           <p>This is a computer-generated invoice and does not require a signature.</p>
         </div>
       </div>

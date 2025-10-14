@@ -7,8 +7,9 @@ import Footer from '@/components/Footer';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle2, Circle, Phone, MessageSquare } from 'lucide-react';
+import { CheckCircle2, Circle, Phone, MessageSquare, Download } from 'lucide-react';
 import { toast } from 'sonner';
+import { generateInvoice } from '@/utils/invoiceGenerator';
 
 const Track = () => {
   const { id } = useParams<{ id: string }>();
@@ -118,6 +119,29 @@ const Track = () => {
 
   const currentStatusIndex = statusSteps.findIndex(s => s.key === sellRequest.status);
 
+  const handleDownloadInvoice = async () => {
+    try {
+      await generateInvoice({
+        orderId: sellRequest.id.slice(0, 8),
+        date: new Date(sellRequest.created_at).toLocaleDateString('en-IN'),
+        customerName: sellRequest.customer_name,
+        customerEmail: sellRequest.customer_email,
+        customerPhone: sellRequest.customer_phone,
+        address: sellRequest.address,
+        pincode: sellRequest.pincode,
+        deviceModel: sellRequest.models?.name || "",
+        deviceBrand: sellRequest.models?.series?.brands?.name || "",
+        deviceSeries: sellRequest.models?.series?.name || "",
+        condition: sellRequest.condition || "",
+        estimatedPrice: sellRequest.estimated_price,
+        finalPrice: sellRequest.final_price,
+      });
+    } catch (error) {
+      toast.error('Failed to generate invoice');
+      console.error(error);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -173,15 +197,22 @@ const Track = () => {
             </div>
           </Card>
 
-          <div className="flex gap-4">
-            <Button variant="cta" className="flex-1">
-              <Phone className="mr-2 h-4 w-4" />
-              Call Support
+          <div className="flex flex-col gap-4">
+            <Button variant="cta" onClick={handleDownloadInvoice} className="w-full">
+              <Download className="mr-2 h-4 w-4" />
+              Download Invoice
             </Button>
-            <Button variant="outline" className="flex-1">
-              <MessageSquare className="mr-2 h-4 w-4" />
-              Chat Support
-            </Button>
+            
+            <div className="flex gap-4">
+              <Button variant="outline" className="flex-1">
+                <Phone className="mr-2 h-4 w-4" />
+                Call Support
+              </Button>
+              <Button variant="outline" className="flex-1">
+                <MessageSquare className="mr-2 h-4 w-4" />
+                Chat Support
+              </Button>
+            </div>
           </div>
         </div>
       </main>

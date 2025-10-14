@@ -451,32 +451,7 @@ const Sell = () => {
       // Clear session storage after successful submission
       sessionStorage.removeItem('sellFormState');
       
-      // Generate and download invoice
-      try {
-        await generateInvoice({
-          orderId: data.id,
-          date: new Date().toLocaleDateString('en-IN', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          }),
-          customerName: user.user_metadata?.full_name || user.email?.split('@')[0] || 'Customer',
-          customerEmail: user.email || '',
-          customerPhone: user.user_metadata?.phone || 'N/A',
-          address: address,
-          pincode: pincode,
-          deviceModel: selectedModel.name,
-          deviceBrand: selectedBrand.name,
-          deviceSeries: selectedSeries.name,
-          condition: getConditionLabel(physicalCondition),
-          estimatedPrice: estimatedPrice,
-        });
-      } catch (invoiceError) {
-        console.error('Invoice generation error:', invoiceError);
-        // Don't block the flow if invoice fails
-      }
-      
-      toast.success('Booking successful! Invoice is downloading...');
+      toast.success('Booking successful!');
       navigate(`/track/${data.id}`);
     } catch (err) {
       console.error('Unexpected error:', err);
