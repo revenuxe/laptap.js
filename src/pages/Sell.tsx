@@ -20,6 +20,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Laptop, Monitor, Smartphone, ChevronRight, Loader2, TrendingUp, Zap, Search } from "lucide-react";
 import { toast } from "sonner";
 import { CountdownTimer } from "@/components/CountdownTimer";
+import { MobileSellForm } from "@/components/MobileSellForm";
 
 type Step = "category" | "brand" | "series" | "model" | "switch_on" | "config" | "additional" | "functionality" | "screen_condition" | "age" | "physical_condition" | "accessories" | "price" | "confirm";
 
@@ -754,15 +755,40 @@ const Sell = () => {
               <Button 
                 variant="cta" 
                 className="w-full"
-                onClick={() => { setStep("switch_on"); window.scrollTo(0, 0); }}
+                onClick={() => { 
+                  if (category === "mobile") {
+                    setStep("config"); // For mobile, skip switch_on and go to mobile form
+                  } else {
+                    setStep("switch_on"); // For laptop/desktop, continue with standard flow
+                  }
+                  window.scrollTo(0, 0); 
+                }}
               >
                 Evaluate Now <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
             </Card>
           )}
 
-          {/* Switch On Check */}
-          {step === "switch_on" && (
+          {/* Mobile Sell Form - Comprehensive form for mobiles */}
+          {step === "config" && category === "mobile" && selectedModel && selectedBrand && (
+            <div className="max-w-4xl mx-auto">
+              <MobileSellForm
+                basePrice={parseFloat(selectedModel.base_price)}
+                brandName={selectedBrand.name}
+                modelName={selectedModel.name}
+                onPriceCalculated={(finalPrice, displayPrice, breakdown) => {
+                  setEstimatedPrice(finalPrice);
+                  setDisplayedPrice(displayPrice);
+                  setPriceBreakdown(breakdown);
+                  setStep("price");
+                  window.scrollTo(0, 0);
+                }}
+              />
+            </div>
+          )}
+
+          {/* Switch On Check - Only for Laptop/Desktop */}
+          {step === "switch_on" && category !== "mobile" && (
             <Card className="p-8 max-w-2xl mx-auto space-y-6">
               <div className="text-center mb-6">
                 <h2 className="text-2xl font-semibold mb-2">Does the {category} switch on?</h2>
@@ -793,8 +819,8 @@ const Sell = () => {
             </Card>
           )}
 
-          {/* System Configuration */}
-          {step === "config" && (
+          {/* System Configuration - Only for Laptop/Desktop */}
+          {step === "config" && category !== "mobile" && (
             <Card className="p-4 md:p-8 max-w-2xl mx-auto space-y-4 md:space-y-6">
               <div className="text-center mb-4 md:mb-6">
                 <h2 className="text-xl md:text-2xl font-semibold mb-2">Select the system configuration of your device?</h2>
@@ -929,8 +955,8 @@ const Sell = () => {
             </Card>
           )}
 
-          {/* Additional Features */}
-          {step === "additional" && (
+          {/* Additional Features - Only for Laptop/Desktop */}
+          {step === "additional" && category !== "mobile" && (
             <Card className="p-4 md:p-8 max-w-2xl mx-auto space-y-4 md:space-y-6">
               <div className="text-center mb-4 md:mb-6">
                 <p className="text-sm md:text-base text-muted-foreground mb-2">Please select your device additional features</p>
@@ -997,8 +1023,8 @@ const Sell = () => {
             </Card>
           )}
 
-          {/* Functionality Check */}
-          {step === "functionality" && (
+          {/* Functionality Check - Only for Laptop/Desktop */}
+          {step === "functionality" && category !== "mobile" && (
             <Card className="p-8 max-w-2xl mx-auto space-y-6">
               <div className="text-center mb-6">
                 <h2 className="text-2xl font-semibold mb-2">Does your device function properly?</h2>
@@ -1038,8 +1064,8 @@ const Sell = () => {
             </Card>
           )}
 
-          {/* Screen Condition */}
-          {step === "screen_condition" && (
+          {/* Screen Condition - Only for Laptop/Desktop */}
+          {step === "screen_condition" && category !== "mobile" && (
             <Card className="p-4 md:p-8 max-w-2xl mx-auto space-y-4 md:space-y-6">
               <div className="text-center mb-4 md:mb-6">
                 <h2 className="text-xl md:text-2xl font-semibold mb-2">Select the screen condition of your device?</h2>
@@ -1105,8 +1131,8 @@ const Sell = () => {
             </Card>
           )}
 
-          {/* Device Age */}
-          {step === "age" && (
+          {/* Device Age - Only for Laptop/Desktop */}
+          {step === "age" && category !== "mobile" && (
             <Card className="p-8 max-w-2xl mx-auto space-y-6">
               <div className="text-center mb-6">
                 <h2 className="text-2xl font-semibold mb-2">Age of your device</h2>
@@ -1144,8 +1170,8 @@ const Sell = () => {
             </Card>
           )}
 
-          {/* Physical Condition */}
-          {step === "physical_condition" && (
+          {/* Physical Condition - Only for Laptop/Desktop */}
+          {step === "physical_condition" && category !== "mobile" && (
             <Card className="p-8 max-w-2xl mx-auto space-y-6">
               <div className="text-center mb-6">
                 <h2 className="text-2xl font-semibold mb-2">Select the physical condition of your device?</h2>
@@ -1216,8 +1242,8 @@ const Sell = () => {
             </Card>
           )}
 
-          {/* Accessories */}
-          {step === "accessories" && (
+          {/* Accessories - Only for Laptop/Desktop */}
+          {step === "accessories" && category !== "mobile" && (
             <Card className="p-8 max-w-2xl mx-auto space-y-6">
               <div className="text-center mb-6">
                 <h2 className="text-2xl font-semibold mb-2">Available Accessories</h2>
