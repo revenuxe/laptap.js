@@ -43,19 +43,26 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
   const [ageCategory, setAgeCategory] = useState<string>("");
 
   // Available variants (you can make this dynamic from model data)
-  const variants = [
-    { ram: "4", rom: "64" },
-    { ram: "6", rom: "128" },
-    { ram: "8", rom: "128" },
-    { ram: "8", rom: "256" },
-    { ram: "12", rom: "256" },
-  ];
+ const variants = [
+  { ram: "4", rom: "64" },
+  { ram: "4", rom: "128" },
+  { ram: "4", rom: "256" },
+  { ram: "6", rom: "128" },
+  { ram: "6", rom: "256" },
+  { ram: "6", rom: "512" },
+  { ram: "8", rom: "128" },
+  { ram: "8", rom: "256" },
+  { ram: "8", rom: "512" },
+  { ram: "12", rom: "256" },
+  { ram: "12", rom: "512" },
+  { ram: "16", rom: "256" }
+];
 
   const screenDefectOptions = [
-    { id: "screen_broken_scratch", label: "Broken/scratch on device screen", icon: "📱" },
-    { id: "screen_dead_spot_line", label: "Dead spot/visible line and discoloration on screen", icon: "📱" },
-    { id: "body_scratch_dent", label: "Scratch/Dent on device body", icon: "📱" },
-    { id: "panel_missing_broken", label: "Device panel missing/broken", icon: "📱" },
+    { id: "screen_broken_scratch", label: "Broken/scratch on device screen", icon:},
+    { id: "screen_dead_spot_line", label: "Dead spot/visible line and discoloration on screen", icon:},
+    { id: "body_scratch_dent", label: "Scratch/Dent on device body", icon: },
+    { id: "panel_missing_broken", label: "Device panel missing/broken", icon: },
   ];
 
   const functionalIssueOptions = [
