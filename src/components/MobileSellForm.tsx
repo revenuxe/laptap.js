@@ -14,22 +14,43 @@ import {
   Cpu,
   ChevronRight,
 } from "lucide-react";
-import { calculateMobilePrice, getVariantMultiplier, getMobileAgeCategoryLabel } from "@/utils/mobilePricingEngine";
+import {
+  calculateMobilePrice,
+  getVariantMultiplier,
+  getMobileAgeCategoryLabel,
+} from "@/utils/mobilePricingEngine";
 
 interface MobileSellFormProps {
   basePrice: number;
   brandName: string;
   modelName: string;
-  onPriceCalculated: (price: number, displayPrice: number, breakdown: any) => void;
+  onPriceCalculated: (
+    price: number,
+    displayPrice: number,
+    breakdown: any
+  ) => void;
 }
 
-type FormStep = "variant" | "screen_defects" | "functional" | "accessories" | "device_details" | "age";
+type FormStep =
+  | "variant"
+  | "screen_defects"
+  | "functional"
+  | "accessories"
+  | "device_details"
+  | "age";
 
-export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalculated }: MobileSellFormProps) => {
+export const MobileSellForm = ({
+  basePrice,
+  brandName,
+  modelName,
+  onPriceCalculated,
+}: MobileSellFormProps) => {
   const [currentStep, setCurrentStep] = useState<FormStep>("variant");
-  
-  // Form state
-  const [selectedVariant, setSelectedVariant] = useState<{ ram: string; rom: string } | null>(null);
+
+  const [selectedVariant, setSelectedVariant] = useState<{
+    ram: string;
+    rom: string;
+  } | null>(null);
   const [screenBodyDefects, setScreenBodyDefects] = useState<string[]>([]);
   const [functionalIssues, setFunctionalIssues] = useState<string[]>([]);
   const [accessories, setAccessories] = useState<string[]>([]);
@@ -42,20 +63,26 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
   });
   const [ageCategory, setAgeCategory] = useState<string>("");
 
-  // Available variants (you can make this dynamic from model data)
   const variants = [
     { ram: "4", rom: "64" },
+    { ram: "4", rom: "128" },
+    { ram: "4", rom: "256" },
     { ram: "6", rom: "128" },
+    { ram: "6", rom: "256" },
+    { ram: "6", rom: "512" },
     { ram: "8", rom: "128" },
     { ram: "8", rom: "256" },
+    { ram: "8", rom: "512" },
     { ram: "12", rom: "256" },
+    { ram: "12", rom: "512" },
+    { ram: "16", rom: "256" },
   ];
 
   const screenDefectOptions = [
-    { id: "screen_broken_scratch", label: "Broken/scratch on device screen", icon: "📱" },
-    { id: "screen_dead_spot_line", label: "Dead spot/visible line and discoloration on screen", icon: "📱" },
-    { id: "body_scratch_dent", label: "Scratch/Dent on device body", icon: "📱" },
-    { id: "panel_missing_broken", label: "Device panel missing/broken", icon: "📱" },
+    { id: "screen_broken_scratch", label: "Broken/scratch on device screen" },
+    { id: "screen_dead_spot_line", label: "Dead spot/visible line and discoloration on screen" },
+    { id: "body_scratch_dent", label: "Scratch/Dent on device body" },
+    { id: "panel_missing_broken", label: "Device panel missing/broken" },
   ];
 
   const functionalIssueOptions = [
@@ -79,8 +106,8 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
   ];
 
   const accessoryOptions = [
-    { id: "original_charger", label: "Original Charger of Device", icon: "🔌" },
-    { id: "original_box", label: "Original Box with same IMEI", icon: "📦" },
+    { id: "original_charger", label: "Original Charger of Device" },
+    { id: "original_box", label: "Original Box with same IMEI" },
   ];
 
   const ageOptions = [
@@ -92,31 +119,43 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
 
   const handleDefectToggle = (defectId: string) => {
     setScreenBodyDefects((prev) =>
-      prev.includes(defectId) ? prev.filter((d) => d !== defectId) : [...prev, defectId]
+      prev.includes(defectId)
+        ? prev.filter((d) => d !== defectId)
+        : [...prev, defectId]
     );
   };
 
   const handleFunctionalToggle = (issueId: string) => {
     setFunctionalIssues((prev) =>
-      prev.includes(issueId) ? prev.filter((i) => i !== issueId) : [...prev, issueId]
+      prev.includes(issueId)
+        ? prev.filter((i) => i !== issueId)
+        : [...prev, issueId]
     );
   };
 
   const handleAccessoryToggle = (accessoryId: string) => {
     setAccessories((prev) =>
-      prev.includes(accessoryId) ? prev.filter((a) => a !== accessoryId) : [...prev, accessoryId]
+      prev.includes(accessoryId)
+        ? prev.filter((a) => a !== accessoryId)
+        : [...prev, accessoryId]
     );
   };
 
   const handleContinue = () => {
-    const steps: FormStep[] = ["variant", "screen_defects", "functional", "accessories", "device_details", "age"];
+    const steps: FormStep[] = [
+      "variant",
+      "screen_defects",
+      "functional",
+      "accessories",
+      "device_details",
+      "age",
+    ];
     const currentIndex = steps.indexOf(currentStep);
-    
+
     if (currentIndex < steps.length - 1) {
       setCurrentStep(steps[currentIndex + 1]);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
-      // Calculate final price
       calculateFinalPrice();
     }
   };
@@ -124,8 +163,11 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
   const calculateFinalPrice = () => {
     if (!selectedVariant || !ageCategory) return;
 
-    const variantMultiplier = getVariantMultiplier(selectedVariant.ram, selectedVariant.rom);
-    
+    const variantMultiplier = getVariantMultiplier(
+      selectedVariant.ram,
+      selectedVariant.rom
+    );
+
     const result = calculateMobilePrice(
       basePrice,
       brandName,
@@ -137,7 +179,11 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
       deviceDetails
     );
 
-    onPriceCalculated(result.finalPriceActual, result.displayedPrice, result.breakdown);
+    onPriceCalculated(
+      result.finalPriceActual,
+      result.displayedPrice,
+      result.breakdown
+    );
   };
 
   const canContinue = () => {
@@ -160,12 +206,17 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
             className="h-full bg-primary transition-all duration-300"
             style={{
               width: `${
-                currentStep === "variant" ? "16%" :
-                currentStep === "screen_defects" ? "33%" :
-                currentStep === "functional" ? "50%" :
-                currentStep === "accessories" ? "66%" :
-                currentStep === "device_details" ? "83%" :
-                "100%"
+                currentStep === "variant"
+                  ? "16%"
+                  : currentStep === "screen_defects"
+                  ? "33%"
+                  : currentStep === "functional"
+                  ? "50%"
+                  : currentStep === "accessories"
+                  ? "66%"
+                  : currentStep === "device_details"
+                  ? "83%"
+                  : "100%"
               }`,
             }}
           />
@@ -175,24 +226,26 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
       {/* Variant Selection */}
       {currentStep === "variant" && (
         <Card className="p-8">
-          <div className="flex items-center gap-3 mb-6">
-            <Cpu className="h-6 w-6 text-primary" />
-            <h2 className="text-2xl font-bold">Choose a Variant</h2>
-          </div>
-          <p className="text-muted-foreground mb-6">Select your device's RAM and storage configuration</p>
-          
+          <h2 className="text-2xl font-bold mb-6">Choose a Variant</h2>
+          <p className="text-muted-foreground mb-6">
+            Select your device's RAM and storage configuration
+          </p>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {variants.map((variant) => (
               <button
                 key={`${variant.ram}-${variant.rom}`}
                 onClick={() => setSelectedVariant(variant)}
                 className={`p-4 rounded-lg border-2 transition-all hover:scale-105 ${
-                  selectedVariant?.ram === variant.ram && selectedVariant?.rom === variant.rom
+                  selectedVariant?.ram === variant.ram &&
+                  selectedVariant?.rom === variant.rom
                     ? "border-primary bg-primary/10"
                     : "border-border hover:border-primary/50"
                 }`}
               >
-                <div className="text-lg font-semibold">{variant.ram} GB / {variant.rom} GB</div>
+                <div className="text-lg font-semibold">
+                  {variant.ram} GB / {variant.rom} GB
+                </div>
               </button>
             ))}
           </div>
@@ -202,12 +255,13 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
       {/* Screen/Body Defects */}
       {currentStep === "screen_defects" && (
         <Card className="p-8">
-          <div className="flex items-center gap-3 mb-6">
-            <ShieldAlert className="h-6 w-6 text-primary" />
-            <h2 className="text-2xl font-bold">Select screen/body defects that are applicable!</h2>
-          </div>
-          <p className="text-muted-foreground mb-6">Please provide correct details</p>
-          
+          <h2 className="text-2xl font-bold mb-6">
+            Select screen/body defects that are applicable!
+          </h2>
+          <p className="text-muted-foreground mb-6">
+            Please provide correct details
+          </p>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {screenDefectOptions.map((defect) => (
               <button
@@ -219,7 +273,6 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
                     : "border-border hover:border-primary/50"
                 }`}
               >
-                <div className="text-4xl mb-3">{defect.icon}</div>
                 <div className="text-sm font-medium">{defect.label}</div>
               </button>
             ))}
@@ -230,12 +283,13 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
       {/* Functional Issues */}
       {currentStep === "functional" && (
         <Card className="p-8">
-          <div className="flex items-center gap-3 mb-6">
-            <Wrench className="h-6 w-6 text-primary" />
-            <h2 className="text-2xl font-bold">Functional or Physical Problems</h2>
-          </div>
-          <p className="text-muted-foreground mb-6">Please choose appropriate condition to get accurate quote</p>
-          
+          <h2 className="text-2xl font-bold mb-6">
+            Functional or Physical Problems
+          </h2>
+          <p className="text-muted-foreground mb-6">
+            Please choose appropriate condition to get accurate quote
+          </p>
+
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {functionalIssueOptions.map((issue) => (
               <button
@@ -247,7 +301,6 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
                     : "border-border hover:border-primary/50"
                 }`}
               >
-                <div className="text-3xl mb-2">📱</div>
                 <div className="text-xs font-medium">{issue.label}</div>
               </button>
             ))}
@@ -258,12 +311,11 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
       {/* Accessories */}
       {currentStep === "accessories" && (
         <Card className="p-8">
-          <div className="flex items-center gap-3 mb-6">
-            <Box className="h-6 w-6 text-primary" />
-            <h2 className="text-2xl font-bold">Do you have the following?</h2>
-          </div>
-          <p className="text-muted-foreground mb-6">Please select accessories which are available</p>
-          
+          <h2 className="text-2xl font-bold mb-6">Do you have the following?</h2>
+          <p className="text-muted-foreground mb-6">
+            Please select accessories which are available
+          </p>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
             {accessoryOptions.map((accessory) => (
               <button
@@ -275,7 +327,6 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
                     : "border-border hover:border-primary/50"
                 }`}
               >
-                <div className="text-4xl mb-3">{accessory.icon}</div>
                 <div className="text-sm font-medium">{accessory.label}</div>
               </button>
             ))}
@@ -286,20 +337,27 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
       {/* Device Details */}
       {currentStep === "device_details" && (
         <Card className="p-8">
-          <div className="flex items-center gap-3 mb-6">
-            <FileCheck className="h-6 w-6 text-primary" />
-            <h2 className="text-2xl font-bold">Tell us more about your device?</h2>
-          </div>
-          <p className="text-muted-foreground mb-6">Please answer a few questions about your device.</p>
-          
+          <h2 className="text-2xl font-bold mb-6">
+            Tell us more about your device?
+          </h2>
+          <p className="text-muted-foreground mb-6">
+            Please answer a few questions about your device.
+          </p>
+
           <div className="space-y-6 max-w-2xl mx-auto">
             {/* Question 1 */}
             <div className="space-y-3">
-              <Label className="text-base font-semibold">1. Are you able to make and receive calls?</Label>
-              <p className="text-sm text-muted-foreground">Check your device for cellular network connectivity issues.</p>
+              <Label className="text-base font-semibold">
+                1. Are you able to make and receive calls?
+              </Label>
               <RadioGroup
                 value={deviceDetails.canMakeCalls ? "yes" : "no"}
-                onValueChange={(value) => setDeviceDetails({ ...deviceDetails, canMakeCalls: value === "yes" })}
+                onValueChange={(value) =>
+                  setDeviceDetails({
+                    ...deviceDetails,
+                    canMakeCalls: value === "yes",
+                  })
+                }
                 className="flex gap-4"
               >
                 <div className="flex items-center space-x-2">
@@ -315,11 +373,17 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
 
             {/* Question 2 */}
             <div className="space-y-3">
-              <Label className="text-base font-semibold">2. Is your device's touch screen working properly?</Label>
-              <p className="text-sm text-muted-foreground">Check the touch screen functionality of your phone.</p>
+              <Label className="text-base font-semibold">
+                2. Is your device's touch screen working properly?
+              </Label>
               <RadioGroup
                 value={deviceDetails.touchWorking ? "yes" : "no"}
-                onValueChange={(value) => setDeviceDetails({ ...deviceDetails, touchWorking: value === "yes" })}
+                onValueChange={(value) =>
+                  setDeviceDetails({
+                    ...deviceDetails,
+                    touchWorking: value === "yes",
+                  })
+                }
                 className="flex gap-4"
               >
                 <div className="flex items-center space-x-2">
@@ -335,11 +399,17 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
 
             {/* Question 3 */}
             <div className="space-y-3">
-              <Label className="text-base font-semibold">3. Is your phone's screen original?</Label>
-              <p className="text-sm text-muted-foreground">Pick "Yes" if screen was never changed or was changed by Authorized Service Center. Pick "No" if screen was changed at local shop.</p>
+              <Label className="text-base font-semibold">
+                3. Is your phone's screen original?
+              </Label>
               <RadioGroup
                 value={deviceDetails.originalScreen ? "yes" : "no"}
-                onValueChange={(value) => setDeviceDetails({ ...deviceDetails, originalScreen: value === "yes" })}
+                onValueChange={(value) =>
+                  setDeviceDetails({
+                    ...deviceDetails,
+                    originalScreen: value === "yes",
+                  })
+                }
                 className="flex gap-4"
               >
                 <div className="flex items-center space-x-2">
@@ -355,11 +425,17 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
 
             {/* Question 4 */}
             <div className="space-y-3">
-              <Label className="text-base font-semibold">4. Is your device under manufacturer warranty?</Label>
-              <p className="text-sm text-muted-foreground">You can get a better price for your device if it's under manufacturer warranty with a GST valid bill.</p>
+              <Label className="text-base font-semibold">
+                4. Is your device under manufacturer warranty?
+              </Label>
               <RadioGroup
                 value={deviceDetails.underWarranty ? "yes" : "no"}
-                onValueChange={(value) => setDeviceDetails({ ...deviceDetails, underWarranty: value === "yes" })}
+                onValueChange={(value) =>
+                  setDeviceDetails({
+                    ...deviceDetails,
+                    underWarranty: value === "yes",
+                  })
+                }
                 className="flex gap-4"
               >
                 <div className="flex items-center space-x-2">
@@ -375,11 +451,17 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
 
             {/* Question 5 */}
             <div className="space-y-3">
-              <Label className="text-base font-semibold">5. Do you have GST valid bill with the same IMEI?</Label>
-              <p className="text-sm text-muted-foreground">Make sure your bill has device IMEI mentioned on it.</p>
+              <Label className="text-base font-semibold">
+                5. Do you have GST valid bill with the same IMEI?
+              </Label>
               <RadioGroup
                 value={deviceDetails.hasGstBill ? "yes" : "no"}
-                onValueChange={(value) => setDeviceDetails({ ...deviceDetails, hasGstBill: value === "yes" })}
+                onValueChange={(value) =>
+                  setDeviceDetails({
+                    ...deviceDetails,
+                    hasGstBill: value === "yes",
+                  })
+                }
                 className="flex gap-4"
               >
                 <div className="flex items-center space-x-2">
@@ -399,12 +481,11 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
       {/* Age Selection */}
       {currentStep === "age" && (
         <Card className="p-8">
-          <div className="flex items-center gap-3 mb-6">
-            <Calendar className="h-6 w-6 text-primary" />
-            <h2 className="text-2xl font-bold">What is your mobile age?</h2>
-          </div>
-          <p className="text-muted-foreground mb-6">(Because you chose your device is under brand's warranty)</p>
-          
+          <h2 className="text-2xl font-bold mb-6">What is your mobile age?</h2>
+          <p className="text-muted-foreground mb-6">
+            (Because you chose your device is under brand's warranty)
+          </p>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
             {ageOptions.map((option) => (
               <button
@@ -416,7 +497,9 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
                     : "border-border hover:border-primary/50"
                 }`}
               >
-                <div className="text-lg font-semibold mb-2">{option.label}</div>
+                <div className="text-lg font-semibold mb-2">
+                  {option.label}
+                </div>
                 {option.subtext && (
                   <div className="text-xs text-primary">{option.subtext}</div>
                 )}
