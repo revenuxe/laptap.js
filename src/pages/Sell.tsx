@@ -95,12 +95,20 @@ const Sell = () => {
         const cat = params.category as "laptop" | "desktop" | "mobile";
         setCategory(cat);
         
+        // Get category ID first
+        const { data: categoryData } = await supabase
+          .from('categories')
+          .select('id')
+          .eq('slug', cat)
+          .single();
+        
         // Load brand if in URL
-        if (params.brand) {
+        if (params.brand && categoryData) {
           const { data: brandData, error: brandError } = await supabase
             .from('brands')
             .select('*')
             .eq('slug', params.brand)
+            .eq('category_id', categoryData.id)
             .maybeSingle();
           
           if (brandData && !brandError) {
