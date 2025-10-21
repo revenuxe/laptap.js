@@ -8,7 +8,7 @@ import {
   calculateMobilePrice,
   getVariantMultiplier,
 } from "@/utils/mobilePricingEngine";
-import { useAuth } from "src/pages/useAuth"; // Your authentication hook
+import { Auth } from "src/pages/Auth"; // Your authentication hook
 
 interface MobileSellFormProps {
   basePrice: number;
