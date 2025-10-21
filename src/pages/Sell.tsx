@@ -17,7 +17,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Laptop, Monitor, ChevronRight, Loader2, TrendingUp, Zap, Search } from "lucide-react";
+import { Laptop, Monitor, Smartphone, ChevronRight, Loader2, TrendingUp, Zap, Search } from "lucide-react";
 import { toast } from "sonner";
 import { CountdownTimer } from "@/components/CountdownTimer";
 
@@ -34,7 +34,7 @@ const Sell = () => {
   const [loadingFromSlug, setLoadingFromSlug] = useState(false);
   
   // Form data
-  const [category, setCategory] = useState<"laptop" | "desktop" | "">("" );
+  const [category, setCategory] = useState<"laptop" | "desktop" | "mobile" | "">("" );
   const [brands, setBrands] = useState<any[]>([]);
   const [selectedBrand, setSelectedBrand] = useState<any>(null);
   const [seriesList, setSeriesList] = useState<any[]>([]);
@@ -92,7 +92,7 @@ const Sell = () => {
     try {
       // Load category
       if (params.category) {
-        const cat = params.category as "laptop" | "desktop";
+        const cat = params.category as "laptop" | "desktop" | "mobile";
         setCategory(cat);
         
         // Load brand if in URL
@@ -324,7 +324,7 @@ const Sell = () => {
     setPriceBreakdown(result.breakdown);
   };
 
-  const handleCategorySelect = (selected: "laptop" | "desktop") => {
+  const handleCategorySelect = (selected: "laptop" | "desktop" | "mobile") => {
     setCategory(selected);
     navigate(`/sell/${selected}`);
     window.scrollTo(0, 0);
@@ -491,12 +491,12 @@ const Sell = () => {
       return `Sell ${selectedBrand.name} ${selectedSeries.name} | Laptap.in`;
     }
     if (selectedBrand) {
-      return `Sell ${selectedBrand.name} ${category === 'laptop' ? 'Laptop' : 'Desktop'} | Laptap.in`;
+      return `Sell ${selectedBrand.name} ${category === 'laptop' ? 'Laptop' : category === 'mobile' ? 'Mobile' : 'Desktop'} | Laptap.in`;
     }
     if (category) {
-      return `Sell ${category === 'laptop' ? 'Laptop' : 'Desktop'} | Get Instant Quote | Laptap.in`;
+      return `Sell ${category === 'laptop' ? 'Laptop' : category === 'mobile' ? 'Mobile' : 'Desktop'} | Get Instant Quote | Laptap.in`;
     }
-    return 'Sell Your Laptop or Desktop | Laptap.in';
+    return 'Sell Your Laptop, Mobile or Desktop | Laptap.in';
   };
 
   const getMetaDescription = () => {
@@ -546,13 +546,21 @@ const Sell = () => {
           {step === "category" && (
             <div className="space-y-6">
               <h2 className="text-xl font-semibold text-center">Select Device Category</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
                 <Card
                   className="cursor-pointer p-8 hover:border-primary hover:shadow-lg transition-all"
                   onClick={() => handleCategorySelect("laptop")}
                 >
                   <Laptop className="mx-auto mb-4 h-16 w-16 text-primary" />
                   <h3 className="text-center text-lg font-semibold">Laptop</h3>
+                </Card>
+
+                <Card
+                  className="cursor-pointer p-8 hover:border-primary hover:shadow-lg transition-all"
+                  onClick={() => handleCategorySelect("mobile")}
+                >
+                  <Smartphone className="mx-auto mb-4 h-16 w-16 text-primary" />
+                  <h3 className="text-center text-lg font-semibold">Mobile</h3>
                 </Card>
                 
                 <Card
