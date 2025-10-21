@@ -10,7 +10,7 @@ import {
   calculateMobilePrice,
   getVariantMultiplier,
 } from "@/utils/mobilePricingEngine";
-import { useAuth } from "@/context/AuthContext"; // <-- your auth context
+import { useAuth } from "@/contexts/AuthContext"; // <-- your auth context
 import { useNavigate } from "react-router-dom";
 
 interface MobileSellFormProps {
