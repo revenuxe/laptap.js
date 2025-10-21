@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Smartphone,
   ShieldAlert,
@@ -13,8 +12,16 @@ import {
   Calendar,
   Cpu,
   ChevronRight,
+  Monitor,
+  AlertTriangle,
+  Square,
+  Package,
 } from "lucide-react";
-import { calculateMobilePrice, getVariantMultiplier, getMobileAgeCategoryLabel } from "@/utils/mobilePricingEngine";
+import {
+  calculateMobilePrice,
+  getVariantMultiplier,
+  getMobileAgeCategoryLabel,
+} from "@/utils/mobilePricingEngine";
 
 interface MobileSellFormProps {
   basePrice: number;
@@ -23,11 +30,22 @@ interface MobileSellFormProps {
   onPriceCalculated: (price: number, displayPrice: number, breakdown: any) => void;
 }
 
-type FormStep = "variant" | "screen_defects" | "functional" | "accessories" | "device_details" | "age";
+type FormStep =
+  | "variant"
+  | "screen_defects"
+  | "functional"
+  | "accessories"
+  | "device_details"
+  | "age";
 
-export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalculated }: MobileSellFormProps) => {
+export const MobileSellForm = ({
+  basePrice,
+  brandName,
+  modelName,
+  onPriceCalculated,
+}: MobileSellFormProps) => {
   const [currentStep, setCurrentStep] = useState<FormStep>("variant");
-  
+
   // Form state
   const [selectedVariant, setSelectedVariant] = useState<{ ram: string; rom: string } | null>(null);
   const [screenBodyDefects, setScreenBodyDefects] = useState<string[]>([]);
@@ -42,29 +60,31 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
   });
   const [ageCategory, setAgeCategory] = useState<string>("");
 
-  // Available variants (you can make this dynamic from model data)
- const variants = [
-  { ram: "4", rom: "64" },
-  { ram: "4", rom: "128" },
-  { ram: "4", rom: "256" },
-  { ram: "6", rom: "128" },
-  { ram: "6", rom: "256" },
-  { ram: "6", rom: "512" },
-  { ram: "8", rom: "128" },
-  { ram: "8", rom: "256" },
-  { ram: "8", rom: "512" },
-  { ram: "12", rom: "256" },
-  { ram: "12", rom: "512" },
-  { ram: "16", rom: "256" }
-];
-
-  const screenDefectOptions = [
-    { id: "screen_broken_scratch", label: "Broken/scratch on device screen", icon:},
-    { id: "screen_dead_spot_line", label: "Dead spot/visible line and discoloration on screen", icon:},
-    { id: "body_scratch_dent", label: "Scratch/Dent on device body", icon: },
-    { id: "panel_missing_broken", label: "Device panel missing/broken", icon: },
+  // Updated variants
+  const variants = [
+    { ram: "4", rom: "64" },
+    { ram: "4", rom: "128" },
+    { ram: "4", rom: "256" },
+    { ram: "6", rom: "128" },
+    { ram: "6", rom: "256" },
+    { ram: "6", rom: "512" },
+    { ram: "8", rom: "128" },
+    { ram: "8", rom: "256" },
+    { ram: "8", rom: "512" },
+    { ram: "12", rom: "256" },
+    { ram: "12", rom: "512" },
+    { ram: "16", rom: "256" },
   ];
 
+  // Screen/body defect options with icons fixed
+  const screenDefectOptions = [
+    { id: "screen_broken_scratch", label: "Broken/scratch on device screen", icon: <Monitor /> },
+    { id: "screen_dead_spot_line", label: "Dead spot/visible line/discoloration on screen", icon: <AlertTriangle /> },
+    { id: "body_scratch_dent", label: "Scratch/Dent on device body", icon: <Square /> },
+    { id: "panel_missing_broken", label: "Device panel missing/broken", icon: <Package /> },
+  ];
+
+  // Functional issues (icons removed)
   const functionalIssueOptions = [
     { id: "front_camera", label: "Front Camera not working" },
     { id: "back_camera", label: "Back Camera not working" },
@@ -116,14 +136,20 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
   };
 
   const handleContinue = () => {
-    const steps: FormStep[] = ["variant", "screen_defects", "functional", "accessories", "device_details", "age"];
+    const steps: FormStep[] = [
+      "variant",
+      "screen_defects",
+      "functional",
+      "accessories",
+      "device_details",
+      "age",
+    ];
     const currentIndex = steps.indexOf(currentStep);
-    
+
     if (currentIndex < steps.length - 1) {
       setCurrentStep(steps[currentIndex + 1]);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
-      // Calculate final price
       calculateFinalPrice();
     }
   };
@@ -132,7 +158,7 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
     if (!selectedVariant || !ageCategory) return;
 
     const variantMultiplier = getVariantMultiplier(selectedVariant.ram, selectedVariant.rom);
-    
+
     const result = calculateMobilePrice(
       basePrice,
       brandName,
@@ -160,19 +186,24 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
 
   return (
     <div className="space-y-6 animate-fade-in">
-      {/* Progress indicator */}
+      {/* Progress bar */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
           <div
             className="h-full bg-primary transition-all duration-300"
             style={{
               width: `${
-                currentStep === "variant" ? "16%" :
-                currentStep === "screen_defects" ? "33%" :
-                currentStep === "functional" ? "50%" :
-                currentStep === "accessories" ? "66%" :
-                currentStep === "device_details" ? "83%" :
-                "100%"
+                currentStep === "variant"
+                  ? "16%"
+                  : currentStep === "screen_defects"
+                  ? "33%"
+                  : currentStep === "functional"
+                  ? "50%"
+                  : currentStep === "accessories"
+                  ? "66%"
+                  : currentStep === "device_details"
+                  ? "83%"
+                  : "100%"
               }`,
             }}
           />
@@ -187,7 +218,7 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
             <h2 className="text-2xl font-bold">Choose a Variant</h2>
           </div>
           <p className="text-muted-foreground mb-6">Select your device's RAM and storage configuration</p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {variants.map((variant) => (
               <button
@@ -199,7 +230,9 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
                     : "border-border hover:border-primary/50"
                 }`}
               >
-                <div className="text-lg font-semibold">{variant.ram} GB / {variant.rom} GB</div>
+                <div className="text-lg font-semibold">
+                  {variant.ram} GB / {variant.rom} GB
+                </div>
               </button>
             ))}
           </div>
@@ -211,10 +244,9 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
         <Card className="p-8">
           <div className="flex items-center gap-3 mb-6">
             <ShieldAlert className="h-6 w-6 text-primary" />
-            <h2 className="text-2xl font-bold">Select screen/body defects that are applicable!</h2>
+            <h2 className="text-2xl font-bold">Select screen/body defects</h2>
           </div>
-          <p className="text-muted-foreground mb-6">Please provide correct details</p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {screenDefectOptions.map((defect) => (
               <button
@@ -226,7 +258,7 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
                     : "border-border hover:border-primary/50"
                 }`}
               >
-                <div className="text-4xl mb-3">{defect.icon}</div>
+                <div className="flex justify-center mb-3">{defect.icon}</div>
                 <div className="text-sm font-medium">{defect.label}</div>
               </button>
             ))}
@@ -241,8 +273,6 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
             <Wrench className="h-6 w-6 text-primary" />
             <h2 className="text-2xl font-bold">Functional or Physical Problems</h2>
           </div>
-          <p className="text-muted-foreground mb-6">Please choose appropriate condition to get accurate quote</p>
-          
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {functionalIssueOptions.map((issue) => (
               <button
@@ -254,179 +284,7 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
                     : "border-border hover:border-primary/50"
                 }`}
               >
-                <div className="text-3xl mb-2">📱</div>
                 <div className="text-xs font-medium">{issue.label}</div>
-              </button>
-            ))}
-          </div>
-        </Card>
-      )}
-
-      {/* Accessories */}
-      {currentStep === "accessories" && (
-        <Card className="p-8">
-          <div className="flex items-center gap-3 mb-6">
-            <Box className="h-6 w-6 text-primary" />
-            <h2 className="text-2xl font-bold">Do you have the following?</h2>
-          </div>
-          <p className="text-muted-foreground mb-6">Please select accessories which are available</p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
-            {accessoryOptions.map((accessory) => (
-              <button
-                key={accessory.id}
-                onClick={() => handleAccessoryToggle(accessory.id)}
-                className={`p-6 rounded-lg border-2 transition-all hover:scale-105 text-center ${
-                  accessories.includes(accessory.id)
-                    ? "border-primary bg-primary/10"
-                    : "border-border hover:border-primary/50"
-                }`}
-              >
-                <div className="text-4xl mb-3">{accessory.icon}</div>
-                <div className="text-sm font-medium">{accessory.label}</div>
-              </button>
-            ))}
-          </div>
-        </Card>
-      )}
-
-      {/* Device Details */}
-      {currentStep === "device_details" && (
-        <Card className="p-8">
-          <div className="flex items-center gap-3 mb-6">
-            <FileCheck className="h-6 w-6 text-primary" />
-            <h2 className="text-2xl font-bold">Tell us more about your device?</h2>
-          </div>
-          <p className="text-muted-foreground mb-6">Please answer a few questions about your device.</p>
-          
-          <div className="space-y-6 max-w-2xl mx-auto">
-            {/* Question 1 */}
-            <div className="space-y-3">
-              <Label className="text-base font-semibold">1. Are you able to make and receive calls?</Label>
-              <p className="text-sm text-muted-foreground">Check your device for cellular network connectivity issues.</p>
-              <RadioGroup
-                value={deviceDetails.canMakeCalls ? "yes" : "no"}
-                onValueChange={(value) => setDeviceDetails({ ...deviceDetails, canMakeCalls: value === "yes" })}
-                className="flex gap-4"
-              >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="yes" id="calls-yes" />
-                  <Label htmlFor="calls-yes">Yes</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="no" id="calls-no" />
-                  <Label htmlFor="calls-no">No</Label>
-                </div>
-              </RadioGroup>
-            </div>
-
-            {/* Question 2 */}
-            <div className="space-y-3">
-              <Label className="text-base font-semibold">2. Is your device's touch screen working properly?</Label>
-              <p className="text-sm text-muted-foreground">Check the touch screen functionality of your phone.</p>
-              <RadioGroup
-                value={deviceDetails.touchWorking ? "yes" : "no"}
-                onValueChange={(value) => setDeviceDetails({ ...deviceDetails, touchWorking: value === "yes" })}
-                className="flex gap-4"
-              >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="yes" id="touch-yes" />
-                  <Label htmlFor="touch-yes">Yes</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="no" id="touch-no" />
-                  <Label htmlFor="touch-no">No</Label>
-                </div>
-              </RadioGroup>
-            </div>
-
-            {/* Question 3 */}
-            <div className="space-y-3">
-              <Label className="text-base font-semibold">3. Is your phone's screen original?</Label>
-              <p className="text-sm text-muted-foreground">Pick "Yes" if screen was never changed or was changed by Authorized Service Center. Pick "No" if screen was changed at local shop.</p>
-              <RadioGroup
-                value={deviceDetails.originalScreen ? "yes" : "no"}
-                onValueChange={(value) => setDeviceDetails({ ...deviceDetails, originalScreen: value === "yes" })}
-                className="flex gap-4"
-              >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="yes" id="screen-yes" />
-                  <Label htmlFor="screen-yes">Yes</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="no" id="screen-no" />
-                  <Label htmlFor="screen-no">No</Label>
-                </div>
-              </RadioGroup>
-            </div>
-
-            {/* Question 4 */}
-            <div className="space-y-3">
-              <Label className="text-base font-semibold">4. Is your device under manufacturer warranty?</Label>
-              <p className="text-sm text-muted-foreground">You can get a better price for your device if it's under manufacturer warranty with a GST valid bill.</p>
-              <RadioGroup
-                value={deviceDetails.underWarranty ? "yes" : "no"}
-                onValueChange={(value) => setDeviceDetails({ ...deviceDetails, underWarranty: value === "yes" })}
-                className="flex gap-4"
-              >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="yes" id="warranty-yes" />
-                  <Label htmlFor="warranty-yes">Yes</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="no" id="warranty-no" />
-                  <Label htmlFor="warranty-no">No</Label>
-                </div>
-              </RadioGroup>
-            </div>
-
-            {/* Question 5 */}
-            <div className="space-y-3">
-              <Label className="text-base font-semibold">5. Do you have GST valid bill with the same IMEI?</Label>
-              <p className="text-sm text-muted-foreground">Make sure your bill has device IMEI mentioned on it.</p>
-              <RadioGroup
-                value={deviceDetails.hasGstBill ? "yes" : "no"}
-                onValueChange={(value) => setDeviceDetails({ ...deviceDetails, hasGstBill: value === "yes" })}
-                className="flex gap-4"
-              >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="yes" id="gst-yes" />
-                  <Label htmlFor="gst-yes">Yes</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="no" id="gst-no" />
-                  <Label htmlFor="gst-no">No</Label>
-                </div>
-              </RadioGroup>
-            </div>
-          </div>
-        </Card>
-      )}
-
-      {/* Age Selection */}
-      {currentStep === "age" && (
-        <Card className="p-8">
-          <div className="flex items-center gap-3 mb-6">
-            <Calendar className="h-6 w-6 text-primary" />
-            <h2 className="text-2xl font-bold">What is your mobile age?</h2>
-          </div>
-          <p className="text-muted-foreground mb-6">(Because you chose your device is under brand's warranty)</p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
-            {ageOptions.map((option) => (
-              <button
-                key={option.id}
-                onClick={() => setAgeCategory(option.id)}
-                className={`p-6 rounded-lg border-2 transition-all hover:scale-105 ${
-                  ageCategory === option.id
-                    ? "border-primary bg-primary/10"
-                    : "border-border hover:border-primary/50"
-                }`}
-              >
-                <div className="text-lg font-semibold mb-2">{option.label}</div>
-                {option.subtext && (
-                  <div className="text-xs text-primary">{option.subtext}</div>
-                )}
               </button>
             ))}
           </div>
@@ -448,3 +306,4 @@ export const MobileSellForm = ({ basePrice, brandName, modelName, onPriceCalcula
     </div>
   );
 };
+
