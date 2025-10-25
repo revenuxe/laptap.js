@@ -84,7 +84,13 @@ const Sell = () => {
 
   // Load data from URL params on mount
   useEffect(() => {
-    loadFromUrlParams();
+    // Check if we're restoring from session storage (after login redirect)
+    const savedState = sessionStorage.getItem('sellFormState');
+    
+    if (!savedState) {
+      // Only load from URL if we're not restoring saved state
+      loadFromUrlParams();
+    }
   }, [params.category, params.brand, params.series, params.model]);
 
   // Restore form state after login
@@ -113,14 +119,16 @@ const Sell = () => {
           setDisplayedPrice(formState.displayedPrice);
           setMarketingBonus(formState.marketingBonus);
           
-          // Navigate to confirm step
-          setStep("confirm");
-          
-          // Clear sessionStorage
+          // Clear sessionStorage first
           sessionStorage.removeItem('sellFormState');
           sessionStorage.removeItem('sellFormRedirect');
           
-          toast.success('Welcome back! Please complete your booking.');
+          // Navigate to confirm step after a brief delay to ensure state is set
+          setTimeout(() => {
+            setStep("confirm");
+            window.scrollTo(0, 0);
+            toast.success('Welcome back! Please complete your booking.');
+          }, 100);
         } catch (error) {
           console.error('Error restoring form state:', error);
           sessionStorage.removeItem('sellFormState');
@@ -211,34 +219,6 @@ const Sell = () => {
     }
   };
 
-  // Restore form state from sessionStorage after auth redirect
-  useEffect(() => {
-    const savedState = sessionStorage.getItem('sellFormState');
-    if (savedState && user) {
-      try {
-        const state = JSON.parse(savedState);
-        setCategory(state.category);
-        setSelectedBrand(state.selectedBrand);
-        setSelectedSeries(state.selectedSeries);
-        setSelectedModel(state.selectedModel);
-        setSwitchesOn(state.switchesOn);
-        setAgeMonths(state.ageMonths);
-        setScreenCondition(state.screenCondition);
-        setPhysicalCondition(state.physicalCondition);
-        setFunctionalityIssues(state.functionalityIssues);
-        setAccessories(state.accessories);
-        setConfig(state.config);
-        setEstimatedPrice(state.estimatedPrice);
-        setDisplayedPrice(state.displayedPrice);
-        setMarketingBonus(state.marketingBonus);
-        setStep('confirm'); // Go directly to confirm step
-        sessionStorage.removeItem('sellFormState'); // Clear saved state
-        toast.success('Welcome back! Please complete your booking.');
-      } catch (e) {
-        console.error('Failed to restore form state:', e);
-      }
-    }
-  }, [user]);
 
   // Pre-fill customer name from user email
   useEffect(() => {
