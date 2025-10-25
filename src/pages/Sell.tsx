@@ -611,19 +611,19 @@ const Sell = () => {
           {/* Selection Method */}
           {step === "selection_method" && (
             <div className="space-y-6">
-              <div className="text-center mb-8">
-                <h2 className="text-2xl font-bold mb-2">Choose Your Selling Method</h2>
-                <p className="text-muted-foreground">Pick the option that works best for you</p>
+              <div className="text-center mb-6">
+                <h2 className="text-xl md:text-2xl font-bold mb-2">Choose Your Selling Method</h2>
+                <p className="text-sm text-muted-foreground">Pick the option that works best for you</p>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
                 {/* WhatsApp Card */}
-                <Card className="group relative overflow-hidden cursor-pointer border-2 hover:border-[#25D366] hover:shadow-2xl transition-all duration-300 hover:scale-105">
-                  <div className="absolute top-4 right-4 bg-[#25D366] text-white text-xs font-bold px-3 py-1 rounded-full">
+                <Card className="group relative overflow-hidden cursor-pointer border-2 hover:border-[#25D366] hover:shadow-lg transition-all duration-300 hover:scale-105">
+                  <div className="absolute top-2 right-2 bg-[#25D366] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
                     RECOMMENDED
                   </div>
                   <div 
-                    className="p-8 space-y-6"
+                    className="p-4 md:p-6 space-y-3 md:space-y-4"
                     onClick={() => {
                       const whatsappNumber = "919886285028";
                       const message = `Hi! I want to sell my ${category}.`;
@@ -632,45 +632,26 @@ const Sell = () => {
                     }}
                   >
                     <div className="flex justify-center">
-                      <div className="w-24 h-24 flex items-center justify-center rounded-2xl bg-[#25D366]/10 group-hover:bg-[#25D366]/20 transition-colors">
-                        <img src={whatsappIcon} alt="WhatsApp" className="w-16 h-16" />
+                      <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-xl bg-[#25D366]/10 group-hover:bg-[#25D366]/20 transition-colors">
+                        <img src={whatsappIcon} alt="WhatsApp" className="w-10 h-10 md:w-12 md:h-12" />
                       </div>
                     </div>
                     
-                    <div className="text-center space-y-2">
-                      <h3 className="text-2xl font-bold">Sell Now Instantly</h3>
-                      <p className="text-lg font-semibold text-[#25D366]">through WhatsApp</p>
+                    <div className="text-center space-y-1">
+                      <h3 className="text-base md:text-lg font-bold">Sell on WhatsApp</h3>
+                      <p className="text-xs text-[#25D366] font-medium">Instant Response</p>
                     </div>
                     
-                    <ul className="space-y-3 text-sm">
-                      <li className="flex items-start gap-2">
-                        <Zap className="h-5 w-5 text-[#25D366] flex-shrink-0 mt-0.5" />
-                        <span>Get instant response from our team</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <Zap className="h-5 w-5 text-[#25D366] flex-shrink-0 mt-0.5" />
-                        <span>Quick price quote within minutes</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <Zap className="h-5 w-5 text-[#25D366] flex-shrink-0 mt-0.5" />
-                        <span>Direct communication for best deals</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <Zap className="h-5 w-5 text-[#25D366] flex-shrink-0 mt-0.5" />
-                        <span>Hassle-free booking process</span>
-                      </li>
-                    </ul>
-                    
-                    <Button className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white h-12 text-lg font-semibold">
-                      Continue with WhatsApp
+                    <Button className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white h-9 md:h-10 text-sm font-semibold">
+                      Continue
                     </Button>
                   </div>
                 </Card>
 
                 {/* Evaluate Now Card */}
-                <Card className="group cursor-pointer border-2 hover:border-primary hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                <Card className="group cursor-pointer border-2 hover:border-primary hover:shadow-lg transition-all duration-300 hover:scale-105">
                   <div 
-                    className="p-8 space-y-6"
+                    className="p-4 md:p-6 space-y-3 md:space-y-4"
                     onClick={async () => {
                       setLoadingFromSlug(true);
                       await fetchBrands();
@@ -679,37 +660,18 @@ const Sell = () => {
                     }}
                   >
                     <div className="flex justify-center">
-                      <div className="w-24 h-24 flex items-center justify-center rounded-2xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                        <TrendingUp className="w-16 h-16 text-primary" />
+                      <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                        <TrendingUp className="w-10 h-10 md:w-12 md:h-12 text-primary" />
                       </div>
                     </div>
                     
-                    <div className="text-center space-y-2">
-                      <h3 className="text-2xl font-bold">Evaluate Now</h3>
-                      <p className="text-lg font-semibold text-muted-foreground">Get detailed quote</p>
+                    <div className="text-center space-y-1">
+                      <h3 className="text-base md:text-lg font-bold">Evaluate Now</h3>
+                      <p className="text-xs text-muted-foreground font-medium">Detailed Quote</p>
                     </div>
                     
-                    <ul className="space-y-3 text-sm text-muted-foreground">
-                      <li className="flex items-start gap-2">
-                        <ChevronRight className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                        <span>Answer a few questions about your device</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <ChevronRight className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                        <span>Get accurate price based on condition</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <ChevronRight className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                        <span>Complete evaluation in 2-3 minutes</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <ChevronRight className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                        <span>Book pickup at your convenience</span>
-                      </li>
-                    </ul>
-                    
-                    <Button variant="outline" className="w-full h-12 text-lg font-semibold border-2 hover:bg-primary hover:text-primary-foreground">
-                      Start Evaluation
+                    <Button variant="outline" className="w-full h-9 md:h-10 text-sm font-semibold border-2 hover:bg-primary hover:text-primary-foreground">
+                      Start
                     </Button>
                   </div>
                 </Card>
