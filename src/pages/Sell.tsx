@@ -87,6 +87,49 @@ const Sell = () => {
     loadFromUrlParams();
   }, [params.category, params.brand, params.series, params.model]);
 
+  // Restore form state after login
+  useEffect(() => {
+    if (user) {
+      const savedState = sessionStorage.getItem('sellFormState');
+      const savedRedirect = sessionStorage.getItem('sellFormRedirect');
+      
+      if (savedState && savedRedirect) {
+        try {
+          const formState = JSON.parse(savedState);
+          
+          // Restore all form state
+          setCategory(formState.category);
+          setSelectedBrand(formState.selectedBrand);
+          setSelectedSeries(formState.selectedSeries);
+          setSelectedModel(formState.selectedModel);
+          setSwitchesOn(formState.switchesOn);
+          setAgeMonths(formState.ageMonths);
+          setScreenCondition(formState.screenCondition);
+          setPhysicalCondition(formState.physicalCondition);
+          setFunctionalityIssues(formState.functionalityIssues);
+          setAccessories(formState.accessories);
+          setConfig(formState.config);
+          setEstimatedPrice(formState.estimatedPrice);
+          setDisplayedPrice(formState.displayedPrice);
+          setMarketingBonus(formState.marketingBonus);
+          
+          // Navigate to confirm step
+          setStep("confirm");
+          
+          // Clear sessionStorage
+          sessionStorage.removeItem('sellFormState');
+          sessionStorage.removeItem('sellFormRedirect');
+          
+          toast.success('Welcome back! Please complete your booking.');
+        } catch (error) {
+          console.error('Error restoring form state:', error);
+          sessionStorage.removeItem('sellFormState');
+          sessionStorage.removeItem('sellFormRedirect');
+        }
+      }
+    }
+  }, [user]);
+
   const loadFromUrlParams = async () => {
     setLoadingFromSlug(true);
     
