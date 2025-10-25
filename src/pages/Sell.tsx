@@ -21,8 +21,9 @@ import { Laptop, Monitor, Smartphone, ChevronRight, Loader2, TrendingUp, Zap, Se
 import { toast } from "sonner";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { MobileSellForm } from "@/components/MobileSellForm";
+import whatsappIcon from "@/assets/whatsapp.svg";
 
-type Step = "category" | "brand" | "series" | "model" | "switch_on" | "config" | "additional" | "functionality" | "screen_condition" | "age" | "physical_condition" | "accessories" | "price" | "confirm";
+type Step = "category" | "selection_method" | "brand" | "series" | "model" | "switch_on" | "config" | "additional" | "functionality" | "screen_condition" | "age" | "physical_condition" | "accessories" | "price" | "confirm";
 
 const Sell = () => {
   const params = useParams();
@@ -358,6 +359,7 @@ const Sell = () => {
 
   const handleCategorySelect = (selected: "laptop" | "desktop" | "mobile") => {
     setCategory(selected);
+    setStep("selection_method");
     navigate(`/sell/${selected}`);
     window.scrollTo(0, 0);
   };
@@ -601,6 +603,115 @@ const Sell = () => {
                 >
                   <Monitor className="mx-auto mb-4 h-16 w-16 text-primary" />
                   <h3 className="text-center text-lg font-semibold">Desktop</h3>
+                </Card>
+              </div>
+            </div>
+          )}
+
+          {/* Selection Method */}
+          {step === "selection_method" && (
+            <div className="space-y-6">
+              <div className="text-center mb-8">
+                <h2 className="text-2xl font-bold mb-2">Choose Your Selling Method</h2>
+                <p className="text-muted-foreground">Pick the option that works best for you</p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                {/* WhatsApp Card */}
+                <Card className="group relative overflow-hidden cursor-pointer border-2 hover:border-[#25D366] hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                  <div className="absolute top-4 right-4 bg-[#25D366] text-white text-xs font-bold px-3 py-1 rounded-full">
+                    RECOMMENDED
+                  </div>
+                  <div 
+                    className="p-8 space-y-6"
+                    onClick={() => {
+                      const whatsappNumber = "919886285028";
+                      const message = `Hi! I want to sell my ${category}.`;
+                      const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+                      window.open(url, '_blank');
+                    }}
+                  >
+                    <div className="flex justify-center">
+                      <div className="w-24 h-24 flex items-center justify-center rounded-2xl bg-[#25D366]/10 group-hover:bg-[#25D366]/20 transition-colors">
+                        <img src={whatsappIcon} alt="WhatsApp" className="w-16 h-16" />
+                      </div>
+                    </div>
+                    
+                    <div className="text-center space-y-2">
+                      <h3 className="text-2xl font-bold">Sell Now Instantly</h3>
+                      <p className="text-lg font-semibold text-[#25D366]">through WhatsApp</p>
+                    </div>
+                    
+                    <ul className="space-y-3 text-sm">
+                      <li className="flex items-start gap-2">
+                        <Zap className="h-5 w-5 text-[#25D366] flex-shrink-0 mt-0.5" />
+                        <span>Get instant response from our team</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Zap className="h-5 w-5 text-[#25D366] flex-shrink-0 mt-0.5" />
+                        <span>Quick price quote within minutes</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Zap className="h-5 w-5 text-[#25D366] flex-shrink-0 mt-0.5" />
+                        <span>Direct communication for best deals</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Zap className="h-5 w-5 text-[#25D366] flex-shrink-0 mt-0.5" />
+                        <span>Hassle-free booking process</span>
+                      </li>
+                    </ul>
+                    
+                    <Button className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white h-12 text-lg font-semibold">
+                      Continue with WhatsApp
+                    </Button>
+                  </div>
+                </Card>
+
+                {/* Evaluate Now Card */}
+                <Card className="group cursor-pointer border-2 hover:border-primary hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                  <div 
+                    className="p-8 space-y-6"
+                    onClick={async () => {
+                      setLoadingFromSlug(true);
+                      await fetchBrands();
+                      setLoadingFromSlug(false);
+                      setStep("brand");
+                    }}
+                  >
+                    <div className="flex justify-center">
+                      <div className="w-24 h-24 flex items-center justify-center rounded-2xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                        <TrendingUp className="w-16 h-16 text-primary" />
+                      </div>
+                    </div>
+                    
+                    <div className="text-center space-y-2">
+                      <h3 className="text-2xl font-bold">Evaluate Now</h3>
+                      <p className="text-lg font-semibold text-muted-foreground">Get detailed quote</p>
+                    </div>
+                    
+                    <ul className="space-y-3 text-sm text-muted-foreground">
+                      <li className="flex items-start gap-2">
+                        <ChevronRight className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span>Answer a few questions about your device</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <ChevronRight className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span>Get accurate price based on condition</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <ChevronRight className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span>Complete evaluation in 2-3 minutes</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <ChevronRight className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span>Book pickup at your convenience</span>
+                      </li>
+                    </ul>
+                    
+                    <Button variant="outline" className="w-full h-12 text-lg font-semibold border-2 hover:bg-primary hover:text-primary-foreground">
+                      Start Evaluation
+                    </Button>
+                  </div>
                 </Card>
               </div>
             </div>

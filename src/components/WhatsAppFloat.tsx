@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { MessageCircle, X } from "lucide-react";
+import { X } from "lucide-react";
+import whatsappIcon from "@/assets/whatsapp.svg";
 
 const WhatsAppFloat = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -45,10 +46,10 @@ const WhatsAppFloat = () => {
           {/* WhatsApp Button */}
           <button
             onClick={handleWhatsAppClick}
-            className="bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group"
+            className="bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group relative"
             aria-label="Contact us on WhatsApp"
           >
-            <MessageCircle className="h-6 w-6 fill-current" />
+            <img src={whatsappIcon} alt="WhatsApp" className="h-6 w-6" />
             
             {/* Ripple effect */}
             <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-20"></span>
