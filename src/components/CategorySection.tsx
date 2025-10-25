@@ -39,9 +39,7 @@ const CategorySection = () => {
               Sell Today?
             </span>
           </h2>
-          <p className="text-lg text-muted-foreground">
-            Choose your device category and get an instant quote. Our AI-powered evaluation system ensures you get the best price for your used electronics in Bengaluru.
-          </p>
+          <p className="text-lg text-muted-foreground">Choose your device category and get an instant quote. Our evaluation system ensures you get the best price for your used electronics in Bengaluru.</p>
         </div>
 
         {/* Category Cards */}
