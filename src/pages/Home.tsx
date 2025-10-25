@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import CategorySection from "@/components/CategorySection";
 import Features from "@/components/Features";
 import HowItWorks from "@/components/HowItWorks";
 import Stats from "@/components/Stats";
@@ -12,6 +13,65 @@ import WhatsAppFloat from "@/components/WhatsAppFloat";
 const Home = () => {
   return <>
       <Helmet>
+        <title>Sell Old Laptop, Mobile & Desktop Online in Bengaluru | Instant Cash Payment | Laptap</title>
+        <meta 
+          name="description" 
+          content="Sell your old laptop, mobile phone, or desktop computer for instant cash in Bengaluru. Get best prices, free doorstep pickup, instant payment within 24 hours. Trusted by 10,000+ sellers across India." 
+        />
+        <meta 
+          name="keywords" 
+          content="sell old laptop Bengaluru, sell used laptop online, sell mobile phone Bengaluru, sell desktop computer, laptop buyback India, instant cash for laptop, sell MacBook Bengaluru, sell iPhone Bengaluru, sell gaming laptop, sell Dell laptop, sell HP laptop, sell Lenovo laptop, best price for old laptop, laptop resale value, sell broken laptop, doorstep laptop pickup Bengaluru, instant payment laptop sale, quick cash for electronics Bengaluru" 
+        />
+        <meta property="og:title" content="Sell Old Laptop, Mobile & Desktop for Instant Cash | Laptap Bengaluru" />
+        <meta property="og:description" content="Get the best price for your used electronics. Free pickup, instant evaluation, and payment within 24 hours. Bengaluru's most trusted platform for selling laptops and mobiles." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://laptap.in" />
+        <meta property="og:image" content="https://laptap.in/og-image.jpg" />
+        <meta property="og:locale" content="en_IN" />
+        <meta property="og:site_name" content="Laptap" />
+        
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Sell Old Laptop, Mobile & Desktop for Instant Cash | Laptap" />
+        <meta name="twitter:description" content="Bengaluru's trusted platform for selling used electronics. Best prices, free pickup, instant payment." />
+        <meta name="twitter:image" content="https://laptap.in/twitter-image.jpg" />
+        
+        <link rel="canonical" href="https://laptap.in" />
+        
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Laptap",
+            "description": "Bengaluru's most trusted platform for selling used laptops, mobile phones, and desktop computers with instant cash payment",
+            "url": "https://laptap.in",
+            "telephone": "+919886285028",
+            "priceRange": "₹₹",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Bengaluru",
+              "addressRegion": "Karnataka",
+              "addressCountry": "IN"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": "12.9716",
+              "longitude": "77.5946"
+            },
+            "areaServed": {
+              "@type": "City",
+              "name": "Bengaluru"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.8",
+              "reviewCount": "10000"
+            },
+            "offers": {
+              "@type": "Offer",
+              "description": "Instant cash for used laptops, mobiles, and desktops"
+            }
+          })}
+        </script>
         <script type="application/ld+json">
           {JSON.stringify({
           "@context": "https://schema.org",
@@ -46,12 +106,13 @@ const Home = () => {
         <Header />
         <main className="flex-1">
           <Hero />
+          <CategorySection />
           <Stats />
           <BrandsSection />
           <Features />
           <HowItWorks />
-          
-          
+          <ProcessSteps />
+          <TrustSignals />
         </main>
         <Footer />
         <WhatsAppFloat />

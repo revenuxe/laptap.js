@@ -618,12 +618,12 @@ const Sell = () => {
               
               <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
                 {/* WhatsApp Card */}
-                <Card className="group relative overflow-hidden cursor-pointer border-2 hover:border-[#25D366] hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <Card className="group relative overflow-hidden cursor-pointer border-2 hover:border-[#25D366] hover:shadow-lg transition-all duration-300 hover:scale-105 flex flex-col">
                   <div className="absolute top-2 right-2 bg-[#25D366] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
                     RECOMMENDED
                   </div>
                   <div 
-                    className="p-4 md:p-6 space-y-3 md:space-y-4"
+                    className="p-4 md:p-6 flex flex-col flex-1"
                     onClick={() => {
                       const whatsappNumber = "919886285028";
                       const message = `Hi! I want to sell my ${category}.`;
@@ -631,27 +631,29 @@ const Sell = () => {
                       window.open(url, '_blank');
                     }}
                   >
-                    <div className="flex justify-center">
+                    <div className="flex justify-center mb-3 md:mb-4">
                       <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-xl bg-[#25D366]/10 group-hover:bg-[#25D366]/20 transition-colors">
                         <img src={whatsappIcon} alt="WhatsApp" className="w-10 h-10 md:w-12 md:h-12" />
                       </div>
                     </div>
                     
-                    <div className="text-center space-y-1">
+                    <div className="text-center space-y-1 mb-3 md:mb-4">
                       <h3 className="text-base md:text-lg font-bold">Sell on WhatsApp</h3>
                       <p className="text-xs text-[#25D366] font-medium">Instant Response</p>
                     </div>
                     
-                    <Button className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white h-9 md:h-10 text-sm font-semibold">
-                      Continue
-                    </Button>
+                    <div className="mt-auto">
+                      <Button className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white h-9 md:h-10 text-sm font-semibold">
+                        Continue
+                      </Button>
+                    </div>
                   </div>
                 </Card>
 
                 {/* Evaluate Now Card */}
-                <Card className="group cursor-pointer border-2 hover:border-primary hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <Card className="group cursor-pointer border-2 hover:border-primary hover:shadow-lg transition-all duration-300 hover:scale-105 flex flex-col">
                   <div 
-                    className="p-4 md:p-6 space-y-3 md:space-y-4"
+                    className="p-4 md:p-6 flex flex-col flex-1"
                     onClick={async () => {
                       setLoadingFromSlug(true);
                       await fetchBrands();
@@ -659,20 +661,22 @@ const Sell = () => {
                       setStep("brand");
                     }}
                   >
-                    <div className="flex justify-center">
+                    <div className="flex justify-center mb-3 md:mb-4">
                       <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
                         <TrendingUp className="w-10 h-10 md:w-12 md:h-12 text-primary" />
                       </div>
                     </div>
                     
-                    <div className="text-center space-y-1">
+                    <div className="text-center space-y-1 mb-3 md:mb-4">
                       <h3 className="text-base md:text-lg font-bold">Evaluate Now</h3>
                       <p className="text-xs text-muted-foreground font-medium">Detailed Quote</p>
                     </div>
                     
-                    <Button variant="outline" className="w-full h-9 md:h-10 text-sm font-semibold border-2 hover:bg-primary hover:text-primary-foreground">
-                      Start
-                    </Button>
+                    <div className="mt-auto">
+                      <Button variant="cta" className="w-full h-9 md:h-10 text-sm font-semibold">
+                        Start
+                      </Button>
+                    </div>
                   </div>
                 </Card>
               </div>

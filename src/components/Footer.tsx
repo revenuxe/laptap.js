@@ -70,8 +70,14 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-12 border-t pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Laptap. All rights reserved.</p>
+        <div className="mt-12 border-t pt-8">
+          <div className="flex flex-col items-center justify-between gap-4 text-sm text-muted-foreground md:flex-row">
+            <p>&copy; {new Date().getFullYear()} Laptap. All rights reserved.</p>
+            <p className="flex items-center gap-2">
+              <span className="inline-block h-2 w-2 rounded-full bg-primary"></span>
+              Location: Bengaluru
+            </p>
+          </div>
         </div>
       </div>
     </footer>;
