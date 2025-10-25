@@ -39,10 +39,10 @@ const Hero = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Button variant="cta" size="lg" onClick={() => navigate("/sell/laptop")} className="min-w-[200px]">
+            <Button variant="cta" size="lg" onClick={() => navigate("/sell")} className="min-w-[200px]">
               Sell Now
             </Button>
-            <Button variant="outline" size="lg" onClick={() => navigate("/sell/laptop")} className="min-w-[200px]">
+            <Button variant="outline" size="lg" onClick={() => navigate("/sell")} className="min-w-[200px]">
               Get Instant Quote
             </Button>
           </div>

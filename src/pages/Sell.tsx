@@ -204,10 +204,10 @@ const Sell = () => {
               setStep("series");
             }
           } else {
-            setStep("brand");
+            setStep("selection_method");
           }
         } else {
-          setStep("brand");
+          setStep("selection_method");
         }
       } else {
         setStep("category");
