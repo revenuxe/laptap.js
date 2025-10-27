@@ -4,15 +4,23 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
-import { Eye } from 'lucide-react';
+import { Eye, Search } from 'lucide-react';
 import { OrderDetailsDialog } from './OrderDetailsDialog';
 
 export function OrdersTab() {
   const [orders, setOrders] = useState<any[]>([]);
+  const [filteredOrders, setFilteredOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  
+  // Filter states
+  const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [categoryFilter, setCategoryFilter] = useState<string>('all');
 
   useEffect(() => {
     fetchOrders();
@@ -66,14 +74,61 @@ export function OrdersTab() {
       }));
 
       setOrders(ordersWithProfiles);
+      setFilteredOrders(ordersWithProfiles);
     } catch (error) {
       toast.error('Failed to fetch orders');
       console.error('Error fetching orders:', error);
       setOrders([]);
+      setFilteredOrders([]);
     } finally {
       setLoading(false);
     }
   };
+
+  // Apply filters whenever search or filter criteria change
+  useEffect(() => {
+    let filtered = [...orders];
+
+    // Search filter
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(order => 
+        order.config?.customer_name?.toLowerCase().includes(query) ||
+        order.config?.customer_mobile?.includes(query) ||
+        order.profiles?.email?.toLowerCase().includes(query) ||
+        order.models?.series?.brands?.name?.toLowerCase().includes(query) ||
+        order.models?.name?.toLowerCase().includes(query) ||
+        order.id?.toLowerCase().includes(query)
+      );
+    }
+
+    // Status filter
+    if (statusFilter !== 'all') {
+      filtered = filtered.filter(order => order.status === statusFilter);
+    }
+
+    // Category filter
+    if (categoryFilter !== 'all') {
+      filtered = filtered.filter(order => {
+        const category = order.models?.series?.brands?.name?.toLowerCase();
+        if (categoryFilter === 'laptop') {
+          return ['dell', 'hp', 'lenovo', 'asus', 'acer', 'apple', 'msi', 'microsoft'].some(brand => 
+            category?.includes(brand)
+          );
+        } else if (categoryFilter === 'mobile') {
+          return ['samsung', 'apple', 'oneplus', 'xiaomi', 'oppo', 'vivo', 'realme'].some(brand => 
+            category?.includes(brand)
+          );
+        } else if (categoryFilter === 'desktop') {
+          return order.models?.name?.toLowerCase().includes('desktop') || 
+                 order.models?.name?.toLowerCase().includes('imac');
+        }
+        return true;
+      });
+    }
+
+    setFilteredOrders(filtered);
+  }, [searchQuery, statusFilter, categoryFilter, orders]);
 
   const getStatusColor = (status: string) => {
     const colors: Record<string, string> = {
@@ -94,7 +149,56 @@ export function OrdersTab() {
 
   return (
     <Card className="p-6">
-      <h2 className="text-xl font-semibold mb-4">Orders Management</h2>
+      <h2 className="text-xl font-semibold mb-6">Orders Management</h2>
+      
+      {/* Filters Section */}
+      <div className="mb-6 grid gap-4 md:grid-cols-4">
+        {/* Search Bar */}
+        <div className="md:col-span-2 relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search by name, mobile, email, device, or order ID..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10"
+          />
+        </div>
+
+        {/* Category Filter */}
+        <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+          <SelectTrigger>
+            <SelectValue placeholder="All Categories" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Categories</SelectItem>
+            <SelectItem value="laptop">Laptops</SelectItem>
+            <SelectItem value="mobile">Mobiles</SelectItem>
+            <SelectItem value="desktop">Desktops</SelectItem>
+          </SelectContent>
+        </Select>
+
+        {/* Status Filter */}
+        <Select value={statusFilter} onValueChange={setStatusFilter}>
+          <SelectTrigger>
+            <SelectValue placeholder="All Status" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Status</SelectItem>
+            <SelectItem value="quoted">Quoted</SelectItem>
+            <SelectItem value="pickup_scheduled">Pickup Scheduled</SelectItem>
+            <SelectItem value="picked_up">Picked Up</SelectItem>
+            <SelectItem value="inspected">Inspected</SelectItem>
+            <SelectItem value="payment_processing">Payment Processing</SelectItem>
+            <SelectItem value="paid">Paid</SelectItem>
+            <SelectItem value="cancelled">Cancelled</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* Results Count */}
+      <div className="mb-4 text-sm text-muted-foreground">
+        Showing {filteredOrders.length} of {orders.length} orders
+      </div>
       
       <div className="overflow-x-auto">
         <Table>
@@ -110,7 +214,16 @@ export function OrdersTab() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {orders.map((order) => (
+            {filteredOrders.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
+                  {searchQuery || statusFilter !== 'all' || categoryFilter !== 'all' 
+                    ? 'No orders match your filters' 
+                    : 'No orders found'}
+                </TableCell>
+              </TableRow>
+            ) : (
+              filteredOrders.map((order) => (
               <TableRow key={order.id}>
                 <TableCell className="font-mono text-xs">
                   {order.id.slice(0, 8)}
@@ -152,7 +265,7 @@ export function OrdersTab() {
                   </Button>
                 </TableCell>
               </TableRow>
-            ))}
+            )))}
           </TableBody>
         </Table>
       </div>

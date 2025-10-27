@@ -86,52 +86,47 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="mb-4 text-sm font-semibold">Laptop Models</h3>
+            <h3 className="mb-4 text-sm font-semibold">Sell by Brand</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/models/macbook-pro" className="text-muted-foreground hover:text-foreground transition-colors">
-                  MacBook Pro
+                <Link to="/bangalore/macbook" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell MacBook Bangalore
                 </Link>
               </li>
               <li>
-                <Link to="/models/dell-xps" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Dell XPS
+                <Link to="/bangalore/dell" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell Dell Bangalore
                 </Link>
               </li>
               <li>
-                <Link to="/models/hp-pavilion" className="text-muted-foreground hover:text-foreground transition-colors">
-                  HP Pavilion
+                <Link to="/bangalore/hp" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell HP Bangalore
                 </Link>
               </li>
               <li>
-                <Link to="/models/lenovo-thinkpad" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Lenovo ThinkPad
+                <Link to="/bangalore/lenovo" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell Lenovo Bangalore
                 </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="mb-4 text-sm font-semibold">Desktop Models</h3>
+            <h3 className="mb-4 text-sm font-semibold">Resources</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/models/imac" className="text-muted-foreground hover:text-foreground transition-colors">
-                  iMac
+                <Link to="/blog/sell-used-laptop-bangalore" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell Laptop Guide
                 </Link>
               </li>
               <li>
-                <Link to="/models/dell-optiplex" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Dell Optiplex
+                <Link to="/sell" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Price Calculator
                 </Link>
               </li>
               <li>
-                <Link to="/models/hp-desktop" className="text-muted-foreground hover:text-foreground transition-colors">
-                  HP Desktop
-                </Link>
-              </li>
-              <li>
-                <Link to="/models/lenovo-desktop" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Lenovo Desktop
+                <Link to="/track/order" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Track Order
                 </Link>
               </li>
             </ul>

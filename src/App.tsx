@@ -22,6 +22,8 @@ import Blog from "./pages/Blog";
 import NotFound from "./pages/NotFound";
 import Bangalore from "./pages/locations/Bangalore";
 import Hyderabad from "./pages/locations/Hyderabad";
+import BangaloreMacBook from "./pages/locations/brands/BangaloreMacBook";
+import SellLaptopBangalore from "./pages/blog/SellLaptopBangalore";
 import MacBookPro from "./pages/models/MacBookPro";
 import DellXPS from "./pages/models/DellXPS";
 import HPPavilion from "./pages/models/HPPavilion";
@@ -63,6 +65,8 @@ const App = () => (
               <Route path="/blog/:slug" element={<Blog />} />
               <Route path="/bangalore" element={<Bangalore />} />
               <Route path="/hyderabad" element={<Hyderabad />} />
+              <Route path="/bangalore/macbook" element={<BangaloreMacBook />} />
+              <Route path="/blog/sell-used-laptop-bangalore" element={<SellLaptopBangalore />} />
               <Route path="/models/macbook-pro" element={<MacBookPro />} />
               <Route path="/models/dell-xps" element={<DellXPS />} />
               <Route path="/models/hp-pavilion" element={<HPPavilion />} />
