@@ -145,7 +145,18 @@ const Bangalore = () => {
       <div className="min-h-screen flex flex-col">
         <Header />
         <main className="flex-1">
-          <Hero />
+          <Hero 
+            location="Bangalore"
+            title={
+              <>
+                Sell Used Laptop in Bangalore{" "}
+                <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+                  for Instant Cash
+                </span>
+              </>
+            }
+            description="Bangalore's #1 trusted platform for selling old laptops, used mobile phones, and desktop computers. Get instant cash quotes for Apple MacBook, Dell, HP, Lenovo, iPhone, Samsung & all brands. Free same-day doorstep pickup across Koramangala, Indiranagar, Whitefield, Electronic City, HSR Layout, Marathahalli & all Bangalore areas. Best market prices guaranteed with instant UPI payment, bank transfer, or cash on pickup. Sell your old electronics today!"
+          />
           <CategorySection />
           <Stats />
           <BrandsSection />

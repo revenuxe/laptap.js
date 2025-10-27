@@ -145,7 +145,18 @@ const Hyderabad = () => {
       <div className="min-h-screen flex flex-col">
         <Header />
         <main className="flex-1">
-          <Hero />
+          <Hero 
+            location="Hyderabad"
+            title={
+              <>
+                Sell Used Laptop in Hyderabad{" "}
+                <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+                  for Instant Cash
+                </span>
+              </>
+            }
+            description="Hyderabad's most trusted electronics selling platform for old laptops, used mobile phones, and desktop computers. Get instant cash for Apple MacBook, Dell, HP, Lenovo, Asus, iPhone, Samsung, OnePlus & all brands. Free same-day doorstep pickup service across Madhapur, Hitech City, Gachibowli, Banjara Hills, Jubilee Hills, Secunderabad, Kukatpally & entire Hyderabad. Best resale value with instant payment via UPI, NEFT, or cash. Turn your old devices into instant money today!"
+          />
           <CategorySection />
           <Stats />
           <BrandsSection />

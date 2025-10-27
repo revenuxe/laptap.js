@@ -2,8 +2,26 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Laptop, Monitor, Smartphone, Shield, TrendingUp, Zap } from "lucide-react";
 import { DeviceSearch } from "@/components/DeviceSearch";
-const Hero = () => {
+
+interface HeroProps {
+  location?: string;
+  title?: React.ReactNode;
+  description?: string;
+}
+
+const Hero = ({ location, title, description }: HeroProps = {}) => {
   const navigate = useNavigate();
+  
+  const defaultTitle = (
+    <>
+      Sell Your Laptop, Mobile or Desktop{" "}
+      <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+        Instantly
+      </span>
+    </>
+  );
+  
+  const defaultDescription = "Get the best price for your device with instant quotes, free doorstep pickup, and instant secure payment.";
   return <section className="relative overflow-hidden bg-gradient-to-b from-background via-muted/20 to-background md:py-32 py-[20px]">
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
@@ -21,15 +39,11 @@ const Hero = () => {
 
           {/* Main heading */}
           <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-            Sell Your Laptop, Mobile or Desktop{" "}
-            <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-              Instantly
-            </span>
+            {title || defaultTitle}
           </h1>
           
           <p className="mb-8 text-lg text-muted-foreground md:text-xl max-w-2xl mx-auto">
-            Get the best price for your device with instant quotes, free doorstep pickup, 
-            and instant secure payment.
+            {description || defaultDescription}
           </p>
 
           {/* Search bar */}
