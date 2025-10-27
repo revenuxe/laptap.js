@@ -20,6 +20,8 @@ import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import Blog from "./pages/Blog";
 import NotFound from "./pages/NotFound";
+import Bangalore from "./pages/locations/Bangalore";
+import Hyderabad from "./pages/locations/Hyderabad";
 
 const queryClient = new QueryClient();
 
@@ -51,6 +53,8 @@ const App = () => (
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<Blog />} />
+              <Route path="/bangalore" element={<Bangalore />} />
+              <Route path="/hyderabad" element={<Hyderabad />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
