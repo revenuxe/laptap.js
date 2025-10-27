@@ -9,6 +9,7 @@ import TrustSignals from "@/components/TrustSignals";
 import { BrandsSection } from "@/components/BrandsSection";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
+import AreasWeService from "@/components/AreasWeService";
 
 const Hyderabad = () => {
   return (
@@ -155,13 +156,25 @@ const Hyderabad = () => {
                 </span>
               </>
             }
-            description="Hyderabad's most trusted electronics selling platform for old laptops, used mobile phones, and desktop computers. Get instant cash for Apple MacBook, Dell, HP, Lenovo, Asus, iPhone, Samsung, OnePlus & all brands. Free same-day doorstep pickup service across Madhapur, Hitech City, Gachibowli, Banjara Hills, Jubilee Hills, Secunderabad, Kukatpally & entire Hyderabad. Best resale value with instant payment via UPI, NEFT, or cash. Turn your old devices into instant money today!"
+            description="Hyderabad's most trusted platform for selling old laptops, mobiles & desktops. Get instant cash for MacBook, Dell, HP, Lenovo, iPhone & all brands. Free same-day pickup across all areas with instant payment via UPI or cash."
           />
           <CategorySection />
           <Stats />
           <BrandsSection />
           <Features />
           <TrustSignals />
+          <AreasWeService 
+            city="Hyderabad"
+            areas={[
+              "Madhapur", "Hitech City", "Gachibowli", "Banjara Hills",
+              "Jubilee Hills", "Secunderabad", "Kukatpally", "Ameerpet",
+              "Begumpet", "Kondapur", "Miyapur", "KPHB",
+              "Nizampet", "Kompally", "Alwal", "Sainikpuri",
+              "Uppal", "LB Nagar", "Dilsukhnagar", "Malakpet",
+              "Attapur", "Tolichowki", "Mehdipatnam", "Masab Tank",
+              "Nampally", "Abids", "Charminar", "Shamshabad"
+            ]}
+          />
         </main>
         <Footer />
         <WhatsAppFloat />

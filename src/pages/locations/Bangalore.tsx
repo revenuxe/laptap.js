@@ -9,6 +9,7 @@ import TrustSignals from "@/components/TrustSignals";
 import { BrandsSection } from "@/components/BrandsSection";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
+import AreasWeService from "@/components/AreasWeService";
 
 const Bangalore = () => {
   return (
@@ -155,13 +156,25 @@ const Bangalore = () => {
                 </span>
               </>
             }
-            description="Bangalore's #1 trusted platform for selling old laptops, used mobile phones, and desktop computers. Get instant cash quotes for Apple MacBook, Dell, HP, Lenovo, iPhone, Samsung & all brands. Free same-day doorstep pickup across Koramangala, Indiranagar, Whitefield, Electronic City, HSR Layout, Marathahalli & all Bangalore areas. Best market prices guaranteed with instant UPI payment, bank transfer, or cash on pickup. Sell your old electronics today!"
+            description="Bangalore's most trusted platform for selling old laptops, mobiles & desktops. Get instant cash for MacBook, Dell, HP, Lenovo, iPhone & all brands. Free same-day pickup across all areas with instant payment via UPI or cash."
           />
           <CategorySection />
           <Stats />
           <BrandsSection />
           <Features />
           <TrustSignals />
+          <AreasWeService 
+            city="Bangalore"
+            areas={[
+              "Koramangala", "Indiranagar", "Whitefield", "Electronic City",
+              "HSR Layout", "Marathahalli", "BTM Layout", "Jayanagar",
+              "JP Nagar", "Banashankari", "Malleshwaram", "Rajajinagar",
+              "Yelahanka", "Hebbal", "Bellandur", "Sarjapur Road",
+              "Bommanahalli", "Bannerghatta Road", "RT Nagar", "Sadashivanagar",
+              "CV Raman Nagar", "Frazer Town", "Domlur", "KR Puram",
+              "Mahadevapura", "Varthur", "Kadugodi", "Brookefield"
+            ]}
+          />
         </main>
         <Footer />
         <WhatsAppFloat />
