@@ -106,7 +106,7 @@ const Home = () => {
           <Features />
           
           
-          <TrustSignals />
+          
         </main>
         <Footer />
         <WhatsAppFloat />
