@@ -29,6 +29,16 @@ const CategorySection = () => {
     gradient: "from-green-500/10 to-emerald-500/10",
     iconColor: "text-green-600"
   }];
+  
+  const repairService = {
+    icon: Laptop,
+    title: "Repair Laptop",
+    description: "Professional laptop repair services at your doorstep. From screen replacement to hardware upgrades, we've got you covered.",
+    features: ["Expert technicians", "Same-day service available", "Free pickup and delivery", "Genuine spare parts"],
+    path: "/repair/brands",
+    gradient: "from-orange-500/10 to-red-500/10",
+    iconColor: "text-orange-600"
+  };
   return <section className="py-16 md:py-24 bg-gradient-to-b from-background to-muted/30">
       <div className="container">
         {/* Section Header */}
@@ -79,6 +89,38 @@ const CategorySection = () => {
               {/* Decorative Element */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-500"></div>
             </Card>)}
+        </div>
+        
+        {/* Repair Service Card */}
+        <div className="mt-8 max-w-4xl mx-auto">
+          <Card className={`group relative overflow-hidden border-2 hover:border-primary transition-all duration-300 hover:shadow-2xl bg-gradient-to-br ${repairService.gradient}`}>
+            <div className="p-6 md:p-8">
+              <div className="flex flex-col md:flex-row items-center gap-6">
+                <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-background shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300 flex-shrink-0`}>
+                  <repairService.icon className={`w-8 h-8 md:w-10 md:h-10 ${repairService.iconColor}`} />
+                </div>
+                
+                <div className="flex-1 text-center md:text-left">
+                  <h3 className="text-2xl md:text-3xl font-bold mb-2">{repairService.title}</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    {repairService.description}
+                  </p>
+                  <ul className="grid grid-cols-2 gap-2 mb-0">
+                    {repairService.features.map(feature => <li key={feature} className="flex items-start gap-2 text-sm">
+                        <ArrowRight className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+                        <span className="text-muted-foreground">{feature}</span>
+                      </li>)}
+                  </ul>
+                </div>
+                
+                <Button variant="cta" className="group-hover:shadow-lg transition-all flex-shrink-0" onClick={() => navigate(repairService.path)}>
+                  Book Repair
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </div>
+            </div>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-500"></div>
+          </Card>
         </div>
 
         {/* Trust Bar */}

@@ -13,6 +13,7 @@ import { OrderDetailsDialog } from './OrderDetailsDialog';
 
 export function OrdersTab() {
   const [orders, setOrders] = useState<any[]>([]);
+  const [repairOrders, setRepairOrders] = useState<any[]>([]);
   const [filteredOrders, setFilteredOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
@@ -27,6 +28,7 @@ export function OrdersTab() {
 
   useEffect(() => {
     fetchOrders();
+    fetchRepairOrders();
   }, []);
 
   const fetchOrders = async () => {
@@ -91,6 +93,25 @@ export function OrdersTab() {
       setFilteredOrders([]);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchRepairOrders = async () => {
+    try {
+      const { data: repairData, error: repairError } = await supabase
+        .from('repair_requests')
+        .select(`
+          *,
+          brands (name)
+        `)
+        .order('created_at', { ascending: false });
+
+      if (repairError) throw repairError;
+      
+      setRepairOrders(repairData || []);
+    } catch (error) {
+      console.error('Error fetching repair orders:', error);
+      toast.error('Failed to load repair orders');
     }
   };
 
@@ -349,59 +370,139 @@ export function OrdersTab() {
         </Select>
       </div>
 
-      {/* Main Device Type Tabs */}
-      <Tabs defaultValue="laptop" className="space-y-4">
+      {/* Main Type Tabs */}
+      <Tabs defaultValue="sell" className="space-y-4">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="laptop">Laptop / Desktop</TabsTrigger>
-          <TabsTrigger value="mobile">Mobile</TabsTrigger>
+          <TabsTrigger value="sell">Sell Orders</TabsTrigger>
+          <TabsTrigger value="repair">Repair Orders</TabsTrigger>
         </TabsList>
 
-        {/* Laptop/Desktop Tab Content */}
-        <TabsContent value="laptop">
-          <Tabs defaultValue="pickup" className="space-y-4">
-            <TabsList>
-              <TabsTrigger value="pickup">Pickup Orders</TabsTrigger>
-              <TabsTrigger value="repair">Processing / Repair</TabsTrigger>
+        <TabsContent value="sell">
+          <Tabs defaultValue="laptop" className="space-y-4">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="laptop">Laptop / Desktop</TabsTrigger>
+              <TabsTrigger value="mobile">Mobile</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="pickup">
-              <div className="mb-3 text-sm text-muted-foreground">
-                {getFilteredOrders('laptop', 'pickup').length} orders in pickup stage
-              </div>
-              {renderOrdersTable('laptop', 'pickup')}
+            {/* Laptop/Desktop Tab Content */}
+            <TabsContent value="laptop">
+              <Tabs defaultValue="pickup" className="space-y-4">
+                <TabsList>
+                  <TabsTrigger value="pickup">Pickup Orders</TabsTrigger>
+                  <TabsTrigger value="repair">Processing / Repair</TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="pickup">
+                  <div className="mb-3 text-sm text-muted-foreground">
+                    {getFilteredOrders('laptop', 'pickup').length} orders in pickup stage
+                  </div>
+                  {renderOrdersTable('laptop', 'pickup')}
+                </TabsContent>
+
+                <TabsContent value="repair">
+                  <div className="mb-3 text-sm text-muted-foreground">
+                    {getFilteredOrders('laptop', 'repair').length} orders in processing/repair stage
+                  </div>
+                  {renderOrdersTable('laptop', 'repair')}
+                </TabsContent>
+              </Tabs>
             </TabsContent>
 
-            <TabsContent value="repair">
-              <div className="mb-3 text-sm text-muted-foreground">
-                {getFilteredOrders('laptop', 'repair').length} orders in processing/repair stage
-              </div>
-              {renderOrdersTable('laptop', 'repair')}
+            {/* Mobile Tab Content */}
+            <TabsContent value="mobile">
+              <Tabs defaultValue="pickup" className="space-y-4">
+                <TabsList>
+                  <TabsTrigger value="pickup">Pickup Orders</TabsTrigger>
+                  <TabsTrigger value="repair">Processing / Repair</TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="pickup">
+                  <div className="mb-3 text-sm text-muted-foreground">
+                    {getFilteredOrders('mobile', 'pickup').length} orders in pickup stage
+                  </div>
+                  {renderOrdersTable('mobile', 'pickup')}
+                </TabsContent>
+
+                <TabsContent value="repair">
+                  <div className="mb-3 text-sm text-muted-foreground">
+                    {getFilteredOrders('mobile', 'repair').length} orders in processing/repair stage
+                  </div>
+                  {renderOrdersTable('mobile', 'repair')}
+                </TabsContent>
+              </Tabs>
             </TabsContent>
           </Tabs>
         </TabsContent>
 
-        {/* Mobile Tab Content */}
-        <TabsContent value="mobile">
-          <Tabs defaultValue="pickup" className="space-y-4">
-            <TabsList>
-              <TabsTrigger value="pickup">Pickup Orders</TabsTrigger>
-              <TabsTrigger value="repair">Processing / Repair</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="pickup">
-              <div className="mb-3 text-sm text-muted-foreground">
-                {getFilteredOrders('mobile', 'pickup').length} orders in pickup stage
-              </div>
-              {renderOrdersTable('mobile', 'pickup')}
-            </TabsContent>
-
-            <TabsContent value="repair">
-              <div className="mb-3 text-sm text-muted-foreground">
-                {getFilteredOrders('mobile', 'repair').length} orders in processing/repair stage
-              </div>
-              {renderOrdersTable('mobile', 'repair')}
-            </TabsContent>
-          </Tabs>
+        <TabsContent value="repair">
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Order #</TableHead>
+                  <TableHead>Customer</TableHead>
+                  <TableHead>Brand/Model</TableHead>
+                  <TableHead>Issue</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {repairOrders.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
+                      No repair orders found
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  repairOrders.map((order) => (
+                    <TableRow key={order.id}>
+                      <TableCell className="font-mono text-xs">{order.order_number}</TableCell>
+                      <TableCell>
+                        <div className="text-sm">
+                          <div className="font-medium">{order.customer_name}</div>
+                          <div className="text-muted-foreground">{order.customer_phone}</div>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="text-sm">
+                          <div className="font-medium">{order.brands?.name}</div>
+                          <div className="text-xs text-muted-foreground">{order.model_name}</div>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="text-sm">
+                          <div className="font-medium">{order.issue_category}</div>
+                          {order.issue_subcategory && (
+                            <div className="text-xs text-muted-foreground">{order.issue_subcategory}</div>
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <Badge>{order.status}</Badge>
+                      </TableCell>
+                      <TableCell className="text-sm text-muted-foreground">
+                        {new Date(order.created_at).toLocaleDateString()}
+                      </TableCell>
+                      <TableCell>
+                        <Button 
+                          variant="ghost" 
+                          size="sm"
+                          onClick={() => {
+                            setSelectedOrder({ ...order, type: 'repair' });
+                            setDialogOpen(true);
+                          }}
+                        >
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </TabsContent>
       </Tabs>
 

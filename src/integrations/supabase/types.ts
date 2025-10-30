@@ -321,6 +321,65 @@ export type Database = {
         }
         Relationships: []
       }
+      repair_requests: {
+        Row: {
+          brand_id: string | null
+          created_at: string
+          customer_name: string
+          customer_phone: string
+          id: string
+          issue_category: string
+          issue_details: string | null
+          issue_subcategory: string | null
+          model_name: string
+          order_number: string
+          preferred_date: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          brand_id?: string | null
+          created_at?: string
+          customer_name: string
+          customer_phone: string
+          id?: string
+          issue_category: string
+          issue_details?: string | null
+          issue_subcategory?: string | null
+          model_name: string
+          order_number: string
+          preferred_date?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          brand_id?: string | null
+          created_at?: string
+          customer_name?: string
+          customer_phone?: string
+          id?: string
+          issue_category?: string
+          issue_details?: string | null
+          issue_subcategory?: string | null
+          model_name?: string
+          order_number?: string
+          preferred_date?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "repair_requests_brand_id_fkey"
+            columns: ["brand_id"]
+            isOneToOne: false
+            referencedRelation: "brands"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       sell_requests: {
         Row: {
           accessories: Json | null
@@ -444,10 +503,8 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      generate_slug: {
-        Args: { name: string }
-        Returns: string
-      }
+      generate_repair_order_number: { Args: never; Returns: string }
+      generate_slug: { Args: { name: string }; Returns: string }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -455,10 +512,7 @@ export type Database = {
         }
         Returns: boolean
       }
-      make_user_admin: {
-        Args: { user_email: string }
-        Returns: undefined
-      }
+      make_user_admin: { Args: { user_email: string }; Returns: undefined }
     }
     Enums: {
       app_role: "admin" | "user"

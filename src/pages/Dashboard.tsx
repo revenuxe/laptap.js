@@ -14,6 +14,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
   const [sellRequests, setSellRequests] = useState<any[]>([]);
+  const [repairRequests, setRepairRequests] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,6 +26,7 @@ const Dashboard = () => {
   useEffect(() => {
     if (user) {
       fetchSellRequests();
+      fetchRepairRequests();
     }
   }, [user]);
 
@@ -51,6 +53,23 @@ const Dashboard = () => {
       setSellRequests(data || []);
     }
     setLoading(false);
+  };
+
+  const fetchRepairRequests = async () => {
+    const { data, error } = await supabase
+      .from('repair_requests')
+      .select(`
+        *,
+        brands (name)
+      `)
+      .eq('user_id', user?.id)
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Failed to load repair requests:', error);
+    } else {
+      setRepairRequests(data || []);
+    }
   };
 
   if (authLoading || loading) {
@@ -119,7 +138,44 @@ const Dashboard = () => {
               ) : (
                 <div className="text-center py-8">
                   <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <p className="text-muted-foreground">No active requests</p>
+                  <p className="text-muted-foreground">No active sell requests</p>
+                </div>
+              )}
+            </Card>
+
+            <Card className="p-6">
+              <h2 className="text-xl font-semibold mb-4">Active Repair Requests</h2>
+              {repairRequests.length > 0 ? (
+                <div className="space-y-4">
+                  {repairRequests.map((request) => (
+                    <div
+                      key={request.id}
+                      className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 p-4 rounded-lg border"
+                    >
+                      <div>
+                        <p className="font-semibold">
+                          {request.brands?.name} - {request.model_name}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          Issue: {request.issue_category} {request.issue_subcategory && `- ${request.issue_subcategory}`}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          Order #: {request.order_number}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          Date: {new Date(request.created_at).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <Badge>{getStatusLabel(request.status)}</Badge>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <p className="text-muted-foreground">No active repair requests</p>
                 </div>
               )}
             </Card>

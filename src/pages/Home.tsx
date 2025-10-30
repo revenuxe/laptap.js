@@ -100,7 +100,7 @@ const Home = () => {
         <Header />
         <main className="flex-1">
           <Hero />
-          
+          <CategorySection />
           <Stats />
           <BrandsSection />
           <Features />

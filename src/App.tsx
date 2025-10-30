@@ -32,6 +32,9 @@ import IMac from "./pages/models/IMac";
 import DellOptiplex from "./pages/models/DellOptiplex";
 import HPDesktop from "./pages/models/HPDesktop";
 import LenovoDesktop from "./pages/models/LenovoDesktop";
+import RepairBrands from "./pages/repair/RepairBrands";
+import RepairForm from "./pages/repair/RepairForm";
+import RepairThankYou from "./pages/repair/RepairThankYou";
 
 const queryClient = new QueryClient();
 
@@ -75,6 +78,9 @@ const App = () => (
               <Route path="/models/dell-optiplex" element={<DellOptiplex />} />
               <Route path="/models/hp-desktop" element={<HPDesktop />} />
               <Route path="/models/lenovo-desktop" element={<LenovoDesktop />} />
+              <Route path="/repair/brands" element={<RepairBrands />} />
+              <Route path="/repair/form" element={<RepairForm />} />
+              <Route path="/repair/thank-you" element={<RepairThankYou />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
