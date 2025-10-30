@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import laptopLogo from "@/assets/laptop_logo.webp";
+import { Facebook, Linkedin, Instagram } from "lucide-react";
 const Footer = () => {
   return <footer className="border-t bg-muted/30 py-12 md:py-16">
       <div className="container">
@@ -130,6 +131,35 @@ const Footer = () => {
         <div className="mt-12 border-t pt-8">
           <div className="flex flex-col items-center justify-between gap-4 text-sm text-muted-foreground md:flex-row">
             <p>&copy; {new Date().getFullYear()} Laptap. All rights reserved.</p>
+            <div className="flex items-center gap-4">
+              <a 
+                href="https://www.facebook.com/ilaptap/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-primary transition-colors"
+                aria-label="Follow us on Facebook"
+              >
+                <Facebook className="h-5 w-5" />
+              </a>
+              <a 
+                href="https://www.instagram.com/ilaptap?igsh=MWt3NHU3YzdoemJmcA==" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-primary transition-colors"
+                aria-label="Follow us on Instagram"
+              >
+                <Instagram className="h-5 w-5" />
+              </a>
+              <a 
+                href="https://www.linkedin.com/company/laptap/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-primary transition-colors"
+                aria-label="Follow us on LinkedIn"
+              >
+                <Linkedin className="h-5 w-5" />
+              </a>
+            </div>
             <p className="flex items-center gap-2">
               <span className="inline-block h-2 w-2 rounded-full bg-primary"></span>
               Location: Bengaluru
