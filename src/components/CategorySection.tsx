@@ -29,7 +29,6 @@ const CategorySection = () => {
     gradient: "from-green-500/10 to-emerald-500/10",
     iconColor: "text-green-600"
   }];
-  
   const repairService = {
     icon: Laptop,
     title: "Repair Laptop",
@@ -53,43 +52,7 @@ const CategorySection = () => {
         </div>
 
         {/* Category Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-          {categories.map((category, index) => <Card key={category.title} className={`group relative overflow-hidden border-2 hover:border-primary transition-all duration-300 hover:shadow-2xl hover:scale-105 bg-gradient-to-br ${category.gradient} animate-fade-in`} style={{
-          animationDelay: `${index * 100}ms`
-        }}>
-              <div className="p-6 md:p-8 space-y-6">
-                {/* Icon */}
-                <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-background shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                  <category.icon className={`w-8 h-8 md:w-10 md:h-10 ${category.iconColor}`} />
-                </div>
-
-                {/* Title */}
-                <div>
-                  <h3 className="text-2xl md:text-3xl font-bold mb-3">{category.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {category.description}
-                  </p>
-                </div>
-
-                {/* Features */}
-                <ul className="space-y-2">
-                  {category.features.map(feature => <li key={feature} className="flex items-start gap-2 text-sm">
-                      <ArrowRight className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
-                      <span className="text-muted-foreground">{feature}</span>
-                    </li>)}
-                </ul>
-
-                {/* CTA Button */}
-                <Button variant="cta" className="w-full group-hover:shadow-lg transition-all" onClick={() => navigate(category.path)}>
-                  Get Instant Quote
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </div>
-
-              {/* Decorative Element */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-500"></div>
-            </Card>)}
-        </div>
+        
         
         {/* Repair Service Card */}
         <div className="mt-8 max-w-4xl mx-auto">
