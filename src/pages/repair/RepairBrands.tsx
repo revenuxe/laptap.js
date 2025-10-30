@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -10,24 +10,33 @@ import { Loader2 } from 'lucide-react';
 
 const RepairBrands = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const category = searchParams.get('category') || 'laptop';
   const [brands, setBrands] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchBrands();
-  }, []);
+  }, [category]);
 
   const fetchBrands = async () => {
     const { data, error } = await supabase
       .from('brands')
-      .select('*')
+      .select(`
+        *,
+        categories (slug)
+      `)
       .order('name');
 
     if (error) {
       toast.error('Failed to load brands');
       console.error(error);
     } else {
-      setBrands(data || []);
+      // Filter brands by category
+      const filtered = data?.filter(brand => 
+        brand.categories?.slug === category
+      ) || [];
+      setBrands(filtered);
     }
     setLoading(false);
   };
@@ -56,15 +65,19 @@ const RepairBrands = () => {
         
         <main className="flex-1 py-12 md:py-20">
           <div className="container max-w-6xl">
-            <h1 className="mb-4 text-3xl font-bold tracking-tight text-center">Select Your Laptop Brand</h1>
-            <p className="mb-12 text-center text-muted-foreground">Choose your device brand to proceed with repair booking</p>
+            <h1 className="mb-4 text-3xl font-bold tracking-tight text-center">
+              Select Your {category === 'laptop' ? 'Laptop' : 'Desktop'} Brand
+            </h1>
+            <p className="mb-12 text-center text-muted-foreground">
+              Choose your device brand to proceed with repair booking
+            </p>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {brands.map((brand) => (
                 <Card
                   key={brand.id}
                   className="p-6 cursor-pointer hover:shadow-lg transition-all hover:scale-105"
-                  onClick={() => navigate(`/repair/form?brand=${brand.id}`)}
+                  onClick={() => navigate(`/repair/form?brand=${brand.id}&category=${category}`)}
                 >
                   <div className="flex flex-col items-center gap-4">
                     {brand.logo_url && (

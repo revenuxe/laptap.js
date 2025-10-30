@@ -35,7 +35,7 @@ const CategorySection = () => {
     title: "Repair Laptop",
     description: "Professional laptop repair services at your doorstep. From screen replacement to hardware upgrades, we've got you covered.",
     features: ["Expert technicians", "Same-day service available", "Free pickup and delivery", "Genuine spare parts"],
-    path: "/repair/brands",
+    path: "/repair",
     gradient: "from-orange-500/10 to-red-500/10",
     iconColor: "text-orange-600"
   };

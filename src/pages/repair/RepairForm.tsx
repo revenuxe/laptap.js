@@ -46,6 +46,7 @@ const RepairForm = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const brandId = searchParams.get('brand');
+  const category = searchParams.get('category') || 'laptop';
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [brandName, setBrandName] = useState('');
@@ -146,7 +147,7 @@ const RepairForm = () => {
           <div className="container max-w-2xl">
             <h1 className="mb-4 text-3xl font-bold tracking-tight text-center">Book Repair Service</h1>
             <p className="mb-8 text-center text-muted-foreground">
-              Fill in the details for your {brandName} laptop repair
+              Fill in the details for your {brandName} {category} repair
             </p>
 
             <Card className="p-6">
@@ -187,7 +188,7 @@ const RepairForm = () => {
                       <FormItem>
                         <FormLabel>Model Name</FormLabel>
                         <FormControl>
-                          <Input placeholder="e.g., XPS 13, ThinkPad X1" {...field} />
+                          <Input placeholder={`e.g., ${category === 'laptop' ? 'XPS 13, ThinkPad X1' : 'Optiplex, Precision'}`} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
