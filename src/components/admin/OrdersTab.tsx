@@ -31,7 +31,7 @@ export function OrdersTab() {
 
   const fetchOrders = async () => {
     try {
-      // Fetch sell requests with models data
+      // Fetch sell requests with models data including category
       const { data: sellRequestsData, error: sellRequestsError } = await supabase
         .from('sell_requests')
         .select(`
@@ -40,7 +40,13 @@ export function OrdersTab() {
             name,
             series (
               name,
-              brands (name)
+              brands (
+                name,
+                categories (
+                  name,
+                  slug
+                )
+              )
             )
           )
         `)
@@ -88,19 +94,15 @@ export function OrdersTab() {
     }
   };
 
-  // Helper function to categorize device type
+  // Helper function to categorize device type using actual category from database
   const getDeviceCategory = (order: any) => {
-    const brandName = order.models?.series?.brands?.name?.toLowerCase() || '';
-    const modelName = order.models?.name?.toLowerCase() || '';
+    const categorySlug = order.models?.series?.brands?.categories?.slug?.toLowerCase() || '';
     
-    const mobileBrands = ['samsung', 'apple', 'oneplus', 'xiaomi', 'oppo', 'vivo', 'realme', 'nokia', 'motorola'];
-    const laptopBrands = ['dell', 'hp', 'lenovo', 'asus', 'acer', 'msi', 'microsoft'];
-    
-    if (mobileBrands.some(brand => brandName.includes(brand)) && !modelName.includes('macbook')) {
+    if (categorySlug === 'mobile') {
       return 'mobile';
-    } else if (laptopBrands.some(brand => brandName.includes(brand)) || brandName.includes('apple') && modelName.includes('macbook')) {
+    } else if (categorySlug === 'laptop') {
       return 'laptop';
-    } else if (modelName.includes('desktop') || modelName.includes('imac')) {
+    } else if (categorySlug === 'desktop') {
       return 'desktop';
     }
     return 'laptop'; // Default to laptop
