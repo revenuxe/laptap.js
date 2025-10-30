@@ -6,8 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
-import { Eye, Search } from 'lucide-react';
+import { Eye, Search, Filter } from 'lucide-react';
 import { OrderDetailsDialog } from './OrderDetailsDialog';
 
 export function OrdersTab() {
@@ -21,6 +22,8 @@ export function OrdersTab() {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
+  const [priceRange, setPriceRange] = useState<string>('all');
+  const [dateRange, setDateRange] = useState<string>('all');
 
   useEffect(() => {
     fetchOrders();
@@ -85,9 +88,46 @@ export function OrdersTab() {
     }
   };
 
-  // Apply filters whenever search or filter criteria change
-  useEffect(() => {
-    let filtered = [...orders];
+  // Helper function to categorize device type
+  const getDeviceCategory = (order: any) => {
+    const brandName = order.models?.series?.brands?.name?.toLowerCase() || '';
+    const modelName = order.models?.name?.toLowerCase() || '';
+    
+    const mobileBrands = ['samsung', 'apple', 'oneplus', 'xiaomi', 'oppo', 'vivo', 'realme', 'nokia', 'motorola'];
+    const laptopBrands = ['dell', 'hp', 'lenovo', 'asus', 'acer', 'msi', 'microsoft'];
+    
+    if (mobileBrands.some(brand => brandName.includes(brand)) && !modelName.includes('macbook')) {
+      return 'mobile';
+    } else if (laptopBrands.some(brand => brandName.includes(brand)) || brandName.includes('apple') && modelName.includes('macbook')) {
+      return 'laptop';
+    } else if (modelName.includes('desktop') || modelName.includes('imac')) {
+      return 'desktop';
+    }
+    return 'laptop'; // Default to laptop
+  };
+
+  // Helper function to categorize order stage
+  const getOrderStage = (status: string) => {
+    const pickupStages = ['quoted', 'pickup_scheduled', 'picked_up'];
+    return pickupStages.includes(status) ? 'pickup' : 'repair';
+  };
+
+  // Filter orders by category, stage, and other filters
+  const getFilteredOrders = (deviceType: 'mobile' | 'laptop', stage: 'pickup' | 'repair') => {
+    let filtered = orders.filter(order => {
+      const category = getDeviceCategory(order);
+      const orderStage = getOrderStage(order.status);
+      
+      // Filter by device type (mobile or laptop/desktop)
+      const matchesDevice = deviceType === 'mobile' 
+        ? category === 'mobile'
+        : ['laptop', 'desktop'].includes(category);
+      
+      // Filter by stage
+      const matchesStage = orderStage === stage;
+      
+      return matchesDevice && matchesStage;
+    });
 
     // Search filter
     if (searchQuery) {
@@ -107,28 +147,45 @@ export function OrdersTab() {
       filtered = filtered.filter(order => order.status === statusFilter);
     }
 
-    // Category filter
-    if (categoryFilter !== 'all') {
+    // Price range filter
+    if (priceRange !== 'all') {
       filtered = filtered.filter(order => {
-        const category = order.models?.series?.brands?.name?.toLowerCase();
-        if (categoryFilter === 'laptop') {
-          return ['dell', 'hp', 'lenovo', 'asus', 'acer', 'apple', 'msi', 'microsoft'].some(brand => 
-            category?.includes(brand)
-          );
-        } else if (categoryFilter === 'mobile') {
-          return ['samsung', 'apple', 'oneplus', 'xiaomi', 'oppo', 'vivo', 'realme'].some(brand => 
-            category?.includes(brand)
-          );
-        } else if (categoryFilter === 'desktop') {
-          return order.models?.name?.toLowerCase().includes('desktop') || 
-                 order.models?.name?.toLowerCase().includes('imac');
+        const price = order.estimated_price || 0;
+        switch (priceRange) {
+          case 'under10k': return price < 10000;
+          case '10k-25k': return price >= 10000 && price < 25000;
+          case '25k-50k': return price >= 25000 && price < 50000;
+          case '50k-100k': return price >= 50000 && price < 100000;
+          case 'above100k': return price >= 100000;
+          default: return true;
         }
-        return true;
       });
     }
 
-    setFilteredOrders(filtered);
-  }, [searchQuery, statusFilter, categoryFilter, orders]);
+    // Date range filter
+    if (dateRange !== 'all') {
+      const now = new Date();
+      filtered = filtered.filter(order => {
+        const orderDate = new Date(order.created_at);
+        const daysDiff = Math.floor((now.getTime() - orderDate.getTime()) / (1000 * 60 * 60 * 24));
+        
+        switch (dateRange) {
+          case 'today': return daysDiff === 0;
+          case 'week': return daysDiff <= 7;
+          case 'month': return daysDiff <= 30;
+          case '3months': return daysDiff <= 90;
+          default: return true;
+        }
+      });
+    }
+
+    return filtered;
+  };
+
+  // Update filteredOrders based on all filters
+  useEffect(() => {
+    setFilteredOrders(orders);
+  }, [orders]);
 
   const getStatusColor = (status: string) => {
     const colors: Record<string, string> = {
@@ -143,63 +200,10 @@ export function OrdersTab() {
     return colors[status] || 'bg-gray-500';
   };
 
-  if (loading) {
-    return <div className="p-6">Loading orders...</div>;
-  }
-
-  return (
-    <Card className="p-6">
-      <h2 className="text-xl font-semibold mb-6">Orders Management</h2>
-      
-      {/* Filters Section */}
-      <div className="mb-6 grid gap-4 md:grid-cols-4">
-        {/* Search Bar */}
-        <div className="md:col-span-2 relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search by name, mobile, email, device, or order ID..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-
-        {/* Category Filter */}
-        <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-          <SelectTrigger>
-            <SelectValue placeholder="All Categories" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Categories</SelectItem>
-            <SelectItem value="laptop">Laptops</SelectItem>
-            <SelectItem value="mobile">Mobiles</SelectItem>
-            <SelectItem value="desktop">Desktops</SelectItem>
-          </SelectContent>
-        </Select>
-
-        {/* Status Filter */}
-        <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <SelectTrigger>
-            <SelectValue placeholder="All Status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Status</SelectItem>
-            <SelectItem value="quoted">Quoted</SelectItem>
-            <SelectItem value="pickup_scheduled">Pickup Scheduled</SelectItem>
-            <SelectItem value="picked_up">Picked Up</SelectItem>
-            <SelectItem value="inspected">Inspected</SelectItem>
-            <SelectItem value="payment_processing">Payment Processing</SelectItem>
-            <SelectItem value="paid">Paid</SelectItem>
-            <SelectItem value="cancelled">Cancelled</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Results Count */}
-      <div className="mb-4 text-sm text-muted-foreground">
-        Showing {filteredOrders.length} of {orders.length} orders
-      </div>
-      
+  const renderOrdersTable = (deviceType: 'mobile' | 'laptop', stage: 'pickup' | 'repair') => {
+    const filtered = getFilteredOrders(deviceType, stage);
+    
+    return (
       <div className="overflow-x-auto">
         <Table>
           <TableHeader>
@@ -214,16 +218,16 @@ export function OrdersTab() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredOrders.length === 0 ? (
+            {filtered.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
-                  {searchQuery || statusFilter !== 'all' || categoryFilter !== 'all' 
+                  {searchQuery || statusFilter !== 'all' || priceRange !== 'all' || dateRange !== 'all'
                     ? 'No orders match your filters' 
                     : 'No orders found'}
                 </TableCell>
               </TableRow>
             ) : (
-              filteredOrders.map((order) => (
+              filtered.map((order) => (
               <TableRow key={order.id}>
                 <TableCell className="font-mono text-xs">
                   {order.id.slice(0, 8)}
@@ -269,6 +273,135 @@ export function OrdersTab() {
           </TableBody>
         </Table>
       </div>
+    );
+  };
+
+  if (loading) {
+    return <div className="p-6">Loading orders...</div>;
+  }
+
+  return (
+    <Card className="p-6">
+      <div className="flex items-center gap-2 mb-6">
+        <Filter className="h-5 w-5" />
+        <h2 className="text-xl font-semibold">Orders Management</h2>
+      </div>
+      
+      {/* Enhanced Filters Section */}
+      <div className="mb-6 grid gap-4 md:grid-cols-5">
+        {/* Search Bar */}
+        <div className="md:col-span-2 relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search by name, mobile, email, device, or ID..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10"
+          />
+        </div>
+
+        {/* Status Filter */}
+        <Select value={statusFilter} onValueChange={setStatusFilter}>
+          <SelectTrigger>
+            <SelectValue placeholder="All Status" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Status</SelectItem>
+            <SelectItem value="quoted">Quoted</SelectItem>
+            <SelectItem value="pickup_scheduled">Pickup Scheduled</SelectItem>
+            <SelectItem value="picked_up">Picked Up</SelectItem>
+            <SelectItem value="inspected">Inspected</SelectItem>
+            <SelectItem value="payment_processing">Payment Processing</SelectItem>
+            <SelectItem value="paid">Paid</SelectItem>
+            <SelectItem value="cancelled">Cancelled</SelectItem>
+          </SelectContent>
+        </Select>
+
+        {/* Price Range Filter */}
+        <Select value={priceRange} onValueChange={setPriceRange}>
+          <SelectTrigger>
+            <SelectValue placeholder="Price Range" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Prices</SelectItem>
+            <SelectItem value="under10k">Under ₹10,000</SelectItem>
+            <SelectItem value="10k-25k">₹10,000 - ₹25,000</SelectItem>
+            <SelectItem value="25k-50k">₹25,000 - ₹50,000</SelectItem>
+            <SelectItem value="50k-100k">₹50,000 - ₹1,00,000</SelectItem>
+            <SelectItem value="above100k">Above ₹1,00,000</SelectItem>
+          </SelectContent>
+        </Select>
+
+        {/* Date Range Filter */}
+        <Select value={dateRange} onValueChange={setDateRange}>
+          <SelectTrigger>
+            <SelectValue placeholder="Date Range" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Time</SelectItem>
+            <SelectItem value="today">Today</SelectItem>
+            <SelectItem value="week">Last 7 Days</SelectItem>
+            <SelectItem value="month">Last 30 Days</SelectItem>
+            <SelectItem value="3months">Last 3 Months</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* Main Device Type Tabs */}
+      <Tabs defaultValue="laptop" className="space-y-4">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="laptop">Laptop / Desktop</TabsTrigger>
+          <TabsTrigger value="mobile">Mobile</TabsTrigger>
+        </TabsList>
+
+        {/* Laptop/Desktop Tab Content */}
+        <TabsContent value="laptop">
+          <Tabs defaultValue="pickup" className="space-y-4">
+            <TabsList>
+              <TabsTrigger value="pickup">Pickup Orders</TabsTrigger>
+              <TabsTrigger value="repair">Processing / Repair</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="pickup">
+              <div className="mb-3 text-sm text-muted-foreground">
+                {getFilteredOrders('laptop', 'pickup').length} orders in pickup stage
+              </div>
+              {renderOrdersTable('laptop', 'pickup')}
+            </TabsContent>
+
+            <TabsContent value="repair">
+              <div className="mb-3 text-sm text-muted-foreground">
+                {getFilteredOrders('laptop', 'repair').length} orders in processing/repair stage
+              </div>
+              {renderOrdersTable('laptop', 'repair')}
+            </TabsContent>
+          </Tabs>
+        </TabsContent>
+
+        {/* Mobile Tab Content */}
+        <TabsContent value="mobile">
+          <Tabs defaultValue="pickup" className="space-y-4">
+            <TabsList>
+              <TabsTrigger value="pickup">Pickup Orders</TabsTrigger>
+              <TabsTrigger value="repair">Processing / Repair</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="pickup">
+              <div className="mb-3 text-sm text-muted-foreground">
+                {getFilteredOrders('mobile', 'pickup').length} orders in pickup stage
+              </div>
+              {renderOrdersTable('mobile', 'pickup')}
+            </TabsContent>
+
+            <TabsContent value="repair">
+              <div className="mb-3 text-sm text-muted-foreground">
+                {getFilteredOrders('mobile', 'repair').length} orders in processing/repair stage
+              </div>
+              {renderOrdersTable('mobile', 'repair')}
+            </TabsContent>
+          </Tabs>
+        </TabsContent>
+      </Tabs>
 
       {selectedOrder && (
         <OrderDetailsDialog
