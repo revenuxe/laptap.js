@@ -6,8 +6,12 @@ import { Calendar, ArrowRight, Loader2 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { useEffect } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 
 const Blog = () => {
+  const queryClient = useQueryClient();
+  
   const { data: blogPosts, isLoading } = useQuery({
     queryKey: ['blogs'],
     queryFn: async () => {
@@ -21,6 +25,28 @@ const Blog = () => {
       return data;
     },
   });
+
+  // Real-time subscription
+  useEffect(() => {
+    const channel = supabase
+      .channel('blog-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'blogs'
+        },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ['blogs'] });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [queryClient]);
 
   // Fallback blog posts if no blogs in database
   const fallbackPosts = [

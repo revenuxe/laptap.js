@@ -19,6 +19,7 @@ import Contact from "./pages/Contact";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import Blog from "./pages/Blog";
+import BlogPost from "./pages/blog/BlogPost";
 import NotFound from "./pages/NotFound";
 import Bangalore from "./pages/locations/Bangalore";
 import Hyderabad from "./pages/locations/Hyderabad";
@@ -66,7 +67,7 @@ const App = () => (
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:slug" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/bangalore" element={<Bangalore />} />
               <Route path="/hyderabad" element={<Hyderabad />} />
               <Route path="/bangalore/macbook" element={<BangaloreMacBook />} />
