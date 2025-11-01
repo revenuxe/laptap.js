@@ -34,6 +34,7 @@ const issueCategories = {
 
 const formSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
+  email: z.string().email('Please enter a valid email'),
   phone: z.string().regex(/^[6-9]\d{9}$/, 'Invalid phone number'),
   model: z.string().min(2, 'Model is required'),
   issueCategory: z.string().min(1, 'Please select an issue category'),
@@ -58,6 +59,7 @@ const RepairForm = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
+      email: '',
       phone: '',
       model: '',
       issueCategory: '',
@@ -75,15 +77,16 @@ const RepairForm = () => {
       }
       setAuthChecked(true);
       
-      // Fetch user profile to pre-fill name
+      // Fetch user profile to pre-fill name, email, phone
       const { data: profile } = await supabase
         .from('profiles')
-        .select('full_name, phone')
+        .select('full_name, email, phone')
         .eq('id', user.id)
         .maybeSingle();
       
       if (profile) {
         if (profile.full_name) form.setValue('name', profile.full_name);
+        if (profile.email) form.setValue('email', profile.email);
         if (profile.phone) form.setValue('phone', profile.phone);
       }
     };
@@ -129,6 +132,7 @@ const RepairForm = () => {
           brand_id: brandId,
           model_name: values.model,
           customer_name: values.name,
+          customer_email: values.email,
           customer_phone: values.phone,
           issue_category: values.issueCategory,
           issue_subcategory: values.issueSubcategory || null,
@@ -183,7 +187,21 @@ const RepairForm = () => {
                       <FormItem>
                         <FormLabel>Full Name</FormLabel>
                         <FormControl>
-                          <Input placeholder="Enter your name" {...field} />
+                          <Input placeholder="Enter your name" {...field} disabled />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input type="email" placeholder="your.email@example.com" {...field} disabled />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

@@ -35,9 +35,10 @@ interface OrderDetailsDialogProps {
   onOpenChange: (open: boolean) => void;
   onOrderUpdated: () => void;
   onOrderDeleted: () => void;
+  orderType?: 'sell' | 'repair';
 }
 
-const statusOptions = [
+const sellStatusOptions = [
   { value: 'quoted', label: 'Quoted' },
   { value: 'pickup_scheduled', label: 'Pickup Scheduled' },
   { value: 'picked_up', label: 'Picked Up' },
@@ -47,12 +48,21 @@ const statusOptions = [
   { value: 'cancelled', label: 'Cancelled' },
 ];
 
+const repairStatusOptions = [
+  { value: 'pending', label: 'Pending' },
+  { value: 'confirmed', label: 'Confirmed' },
+  { value: 'in_progress', label: 'In Progress' },
+  { value: 'completed', label: 'Completed' },
+  { value: 'cancelled', label: 'Cancelled' },
+];
+
 export function OrderDetailsDialog({
   order,
   open,
   onOpenChange,
   onOrderUpdated,
   onOrderDeleted,
+  orderType = 'sell',
 }: OrderDetailsDialogProps) {
   const [status, setStatus] = useState(order.status);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -61,8 +71,9 @@ export function OrderDetailsDialog({
 
   const handleUpdateStatus = async () => {
     setUpdating(true);
+    const tableName = orderType === 'repair' ? 'repair_requests' : 'sell_requests';
     const { error } = await supabase
-      .from('sell_requests')
+      .from(tableName)
       .update({ status })
       .eq('id', order.id);
 
@@ -79,8 +90,9 @@ export function OrderDetailsDialog({
 
   const handleDelete = async () => {
     setDeleting(true);
+    const tableName = orderType === 'repair' ? 'repair_requests' : 'sell_requests';
     const { error } = await supabase
-      .from('sell_requests')
+      .from(tableName)
       .delete()
       .eq('id', order.id);
 
@@ -112,26 +124,43 @@ export function OrderDetailsDialog({
             <div>
               <h3 className="font-semibold mb-2">Customer Information</h3>
               <div className="space-y-1 text-sm">
-                <p><strong>Name:</strong> {order.config?.customer_name || order.profiles?.full_name || 'N/A'}</p>
-                <p><strong>Email:</strong> {order.profiles?.email || 'N/A'}</p>
-                <p><strong>Phone:</strong> {order.config?.customer_mobile || order.profiles?.phone || 'N/A'}</p>
+                <p><strong>Name:</strong> {order.customer_name || order.config?.customer_name || order.profiles?.full_name || 'Not provided'}</p>
+                <p><strong>Email:</strong> {order.customer_email || order.profiles?.email || 'Not provided'}</p>
+                <p><strong>Phone:</strong> {order.customer_phone || order.config?.customer_mobile || order.profiles?.phone || 'Not provided'}</p>
               </div>
             </div>
 
-            {/* Device Info */}
-            <div>
-              <h3 className="font-semibold mb-2">Device Information</h3>
-              <div className="space-y-1 text-sm">
-                <p><strong>Brand:</strong> {order.models?.series?.brands?.name}</p>
-                <p><strong>Series:</strong> {order.models?.series?.name}</p>
-                <p><strong>Model:</strong> {order.models?.name}</p>
-                <p><strong>Condition:</strong> {order.condition}</p>
-                <p><strong>Age:</strong> {order.age_months} months</p>
+            {orderType === 'repair' ? (
+              /* Repair Info */
+              <div>
+                <h3 className="font-semibold mb-2">Repair Details</h3>
+                <div className="space-y-1 text-sm">
+                  <p><strong>Brand:</strong> {order.brands?.name || 'N/A'}</p>
+                  <p><strong>Model:</strong> {order.model_name}</p>
+                  <p><strong>Issue Category:</strong> {order.issue_category}</p>
+                  {order.issue_subcategory && <p><strong>Specific Issue:</strong> {order.issue_subcategory}</p>}
+                  {order.issue_details && <p><strong>Details:</strong> {order.issue_details}</p>}
+                  {order.preferred_date && (
+                    <p><strong>Preferred Date:</strong> {new Date(order.preferred_date).toLocaleDateString()}</p>
+                  )}
+                </div>
               </div>
-            </div>
+            ) : (
+              /* Device Info */
+              <div>
+                <h3 className="font-semibold mb-2">Device Information</h3>
+                <div className="space-y-1 text-sm">
+                  <p><strong>Brand:</strong> {order.models?.series?.brands?.name}</p>
+                  <p><strong>Series:</strong> {order.models?.series?.name}</p>
+                  <p><strong>Model:</strong> {order.models?.name}</p>
+                  <p><strong>Condition:</strong> {order.condition}</p>
+                  <p><strong>Age:</strong> {order.age_months} months</p>
+                </div>
+              </div>
+            )}
 
             {/* Configuration */}
-            {order.config && Object.keys(order.config).length > 0 && (
+            {orderType === 'sell' && order.config && Object.keys(order.config).length > 0 && (
               <div>
                 <h3 className="font-semibold mb-2">Configuration</h3>
                 <div className="space-y-1 text-sm">
@@ -145,7 +174,7 @@ export function OrderDetailsDialog({
             )}
 
             {/* Accessories */}
-            {order.accessories && Object.keys(order.accessories).length > 0 && (
+            {orderType === 'sell' && order.accessories && Object.keys(order.accessories).length > 0 && (
               <div>
                 <h3 className="font-semibold mb-2">Accessories</h3>
                 <div className="flex flex-wrap gap-2">
@@ -157,18 +186,20 @@ export function OrderDetailsDialog({
             )}
 
             {/* Pricing */}
-            <div>
-              <h3 className="font-semibold mb-2">Pricing</h3>
-              <div className="space-y-1 text-sm">
-                <p><strong>Estimated Price:</strong> ₹{order.estimated_price?.toLocaleString()}</p>
-                {order.final_price && (
-                  <p><strong>Final Price:</strong> ₹{order.final_price?.toLocaleString()}</p>
-                )}
+            {orderType === 'sell' && (
+              <div>
+                <h3 className="font-semibold mb-2">Pricing</h3>
+                <div className="space-y-1 text-sm">
+                  <p><strong>Estimated Price:</strong> ₹{order.estimated_price?.toLocaleString()}</p>
+                  {order.final_price && (
+                    <p><strong>Final Price:</strong> ₹{order.final_price?.toLocaleString()}</p>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Address */}
-            {order.address && (
+            {orderType === 'sell' && order.address && (
               <div>
                 <h3 className="font-semibold mb-2">Pickup Address</h3>
                 <p className="text-sm">{order.address}</p>
@@ -185,7 +216,7 @@ export function OrderDetailsDialog({
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {statusOptions.map((option) => (
+                    {(orderType === 'repair' ? repairStatusOptions : sellStatusOptions).map((option) => (
                       <SelectItem key={option.value} value={option.value}>
                         {option.label}
                       </SelectItem>

@@ -486,16 +486,39 @@ export function OrdersTab() {
                         {new Date(order.created_at).toLocaleDateString()}
                       </TableCell>
                       <TableCell>
-                        <Button 
-                          variant="ghost" 
-                          size="sm"
-                          onClick={() => {
-                            setSelectedOrder({ ...order, type: 'repair' });
-                            setDialogOpen(true);
-                          }}
-                        >
-                          <Eye className="h-4 w-4" />
-                        </Button>
+                        <div className="flex gap-2">
+                          <Button 
+                            variant="ghost" 
+                            size="sm"
+                            onClick={() => {
+                              setSelectedOrder(order);
+                              setDialogOpen(true);
+                            }}
+                          >
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="destructive"
+                            size="sm"
+                            onClick={async () => {
+                              if (confirm('Are you sure you want to delete this repair request?')) {
+                                const { error } = await supabase
+                                  .from('repair_requests')
+                                  .delete()
+                                  .eq('id', order.id);
+                                
+                                if (error) {
+                                  toast.error('Failed to delete repair request');
+                                } else {
+                                  toast.success('Repair request deleted');
+                                  fetchRepairOrders();
+                                }
+                              }
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))
@@ -511,8 +534,15 @@ export function OrdersTab() {
           order={selectedOrder}
           open={dialogOpen}
           onOpenChange={setDialogOpen}
-          onOrderUpdated={fetchOrders}
-          onOrderDeleted={fetchOrders}
+          onOrderUpdated={() => {
+            fetchOrders();
+            fetchRepairOrders();
+          }}
+          onOrderDeleted={() => {
+            fetchOrders();
+            fetchRepairOrders();
+          }}
+          orderType={selectedOrder.order_number?.startsWith('REP') ? 'repair' : 'sell'}
         />
       )}
     </Card>
