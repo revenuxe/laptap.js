@@ -461,8 +461,8 @@ export function OrdersTab() {
                       <TableCell className="font-mono text-xs">{order.order_number}</TableCell>
                       <TableCell>
                         <div className="text-sm">
-                          <div className="font-medium">{order.customer_name}</div>
-                          <div className="text-muted-foreground">{order.customer_phone}</div>
+                          <div className="font-medium">{order.customer_name || 'Not provided'}</div>
+                          <div className="text-muted-foreground">{order.customer_phone || 'Not provided'}</div>
                         </div>
                       </TableCell>
                       <TableCell>

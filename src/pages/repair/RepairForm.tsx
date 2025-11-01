@@ -52,6 +52,7 @@ const RepairForm = () => {
   const [brandName, setBrandName] = useState('');
   const [subcategories, setSubcategories] = useState<string[]>([]);
   const [modelOpen, setModelOpen] = useState(false);
+  const [authChecked, setAuthChecked] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -66,12 +67,35 @@ const RepairForm = () => {
   });
 
   useEffect(() => {
+    const checkAuth = async () => {
+      if (!user) {
+        const currentPath = `/repair/form?brand=${brandId}&category=${category}`;
+        navigate(`/auth?redirect=${encodeURIComponent(currentPath)}`);
+        return;
+      }
+      setAuthChecked(true);
+      
+      // Fetch user profile to pre-fill name
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('full_name, phone')
+        .eq('id', user.id)
+        .maybeSingle();
+      
+      if (profile) {
+        if (profile.full_name) form.setValue('name', profile.full_name);
+        if (profile.phone) form.setValue('phone', profile.phone);
+      }
+    };
+
     if (!brandId) {
       navigate('/repair/brands');
       return;
     }
+    
+    checkAuth();
     fetchBrand();
-  }, [brandId]);
+  }, [brandId, user]);
 
   const fetchBrand = async () => {
     const { data, error } = await supabase
@@ -95,12 +119,6 @@ const RepairForm = () => {
   };
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    if (!user) {
-      toast.error('Please login to continue');
-      navigate(`/auth?redirect=/repair/form?brand=${brandId}`);
-      return;
-    }
-
     setLoading(true);
 
     try {
@@ -144,7 +162,12 @@ const RepairForm = () => {
         <Header />
         
         <main className="flex-1 py-12 md:py-20">
-          <div className="container max-w-2xl">
+          {!authChecked ? (
+            <div className="container max-w-2xl flex items-center justify-center min-h-[400px]">
+              <Loader2 className="h-8 w-8 animate-spin" />
+            </div>
+          ) : (
+            <div className="container max-w-2xl">
             <h1 className="mb-4 text-3xl font-bold tracking-tight text-center">Book Repair Service</h1>
             <p className="mb-8 text-center text-muted-foreground">
               Fill in the details for your {brandName} {category} repair
@@ -324,6 +347,7 @@ const RepairForm = () => {
               </Form>
             </Card>
           </div>
+          )}
         </main>
 
         <Footer />
