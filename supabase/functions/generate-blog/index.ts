@@ -21,7 +21,7 @@ serve(async (req) => {
 
     console.log("Generating blog for topic:", topic);
 
-    // Step 1: Generate the blog content (optimized for speed)
+    // Step 1: Generate the blog content
     const contentPrompt = `You are an expert blog writer for a laptop and mobile buying/selling service. Write a comprehensive, human-like blog post about "${topic}".
 
 CRITICAL REQUIREMENTS:
@@ -32,7 +32,7 @@ CRITICAL REQUIREMENTS:
    - Compelling introduction (hook the reader emotionally)
    - Use H2 headings for main sections (##)
    - Use bullet points and numbered lists for clarity
-   - Include 2 sections where images should be placed with marker: [IMAGE_PLACEHOLDER_X] where X is 1-2
+   - Include 4 sections where images should be placed with marker: [IMAGE_PLACEHOLDER_X] where X is 1-4
    - Conclusion with clear call-to-action
 
 5. Content Quality:
@@ -65,10 +65,6 @@ Please write the full blog post now. Remember: 2500-2700 words is mandatory.`;
         ],
       }),
     });
-
-    if (!contentResponse.ok) {
-      throw new Error(`Content generation failed: ${contentResponse.status}`);
-    }
 
     const contentData = await contentResponse.json();
     const blogContent = contentData.choices[0].message.content;
@@ -114,18 +110,18 @@ Format your response as JSON:
 
     console.log("Meta information generated");
 
-    // Step 3: Generate images in parallel (reduced to 2 for speed)
+    // Step 3: Generate images
     const imagePrompts = [
       `Professional photo of a modern laptop on a clean desk, bright lighting, high quality, realistic`,
-      `Happy customer with laptop, professional setting, bright and clean, high quality photo`
+      `Person holding a smartphone, professional setting, bright and clean, high quality photo`,
+      `Close-up of laptop keyboard and screen showing quality details, professional photography`,
+      `Happy customer receiving their laptop, friendly interaction, professional setting, bright photo`
     ];
 
     const imageUrls: string[] = [];
-    
-    // Generate images in parallel for speed
-    console.log('Starting parallel image generation');
-    const imagePromises = imagePrompts.map(async (prompt, i) => {
-      console.log(`Generating image ${i + 1}/${imagePrompts.length}`);
+
+    for (let i = 0; i < 4; i++) {
+      console.log(`Generating image ${i + 1}/4`);
       
       try {
         const imageResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
@@ -136,37 +132,34 @@ Format your response as JSON:
           },
           body: JSON.stringify({
             model: "google/gemini-2.5-flash-image-preview",
-            messages: [{ role: "user", content: prompt }],
+            messages: [
+              {
+                role: "user",
+                content: imagePrompts[i]
+              }
+            ],
             modalities: ["image", "text"]
           }),
         });
 
-        if (!imageResponse.ok) {
-          console.error(`Image ${i + 1} generation failed: ${imageResponse.status}`);
-          return "";
-        }
-
         const imageData = await imageResponse.json();
         
         if (imageData.choices?.[0]?.message?.images?.[0]?.image_url?.url) {
+          imageUrls.push(imageData.choices[0].message.images[0].image_url.url);
           console.log(`Image ${i + 1} generated successfully`);
-          return imageData.choices[0].message.images[0].image_url.url;
         } else {
-          console.error(`Failed to extract image ${i + 1} URL`);
-          return "";
+          console.error(`Failed to generate image ${i + 1}`);
+          imageUrls.push(""); // Empty placeholder
         }
       } catch (imageError) {
         console.error(`Error generating image ${i + 1}:`, imageError);
-        return "";
+        imageUrls.push(""); // Empty placeholder
       }
-    });
-
-    const generatedImages = await Promise.all(imagePromises);
-    imageUrls.push(...generatedImages);
+    }
 
     // Step 4: Insert images into content
     let finalContent = blogContent;
-    for (let i = 0; i < imagePrompts.length; i++) {
+    for (let i = 0; i < 4; i++) {
       if (imageUrls[i]) {
         finalContent = finalContent.replace(
           `[IMAGE_PLACEHOLDER_${i + 1}]`,

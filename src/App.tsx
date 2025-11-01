@@ -33,12 +33,6 @@ import IMac from "./pages/models/IMac";
 import DellOptiplex from "./pages/models/DellOptiplex";
 import HPDesktop from "./pages/models/HPDesktop";
 import LenovoDesktop from "./pages/models/LenovoDesktop";
-import SellMacBook from "./pages/brands/SellMacBook";
-import SellDell from "./pages/brands/SellDell";
-import SellHP from "./pages/brands/SellHP";
-import SellLenovo from "./pages/brands/SellLenovo";
-import SellAsus from "./pages/brands/SellAsus";
-import SellAcer from "./pages/brands/SellAcer";
 import RepairCategory from "./pages/repair/RepairCategory";
 import RepairBrands from "./pages/repair/RepairBrands";
 import RepairForm from "./pages/repair/RepairForm";
@@ -86,12 +80,6 @@ const App = () => (
               <Route path="/models/dell-optiplex" element={<DellOptiplex />} />
               <Route path="/models/hp-desktop" element={<HPDesktop />} />
               <Route path="/models/lenovo-desktop" element={<LenovoDesktop />} />
-              <Route path="/sell/macbook" element={<SellMacBook />} />
-              <Route path="/sell/dell" element={<SellDell />} />
-              <Route path="/sell/hp" element={<SellHP />} />
-              <Route path="/sell/lenovo" element={<SellLenovo />} />
-              <Route path="/sell/asus" element={<SellAsus />} />
-              <Route path="/sell/acer" element={<SellAcer />} />
               <Route path="/repair" element={<RepairCategory />} />
               <Route path="/repair/brands" element={<RepairBrands />} />
               <Route path="/repair/form" element={<RepairForm />} />
