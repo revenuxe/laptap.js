@@ -77,15 +77,15 @@ const RepairForm = () => {
       }
       setAuthChecked(true);
       
-      // Fetch user profile to pre-fill phone only
+      // Fetch user email to pre-fill
       const { data: profile } = await supabase
         .from('profiles')
-        .select('phone')
+        .select('email')
         .eq('id', user.id)
         .maybeSingle();
       
-      if (profile?.phone) {
-        form.setValue('phone', profile.phone);
+      if (profile?.email) {
+        form.setValue('email', profile.email);
       }
     };
 
@@ -199,7 +199,7 @@ const RepairForm = () => {
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input type="email" placeholder="your.email@example.com" {...field} />
+                          <Input type="email" placeholder="your.email@example.com" {...field} disabled />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
