@@ -2,16 +2,33 @@ import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
-import { Calendar, ArrowRight } from "lucide-react";
+import { Calendar, ArrowRight, Loader2 } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 
 const Blog = () => {
-  const blogPosts = [
+  const { data: blogPosts, isLoading } = useQuery({
+    queryKey: ['blogs'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('blogs')
+        .select('*')
+        .eq('published', true)
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  // Fallback blog posts if no blogs in database
+  const fallbackPosts = [
     {
       id: 1,
       title: "Top 10 Things to Check Before Buying a Refurbished Laptop",
       excerpt: "Learn the essential factors to consider when purchasing a refurbished laptop to ensure you get the best value for your money.",
-      date: "2025-10-01",
+      created_at: "2025-10-01",
       category: "Buying Guide",
       slug: "buying-refurbished-laptop-guide",
     },
@@ -19,7 +36,7 @@ const Blog = () => {
       id: 2,
       title: "How to Prepare Your Laptop for Sale: A Complete Guide",
       excerpt: "Step-by-step instructions on backing up data, wiping your device, and getting the best price when selling your laptop.",
-      date: "2025-09-28",
+      created_at: "2025-09-28",
       category: "Selling Tips",
       slug: "prepare-laptop-for-sale",
     },
@@ -27,11 +44,13 @@ const Blog = () => {
       id: 3,
       title: "Refurbished vs New Laptops: Which Should You Choose?",
       excerpt: "Compare the pros and cons of refurbished and new laptops to make an informed decision for your needs and budget.",
-      date: "2025-09-25",
+      created_at: "2025-09-25",
       category: "Comparison",
       slug: "refurbished-vs-new-laptops",
     },
   ];
+
+  const displayPosts = blogPosts && blogPosts.length > 0 ? blogPosts : fallbackPosts;
 
   return (
     <>
@@ -79,42 +98,52 @@ const Blog = () => {
           {/* Blog Posts Section */}
           <section className="py-16 md:py-24">
             <div className="container">
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {blogPosts.map((post) => (
-                  <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                    <div className="p-6">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
-                        <Calendar className="h-4 w-4" />
-                        <time dateTime={post.date}>
-                          {new Date(post.date).toLocaleDateString('en-US', { 
-                            year: 'numeric', 
-                            month: 'long', 
-                            day: 'numeric' 
-                          })}
-                        </time>
-                      </div>
-                      <span className="inline-block px-3 py-1 text-xs font-semibold bg-primary/10 text-primary rounded-full mb-3">
-                        {post.category}
-                      </span>
-                      <h2 className="text-xl font-bold mb-3 line-clamp-2">{post.title}</h2>
-                      <p className="text-muted-foreground mb-4 line-clamp-3">{post.excerpt}</p>
-                      <Link 
-                        to={`/blog/${post.slug}`}
-                        className="inline-flex items-center gap-2 text-primary hover:underline font-medium"
-                      >
-                        Read More <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </div>
-                  </Card>
-                ))}
-              </div>
+              {isLoading ? (
+                <div className="flex items-center justify-center py-12">
+                  <Loader2 className="w-8 h-8 animate-spin" />
+                </div>
+              ) : (
+                <>
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {displayPosts.map((post) => (
+                      <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                        <div className="p-6">
+                          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+                            <Calendar className="h-4 w-4" />
+                            <time dateTime={post.created_at}>
+                              {new Date(post.created_at).toLocaleDateString('en-US', { 
+                                year: 'numeric', 
+                                month: 'long', 
+                                day: 'numeric' 
+                              })}
+                            </time>
+                          </div>
+                          <span className="inline-block px-3 py-1 text-xs font-semibold bg-primary/10 text-primary rounded-full mb-3">
+                            {post.category}
+                          </span>
+                          <h2 className="text-xl font-bold mb-3 line-clamp-2">{post.title}</h2>
+                          <p className="text-muted-foreground mb-4 line-clamp-3">{post.excerpt}</p>
+                          <Link 
+                            to={`/blog/${post.slug}`}
+                            className="inline-flex items-center gap-2 text-primary hover:underline font-medium"
+                          >
+                            Read More <ArrowRight className="h-4 w-4" />
+                          </Link>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
 
-              {/* Coming Soon Message */}
-              <div className="mt-12 text-center">
-                <p className="text-muted-foreground">
-                  More articles coming soon! Stay tuned for expert insights and guides.
-                </p>
-              </div>
+                  {/* Coming Soon Message */}
+                  {blogPosts && blogPosts.length > 0 && (
+                    <div className="mt-12 text-center">
+                      <p className="text-muted-foreground">
+                        More articles coming soon! Stay tuned for expert insights and guides.
+                      </p>
+                    </div>
+                  )}
+                </>
+              )}
             </div>
           </section>
         </main>

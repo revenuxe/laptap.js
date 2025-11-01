@@ -1,1 +1,4 @@
 project_id = "ziuuektwmuwqdeiafnkz"
+
+[functions.generate-blog]
+verify_jwt = true

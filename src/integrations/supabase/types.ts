@@ -41,6 +41,60 @@ export type Database = {
         }
         Relationships: []
       }
+      blogs: {
+        Row: {
+          author: string | null
+          category: string
+          content: string
+          created_at: string | null
+          excerpt: string
+          featured_image: string | null
+          id: string
+          images: Json | null
+          keywords: string[] | null
+          meta_description: string
+          meta_title: string
+          published: boolean | null
+          slug: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          author?: string | null
+          category: string
+          content: string
+          created_at?: string | null
+          excerpt: string
+          featured_image?: string | null
+          id?: string
+          images?: Json | null
+          keywords?: string[] | null
+          meta_description: string
+          meta_title: string
+          published?: boolean | null
+          slug: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          author?: string | null
+          category?: string
+          content?: string
+          created_at?: string | null
+          excerpt?: string
+          featured_image?: string | null
+          id?: string
+          images?: Json | null
+          keywords?: string[] | null
+          meta_description?: string
+          meta_title?: string
+          published?: boolean | null
+          slug?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       brands: {
         Row: {
           category_id: string | null
