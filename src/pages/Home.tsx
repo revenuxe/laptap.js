@@ -38,7 +38,7 @@ const Home = () => {
           "name": "Laptap",
           "description": "Bengaluru's most trusted platform for selling used laptops, mobile phones, and desktop computers with instant cash payment",
           "url": "https://laptap.in",
-          "telephone": "+919886285028",
+          "telephone": "+919886579923",
           "priceRange": "₹₹",
           "address": {
             "@type": "PostalAddress",

@@ -4,7 +4,7 @@ import whatsappIcon from "@/assets/whatsapp.svg";
 
 const WhatsAppFloat = () => {
   const [showPopup, setShowPopup] = useState(false);
-  const whatsappNumber = "919886285028";
+  const whatsappNumber = "919886579923";
   const message = "Hi! I want to sell my device.";
 
   useEffect(() => {

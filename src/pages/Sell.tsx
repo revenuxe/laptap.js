@@ -625,7 +625,7 @@ const Sell = () => {
                   <div 
                     className="p-4 md:p-6 flex flex-col flex-1"
                     onClick={() => {
-                      const whatsappNumber = "919886285028";
+                      const whatsappNumber = "919886579923";
                       const message = `Hi! I want to sell my ${category}.`;
                       const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
                       window.open(url, '_blank');

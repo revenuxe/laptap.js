@@ -41,7 +41,7 @@ const Hyderabad = () => {
             "name": "Laptap Hyderabad",
             "description": "Hyderabad's most trusted platform for selling used laptops, mobile phones, and desktop computers with instant cash payment and free same-day doorstep pickup",
             "url": "https://laptap.in/hyderabad",
-            "telephone": "+919886285028",
+            "telephone": "+919886579923",
             "priceRange": "₹₹",
             "address": {
               "@type": "PostalAddress",
