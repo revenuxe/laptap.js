@@ -2,8 +2,9 @@ import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
-import { Calendar, ArrowRight, Loader2 } from "lucide-react";
+import { Calendar, ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useEffect } from 'react';
@@ -125,8 +126,19 @@ const Blog = () => {
           <section className="py-16 md:py-24">
             <div className="container">
               {isLoading ? (
-                <div className="flex items-center justify-center py-12">
-                  <Loader2 className="w-8 h-8 animate-spin" />
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {[1, 2, 3].map((i) => (
+                    <Card key={i} className="overflow-hidden">
+                      <div className="p-6">
+                        <Skeleton className="h-4 w-32 mb-3" />
+                        <Skeleton className="h-6 w-20 mb-3 rounded-full" />
+                        <Skeleton className="h-6 w-full mb-2" />
+                        <Skeleton className="h-6 w-3/4 mb-3" />
+                        <Skeleton className="h-16 w-full mb-4" />
+                        <Skeleton className="h-4 w-24" />
+                      </div>
+                    </Card>
+                  ))}
                 </div>
               ) : (
                 <>

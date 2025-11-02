@@ -4,9 +4,10 @@ import { supabase } from '@/integrations/supabase/client';
 import { Helmet } from 'react-helmet-async';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { Calendar, User, ArrowLeft, Loader2 } from 'lucide-react';
+import { Calendar, User, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import ReactMarkdown from 'react-markdown';
 
 const BlogPost = () => {
@@ -31,8 +32,26 @@ const BlogPost = () => {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
-        <main className="flex-1 flex items-center justify-center">
-          <Loader2 className="w-8 h-8 animate-spin" />
+        <main className="flex-1">
+          <section className="py-6 border-b">
+            <div className="container max-w-4xl">
+              <Skeleton className="h-10 w-32" />
+            </div>
+          </section>
+          <article className="py-12">
+            <div className="container max-w-4xl">
+              <Skeleton className="h-8 w-32 mb-4 rounded-full" />
+              <Skeleton className="h-12 w-full mb-4" />
+              <Skeleton className="h-12 w-3/4 mb-8" />
+              <div className="flex gap-6 mb-12">
+                <Skeleton className="h-4 w-32" />
+                <Skeleton className="h-4 w-32" />
+              </div>
+              <Skeleton className="h-96 w-full mb-12 rounded-2xl" />
+              <Skeleton className="h-64 w-full mb-6" />
+              <Skeleton className="h-64 w-full mb-6" />
+            </div>
+          </article>
         </main>
         <Footer />
       </div>

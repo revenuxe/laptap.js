@@ -56,7 +56,7 @@ export const AIBlogGenerator = ({ onSuccess }: AIBlogGeneratorProps) => {
           meta_title: data.metaTitle,
           meta_description: data.metaDescription,
           category: data.category,
-          images: data.images,
+          featured_image: data.featuredImage || null,
           keywords: data.keywords,
           published: false,
         })
@@ -134,7 +134,7 @@ export const AIBlogGenerator = ({ onSuccess }: AIBlogGeneratorProps) => {
         <ul className="text-xs space-y-1 ml-4 list-disc">
           <li>2500-2700 word blog post (human-like writing)</li>
           <li>Proper H2 structure with bullet points and lists</li>
-          <li>3-4 AI-generated images placed throughout</li>
+          <li>1 AI-generated featured image</li>
           <li>Real expertise, case studies, and examples</li>
           <li>Natural keyword integration (SEO-optimized)</li>
           <li>Emotional meta title and description</li>

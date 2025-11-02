@@ -41,6 +41,7 @@ CRITICAL REQUIREMENTS:
    - Add statistics or data points (mark with "studies show" or "according to experts")
    - Use long-tail keywords naturally: ${keywords.join(", ")}
    - Make it emotional and relatable
+   - Do NOT include image placeholders - content only
 
 6. SEO Best Practices:
    - Use keywords naturally throughout (no stuffing)
@@ -110,65 +111,46 @@ Format your response as JSON:
 
     console.log("Meta information generated");
 
-    // Step 3: Generate images
-    const imagePrompts = [
-      `Professional photo of a modern laptop on a clean desk, bright lighting, high quality, realistic`,
-      `Person holding a smartphone, professional setting, bright and clean, high quality photo`,
-      `Close-up of laptop keyboard and screen showing quality details, professional photography`,
-      `Happy customer receiving their laptop, friendly interaction, professional setting, bright photo`
-    ];
+    // Step 3: Generate featured image
+    const imagePrompt = `Professional high-quality photo of a modern laptop on a clean desk with natural lighting, realistic, detailed, 4K quality`;
 
-    const imageUrls: string[] = [];
+    let featuredImageUrl = "";
 
-    for (let i = 0; i < 4; i++) {
-      console.log(`Generating image ${i + 1}/4`);
+    try {
+      console.log("Generating featured image...");
       
-      try {
-        const imageResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${LOVABLE_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            model: "google/gemini-2.5-flash-image-preview",
-            messages: [
-              {
-                role: "user",
-                content: imagePrompts[i]
-              }
-            ],
-            modalities: ["image", "text"]
-          }),
-        });
+      const imageResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${LOVABLE_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "google/gemini-2.5-flash-image-preview",
+          messages: [
+            {
+              role: "user",
+              content: imagePrompt
+            }
+          ],
+          modalities: ["image", "text"]
+        }),
+      });
 
-        const imageData = await imageResponse.json();
-        
-        if (imageData.choices?.[0]?.message?.images?.[0]?.image_url?.url) {
-          imageUrls.push(imageData.choices[0].message.images[0].image_url.url);
-          console.log(`Image ${i + 1} generated successfully`);
-        } else {
-          console.error(`Failed to generate image ${i + 1}`);
-          imageUrls.push(""); // Empty placeholder
-        }
-      } catch (imageError) {
-        console.error(`Error generating image ${i + 1}:`, imageError);
-        imageUrls.push(""); // Empty placeholder
-      }
-    }
-
-    // Step 4: Insert images into content
-    let finalContent = blogContent;
-    for (let i = 0; i < 4; i++) {
-      if (imageUrls[i]) {
-        finalContent = finalContent.replace(
-          `[IMAGE_PLACEHOLDER_${i + 1}]`,
-          `\n\n![${topic} - Image ${i + 1}](${imageUrls[i]})\n\n`
-        );
+      const imageData = await imageResponse.json();
+      
+      if (imageData.choices?.[0]?.message?.images?.[0]?.image_url?.url) {
+        featuredImageUrl = imageData.choices[0].message.images[0].image_url.url;
+        console.log("Featured image generated successfully");
       } else {
-        finalContent = finalContent.replace(`[IMAGE_PLACEHOLDER_${i + 1}]`, "");
+        console.error("Failed to generate featured image");
       }
+    } catch (imageError) {
+      console.error("Error generating featured image:", imageError);
     }
+
+    // Step 4: Clean up content (remove any image placeholders)
+    let finalContent = blogContent.replace(/\[IMAGE_PLACEHOLDER_\d+\]/g, "");
 
     // Generate slug from topic
     const slug = topic.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
@@ -186,7 +168,7 @@ Format your response as JSON:
         metaTitle: metaInfo.title,
         metaDescription: metaInfo.description,
         category,
-        images: imageUrls,
+        featuredImage: featuredImageUrl,
         keywords,
         wordCount: blogContent.split(' ').length
       }),
