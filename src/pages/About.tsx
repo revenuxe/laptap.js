@@ -4,17 +4,25 @@ import Footer from "@/components/Footer";
 import { Users, Award, ShoppingBag, CheckCircle, Sparkles, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-
 const About = () => {
-  const stats = [
-    { icon: Award, value: "7+", label: "Years in Business" },
-    { icon: Users, value: "500+", label: "Happy Customers" },
-    { icon: ShoppingBag, value: "1000+", label: "Units Sold" },
-    { icon: CheckCircle, value: "100%", label: "Quality Assured" },
-  ];
-
-  return (
-    <>
+  const stats = [{
+    icon: Award,
+    value: "7+",
+    label: "Years in Business"
+  }, {
+    icon: Users,
+    value: "500+",
+    label: "Happy Customers"
+  }, {
+    icon: ShoppingBag,
+    value: "1000+",
+    label: "Units Sold"
+  }, {
+    icon: CheckCircle,
+    value: "100%",
+    label: "Quality Assured"
+  }];
+  return <>
       <Helmet>
         <title>About Laptap - 7 Years of Trusted Laptop & Desktop Sales | 500+ Happy Customers</title>
         <meta name="description" content="Laptap has been serving customers for 7 years with 500+ satisfied clients and 1000+ units sold. Learn about our journey in refurbished laptops and desktops in Bangalore." />
@@ -26,23 +34,23 @@ const About = () => {
         <meta property="og:type" content="website" />
         <script type="application/ld+json">
           {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": "Laptap",
-            "url": "https://laptap.in",
-            "logo": "https://laptap.in/logo.png",
-            "description": "India's most trusted platform for selling used laptops and desktops with 7 years of experience",
-            "address": {
-              "@type": "PostalAddress",
-              "streetAddress": "HBR Layout, Nagawara Main Road",
-              "addressLocality": "Bangalore",
-              "postalCode": "560045",
-              "addressCountry": "IN"
-            },
-            "email": "laptap.in@gmail.com",
-            "foundingDate": "2018",
-            "numberOfEmployees": "10-50"
-          })}
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "Laptap",
+          "url": "https://laptap.in",
+          "logo": "https://laptap.in/logo.png",
+          "description": "India's most trusted platform for selling used laptops and desktops with 7 years of experience",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "HBR Layout, Nagawara Main Road",
+            "addressLocality": "Bangalore",
+            "postalCode": "560045",
+            "addressCountry": "IN"
+          },
+          "email": "laptap.in@gmail.com",
+          "foundingDate": "2018",
+          "numberOfEmployees": "10-50"
+        })}
         </script>
       </Helmet>
 
@@ -66,8 +74,7 @@ const About = () => {
           <section className="py-16 md:py-24">
             <div className="container">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                {stats.map((stat, index) => (
-                  <div key={index} className="text-center">
+                {stats.map((stat, index) => <div key={index} className="text-center">
                     <div className="flex justify-center mb-4">
                       <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center">
                         <stat.icon className="h-8 w-8 text-primary" />
@@ -75,8 +82,7 @@ const About = () => {
                     </div>
                     <div className="text-3xl font-bold mb-2">{stat.value}</div>
                     <div className="text-muted-foreground">{stat.label}</div>
-                  </div>
-                ))}
+                  </div>)}
               </div>
             </div>
           </section>
@@ -165,9 +171,7 @@ const About = () => {
                   <CardContent className="p-8 md:p-12">
                     <div className="flex flex-col md:flex-row items-center gap-8">
                       <div className="flex-shrink-0">
-                        <div className="h-24 w-24 rounded-2xl bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center shadow-lg">
-                          <Sparkles className="h-12 w-12 text-primary-foreground" />
-                        </div>
+                        
                       </div>
                       
                       <div className="flex-1 text-center md:text-left">
@@ -181,21 +185,13 @@ const About = () => {
                         
                         <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
                           <Button asChild variant="default" className="gap-2">
-                            <a 
-                              href="https://www.arrowmind.in/case-studies/7a0efa9a-d416-4bf3-b851-f4f973db4d2a" 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                            >
+                            <a href="https://www.arrowmind.in/case-studies/7a0efa9a-d416-4bf3-b851-f4f973db4d2a" target="_blank" rel="noopener noreferrer">
                               View Our Case Study
                               <ExternalLink className="h-4 w-4" />
                             </a>
                           </Button>
                           <Button asChild variant="outline" className="gap-2">
-                            <a 
-                              href="https://arrowmind.in" 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                            >
+                            <a href="https://arrowmind.in" target="_blank" rel="noopener noreferrer">
                               Visit Arrowmind
                               <ExternalLink className="h-4 w-4" />
                             </a>
@@ -211,8 +207,6 @@ const About = () => {
         </main>
         <Footer />
       </div>
-    </>
-  );
+    </>;
 };
-
 export default About;
