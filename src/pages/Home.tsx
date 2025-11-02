@@ -10,6 +10,8 @@ import TrustSignals from "@/components/TrustSignals";
 import { BrandsSection } from "@/components/BrandsSection";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
+import FAQ from "@/components/FAQ";
+import QuickLinks from "@/components/QuickLinks";
 const Home = () => {
   return <>
       <Helmet>
@@ -104,10 +106,9 @@ const Home = () => {
           <Stats />
           <BrandsSection />
           <Features />
-          
-          
-          
+          <FAQ />
         </main>
+        <QuickLinks />
         <Footer />
         <WhatsAppFloat />
       </div>

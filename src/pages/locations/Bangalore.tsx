@@ -10,6 +10,8 @@ import { BrandsSection } from "@/components/BrandsSection";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import AreasWeService from "@/components/AreasWeService";
+import FAQ from "@/components/FAQ";
+import QuickLinks from "@/components/QuickLinks";
 
 const Bangalore = () => {
   return (
@@ -175,7 +177,9 @@ const Bangalore = () => {
               "Mahadevapura", "Varthur", "Kadugodi", "Brookefield"
             ]}
           />
+          <FAQ location="Bangalore" />
         </main>
+        <QuickLinks />
         <Footer />
         <WhatsAppFloat />
       </div>
