@@ -1,7 +1,9 @@
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Users, Award, ShoppingBag, CheckCircle } from "lucide-react";
+import { Users, Award, ShoppingBag, CheckCircle, Sparkles, ExternalLink } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 const About = () => {
   const stats = [
@@ -139,6 +141,70 @@ const About = () => {
                     </p>
                   </div>
                 </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Creator Section */}
+          <section className="py-16 md:py-24 bg-gradient-to-br from-primary/10 via-primary/5 to-background relative overflow-hidden">
+            <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+            <div className="container relative">
+              <div className="max-w-4xl mx-auto">
+                <div className="text-center mb-12">
+                  <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full mb-4">
+                    <Sparkles className="h-5 w-5 text-primary" />
+                    <span className="text-sm font-medium text-primary">Powered By Innovation</span>
+                  </div>
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4">Who Are Our Creators</h2>
+                  <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                    Behind every great platform is a team that brings vision to life
+                  </p>
+                </div>
+
+                <Card className="border-primary/20 bg-card/50 backdrop-blur-sm shadow-xl">
+                  <CardContent className="p-8 md:p-12">
+                    <div className="flex flex-col md:flex-row items-center gap-8">
+                      <div className="flex-shrink-0">
+                        <div className="h-24 w-24 rounded-2xl bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center shadow-lg">
+                          <Sparkles className="h-12 w-12 text-primary-foreground" />
+                        </div>
+                      </div>
+                      
+                      <div className="flex-1 text-center md:text-left">
+                        <h3 className="text-2xl font-bold mb-3">Arrowmind</h3>
+                        <p className="text-primary font-semibold mb-4">AI Marketing Agency</p>
+                        <p className="text-muted-foreground mb-6 leading-relaxed">
+                          With their awesome mind, deep analysis, and commitment to on-time delivery, 
+                          Arrowmind helped us launch our platform with excellence. Their expertise in AI-driven 
+                          marketing and strategic vision transformed our ideas into reality.
+                        </p>
+                        
+                        <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
+                          <Button asChild variant="default" className="gap-2">
+                            <a 
+                              href="https://www.arrowmind.in/case-studies/7a0efa9a-d416-4bf3-b851-f4f973db4d2a" 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                            >
+                              View Our Case Study
+                              <ExternalLink className="h-4 w-4" />
+                            </a>
+                          </Button>
+                          <Button asChild variant="outline" className="gap-2">
+                            <a 
+                              href="https://arrowmind.in" 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                            >
+                              Visit Arrowmind
+                              <ExternalLink className="h-4 w-4" />
+                            </a>
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             </div>
           </section>
