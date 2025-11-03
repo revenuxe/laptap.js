@@ -46,11 +46,7 @@ const Footer = () => {
                   My Dashboard
                 </Link>
               </li>
-              <li>
-                <Link to="/track/order" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Track Order
-                </Link>
-              </li>
+              
             </ul>
           </div>
 
@@ -125,11 +121,7 @@ const Footer = () => {
                   Price Calculator
                 </Link>
               </li>
-              <li>
-                <Link to="/track/order" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Track Order
-                </Link>
-              </li>
+              
             </ul>
           </div>
         </div>
@@ -138,31 +130,13 @@ const Footer = () => {
           <div className="flex flex-col items-center justify-between gap-4 text-sm text-muted-foreground md:flex-row">
             <p>&copy; {new Date().getFullYear()} Laptap. All rights reserved.</p>
             <div className="flex items-center gap-4">
-              <a 
-                href="https://www.facebook.com/ilaptap/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="hover:text-primary transition-colors"
-                aria-label="Follow us on Facebook"
-              >
+              <a href="https://www.facebook.com/ilaptap/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors" aria-label="Follow us on Facebook">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a 
-                href="https://www.instagram.com/ilaptap?igsh=MWt3NHU3YzdoemJmcA==" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="hover:text-primary transition-colors"
-                aria-label="Follow us on Instagram"
-              >
+              <a href="https://www.instagram.com/ilaptap?igsh=MWt3NHU3YzdoemJmcA==" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors" aria-label="Follow us on Instagram">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a 
-                href="https://www.linkedin.com/company/laptap/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="hover:text-primary transition-colors"
-                aria-label="Follow us on LinkedIn"
-              >
+              <a href="https://www.linkedin.com/company/laptap/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors" aria-label="Follow us on LinkedIn">
                 <Linkedin className="h-5 w-5" />
               </a>
             </div>
