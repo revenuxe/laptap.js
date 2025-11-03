@@ -15,7 +15,7 @@ const SellLaptopBangalore = () => {
         <title>Complete Guide to Sell Used Laptop in Bangalore 2024 | Best Price, Instant Cash | Laptap</title>
         <meta name="description" content="Ultimate guide to sell your used laptop in Bangalore in 2024. Learn how to get the best price, where to sell (Koramangala, Indiranagar, Whitefield), instant cash options, doorstep pickup, price calculation, MacBook, Dell, HP, Lenovo resale values, and expert tips for maximum profit." />
         <meta name="keywords" content="sell used laptop Bangalore, sell old laptop Bangalore, laptop resale Bangalore, best place to sell laptop Bangalore, instant cash laptop Bangalore, doorstep laptop pickup Bangalore, sell MacBook Bangalore, sell Dell laptop Bangalore, sell HP laptop Bangalore, laptop buyback Bangalore, second hand laptop buyer Bangalore, cash for laptop Bangalore" />
-        <link rel="canonical" href="https://laptap.in/blog/sell-used-laptop-bangalore" />
+        <link rel="canonical" href="https://www.laptap.in/blog/sell-used-laptop-bangalore" />
         
         <script type="application/ld+json">
           {JSON.stringify({

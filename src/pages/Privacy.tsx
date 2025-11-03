@@ -8,7 +8,7 @@ const Privacy = () => {
       <Helmet>
         <title>Privacy Policy - Laptap | Data Protection & Security</title>
         <meta name="description" content="Learn how Laptap protects your personal information. GDPR compliant privacy policy covering data collection, usage, and security practices." />
-        <link rel="canonical" href="https://laptap.in/privacy" />
+        <link rel="canonical" href="https://www.laptap.in/privacy" />
         <meta property="og:title" content="Privacy Policy - Laptap" />
         <meta property="og:url" content="https://laptap.in/privacy" />
       </Helmet>

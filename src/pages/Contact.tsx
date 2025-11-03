@@ -45,7 +45,7 @@ const Contact = () => {
         <title>Contact Laptap - Get in Touch | HBR Layout, Bangalore</title>
         <meta name="description" content="Contact Laptap for inquiries about buying or selling laptops. Visit us at HBR Layout, Nagawara Main Road, Bangalore or email laptap.in@gmail.com" />
         <meta name="keywords" content="contact laptap, laptop shop bangalore, hbr layout, nagawara, bangalore electronics" />
-        <link rel="canonical" href="https://laptap.in/contact" />
+        <link rel="canonical" href="https://www.laptap.in/contact" />
         <meta property="og:title" content="Contact Laptap - HBR Layout, Bangalore" />
         <meta property="og:url" content="https://laptap.in/contact" />
         <script type="application/ld+json">

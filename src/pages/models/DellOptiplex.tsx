@@ -15,7 +15,7 @@ const DellOptiplex = () => {
         <title>Sell Dell Optiplex Desktop Online - Best Price for Dell Desktop | Instant Cash | Laptap</title>
         <meta name="description" content="Sell your used Dell Optiplex desktop for instant cash. Get the best resale value for Dell Optiplex models. Free doorstep pickup across India." />
         <meta name="keywords" content="sell Dell Optiplex, sell Dell desktop, Dell Optiplex resale value, sell used Dell desktop, Dell desktop buyback India" />
-        <link rel="canonical" href="https://laptap.in/models/dell-optiplex" />
+        <link rel="canonical" href="https://www.laptap.in/models/dell-optiplex" />
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

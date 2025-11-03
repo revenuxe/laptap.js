@@ -15,7 +15,7 @@ const MacBookPro = () => {
         <title>Sell MacBook Pro Online - Get Instant Cash for Your MacBook | Best Price Guaranteed | Laptap</title>
         <meta name="description" content="Sell your used MacBook Pro for instant cash. Get the best resale value for MacBook Pro 13-inch, 14-inch, 15-inch, 16-inch models (M1, M2, M3, Intel). Free doorstep pickup across India. Instant payment via UPI. Trusted by 10,000+ MacBook sellers. Sell MacBook Pro 2024, 2023, 2022, 2021, 2020 models." />
         <meta name="keywords" content="sell MacBook Pro, sell MacBook Pro online, MacBook Pro resale value, sell used MacBook Pro, sell old MacBook Pro, MacBook Pro buyback, best price MacBook Pro, sell MacBook Pro 16 inch, sell MacBook Pro 14 inch, sell MacBook Pro 13 inch, sell MacBook Pro M3, sell MacBook Pro M2, sell MacBook Pro M1, sell MacBook Pro 2024, sell MacBook Pro 2023, sell MacBook Pro India, instant cash MacBook Pro" />
-        <link rel="canonical" href="https://laptap.in/models/macbook-pro" />
+        <link rel="canonical" href="https://www.laptap.in/models/macbook-pro" />
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

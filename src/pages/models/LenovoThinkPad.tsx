@@ -15,7 +15,7 @@ const LenovoThinkPad = () => {
         <title>Sell Lenovo ThinkPad Laptop Online - Best Price for ThinkPad | Instant Cash | Laptap</title>
         <meta name="description" content="Sell your used Lenovo ThinkPad laptop for instant cash. Get the best resale value for ThinkPad X1, T-series, E-series models. Free doorstep pickup across India." />
         <meta name="keywords" content="sell Lenovo ThinkPad, sell ThinkPad X1, ThinkPad resale value, sell used Lenovo laptop, ThinkPad buyback India" />
-        <link rel="canonical" href="https://laptap.in/models/lenovo-thinkpad" />
+        <link rel="canonical" href="https://www.laptap.in/models/lenovo-thinkpad" />
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

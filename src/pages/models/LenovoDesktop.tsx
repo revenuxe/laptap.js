@@ -15,7 +15,7 @@ const LenovoDesktop = () => {
         <title>Sell Lenovo Desktop Computer Online - Best Price for Lenovo Desktop | Instant Cash | Laptap</title>
         <meta name="description" content="Sell your used Lenovo desktop computer for instant cash. Get the best resale value for Lenovo desktop models. Free doorstep pickup across India." />
         <meta name="keywords" content="sell Lenovo desktop, sell Lenovo desktop computer, Lenovo desktop resale value, sell used Lenovo desktop, Lenovo desktop buyback India" />
-        <link rel="canonical" href="https://laptap.in/models/lenovo-desktop" />
+        <link rel="canonical" href="https://www.laptap.in/models/lenovo-desktop" />
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

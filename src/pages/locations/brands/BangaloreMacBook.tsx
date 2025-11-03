@@ -15,7 +15,7 @@ const BangaloreMacBook = () => {
         <title>Sell Used MacBook in Bangalore | Best Price for MacBook Pro, Air | Instant Cash at Doorstep | Laptap</title>
         <meta name="description" content="Sell your used MacBook in Bangalore for instant cash. Get the best resale value for MacBook Pro, MacBook Air (M1, M2, M3, Intel). Free same-day doorstep pickup across Koramangala, Indiranagar, Whitefield, Electronic City, HSR Layout. Instant payment via UPI. Trusted by 5000+ Bangalore MacBook sellers." />
         <meta name="keywords" content="sell MacBook Bangalore, sell used MacBook Bangalore, sell MacBook Pro Bangalore, sell MacBook Air Bangalore, MacBook resale value Bangalore, best price MacBook Bangalore, MacBook buyback Bangalore, sell MacBook Koramangala, sell MacBook Indiranagar, sell MacBook Whitefield, sell MacBook HSR Layout, instant cash MacBook Bangalore, doorstep MacBook pickup Bangalore, sell old MacBook Bangalore" />
-        <link rel="canonical" href="https://laptap.in/bangalore/macbook" />
+        <link rel="canonical" href="https://www.laptap.in/bangalore/macbook" />
         
         <script type="application/ld+json">
           {JSON.stringify({

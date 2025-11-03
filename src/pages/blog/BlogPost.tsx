@@ -84,7 +84,7 @@ const BlogPost = () => {
         <title>{post.meta_title}</title>
         <meta name="description" content={post.meta_description} />
         <meta name="keywords" content={post.keywords?.join(', ')} />
-        <link rel="canonical" href={`https://laptap.in/blog/${post.slug}`} />
+        <link rel="canonical" href={`https://www.laptap.in/blog/${post.slug}`} />
         <meta property="og:title" content={post.meta_title} />
         <meta property="og:description" content={post.meta_description} />
         <meta property="og:url" content={`https://laptap.in/blog/${post.slug}`} />

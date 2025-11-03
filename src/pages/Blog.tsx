@@ -85,7 +85,7 @@ const Blog = () => {
         <title>Laptap Blog - Laptop Buying Guides, Selling Tips & Tech Insights</title>
         <meta name="description" content="Read expert guides on buying refurbished laptops, selling tips, tech comparisons, and market insights from Laptap's technology experts." />
         <meta name="keywords" content="laptop blog, refurbished laptop guide, selling laptop tips, tech insights, laptop comparisons" />
-        <link rel="canonical" href="https://laptap.in/blog" />
+        <link rel="canonical" href="https://www.laptap.in/blog" />
         <meta property="og:title" content="Laptap Blog - Tech Guides & Insights" />
         <meta property="og:url" content="https://laptap.in/blog" />
         <script type="application/ld+json">

@@ -27,7 +27,7 @@ const About = () => {
         <title>About Laptap - 7 Years of Trusted Laptop & Desktop Sales | 500+ Happy Customers</title>
         <meta name="description" content="Laptap has been serving customers for 7 years with 500+ satisfied clients and 1000+ units sold. Learn about our journey in refurbished laptops and desktops in Bangalore." />
         <meta name="keywords" content="about laptap, laptop dealers bangalore, refurbished laptops, used laptops, pre-owned tech, hbr layout" />
-        <link rel="canonical" href="https://laptap.in/about" />
+        <link rel="canonical" href="https://www.laptap.in/about" />
         <meta property="og:title" content="About Laptap - 7 Years of Trusted Service" />
         <meta property="og:description" content="500+ happy customers, 1000+ units sold. Learn about Laptap's journey in providing quality refurbished laptops." />
         <meta property="og:url" content="https://laptap.in/about" />

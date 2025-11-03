@@ -31,7 +31,7 @@ const Home = () => {
         <meta name="twitter:description" content="Bengaluru's trusted platform for selling used electronics. Best prices, free pickup, instant payment." />
         <meta name="twitter:image" content="https://laptap.in/twitter-image.jpg" />
         
-        <link rel="canonical" href="https://laptap.in" />
+        <link rel="canonical" href="https://www.laptap.in" />
         
         <script type="application/ld+json">
           {JSON.stringify({

@@ -15,7 +15,7 @@ const DellXPS = () => {
         <title>Sell Dell XPS Laptop Online - Get Best Price for Dell XPS 13, 15, 17 | Instant Cash | Laptap</title>
         <meta name="description" content="Sell your used Dell XPS laptop for instant cash. Get the best resale value for Dell XPS 13, XPS 15, XPS 17 models. Free doorstep pickup across India. Instant payment via UPI. Sell Dell XPS 2024, 2023, 2022 models with Intel Core i5, i7, i9 processors." />
         <meta name="keywords" content="sell Dell XPS, sell Dell XPS 13, sell Dell XPS 15, sell Dell XPS 17, Dell XPS resale value, sell used Dell XPS, sell old Dell XPS laptop, Dell XPS buyback, best price Dell XPS, Dell XPS 13 9320, Dell XPS 15 9530, Dell XPS Plus, sell Dell laptop online, instant cash Dell XPS" />
-        <link rel="canonical" href="https://laptap.in/models/dell-xps" />
+        <link rel="canonical" href="https://www.laptap.in/models/dell-xps" />
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

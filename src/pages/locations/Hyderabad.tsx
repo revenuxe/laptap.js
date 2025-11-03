@@ -34,7 +34,7 @@ const Hyderabad = () => {
         <meta name="twitter:description" content="Hyderabad's #1 platform for selling used electronics. Free doorstep pickup, best prices, instant payment across all Hyderabad areas." />
         <meta name="twitter:image" content="https://laptap.in/twitter-image-hyderabad.jpg" />
         
-        <link rel="canonical" href="https://laptap.in/hyderabad" />
+        <link rel="canonical" href="https://www.laptap.in/hyderabad" />
         
         <script type="application/ld+json">
           {JSON.stringify({

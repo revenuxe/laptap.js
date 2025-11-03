@@ -15,7 +15,7 @@ const HPPavilion = () => {
         <title>Sell HP Pavilion Laptop Online - Best Price for HP Pavilion | Instant Cash | Laptap</title>
         <meta name="description" content="Sell your used HP Pavilion laptop for instant cash. Get the best resale value for HP Pavilion 14, 15, 16 models. Free doorstep pickup across India with instant payment." />
         <meta name="keywords" content="sell HP Pavilion, sell HP Pavilion laptop, HP Pavilion resale value, sell used HP laptop, HP Pavilion buyback India" />
-        <link rel="canonical" href="https://laptap.in/models/hp-pavilion" />
+        <link rel="canonical" href="https://www.laptap.in/models/hp-pavilion" />
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

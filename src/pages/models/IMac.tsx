@@ -15,7 +15,7 @@ const IMac = () => {
         <title>Sell iMac Desktop Online - Best Price for iMac 24-inch, 27-inch | Instant Cash | Laptap</title>
         <meta name="description" content="Sell your used iMac desktop for instant cash. Get the best resale value for iMac M1, M3, Intel models. Free doorstep pickup across India with instant payment." />
         <meta name="keywords" content="sell iMac, sell iMac desktop, iMac resale value, sell used iMac, iMac buyback, best price iMac India" />
-        <link rel="canonical" href="https://laptap.in/models/imac" />
+        <link rel="canonical" href="https://www.laptap.in/models/imac" />
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

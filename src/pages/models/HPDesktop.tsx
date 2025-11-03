@@ -15,7 +15,7 @@ const HPDesktop = () => {
         <title>Sell HP Desktop Computer Online - Best Price for HP Desktop | Instant Cash | Laptap</title>
         <meta name="description" content="Sell your used HP desktop computer for instant cash. Get the best resale value for HP desktop models. Free doorstep pickup across India." />
         <meta name="keywords" content="sell HP desktop, sell HP desktop computer, HP desktop resale value, sell used HP desktop, HP desktop buyback India" />
-        <link rel="canonical" href="https://laptap.in/models/hp-desktop" />
+        <link rel="canonical" href="https://www.laptap.in/models/hp-desktop" />
       </Helmet>
 
       <div className="min-h-screen flex flex-col">
