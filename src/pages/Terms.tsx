@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -115,7 +116,7 @@ const Terms = () => {
               <section>
                 <h2 className="text-2xl font-semibold text-foreground mb-4">10. Privacy & Data Protection</h2>
                 <p>
-                  Your use of our services is also governed by our Privacy Policy. We are committed to protecting your personal 
+                  Your use of our services is also governed by our <Link to="/privacy" className="text-primary hover:underline">Privacy Policy</Link>. We are committed to protecting your personal 
                   information and complying with applicable data protection laws.
                 </p>
               </section>
@@ -140,13 +141,19 @@ const Terms = () => {
               <section>
                 <h2 className="text-2xl font-semibold text-foreground mb-4">13. Contact Information</h2>
                 <p>
-                  For questions about these Terms and Conditions, please contact us at:
+                  For questions about these Terms and Conditions, please <Link to="/contact" className="text-primary hover:underline">contact us</Link> at:
                 </p>
                 <p className="mt-2">
                   <strong>Email:</strong> laptap.in@gmail.com<br />
                   <strong>Address:</strong> HBR Layout, Nagawara Main Road, Bangalore – 560045
                 </p>
               </section>
+
+              <div className="mt-8 p-6 bg-muted rounded-lg">
+                <p className="text-center">
+                  Ready to sell your laptop? <Link to="/sell" className="text-primary hover:underline font-semibold">Get an instant quote</Link> or <Link to="/" className="text-primary hover:underline font-semibold">visit our homepage</Link> to learn more.
+                </p>
+              </div>
 
               <p className="text-sm mt-8">
                 <strong>Last Updated:</strong> October 7, 2025

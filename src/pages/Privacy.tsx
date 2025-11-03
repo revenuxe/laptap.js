@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -165,13 +166,22 @@ const Privacy = () => {
               <section>
                 <h2 className="text-2xl font-semibold text-foreground mb-4">14. Contact Us</h2>
                 <p>
-                  If you have questions or concerns about this Privacy Policy or our data practices, please contact us:
+                  If you have questions or concerns about this Privacy Policy or our data practices, please <Link to="/contact" className="text-primary hover:underline">contact us</Link>:
                 </p>
                 <p className="mt-2">
                   <strong>Email:</strong> laptap.in@gmail.com<br />
                   <strong>Address:</strong> HBR Layout, Nagawara Main Road, Bangalore – 560045
                 </p>
               </section>
+
+              <div className="mt-8 p-6 bg-muted rounded-lg space-y-4">
+                <p className="text-center">
+                  For more information, read our <Link to="/terms" className="text-primary hover:underline font-semibold">Terms & Conditions</Link>.
+                </p>
+                <p className="text-center">
+                  Ready to sell your laptop? <Link to="/sell" className="text-primary hover:underline font-semibold">Get an instant quote</Link> or learn <Link to="/about" className="text-primary hover:underline font-semibold">more about us</Link>.
+                </p>
+              </div>
 
               <p className="text-sm mt-8">
                 <strong>Last Updated:</strong> October 7, 2025

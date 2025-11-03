@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
@@ -43,6 +44,31 @@ const IMac = () => {
                 <Button variant="cta" size="lg" onClick={() => navigate("/sell/desktop")}>
                   Get Instant Quote
                 </Button>
+
+                <div className="mt-16 p-8 bg-muted/30 rounded-2xl">
+                  <h2 className="text-2xl font-bold mb-4 text-center">Related Products</h2>
+                  <div className="flex flex-wrap gap-4 justify-center">
+                    <Link to="/models/macbook-pro" className="text-primary hover:underline font-medium">
+                      Sell MacBook Pro
+                    </Link>
+                    <span className="text-muted-foreground">•</span>
+                    <Link to="/models/dell-xps" className="text-primary hover:underline font-medium">
+                      Sell Dell XPS
+                    </Link>
+                    <span className="text-muted-foreground">•</span>
+                    <Link to="/bangalore" className="text-primary hover:underline font-medium">
+                      Sell in Bangalore
+                    </Link>
+                    <span className="text-muted-foreground">•</span>
+                    <Link to="/blog" className="text-primary hover:underline font-medium">
+                      Read Our Blog
+                    </Link>
+                    <span className="text-muted-foreground">•</span>
+                    <Link to="/" className="text-primary hover:underline font-medium">
+                      Homepage
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
           </section>

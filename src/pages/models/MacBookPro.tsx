@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
@@ -153,6 +154,31 @@ const MacBookPro = () => {
                 <Button variant="cta" size="lg" onClick={() => navigate("/sell/laptop")}>
                   Start Selling Now
                 </Button>
+              </div>
+
+              <div className="mt-16 p-8 bg-muted/30 rounded-2xl">
+                <h3 className="text-2xl font-bold mb-4 text-center">Explore More Models</h3>
+                <div className="flex flex-wrap gap-4 justify-center">
+                  <Link to="/models/imac" className="text-primary hover:underline font-medium">
+                    Sell iMac Desktop
+                  </Link>
+                  <span className="text-muted-foreground">•</span>
+                  <Link to="/models/dell-xps" className="text-primary hover:underline font-medium">
+                    Sell Dell XPS
+                  </Link>
+                  <span className="text-muted-foreground">•</span>
+                  <Link to="/models/lenovo-thinkpad" className="text-primary hover:underline font-medium">
+                    Sell Lenovo ThinkPad
+                  </Link>
+                  <span className="text-muted-foreground">•</span>
+                  <Link to="/blog/sell-used-laptop-bangalore" className="text-primary hover:underline font-medium">
+                    Selling Guide
+                  </Link>
+                  <span className="text-muted-foreground">•</span>
+                  <Link to="/contact" className="text-primary hover:underline font-medium">
+                    Contact Us
+                  </Link>
+                </div>
               </div>
             </div>
           </section>

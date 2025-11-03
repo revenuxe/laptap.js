@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
@@ -118,6 +119,31 @@ const DellXPS = () => {
                     <p className="text-sm text-muted-foreground">{feature.description}</p>
                   </div>
                 ))}
+              </div>
+
+              <div className="mt-16 p-8 bg-muted/30 rounded-2xl">
+                <h3 className="text-2xl font-bold mb-4 text-center">Also Selling Other Brands?</h3>
+                <div className="flex flex-wrap gap-4 justify-center">
+                  <Link to="/models/macbook-pro" className="text-primary hover:underline font-medium">
+                    Sell MacBook Pro
+                  </Link>
+                  <span className="text-muted-foreground">•</span>
+                  <Link to="/models/hp-pavilion" className="text-primary hover:underline font-medium">
+                    Sell HP Pavilion
+                  </Link>
+                  <span className="text-muted-foreground">•</span>
+                  <Link to="/models/lenovo-thinkpad" className="text-primary hover:underline font-medium">
+                    Sell Lenovo ThinkPad
+                  </Link>
+                  <span className="text-muted-foreground">•</span>
+                  <Link to="/about" className="text-primary hover:underline font-medium">
+                    About Us
+                  </Link>
+                  <span className="text-muted-foreground">•</span>
+                  <Link to="/" className="text-primary hover:underline font-medium">
+                    Homepage
+                  </Link>
+                </div>
               </div>
             </div>
           </section>
