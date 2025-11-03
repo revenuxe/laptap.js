@@ -24,6 +24,9 @@ import NotFound from "./pages/NotFound";
 import Bangalore from "./pages/locations/Bangalore";
 import Hyderabad from "./pages/locations/Hyderabad";
 import BangaloreMacBook from "./pages/locations/brands/BangaloreMacBook";
+import BangaloreDell from "./pages/locations/brands/BangaloreDell";
+import BangaloreLenovo from "./pages/locations/brands/BangaloreLenovo";
+import BangaloreHP from "./pages/locations/brands/BangaloreHP";
 import SellLaptopBangalore from "./pages/blog/SellLaptopBangalore";
 import MacBookPro from "./pages/models/MacBookPro";
 import DellXPS from "./pages/models/DellXPS";
@@ -71,6 +74,9 @@ const App = () => (
               <Route path="/bangalore" element={<Bangalore />} />
               <Route path="/hyderabad" element={<Hyderabad />} />
               <Route path="/bangalore/macbook" element={<BangaloreMacBook />} />
+              <Route path="/bangalore/dell" element={<BangaloreDell />} />
+              <Route path="/bangalore/lenovo" element={<BangaloreLenovo />} />
+              <Route path="/bangalore/hp" element={<BangaloreHP />} />
               <Route path="/blog/sell-used-laptop-bangalore" element={<SellLaptopBangalore />} />
               <Route path="/models/macbook-pro" element={<MacBookPro />} />
               <Route path="/models/dell-xps" element={<DellXPS />} />

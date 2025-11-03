@@ -89,44 +89,57 @@ const BangaloreMacBook = () => {
             </div>
           </section>
 
-          {/* MacBook Models We Buy */}
+          {/* SEO Content Section */}
           <section className="py-16 md:py-24">
-            <div className="container">
-              <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
-                MacBook Models We Buy in Bangalore
-              </h2>
-              <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-                We accept all MacBook models in any condition - working, damaged, or broken. Get instant quotes online.
-              </p>
-
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                {[
-                  { name: "MacBook Pro 16-inch M3 Max", year: "2024", price: "₹1,20,000 - ₹2,50,000", areas: "Available across all Bangalore areas" },
-                  { name: "MacBook Pro 14-inch M3 Pro", year: "2024", price: "₹90,000 - ₹1,80,000", areas: "Koramangala, Indiranagar pickup" },
-                  { name: "MacBook Air 15-inch M2", year: "2023", price: "₹70,000 - ₹1,10,000", areas: "Whitefield, HSR Layout pickup" },
-                  { name: "MacBook Air 13-inch M2", year: "2022-2023", price: "₹55,000 - ₹85,000", areas: "Electronic City, Marathahalli" },
-                  { name: "MacBook Pro 16-inch M1 Max", year: "2021", price: "₹80,000 - ₹1,50,000", areas: "BTM, Jayanagar pickup" },
-                  { name: "MacBook Pro 13-inch M1", year: "2020", price: "₹45,000 - ₹75,000", areas: "All Bangalore areas" },
-                  { name: "MacBook Pro 16-inch Intel", year: "2019", price: "₹40,000 - ₹80,000", areas: "Same day pickup available" },
-                  { name: "MacBook Air Intel", year: "2017-2020", price: "₹25,000 - ₹55,000", areas: "Free doorstep service" },
-                  { name: "MacBook Pro 15-inch Intel", year: "2015-2019", price: "₹30,000 - ₹70,000", areas: "Instant cash payment" },
-                ].map((model, index) => (
-                  <div key={index} className="p-6 rounded-2xl border-2 border-border bg-card hover:border-primary transition-all group">
-                    <h3 className="font-bold text-lg mb-2">{model.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-2">{model.year}</p>
-                    <p className="text-primary font-semibold mb-3">{model.price}</p>
-                    <p className="text-xs text-muted-foreground flex items-center gap-1">
-                      <MapPin className="h-3 w-3" />
-                      {model.areas}
+            <div className="container max-w-6xl">
+              <div className="grid md:grid-cols-2 gap-12">
+                <div>
+                  <h2 className="text-3xl font-bold mb-6">
+                    Sell MacBook in Bangalore - Get Maximum Value
+                  </h2>
+                  <div className="prose prose-slate">
+                    <p className="text-muted-foreground mb-4">
+                      Looking to sell your MacBook in Bangalore? Laptap offers the best resale value for all MacBook models including MacBook Pro and MacBook Air with M3, M2, M1, and Intel processors. Whether you have the latest MacBook Pro 16-inch M3 Max or an older MacBook Air, we provide competitive pricing and instant cash payment.
+                    </p>
+                    <p className="text-muted-foreground mb-4">
+                      Our service covers all major areas in Bangalore including Koramangala, Indiranagar, Whitefield, Electronic City, HSR Layout, and Marathahalli. We offer free same-day doorstep pickup, professional data wiping, and secure payment options via UPI, PhonePe, GPay, or cash.
+                    </p>
+                    <p className="text-muted-foreground">
+                      With over 5,000+ satisfied customers in Bangalore, Laptap is the most trusted platform for selling used MacBooks. Get an instant online quote, schedule a convenient pickup time, and receive payment within hours. No hidden charges, no bargaining - just transparent pricing and quick service.
                     </p>
                   </div>
-                ))}
-              </div>
-
-              <div className="text-center mt-12">
-                <Button variant="cta" size="lg" onClick={() => navigate("/sell/laptop")}>
-                  Book Free Pickup in Bangalore
-                </Button>
+                </div>
+                <div>
+                  <h2 className="text-3xl font-bold mb-6">
+                    Why Choose Laptap to Sell MacBook in Bangalore?
+                  </h2>
+                  <div className="space-y-4">
+                    <div className="p-4 bg-card rounded-lg border">
+                      <h3 className="font-bold mb-2">Highest Market Price</h3>
+                      <p className="text-sm text-muted-foreground">
+                        We offer 15-20% more than other buyers in Bangalore. Our pricing algorithm ensures you get the best value for your MacBook based on current market rates.
+                      </p>
+                    </div>
+                    <div className="p-4 bg-card rounded-lg border">
+                      <h3 className="font-bold mb-2">Free Doorstep Pickup Across Bangalore</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Our verified technicians provide free same-day pickup service across all localities in Bangalore. Book online and we reach within 2-4 hours.
+                      </p>
+                    </div>
+                    <div className="p-4 bg-card rounded-lg border">
+                      <h3 className="font-bold mb-2">Instant Payment & Data Security</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Get paid immediately via UPI or cash after device verification. Professional data wiping ensures 100% privacy and security.
+                      </p>
+                    </div>
+                    <div className="p-4 bg-card rounded-lg border">
+                      <h3 className="font-bold mb-2">All MacBook Models Accepted</h3>
+                      <p className="text-sm text-muted-foreground">
+                        From MacBook Pro M3 Max to older Intel models, we buy all MacBooks in any condition - working, damaged, or broken screen.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </section>

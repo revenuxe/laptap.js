@@ -95,13 +95,19 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                
+                <Link to="/bangalore/dell" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell Dell Bangalore
+                </Link>
               </li>
               <li>
-                
+                <Link to="/bangalore/lenovo" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell Lenovo Bangalore
+                </Link>
               </li>
               <li>
-                
+                <Link to="/bangalore/hp" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell HP Bangalore
+                </Link>
               </li>
             </ul>
           </div>
