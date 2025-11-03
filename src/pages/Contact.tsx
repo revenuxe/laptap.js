@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { toast } from "sonner";
+import { contactFormSchema } from "@/lib/validationSchemas";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -18,10 +19,24 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // In production, this would send to an API endpoint
-    const mailtoLink = `mailto:laptap.in@gmail.com?subject=Contact from ${formData.name}&body=Name: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0APhone: ${formData.phone}%0D%0A%0D%0AMessage:%0D%0A${formData.message}`;
-    window.location.href = mailtoLink;
-    toast.success("Opening your email client...");
+    
+    // Validate form data
+    try {
+      const validatedData = contactFormSchema.parse(formData);
+      
+      // Sanitize and encode data for mailto link
+      const encodeName = encodeURIComponent(validatedData.name);
+      const encodeEmail = encodeURIComponent(validatedData.email);
+      const encodePhone = encodeURIComponent(validatedData.phone || "");
+      const encodeMessage = encodeURIComponent(validatedData.message);
+      
+      const mailtoLink = `mailto:laptap.in@gmail.com?subject=Contact from ${encodeName}&body=Name: ${encodeName}%0D%0AEmail: ${encodeEmail}%0D%0APhone: ${encodePhone}%0D%0A%0D%0AMessage:%0D%0A${encodeMessage}`;
+      window.location.href = mailtoLink;
+      toast.success("Opening your email client...");
+    } catch (error: any) {
+      const errorMessage = error.errors?.[0]?.message || "Please check your input and try again";
+      toast.error(errorMessage);
+    }
   };
 
   return (

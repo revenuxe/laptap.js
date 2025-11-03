@@ -91,6 +91,37 @@ export const modelSchema = z.object({
     .or(z.literal("")),
 });
 
+// Contact Form Validation
+export const contactFormSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(1, { message: "Name is required" })
+    .max(100, { message: "Name must be less than 100 characters" })
+    .regex(/^[a-zA-Z\s\-'.]+$/, { 
+      message: "Name contains invalid characters" 
+    }),
+  email: z
+    .string()
+    .trim()
+    .email({ message: "Invalid email address" })
+    .max(255, { message: "Email must be less than 255 characters" }),
+  phone: z
+    .string()
+    .trim()
+    .regex(/^[+]?[0-9\s\-()]{0,20}$/, { 
+      message: "Invalid phone number format" 
+    })
+    .max(20, { message: "Phone number must be less than 20 characters" })
+    .optional()
+    .or(z.literal("")),
+  message: z
+    .string()
+    .trim()
+    .min(1, { message: "Message is required" })
+    .max(1000, { message: "Message must be less than 1000 characters" }),
+});
+
 // File validation helper
 export const validateImageFile = (file: File | null): { valid: boolean; error?: string } => {
   if (!file) return { valid: true }; // Optional
