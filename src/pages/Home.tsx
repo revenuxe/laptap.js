@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import ReferralCard from "@/components/ReferralCard";
 import CategorySection from "@/components/CategorySection";
 import Features from "@/components/Features";
 import HowItWorks from "@/components/HowItWorks";
@@ -102,6 +103,14 @@ const Home = () => {
         <Header />
         <main className="flex-1">
           <Hero />
+          
+          {/* Referral Card Section */}
+          <section className="py-12 bg-muted/30">
+            <div className="container max-w-2xl">
+              <ReferralCard />
+            </div>
+          </section>
+          
           <CategorySection />
           <Stats />
           <BrandsSection />

@@ -9,6 +9,7 @@ import { OrdersTab } from '@/components/admin/OrdersTab';
 import { CatalogTab } from '@/components/admin/CatalogTab';
 import { MobileCatalogTab } from '@/components/admin/MobileCatalogTab';
 import { BlogsTab } from '@/components/admin/BlogsTab';
+import ReferralsTab from '@/components/admin/ReferralsTab';
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -49,6 +50,7 @@ const Admin = () => {
               <TabsTrigger value="orders">Orders</TabsTrigger>
               <TabsTrigger value="catalog">Device Catalog</TabsTrigger>
               <TabsTrigger value="mobile">Mobile Catalogue</TabsTrigger>
+              <TabsTrigger value="referrals">Referrals</TabsTrigger>
               <TabsTrigger value="blogs">Blogs</TabsTrigger>
               <TabsTrigger value="analytics">Analytics</TabsTrigger>
             </TabsList>
@@ -63,6 +65,10 @@ const Admin = () => {
 
             <TabsContent value="mobile">
               <MobileCatalogTab />
+            </TabsContent>
+
+            <TabsContent value="referrals">
+              <ReferralsTab />
             </TabsContent>
 
             <TabsContent value="blogs">

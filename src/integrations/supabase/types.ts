@@ -375,6 +375,39 @@ export type Database = {
         }
         Relationships: []
       }
+      referrals: {
+        Row: {
+          created_at: string
+          id: string
+          referral_code: string
+          referred_user_id: string | null
+          referrer_user_id: string
+          reward_amount: number | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          referral_code: string
+          referred_user_id?: string | null
+          referrer_user_id: string
+          reward_amount?: number | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          referral_code?: string
+          referred_user_id?: string | null
+          referrer_user_id?: string
+          reward_amount?: number | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       repair_requests: {
         Row: {
           brand_id: string | null

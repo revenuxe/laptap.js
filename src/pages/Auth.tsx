@@ -10,6 +10,7 @@ import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const Auth = () => {
   const [signupFullName, setSignupFullName] = useState('');
 
   const redirect = searchParams.get('redirect') || '/dashboard';
+  const referralCode = searchParams.get('ref');
 
   useEffect(() => {
     if (user) {
@@ -58,6 +60,22 @@ const Auth = () => {
       toast.error(error.message || 'Failed to sign up');
     } else {
       toast.success('Account created! Please check your email to verify.');
+      
+      // If there's a referral code, link the referral
+      if (referralCode) {
+        try {
+          const { data: { user: newUser } } = await supabase.auth.getUser();
+          if (newUser) {
+            await supabase
+              .from('referrals')
+              .update({ referred_user_id: newUser.id })
+              .eq('referral_code', referralCode)
+              .is('referred_user_id', null);
+          }
+        } catch (err) {
+          console.error('Error linking referral:', err);
+        }
+      }
     }
 
     setLoading(false);

@@ -4,10 +4,10 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Package, Eye } from "lucide-react";
+import { Package, Eye, Gift, Copy, Check } from "lucide-react";
 import { toast } from 'sonner';
 
 const Dashboard = () => {
@@ -16,6 +16,9 @@ const Dashboard = () => {
   const [sellRequests, setSellRequests] = useState<any[]>([]);
   const [repairRequests, setRepairRequests] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [referralCode, setReferralCode] = useState('');
+  const [referrals, setReferrals] = useState<any[]>([]);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -27,6 +30,7 @@ const Dashboard = () => {
     if (user) {
       fetchSellRequests();
       fetchRepairRequests();
+      fetchReferralData();
     }
   }, [user]);
 
@@ -72,6 +76,59 @@ const Dashboard = () => {
     }
   };
 
+  const fetchReferralData = async () => {
+    if (!user) return;
+
+    try {
+      // Get or create referral code
+      const { data: existingCode } = await supabase
+        .from('referrals')
+        .select('referral_code')
+        .eq('referrer_user_id', user.id)
+        .single();
+
+      if (existingCode) {
+        setReferralCode(existingCode.referral_code);
+      } else {
+        const code = `REF${user.id.substring(0, 8).toUpperCase()}`;
+        await supabase.from('referrals').insert({
+          referrer_user_id: user.id,
+          referral_code: code,
+        });
+        setReferralCode(code);
+      }
+
+      // Fetch user's referrals
+      const { data: referralData } = await supabase
+        .from('referrals')
+        .select(`
+          id,
+          status,
+          reward_amount,
+          created_at,
+          referred:profiles!referrals_referred_user_id_fkey(email, full_name)
+        `)
+        .eq('referrer_user_id', user.id)
+        .not('referred_user_id', 'is', null);
+
+      setReferrals(referralData || []);
+    } catch (error) {
+      console.error('Error fetching referral data:', error);
+    }
+  };
+
+  const handleCopyReferralLink = async () => {
+    const link = `${window.location.origin}/auth?ref=${referralCode}`;
+    try {
+      await navigator.clipboard.writeText(link);
+      setCopied(true);
+      toast.success('Referral link copied!');
+      setTimeout(() => setCopied(false), 2000);
+    } catch (error) {
+      toast.error('Failed to copy link');
+    }
+  };
+
   if (authLoading || loading) {
     return (
       <div className="min-h-screen flex flex-col">
@@ -97,6 +154,68 @@ const Dashboard = () => {
           <h1 className="mb-8 text-3xl font-bold tracking-tight">My Dashboard</h1>
 
           <div className="space-y-6">
+            {/* Referral Section */}
+            <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20">
+              <CardHeader>
+                <div className="flex items-center gap-2">
+                  <Gift className="h-5 w-5 text-primary" />
+                  <CardTitle>Your Referral Program</CardTitle>
+                </div>
+                <CardDescription>
+                  Earn ₹200 for every successful laptop sale through your referral
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={`${window.location.origin}/auth?ref=${referralCode}`}
+                    readOnly
+                    className="flex-1 px-3 py-2 rounded-md border bg-background"
+                  />
+                  <Button
+                    onClick={handleCopyReferralLink}
+                    variant="outline"
+                    size="icon"
+                  >
+                    {copied ? (
+                      <Check className="h-4 w-4 text-green-500" />
+                    ) : (
+                      <Copy className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
+
+                {referrals.length > 0 && (
+                  <div className="space-y-2">
+                    <h3 className="font-semibold">Your Referrals ({referrals.length})</h3>
+                    <div className="space-y-2">
+                      {referrals.map((ref) => (
+                        <div
+                          key={ref.id}
+                          className="flex items-center justify-between p-3 rounded-lg bg-background"
+                        >
+                          <div>
+                            <p className="font-medium">
+                              {ref.referred?.full_name || ref.referred?.email}
+                            </p>
+                            <p className="text-sm text-muted-foreground">
+                              {new Date(ref.created_at).toLocaleDateString()}
+                            </p>
+                          </div>
+                          <Badge
+                            variant={ref.status === 'successful' ? 'default' : 'secondary'}
+                          >
+                            {ref.status === 'successful' ? `₹${ref.reward_amount} Earned` : 'Pending'}
+                          </Badge>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+            
             <Card className="p-6">
               <h2 className="text-xl font-semibold mb-4">Active Sell Requests</h2>
               {sellRequests.length > 0 ? (
