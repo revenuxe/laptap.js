@@ -51,7 +51,7 @@ const ReferralCard = () => {
   };
 
   const getReferralLink = () => {
-    return `${window.location.origin}/auth?ref=${referralCode}`;
+    return `https://www.laptap.in/auth?ref=${referralCode}`;
   };
 
   const handleCopyLink = async () => {

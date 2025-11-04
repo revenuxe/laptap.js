@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Package, Eye, Gift, Copy, Check } from "lucide-react";
 import { toast } from 'sonner';
 
@@ -118,7 +119,7 @@ const Dashboard = () => {
   };
 
   const handleCopyReferralLink = async () => {
-    const link = `${window.location.origin}/auth?ref=${referralCode}`;
+    const link = `https://www.laptap.in/auth?ref=${referralCode}`;
     try {
       await navigator.clipboard.writeText(link);
       setCopied(true);
@@ -153,71 +154,15 @@ const Dashboard = () => {
         <div className="container max-w-6xl">
           <h1 className="mb-8 text-3xl font-bold tracking-tight">My Dashboard</h1>
 
-          <div className="space-y-6">
-            {/* Referral Section */}
-            <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20">
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <Gift className="h-5 w-5 text-primary" />
-                  <CardTitle>Your Referral Program</CardTitle>
-                </div>
-                <CardDescription>
-                  Earn ₹200 for every successful laptop sale through your referral
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={`${window.location.origin}/auth?ref=${referralCode}`}
-                    readOnly
-                    className="flex-1 px-3 py-2 rounded-md border bg-background"
-                  />
-                  <Button
-                    onClick={handleCopyReferralLink}
-                    variant="outline"
-                    size="icon"
-                  >
-                    {copied ? (
-                      <Check className="h-4 w-4 text-green-500" />
-                    ) : (
-                      <Copy className="h-4 w-4" />
-                    )}
-                  </Button>
-                </div>
+          <Tabs defaultValue="requests" className="space-y-6">
+            <TabsList>
+              <TabsTrigger value="requests">My Requests</TabsTrigger>
+              <TabsTrigger value="referrals">Referrals</TabsTrigger>
+            </TabsList>
 
-                {referrals.length > 0 && (
-                  <div className="space-y-2">
-                    <h3 className="font-semibold">Your Referrals ({referrals.length})</h3>
-                    <div className="space-y-2">
-                      {referrals.map((ref) => (
-                        <div
-                          key={ref.id}
-                          className="flex items-center justify-between p-3 rounded-lg bg-background"
-                        >
-                          <div>
-                            <p className="font-medium">
-                              {ref.referred?.full_name || ref.referred?.email}
-                            </p>
-                            <p className="text-sm text-muted-foreground">
-                              {new Date(ref.created_at).toLocaleDateString()}
-                            </p>
-                          </div>
-                          <Badge
-                            variant={ref.status === 'successful' ? 'default' : 'secondary'}
-                          >
-                            {ref.status === 'successful' ? `₹${ref.reward_amount} Earned` : 'Pending'}
-                          </Badge>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-            
-            <Card className="p-6">
-              <h2 className="text-xl font-semibold mb-4">Active Sell Requests</h2>
+            <TabsContent value="requests" className="space-y-6">
+              <Card className="p-6">
+                <h2 className="text-xl font-semibold mb-4">Active Sell Requests</h2>
               {sellRequests.length > 0 ? (
                 <div className="space-y-4">
                   {sellRequests.map((request) => (
@@ -299,17 +244,107 @@ const Dashboard = () => {
               )}
             </Card>
 
-            <Card className="p-6">
-              <h2 className="text-xl font-semibold mb-4">History</h2>
-              <p className="text-muted-foreground">No past transactions</p>
-            </Card>
-          </div>
+              <Card className="p-6">
+                <h2 className="text-xl font-semibold mb-4">History</h2>
+                <p className="text-muted-foreground">No past transactions</p>
+              </Card>
 
-          <div className="mt-8 text-center">
-            <Button variant="cta" size="lg" onClick={() => navigate("/sell")}>
-              Sell Another Device
-            </Button>
-          </div>
+              <div className="mt-8 text-center">
+                <Button variant="cta" size="lg" onClick={() => navigate("/sell")}>
+                  Sell Another Device
+                </Button>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="referrals">
+              <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20">
+                <CardHeader>
+                  <div className="flex items-center gap-2">
+                    <Gift className="h-5 w-5 text-primary" />
+                    <CardTitle>Your Referral Program</CardTitle>
+                  </div>
+                  <CardDescription>
+                    Earn ₹200 for every successful laptop sale through your referral
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Your Referral Link</label>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={`https://www.laptap.in/auth?ref=${referralCode}`}
+                        readOnly
+                        className="flex-1 px-3 py-2 rounded-md border bg-background"
+                      />
+                      <Button
+                        onClick={handleCopyReferralLink}
+                        variant="outline"
+                        size="icon"
+                      >
+                        {copied ? (
+                          <Check className="h-4 w-4 text-green-500" />
+                        ) : (
+                          <Copy className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-semibold">Your Referrals</h3>
+                      <Badge variant="outline">{referrals.length} Total</Badge>
+                    </div>
+
+                    {referrals.length > 0 ? (
+                      <div className="space-y-3">
+                        {referrals.map((ref) => (
+                          <div
+                            key={ref.id}
+                            className="flex items-center justify-between p-4 rounded-lg bg-background border"
+                          >
+                            <div className="space-y-1">
+                              <p className="font-medium">
+                                {ref.referred?.full_name || 'New User'}
+                              </p>
+                              <p className="text-sm text-muted-foreground">
+                                {ref.referred?.email || 'Email not available'}
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                Joined: {new Date(ref.created_at).toLocaleDateString()}
+                              </p>
+                            </div>
+                            <div className="text-right">
+                              <Badge
+                                variant={ref.status === 'successful' ? 'default' : 'secondary'}
+                                className="mb-1"
+                              >
+                                {ref.status}
+                              </Badge>
+                              {ref.status === 'successful' && (
+                                <p className="text-sm font-semibold text-green-600">
+                                  +₹{ref.reward_amount}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center py-8 border rounded-lg bg-muted/30">
+                        <Gift className="h-12 w-12 text-muted-foreground mx-auto mb-2" />
+                        <p className="text-muted-foreground">No referrals yet</p>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Share your link to start earning!
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
         </div>
       </main>
 

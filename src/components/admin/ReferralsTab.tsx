@@ -41,13 +41,41 @@ const ReferralsTab = () => {
           status,
           reward_amount,
           created_at,
-          referrer:profiles!referrals_referrer_user_id_fkey(email, full_name),
-          referred:profiles!referrals_referred_user_id_fkey(email, full_name)
+          referrer_user_id,
+          referred_user_id
         `)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setReferrals(data as any);
+
+      // Fetch profile data separately
+      const referralsWithProfiles = await Promise.all(
+        (data || []).map(async (referral) => {
+          const { data: referrerProfile } = await supabase
+            .from('profiles')
+            .select('email, full_name')
+            .eq('id', referral.referrer_user_id)
+            .single();
+
+          let referredProfile = null;
+          if (referral.referred_user_id) {
+            const { data: refProfile } = await supabase
+              .from('profiles')
+              .select('email, full_name')
+              .eq('id', referral.referred_user_id)
+              .single();
+            referredProfile = refProfile;
+          }
+
+          return {
+            ...referral,
+            referrer: referrerProfile,
+            referred: referredProfile,
+          };
+        })
+      );
+
+      setReferrals(referralsWithProfiles as any);
     } catch (error) {
       console.error('Error fetching referrals:', error);
       toast.error('Failed to load referrals');
