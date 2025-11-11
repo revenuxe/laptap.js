@@ -55,8 +55,8 @@ const MacBookPro = () => {
             </div>
           </section>
 
-          {/* Models We Accept */}
-          <section className="py-16 md:py-24">
+          {/* Models We Accept - Above Footer */}
+          <section className="py-16 md:py-24 bg-muted/30">
             <div className="container">
               <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
                 MacBook Pro Models We Buy
@@ -64,127 +64,39 @@ const MacBookPro = () => {
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
                 {[
-                  { name: "MacBook Pro 16-inch", year: "2024 (M3 Max/Pro)", price: "₹80,000 - ₹2,50,000" },
-                  { name: "MacBook Pro 14-inch", year: "2024 (M3 Max/Pro)", price: "₹70,000 - ₹1,80,000" },
-                  { name: "MacBook Pro 16-inch", year: "2023 (M2 Max/Pro)", price: "₹75,000 - ₹2,00,000" },
-                  { name: "MacBook Pro 14-inch", year: "2023 (M2 Max/Pro)", price: "₹65,000 - ₹1,50,000" },
-                  { name: "MacBook Pro 13-inch", year: "2022 (M2)", price: "₹55,000 - ₹95,000" },
-                  { name: "MacBook Pro 16-inch", year: "2021 (M1 Max/Pro)", price: "₹65,000 - ₹1,50,000" },
-                  { name: "MacBook Pro 14-inch", year: "2021 (M1 Max/Pro)", price: "₹55,000 - ₹1,20,000" },
-                  { name: "MacBook Pro 13-inch", year: "2020 (M1)", price: "₹45,000 - ₹75,000" },
-                  { name: "MacBook Pro 16-inch", year: "2019 (Intel)", price: "₹40,000 - ₹80,000" },
+                  { name: "MacBook Pro 16-inch M3 Max/Pro", year: "2024" },
+                  { name: "MacBook Pro 14-inch M3 Max/Pro", year: "2024" },
+                  { name: "MacBook Pro 16-inch M2 Max/Pro", year: "2023" },
+                  { name: "MacBook Pro 14-inch M2 Max/Pro", year: "2023" },
+                  { name: "MacBook Pro 13-inch M2", year: "2022" },
+                  { name: "MacBook Pro 16-inch M1 Max/Pro", year: "2021" },
+                  { name: "MacBook Pro 14-inch M1 Max/Pro", year: "2021" },
+                  { name: "MacBook Pro 13-inch M1", year: "2020" },
+                  { name: "MacBook Pro 16-inch Intel", year: "2019-2020" },
+                  { name: "MacBook Pro 15-inch Intel", year: "2016-2019" },
+                  { name: "MacBook Pro 13-inch Intel", year: "2016-2020" },
+                  { name: "MacBook Pro Retina", year: "2012-2015" },
                 ].map((model, index) => (
                   <div key={index} className="p-6 rounded-2xl border-2 border-border bg-card hover:border-primary transition-all">
                     <h3 className="font-bold text-lg mb-2">{model.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-3">{model.year}</p>
-                    <p className="text-primary font-semibold">{model.price}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* Why Sell MacBook Pro With Us */}
-          <section className="py-16 md:py-24 bg-muted/30">
-            <div className="container">
-              <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-                Why Sell Your MacBook Pro With Us?
-              </h2>
-
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-                {[
-                  {
-                    icon: TrendingUp,
-                    title: "Best Market Prices",
-                    description: "We offer the highest resale value for MacBook Pro models"
-                  },
-                  {
-                    icon: Zap,
-                    title: "Instant Payment",
-                    description: "Get paid immediately via UPI, bank transfer, or cash"
-                  },
-                  {
-                    icon: Shield,
-                    title: "100% Secure",
-                    description: "Complete data wiping and secure transaction process"
-                  },
-                  {
-                    icon: CheckCircle,
-                    title: "Free Pickup",
-                    description: "Doorstep pickup across all major cities in India"
-                  }
-                ].map((feature, index) => (
-                  <div key={index} className="p-6 rounded-2xl bg-card text-center">
-                    <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 mb-4">
-                      <feature.icon className="h-6 w-6 text-primary" />
-                    </div>
-                    <h3 className="font-bold mb-2">{feature.title}</h3>
-                    <p className="text-sm text-muted-foreground">{feature.description}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* Process */}
-          <section className="py-16 md:py-24">
-            <div className="container">
-              <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-                How to Sell Your MacBook Pro
-              </h2>
-
-              <div className="grid md:grid-cols-4 gap-8 max-w-5xl mx-auto">
-                {[
-                  { step: "1", title: "Get Quote", desc: "Select MacBook Pro model and get instant price" },
-                  { step: "2", title: "Schedule Pickup", desc: "Choose convenient time for free doorstep pickup" },
-                  { step: "3", title: "Device Check", desc: "Our expert verifies your MacBook Pro condition" },
-                  { step: "4", title: "Get Paid", desc: "Receive instant payment via your preferred method" }
-                ].map((item, index) => (
-                  <div key={index} className="text-center">
-                    <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-foreground text-2xl font-bold">
-                      {item.step}
-                    </div>
-                    <h3 className="font-bold mb-2">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground">{item.desc}</p>
+                    <p className="text-sm text-muted-foreground">{model.year}</p>
                   </div>
                 ))}
               </div>
 
-              <div className="text-center mt-12">
-                <Button variant="cta" size="lg" onClick={() => navigate("/sell/laptop")}>
-                  Start Selling Now
+              <div className="mt-12 text-center">
+                <p className="text-muted-foreground mb-6">
+                  All MacBook Pro models accepted - M3, M2, M1, Intel - in any condition
+                </p>
+                <Button variant="cta" size="lg" onClick={() => navigate("/sell")}>
+                  Get Instant Quote Now
                 </Button>
-              </div>
-
-              <div className="mt-16 p-8 bg-muted/30 rounded-2xl">
-                <h3 className="text-2xl font-bold mb-4 text-center">Explore More Models</h3>
-                <div className="flex flex-wrap gap-4 justify-center">
-                  <Link to="/models/imac" className="text-primary hover:underline font-medium">
-                    Sell iMac Desktop
-                  </Link>
-                  <span className="text-muted-foreground">•</span>
-                  <Link to="/models/dell-xps" className="text-primary hover:underline font-medium">
-                    Sell Dell XPS
-                  </Link>
-                  <span className="text-muted-foreground">•</span>
-                  <Link to="/models/lenovo-thinkpad" className="text-primary hover:underline font-medium">
-                    Sell Lenovo ThinkPad
-                  </Link>
-                  <span className="text-muted-foreground">•</span>
-                  <Link to="/blog/sell-used-laptop-bangalore" className="text-primary hover:underline font-medium">
-                    Selling Guide
-                  </Link>
-                  <span className="text-muted-foreground">•</span>
-                  <Link to="/contact" className="text-primary hover:underline font-medium">
-                    Contact Us
-                  </Link>
-                </div>
               </div>
             </div>
           </section>
 
           {/* FAQ */}
-          <section className="py-16 md:py-24 bg-muted/30">
+          <section className="py-16 md:py-24">
             <div className="container max-w-4xl">
               <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
                 Frequently Asked Questions

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import Header from '@/components/Header';
@@ -95,25 +96,44 @@ const Track = () => {
 
   if (loading || authLoading) {
     return (
-      <div className="min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-1 flex items-center justify-center">
-          <p className="text-muted-foreground">Loading...</p>
-        </main>
-        <Footer />
-      </div>
+      <>
+        <Helmet>
+          <title>Track Your Laptop Sale Order - Check Status Online | Laptap</title>
+          <meta name="description" content="Track your laptop sale order status online. View pickup schedule, inspection status, and payment details. Real-time updates on your laptop sale." />
+          <meta name="keywords" content="track laptop sale, order tracking, laptop sale status, sell laptop tracking" />
+          <link rel="canonical" href={`https://www.laptap.in/track/${id}`} />
+          <meta property="og:title" content="Track Your Order - Laptap" />
+          <meta property="og:type" content="website" />
+        </Helmet>
+
+        <div className="min-h-screen flex flex-col">
+          <Header />
+          <main className="flex-1 flex items-center justify-center">
+            <p className="text-muted-foreground">Loading...</p>
+          </main>
+          <Footer />
+        </div>
+      </>
     );
   }
 
   if (!sellRequest) {
     return (
-      <div className="min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-1 flex items-center justify-center">
-          <p className="text-muted-foreground">Request not found</p>
-        </main>
-        <Footer />
-      </div>
+      <>
+        <Helmet>
+          <title>Track Your Laptop Sale Order - Check Status Online | Laptap</title>
+          <meta name="description" content="Track your laptop sale order status online. View pickup schedule, inspection status, and payment details. Real-time updates on your laptop sale." />
+          <link rel="canonical" href={`https://www.laptap.in/track/${id}`} />
+        </Helmet>
+
+        <div className="min-h-screen flex flex-col">
+          <Header />
+          <main className="flex-1 flex items-center justify-center">
+            <p className="text-muted-foreground">Request not found</p>
+          </main>
+          <Footer />
+        </div>
+      </>
     );
   }
 
@@ -143,7 +163,15 @@ const Track = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <>
+      <Helmet>
+        <title>Track Your Laptop Sale Order #{sellRequest.id.slice(0, 8)} - Laptap</title>
+        <meta name="description" content="Track your laptop sale order status, view pickup schedule, inspection details, and payment information." />
+        <link rel="canonical" href={`https://www.laptap.in/track/${id}`} />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+
+      <div className="min-h-screen flex flex-col">
       <Header />
       
       <main className="flex-1 py-12 md:py-20">
@@ -219,6 +247,7 @@ const Track = () => {
 
       <Footer />
     </div>
+    </>
   );
 };
 

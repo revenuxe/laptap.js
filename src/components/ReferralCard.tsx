@@ -25,28 +25,44 @@ const ReferralCard = () => {
     if (!user) return;
 
     try {
-      // Check if user already has a referral code
-      const { data: existingReferral } = await supabase
+      setLoading(true);
+      
+      // Check if user already has ANY referral entry
+      const { data: existingReferrals, error: fetchError } = await supabase
         .from('referrals')
         .select('referral_code')
         .eq('referrer_user_id', user.id)
-        .single();
+        .limit(1);
 
-      if (existingReferral) {
-        setReferralCode(existingReferral.referral_code);
+      if (fetchError) {
+        console.error('Error fetching referral:', fetchError);
+        return;
+      }
+
+      if (existingReferrals && existingReferrals.length > 0) {
+        setReferralCode(existingReferrals[0].referral_code);
       } else {
-        // Generate new unique code
+        // Generate new unique code based on user ID
         const code = `REF${user.id.substring(0, 8).toUpperCase()}`;
         setReferralCode(code);
         
         // Create referral record
-        await supabase.from('referrals').insert({
+        const { error: insertError } = await supabase.from('referrals').insert({
           referrer_user_id: user.id,
           referral_code: code,
+          status: 'pending'
         });
+
+        if (insertError) {
+          console.error('Error creating referral:', insertError);
+        } else {
+          console.log('Referral code created:', code);
+        }
       }
     } catch (error) {
-      console.error('Error generating referral code:', error);
+      console.error('Error in generateReferralCode:', error);
+    } finally {
+      setLoading(false);
     }
   };
 

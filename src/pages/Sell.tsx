@@ -552,12 +552,14 @@ const Sell = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Helmet>
-        <title>{getMetaTitle()}</title>
-        <meta name="description" content={getMetaDescription()} />
-        <meta property="og:title" content={getMetaTitle()} />
-        <meta property="og:description" content={getMetaDescription()} />
+        <title>Sell Used Laptop Online - Get Instant Cash for Old Laptop | Best Price | Free Doorstep Pickup | Laptap</title>
+        <meta name="description" content="Sell your used laptop online for instant cash. Get the best price for old laptops, MacBooks, desktops. Free doorstep pickup across India. Instant payment via UPI. Sell laptop online in 3 easy steps." />
+        <meta name="keywords" content="sell laptop online, sell used laptop, sell old laptop, laptop buyback, best price for old laptop, instant cash for laptop, sell laptop India, free doorstep pickup laptop" />
+        <link rel="canonical" href="https://www.laptap.in/sell" />
+        <meta property="og:title" content="Sell Used Laptop Online - Instant Cash | Laptap" />
+        <meta property="og:description" content="Get the best price for your used laptop. Free doorstep pickup and instant payment." />
+        <meta property="og:url" content="https://www.laptap.in/sell" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://laptap.in${window.location.pathname}`} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={getMetaTitle()} />
         <meta name="twitter:description" content={getMetaDescription()} />
