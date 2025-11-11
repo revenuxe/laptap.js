@@ -54,28 +54,45 @@ const Auth = () => {
     e.preventDefault();
     setLoading(true);
 
-    const { data, error } = await signUp(signupEmail, signupPassword, signupFullName);
+    try {
+      const { data, error } = await signUp(signupEmail, signupPassword, signupFullName);
 
-    if (error) {
-      toast.error(error.message || 'Failed to sign up');
-      setLoading(false);
-    } else {
+      if (error) {
+        toast.error(error.message || 'Failed to sign up');
+        setLoading(false);
+        return;
+      }
+
+      if (!data?.user) {
+        toast.error('Signup failed - no user data returned');
+        setLoading(false);
+        return;
+      }
+
       toast.success('Account created successfully!');
       
-      // If there's a referral code, link the referral immediately
-      if (referralCode && data?.user) {
+      // If there's a referral code, link the referral
+      if (referralCode) {
         try {
-          const { error: refError } = await supabase
+          // Wait a bit to ensure the user profile is created
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          
+          const { data: referralData, error: refError } = await supabase
             .from('referrals')
             .update({ 
               referred_user_id: data.user.id,
               updated_at: new Date().toISOString()
             })
-            .eq('referral_code', referralCode)
-            .is('referred_user_id', null);
+            .eq('referral_code', referralCode.toUpperCase())
+            .is('referred_user_id', null)
+            .select();
           
-          if (!refError) {
-            toast.success('Referral applied successfully!');
+          if (refError) {
+            console.error('Error linking referral:', refError);
+          } else if (referralData && referralData.length > 0) {
+            toast.success('Referral code applied successfully!');
+          } else {
+            console.log('No referral found with code:', referralCode);
           }
         } catch (err) {
           console.error('Error linking referral:', err);
@@ -84,6 +101,10 @@ const Auth = () => {
       
       setLoading(false);
       navigate(redirect);
+    } catch (err) {
+      console.error('Signup error:', err);
+      toast.error('An unexpected error occurred');
+      setLoading(false);
     }
   };
 

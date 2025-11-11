@@ -81,32 +81,48 @@ const Dashboard = () => {
     if (!user) return;
 
     try {
-      // Get or create referral code
-      const { data: existingReferrals } = await supabase
+      // Get or create referral code - check if ANY referral exists for this user
+      const { data: existingReferrals, error: fetchError } = await supabase
         .from('referrals')
         .select('referral_code')
         .eq('referrer_user_id', user.id)
         .limit(1);
 
+      if (fetchError) {
+        console.error('Error fetching referrals:', fetchError);
+        return;
+      }
+
       if (existingReferrals && existingReferrals.length > 0) {
         setReferralCode(existingReferrals[0].referral_code);
       } else {
+        // Create a new referral entry for this user
         const code = `REF${user.id.substring(0, 8).toUpperCase()}`;
         const { error: insertError } = await supabase.from('referrals').insert({
           referrer_user_id: user.id,
           referral_code: code,
+          status: 'pending'
         });
+        
         if (!insertError) {
           setReferralCode(code);
+        } else {
+          console.error('Error creating referral:', insertError);
         }
       }
 
-      // Fetch user's successful referrals with referred user details
-      const { data: referralData } = await supabase
+      // Fetch all referrals where this user is the referrer AND someone has used the code
+      const { data: referralData, error: refDataError } = await supabase
         .from('referrals')
         .select('id, status, reward_amount, created_at, referred_user_id')
         .eq('referrer_user_id', user.id)
         .not('referred_user_id', 'is', null);
+
+      if (refDataError) {
+        console.error('Error fetching referral data:', refDataError);
+        setReferrals([]);
+        return;
+      }
 
       if (referralData && referralData.length > 0) {
         // Get all referred user IDs
@@ -114,27 +130,36 @@ const Dashboard = () => {
           .map(r => r.referred_user_id)
           .filter(Boolean);
 
-        // Fetch all profiles in one query
-        const { data: profiles } = await supabase
-          .from('profiles')
-          .select('id, email, full_name')
-          .in('id', referredUserIds);
+        if (referredUserIds.length > 0) {
+          // Fetch all profiles in one query
+          const { data: profiles, error: profileError } = await supabase
+            .from('profiles')
+            .select('id, email, full_name')
+            .in('id', referredUserIds);
 
-        // Create a map for quick lookup
-        const profileMap = new Map(profiles?.map(p => [p.id, p]) || []);
+          if (profileError) {
+            console.error('Error fetching profiles:', profileError);
+          }
 
-        // Map referrals with profile data
-        const referralsWithProfiles = referralData.map(ref => ({
-          ...ref,
-          referred: ref.referred_user_id ? profileMap.get(ref.referred_user_id) : null,
-        }));
+          // Create a map for quick lookup
+          const profileMap = new Map(profiles?.map(p => [p.id, p]) || []);
 
-        setReferrals(referralsWithProfiles);
+          // Map referrals with profile data
+          const referralsWithProfiles = referralData.map(ref => ({
+            ...ref,
+            referred: ref.referred_user_id ? profileMap.get(ref.referred_user_id) : null,
+          }));
+
+          setReferrals(referralsWithProfiles);
+        } else {
+          setReferrals(referralData.map(ref => ({ ...ref, referred: null })));
+        }
       } else {
         setReferrals([]);
       }
     } catch (error) {
-      console.error('Error fetching referral data:', error);
+      console.error('Error in fetchReferralData:', error);
+      setReferrals([]);
     }
   };
 

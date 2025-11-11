@@ -18,36 +18,15 @@ const Blog = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('blogs')
-        .select('*')
+        .select('id, title, excerpt, created_at, category, slug')
         .eq('published', true)
         .order('created_at', { ascending: false });
       
       if (error) throw error;
       return data;
     },
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
   });
-
-  // Real-time subscription
-  useEffect(() => {
-    const channel = supabase
-      .channel('blog-changes')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'blogs'
-        },
-        () => {
-          queryClient.invalidateQueries({ queryKey: ['blogs'] });
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [queryClient]);
 
   // Fallback blog posts if no blogs in database
   const fallbackPosts = [
