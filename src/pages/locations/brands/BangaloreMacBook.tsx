@@ -249,6 +249,38 @@ const BangaloreMacBook = () => {
             </div>
           </section>
 
+          {/* MacBook Models Section */}
+          <section className="py-16 md:py-24 bg-muted/30">
+            <div className="container">
+              <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">MacBook Models We Buy in Bangalore</h2>
+              <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+                All MacBook models accepted - Pro, Air, Intel, M1, M2, M3 - any condition
+              </p>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                {[
+                  { name: "MacBook Pro 16\" M3 Max", series: "2024 Latest" },
+                  { name: "MacBook Pro 14\" M3 Pro", series: "2024 Latest" },
+                  { name: "MacBook Air 15\" M3", series: "2024" },
+                  { name: "MacBook Air 13\" M3", series: "2024" },
+                  { name: "MacBook Pro 16\" M2 Max", series: "2023" },
+                  { name: "MacBook Pro 14\" M2 Pro", series: "2023" },
+                  { name: "MacBook Air 15\" M2", series: "2023" },
+                  { name: "MacBook Air 13\" M2", series: "2022" },
+                  { name: "MacBook Pro 16\" M1 Max", series: "2021" },
+                  { name: "MacBook Pro 14\" M1 Pro", series: "2021" },
+                  { name: "MacBook Air 13\" M1", series: "2020" },
+                  { name: "MacBook Pro 16\" Intel", series: "2019-2020" },
+                ].map((model, index) => (
+                  <div key={index} className="p-6 rounded-2xl border-2 border-border bg-card hover:border-primary transition-all">
+                    <h3 className="font-bold text-lg mb-2">{model.name}</h3>
+                    <p className="text-sm text-muted-foreground">{model.series}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
           {/* FAQ Bangalore Specific */}
           <section className="py-16 md:py-24">
             <div className="container max-w-4xl">

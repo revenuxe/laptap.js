@@ -54,31 +54,37 @@ const Auth = () => {
     e.preventDefault();
     setLoading(true);
 
-    const { error } = await signUp(signupEmail, signupPassword, signupFullName);
+    const { data, error } = await signUp(signupEmail, signupPassword, signupFullName);
 
     if (error) {
       toast.error(error.message || 'Failed to sign up');
+      setLoading(false);
     } else {
-      toast.success('Account created! Please check your email to verify.');
+      toast.success('Account created successfully!');
       
-      // If there's a referral code, link the referral
-      if (referralCode) {
+      // If there's a referral code, link the referral immediately
+      if (referralCode && data?.user) {
         try {
-          const { data: { user: newUser } } = await supabase.auth.getUser();
-          if (newUser) {
-            await supabase
-              .from('referrals')
-              .update({ referred_user_id: newUser.id })
-              .eq('referral_code', referralCode)
-              .is('referred_user_id', null);
+          const { error: refError } = await supabase
+            .from('referrals')
+            .update({ 
+              referred_user_id: data.user.id,
+              updated_at: new Date().toISOString()
+            })
+            .eq('referral_code', referralCode)
+            .is('referred_user_id', null);
+          
+          if (!refError) {
+            toast.success('Referral applied successfully!');
           }
         } catch (err) {
           console.error('Error linking referral:', err);
         }
       }
+      
+      setLoading(false);
+      navigate(redirect);
     }
-
-    setLoading(false);
   };
 
   return (

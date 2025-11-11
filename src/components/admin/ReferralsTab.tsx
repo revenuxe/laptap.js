@@ -48,32 +48,35 @@ const ReferralsTab = () => {
 
       if (error) throw error;
 
-      // Fetch profile data separately
-      const referralsWithProfiles = await Promise.all(
-        (data || []).map(async (referral) => {
-          const { data: referrerProfile } = await supabase
-            .from('profiles')
-            .select('email, full_name')
-            .eq('id', referral.referrer_user_id)
-            .single();
+      if (!data || data.length === 0) {
+        setReferrals([]);
+        return;
+      }
 
-          let referredProfile = null;
-          if (referral.referred_user_id) {
-            const { data: refProfile } = await supabase
-              .from('profiles')
-              .select('email, full_name')
-              .eq('id', referral.referred_user_id)
-              .single();
-            referredProfile = refProfile;
-          }
+      // Get all unique user IDs
+      const userIds = new Set<string>();
+      data.forEach(ref => {
+        userIds.add(ref.referrer_user_id);
+        if (ref.referred_user_id) userIds.add(ref.referred_user_id);
+      });
 
-          return {
-            ...referral,
-            referrer: referrerProfile,
-            referred: referredProfile,
-          };
-        })
-      );
+      // Fetch all profiles in one query
+      const { data: profiles } = await supabase
+        .from('profiles')
+        .select('id, email, full_name')
+        .in('id', Array.from(userIds));
+
+      // Create a map for quick lookup
+      const profileMap = new Map(profiles?.map(p => [p.id, p]) || []);
+
+      // Map referrals with profiles
+      const referralsWithProfiles = data.map(referral => ({
+        ...referral,
+        referrer: profileMap.get(referral.referrer_user_id) || { email: 'Unknown', full_name: 'Unknown' },
+        referred: referral.referred_user_id 
+          ? profileMap.get(referral.referred_user_id) || null
+          : null,
+      }));
 
       setReferrals(referralsWithProfiles as any);
     } catch (error) {

@@ -108,20 +108,51 @@ const BangaloreLenovo = () => {
             </div>
           </section>
 
+          {/* Lenovo Models Section */}
           <section className="py-16 md:py-24 bg-muted/30">
             <div className="container">
-              <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Lenovo Laptop Models We Buy in Bangalore</h2>
+              <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+                All Lenovo laptop series accepted - ThinkPad, IdeaPad, Yoga, Legion, ThinkBook
+              </p>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                {[
+                  { name: "ThinkPad X1 Carbon", series: "Premium Business" },
+                  { name: "ThinkPad T14, T15, T16", series: "Business Series" },
+                  { name: "ThinkPad E14, E15", series: "Essential Business" },
+                  { name: "ThinkPad X1 Yoga", series: "Premium 2-in-1" },
+                  { name: "ThinkPad P1, P15, P16", series: "Mobile Workstations" },
+                  { name: "IdeaPad Slim 3, 5, 7", series: "Consumer Laptops" },
+                  { name: "Yoga 7i, 9i", series: "Premium Convertibles" },
+                  { name: "Legion 5, 5 Pro, 7", series: "Gaming Laptops" },
+                  { name: "ThinkBook 14, 15", series: "Small Business" },
+                ].map((model, index) => (
+                  <div key={index} className="p-6 rounded-2xl border-2 border-border bg-card hover:border-primary transition-all">
+                    <h3 className="font-bold text-lg mb-2">{model.name}</h3>
+                    <p className="text-sm text-muted-foreground">{model.series}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-12 text-center">
+                <Button variant="cta" size="lg" onClick={() => navigate("/sell")}>
+                  Get Started - Sell Lenovo Laptop Now
+                </Button>
+              </div>
+            </div>
+          </section>
+
+          {/* CTA Section */}
+          <section className="py-16 md:py-24">
+            <div className="container">
+              <div className="text-center mb-8">
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">
                   Sell Your Lenovo Laptop in Bangalore Today
                 </h2>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
                   Join thousands of satisfied Bangalore customers. Get instant quote, free pickup, and immediate payment.
                 </p>
-              </div>
-              <div className="flex justify-center">
-                <Button variant="cta" size="lg" onClick={() => navigate("/sell/laptop")}>
-                  Get Started - Sell Lenovo Laptop Now
-                </Button>
               </div>
               <div className="mt-12 text-center">
                 <p className="text-sm text-muted-foreground">

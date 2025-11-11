@@ -108,20 +108,51 @@ const BangaloreHP = () => {
             </div>
           </section>
 
+          {/* HP Models Section */}
           <section className="py-16 md:py-24 bg-muted/30">
             <div className="container">
-              <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">HP Laptop Models We Buy in Bangalore</h2>
+              <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+                All HP laptop series accepted - Pavilion, Envy, Omen, EliteBook, ProBook, Spectre
+              </p>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                {[
+                  { name: "HP Pavilion 14, 15, 16", series: "Consumer Laptops" },
+                  { name: "HP Pavilion x360", series: "2-in-1 Convertibles" },
+                  { name: "HP Envy 13, 14, 15", series: "Premium Laptops" },
+                  { name: "HP Envy x360", series: "Premium Convertibles" },
+                  { name: "HP Omen 15, 16, 17", series: "Gaming Laptops" },
+                  { name: "HP EliteBook 840, 850, 860", series: "Business Laptops" },
+                  { name: "HP ProBook 440, 450, 640", series: "Business Value" },
+                  { name: "HP Spectre x360", series: "Ultra-Premium" },
+                  { name: "HP Victus 15, 16", series: "Budget Gaming" },
+                ].map((model, index) => (
+                  <div key={index} className="p-6 rounded-2xl border-2 border-border bg-card hover:border-primary transition-all">
+                    <h3 className="font-bold text-lg mb-2">{model.name}</h3>
+                    <p className="text-sm text-muted-foreground">{model.series}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-12 text-center">
+                <Button variant="cta" size="lg" onClick={() => navigate("/sell")}>
+                  Get Started - Sell HP Laptop Now
+                </Button>
+              </div>
+            </div>
+          </section>
+
+          {/* CTA Section */}
+          <section className="py-16 md:py-24">
+            <div className="container">
+              <div className="text-center mb-8">
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">
                   Ready to Sell Your HP Laptop in Bangalore?
                 </h2>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
                   Join thousands of satisfied customers in Bangalore. Get instant quote, free pickup, and same-day payment.
                 </p>
-              </div>
-              <div className="flex justify-center">
-                <Button variant="cta" size="lg" onClick={() => navigate("/sell/laptop")}>
-                  Get Started - Sell HP Laptop Now
-                </Button>
               </div>
               <div className="mt-12 text-center">
                 <p className="text-sm text-muted-foreground">
