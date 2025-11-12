@@ -1,7 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { Laptop, Monitor, Smartphone, Shield, TrendingUp, Zap, Wrench } from "lucide-react";
+import { Laptop, Monitor, Smartphone, Shield, TrendingUp, Zap, Wrench, FileText } from "lucide-react";
 import { DeviceSearch } from "@/components/DeviceSearch";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import SimpleForm from "./SimpleForm";
 
 interface HeroProps {
   location?: string;
@@ -11,6 +21,7 @@ interface HeroProps {
 
 const Hero = ({ location, title, description }: HeroProps = {}) => {
   const navigate = useNavigate();
+  const [formOpen, setFormOpen] = useState(false);
   
   const defaultTitle = (
     <>
@@ -78,7 +89,7 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
           </div>
 
           {/* Category cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
             <div className="group cursor-pointer rounded-3xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-8 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50" onClick={() => navigate("/sell/laptop")}>
               <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
                 <Laptop className="h-8 w-8 text-primary" />
@@ -118,6 +129,29 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
                 Best prices for desktop computers
               </p>
             </div>
+
+            <Dialog open={formOpen} onOpenChange={setFormOpen}>
+              <DialogTrigger asChild>
+                <div className="group cursor-pointer rounded-3xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-8 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50">
+                  <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
+                    <FileText className="h-8 w-8 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">Simple Form</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Quick inquiry form
+                  </p>
+                </div>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Get Quick Quote</DialogTitle>
+                  <DialogDescription>
+                    Fill in your details and we'll get back to you with the best price.
+                  </DialogDescription>
+                </DialogHeader>
+                <SimpleForm onSuccess={() => setFormOpen(false)} />
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
       </div>
