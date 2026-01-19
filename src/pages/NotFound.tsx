@@ -1,5 +1,6 @@
 import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Home, Search } from "lucide-react";
@@ -13,8 +14,14 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
+    <>
+      <Helmet>
+        <title>Page Not Found | Laptap</title>
+        <meta name="description" content="The page you're looking for doesn't exist. Return to Laptap homepage to sell your laptop, desktop or mobile." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+      <div className="min-h-screen flex flex-col">
+        <Header />
       <main className="flex-1 flex items-center justify-center bg-gradient-to-br from-primary/5 to-secondary/5 py-16">
         <div className="container max-w-2xl text-center px-4">
           <div className="mb-8">
@@ -52,7 +59,8 @@ const NotFound = () => {
         </div>
       </main>
       <Footer />
-    </div>
+      </div>
+    </>
   );
 };
 
