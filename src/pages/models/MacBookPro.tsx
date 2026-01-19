@@ -19,6 +19,60 @@ const MacBookPro = () => {
         <meta name="description" content="Sell your used MacBook Pro for instant cash. Get the best resale value for MacBook Pro 13-inch, 14-inch, 15-inch, 16-inch models (M1, M2, M3, Intel). Free doorstep pickup across India. Instant payment via UPI. Trusted by 10,000+ MacBook sellers. Sell MacBook Pro 2024, 2023, 2022, 2021, 2020 models." />
         <meta name="keywords" content="sell MacBook Pro, sell MacBook Pro online, MacBook Pro resale value, sell used MacBook Pro, sell old MacBook Pro, MacBook Pro buyback, best price MacBook Pro, sell MacBook Pro 16 inch, sell MacBook Pro 14 inch, sell MacBook Pro 13 inch, sell MacBook Pro M3, sell MacBook Pro M2, sell MacBook Pro M1, sell MacBook Pro 2024, sell MacBook Pro 2023, sell MacBook Pro India, instant cash MacBook Pro" />
         <link rel="canonical" href="https://www.laptap.in/models/macbook-pro" />
+        <link rel="alternate" hrefLang="en-IN" href="https://www.laptap.in/models/macbook-pro" />
+        <link rel="alternate" hrefLang="en" href="https://www.laptap.in/models/macbook-pro" />
+        <link rel="alternate" hrefLang="x-default" href="https://www.laptap.in/models/macbook-pro" />
+        <meta property="og:title" content="Sell MacBook Pro Online | Best Price Guaranteed | Laptap" />
+        <meta property="og:description" content="Get instant cash for your MacBook Pro. Best resale value for M1, M2, M3, Intel models. Free doorstep pickup across India." />
+        <meta property="og:url" content="https://www.laptap.in/models/macbook-pro" />
+        <meta property="og:type" content="product" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": "Sell MacBook Pro",
+            "description": "Sell your used MacBook Pro for instant cash with best market prices and free doorstep pickup across India",
+            "brand": { "@type": "Brand", "name": "Apple" },
+            "category": "Laptop",
+            "offers": {
+              "@type": "AggregateOffer",
+              "priceCurrency": "INR",
+              "lowPrice": "25000",
+              "highPrice": "280000",
+              "offerCount": "500",
+              "availability": "https://schema.org/InStock"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.9",
+              "reviewCount": "3500"
+            }
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "How much can I get for my MacBook Pro?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "MacBook Pro resale prices: M3 Max (₹1,50,000-₹2,80,000), M2 Pro (₹90,000-₹1,80,000), M1 (₹60,000-₹1,20,000), Intel models (₹25,000-₹80,000). Exact price depends on model, year, storage, RAM, and condition."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Do you buy damaged MacBook Pro?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes! We buy MacBook Pro in any condition - cracked screen, battery issues, water damage, keyboard problems, or non-functional. Price is adjusted based on condition assessment."
+                }
+              }
+            ]
+          })}
+        </script>
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

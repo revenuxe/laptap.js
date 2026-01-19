@@ -17,6 +17,30 @@ const BangaloreHP = () => {
         <meta name="description" content="Sell your used HP laptop in Bangalore for instant cash. Get the best resale value for HP Pavilion, Envy, Omen, EliteBook, ProBook models. Free same-day doorstep pickup across all Bangalore areas." />
         <meta name="keywords" content="sell HP laptop Bangalore, sell HP Pavilion Bangalore, sell HP Envy Bangalore, HP laptop resale Bangalore, best price HP laptop Bangalore, sell used HP laptop Bangalore" />
         <link rel="canonical" href="https://www.laptap.in/bangalore/hp" />
+        <link rel="alternate" hrefLang="en-IN" href="https://www.laptap.in/bangalore/hp" />
+        <link rel="alternate" hrefLang="en" href="https://www.laptap.in/bangalore/hp" />
+        <link rel="alternate" hrefLang="x-default" href="https://www.laptap.in/bangalore/hp" />
+        <meta property="og:title" content="Sell HP Laptop in Bangalore | Best Price | Laptap" />
+        <meta property="og:description" content="Get instant cash for your HP laptop in Bangalore. Free same-day pickup across Koramangala, Indiranagar, Whitefield." />
+        <meta property="og:url" content="https://www.laptap.in/bangalore/hp" />
+        <meta property="og:type" content="website" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": "Sell HP Laptop in Bangalore",
+            "description": "Sell your used HP laptop for instant cash in Bangalore with free doorstep pickup and best market prices",
+            "brand": { "@type": "Brand", "name": "HP" },
+            "offers": {
+              "@type": "AggregateOffer",
+              "priceCurrency": "INR",
+              "lowPrice": "6000",
+              "highPrice": "100000",
+              "offerCount": "400",
+              "areaServed": { "@type": "City", "name": "Bangalore" }
+            }
+          })}
+        </script>
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

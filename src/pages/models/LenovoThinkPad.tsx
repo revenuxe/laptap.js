@@ -16,6 +16,36 @@ const LenovoThinkPad = () => {
         <meta name="description" content="Sell your used Lenovo ThinkPad laptop for instant cash. Get the best resale value for ThinkPad X1, T-series, E-series models. Free doorstep pickup across India." />
         <meta name="keywords" content="sell Lenovo ThinkPad, sell ThinkPad X1, ThinkPad resale value, sell used Lenovo laptop, ThinkPad buyback India" />
         <link rel="canonical" href="https://www.laptap.in/models/lenovo-thinkpad" />
+        <link rel="alternate" hrefLang="en-IN" href="https://www.laptap.in/models/lenovo-thinkpad" />
+        <link rel="alternate" hrefLang="en" href="https://www.laptap.in/models/lenovo-thinkpad" />
+        <link rel="alternate" hrefLang="x-default" href="https://www.laptap.in/models/lenovo-thinkpad" />
+        <meta property="og:title" content="Sell Lenovo ThinkPad | Best Price Guaranteed | Laptap" />
+        <meta property="og:description" content="Get instant cash for your ThinkPad. Best resale value for X1 Carbon, T-series, E-series. Free doorstep pickup across India." />
+        <meta property="og:url" content="https://www.laptap.in/models/lenovo-thinkpad" />
+        <meta property="og:type" content="product" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": "Sell Lenovo ThinkPad",
+            "description": "Sell your used Lenovo ThinkPad laptop for instant cash with best market prices and free doorstep pickup across India",
+            "brand": { "@type": "Brand", "name": "Lenovo" },
+            "category": "Laptop",
+            "offers": {
+              "@type": "AggregateOffer",
+              "priceCurrency": "INR",
+              "lowPrice": "15000",
+              "highPrice": "120000",
+              "offerCount": "300",
+              "availability": "https://schema.org/InStock"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.8",
+              "reviewCount": "950"
+            }
+          })}
+        </script>
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

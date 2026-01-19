@@ -16,6 +16,30 @@ const HPDesktop = () => {
         <meta name="description" content="Sell your used HP desktop computer for instant cash. Get the best resale value for HP desktop models. Free doorstep pickup across India." />
         <meta name="keywords" content="sell HP desktop, sell HP desktop computer, HP desktop resale value, sell used HP desktop, HP desktop buyback India" />
         <link rel="canonical" href="https://www.laptap.in/models/hp-desktop" />
+        <link rel="alternate" hrefLang="en-IN" href="https://www.laptap.in/models/hp-desktop" />
+        <link rel="alternate" hrefLang="en" href="https://www.laptap.in/models/hp-desktop" />
+        <link rel="alternate" hrefLang="x-default" href="https://www.laptap.in/models/hp-desktop" />
+        <meta property="og:title" content="Sell HP Desktop | Best Price Guaranteed | Laptap" />
+        <meta property="og:description" content="Get instant cash for your HP desktop computer. Best resale value with free doorstep pickup across India." />
+        <meta property="og:url" content="https://www.laptap.in/models/hp-desktop" />
+        <meta property="og:type" content="product" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": "Sell HP Desktop",
+            "description": "Sell your used HP desktop computer for instant cash with best market prices and free doorstep pickup",
+            "brand": { "@type": "Brand", "name": "HP" },
+            "category": "Desktop Computer",
+            "offers": {
+              "@type": "AggregateOffer",
+              "priceCurrency": "INR",
+              "lowPrice": "5000",
+              "highPrice": "45000",
+              "offerCount": "120"
+            }
+          })}
+        </script>
       </Helmet>
 
       <div className="min-h-screen flex flex-col">
