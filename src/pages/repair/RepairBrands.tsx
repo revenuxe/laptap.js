@@ -56,8 +56,9 @@ const RepairBrands = () => {
   return (
     <>
       <Helmet>
-        <title>Select Brand for Laptop Repair | Laptap</title>
-        <meta name="description" content="Choose your laptop brand to schedule a repair service." />
+        <title>Select Brand for {category === 'laptop' ? 'Laptop' : 'Desktop'} Repair | Laptap</title>
+        <meta name="description" content={`Choose your ${category} brand to schedule a repair service. We repair all major brands including Apple, Dell, HP, Lenovo, Asus and more.`} />
+        <link rel="canonical" href="https://www.laptap.in/repair/brands" />
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

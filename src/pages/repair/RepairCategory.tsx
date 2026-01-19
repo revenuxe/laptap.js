@@ -32,8 +32,10 @@ const RepairCategory = () => {
   return (
     <>
       <Helmet>
-        <title>Select Device Type for Repair | Laptap</title>
-        <meta name="description" content="Choose your device type to schedule a repair service." />
+        <title>Laptop & Desktop Repair Services in Bangalore | Expert Technicians | Laptap</title>
+        <meta name="description" content="Professional laptop and desktop repair services in Bangalore. Expert technicians, quick turnaround, doorstep service available. Fix screens, batteries, keyboards, and more." />
+        <meta name="keywords" content="laptop repair Bangalore, desktop repair Bangalore, computer repair service, MacBook repair, Dell repair, HP repair, Lenovo repair" />
+        <link rel="canonical" href="https://www.laptap.in/repair" />
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

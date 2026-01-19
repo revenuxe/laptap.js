@@ -47,13 +47,13 @@ const Contact = () => {
         <meta name="keywords" content="contact laptap, laptop shop bangalore, hbr layout, nagawara, bangalore electronics" />
         <link rel="canonical" href="https://www.laptap.in/contact" />
         <meta property="og:title" content="Contact Laptap - HBR Layout, Bangalore" />
-        <meta property="og:url" content="https://laptap.in/contact" />
+        <meta property="og:url" content="https://www.laptap.in/contact" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "LocalBusiness",
             "name": "Laptap",
-            "image": "https://laptap.in/logo.png",
+            "image": "https://www.laptap.in/logo.png",
             "address": {
               "@type": "PostalAddress",
               "streetAddress": "HBR Layout, Nagawara Main Road",

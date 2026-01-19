@@ -24,15 +24,15 @@ const Hyderabad = () => {
         <meta property="og:title" content="Sell Old Laptop, Mobile & Desktop in Hyderabad for Instant Cash | Laptap" />
         <meta property="og:description" content="Hyderabad's most trusted platform for selling used electronics. Free same-day pickup across Madhapur, Hitech City, Gachibowli, Banjara Hills & all areas. Best prices guaranteed with instant payment." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://laptap.in/hyderabad" />
-        <meta property="og:image" content="https://laptap.in/og-image-hyderabad.jpg" />
+        <meta property="og:url" content="https://www.laptap.in/hyderabad" />
+        <meta property="og:image" content="https://www.laptap.in/og-image-hyderabad.jpg" />
         <meta property="og:locale" content="en_IN" />
         <meta property="og:site_name" content="Laptap Hyderabad" />
         
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Sell Old Laptop & Mobile in Hyderabad for Instant Cash | Laptap" />
         <meta name="twitter:description" content="Hyderabad's #1 platform for selling used electronics. Free doorstep pickup, best prices, instant payment across all Hyderabad areas." />
-        <meta name="twitter:image" content="https://laptap.in/twitter-image-hyderabad.jpg" />
+        <meta name="twitter:image" content="https://www.laptap.in/twitter-image-hyderabad.jpg" />
         
         <link rel="canonical" href="https://www.laptap.in/hyderabad" />
         
@@ -42,7 +42,7 @@ const Hyderabad = () => {
             "@type": "LocalBusiness",
             "name": "Laptap Hyderabad",
             "description": "Hyderabad's most trusted platform for selling used laptops, mobile phones, and desktop computers with instant cash payment and free same-day doorstep pickup",
-            "url": "https://laptap.in/hyderabad",
+            "url": "https://www.laptap.in/hyderabad",
             "telephone": "+919886579923",
             "priceRange": "₹₹",
             "address": {

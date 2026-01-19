@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { useAuth } from '@/contexts/AuthContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -109,6 +110,14 @@ const Auth = () => {
   };
 
   return (
+    <>
+      <Helmet>
+        <title>Login or Sign Up | Laptap - Sell Your Used Electronics</title>
+        <meta name="description" content="Sign in or create an account to sell your used laptop, mobile, or desktop for instant cash. Track orders and manage your account." />
+        <link rel="canonical" href="https://www.laptap.in/auth" />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+      
     <div className="min-h-screen flex flex-col">
       <Header />
       
@@ -199,6 +208,7 @@ const Auth = () => {
 
       <Footer />
     </div>
+    </>
   );
 };
 

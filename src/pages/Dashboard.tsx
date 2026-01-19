@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import Header from "@/components/Header";
@@ -192,6 +193,14 @@ const Dashboard = () => {
   };
 
   return (
+    <>
+      <Helmet>
+        <title>My Dashboard | Laptap - Track Your Sell Requests</title>
+        <meta name="description" content="Track your laptop, mobile and desktop sell requests. View order status, referral earnings, and manage your account." />
+        <link rel="canonical" href="https://www.laptap.in/dashboard" />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+      
     <div className="min-h-screen flex flex-col">
       <Header />
       
@@ -395,6 +404,7 @@ const Dashboard = () => {
 
       <Footer />
     </div>
+    </>
   );
 };
 
