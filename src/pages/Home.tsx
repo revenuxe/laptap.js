@@ -22,15 +22,15 @@ const Home = () => {
         <meta property="og:title" content="Sell Old Laptop, Mobile & Desktop for Instant Cash | Laptap Bengaluru" />
         <meta property="og:description" content="Get the best price for your used electronics. Free pickup, instant evaluation, and payment within 24 hours. Bengaluru's most trusted platform for selling laptops and mobiles." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://laptap.in" />
-        <meta property="og:image" content="https://laptap.in/og-image.jpg" />
+        <meta property="og:url" content="https://www.laptap.in" />
+        <meta property="og:image" content="https://www.laptap.in/og-image.jpg" />
         <meta property="og:locale" content="en_IN" />
         <meta property="og:site_name" content="Laptap" />
         
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Sell Old Laptop, Mobile & Desktop for Instant Cash | Laptap" />
         <meta name="twitter:description" content="Bengaluru's trusted platform for selling used electronics. Best prices, free pickup, instant payment." />
-        <meta name="twitter:image" content="https://laptap.in/twitter-image.jpg" />
+        <meta name="twitter:image" content="https://www.laptap.in/twitter-image.jpg" />
         
         <link rel="canonical" href="https://www.laptap.in" />
         
@@ -40,7 +40,7 @@ const Home = () => {
           "@type": "LocalBusiness",
           "name": "Laptap",
           "description": "Bengaluru's most trusted platform for selling used laptops, mobile phones, and desktop computers with instant cash payment",
-          "url": "https://laptap.in",
+          "url": "https://www.laptap.in",
           "telephone": "+919886579923",
           "priceRange": "₹₹",
           "address": {

@@ -156,8 +156,9 @@ const RepairForm = () => {
   return (
     <>
       <Helmet>
-        <title>Book Laptop Repair | Laptap</title>
-        <meta name="description" content="Fill in the details to book your laptop repair service." />
+        <title>Book Laptop Repair Service | Expert Technicians | Laptap</title>
+        <meta name="description" content="Fill in the details to book your laptop repair service. Get quick diagnosis and repair by certified technicians." />
+        <link rel="canonical" href="https://www.laptap.in/repair/form" />
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

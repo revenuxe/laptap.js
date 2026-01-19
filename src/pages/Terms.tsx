@@ -11,7 +11,7 @@ const Terms = () => {
         <meta name="description" content="Read Laptap's terms and conditions covering warranties, returns, refunds, pricing, and legal compliance for buying and selling laptops." />
         <link rel="canonical" href="https://www.laptap.in/terms" />
         <meta property="og:title" content="Terms & Conditions - Laptap" />
-        <meta property="og:url" content="https://laptap.in/terms" />
+        <meta property="og:url" content="https://www.laptap.in/terms" />
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

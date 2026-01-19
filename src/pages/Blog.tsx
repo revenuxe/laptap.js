@@ -66,20 +66,20 @@ const Blog = () => {
         <meta name="keywords" content="laptop blog, refurbished laptop guide, selling laptop tips, tech insights, laptop comparisons" />
         <link rel="canonical" href="https://www.laptap.in/blog" />
         <meta property="og:title" content="Laptap Blog - Tech Guides & Insights" />
-        <meta property="og:url" content="https://laptap.in/blog" />
+        <meta property="og:url" content="https://www.laptap.in/blog" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Blog",
             "name": "Laptap Blog",
             "description": "Expert guides on buying and selling laptops, tech insights, and market trends",
-            "url": "https://laptap.in/blog",
+            "url": "https://www.laptap.in/blog",
             "publisher": {
               "@type": "Organization",
               "name": "Laptap",
               "logo": {
                 "@type": "ImageObject",
-                "url": "https://laptap.in/logo.png"
+                "url": "https://www.laptap.in/logo.png"
               }
             }
           })}

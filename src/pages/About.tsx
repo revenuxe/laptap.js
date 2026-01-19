@@ -30,15 +30,15 @@ const About = () => {
         <link rel="canonical" href="https://www.laptap.in/about" />
         <meta property="og:title" content="About Laptap - 7 Years of Trusted Service" />
         <meta property="og:description" content="500+ happy customers, 1000+ units sold. Learn about Laptap's journey in providing quality refurbished laptops." />
-        <meta property="og:url" content="https://laptap.in/about" />
+        <meta property="og:url" content="https://www.laptap.in/about" />
         <meta property="og:type" content="website" />
         <script type="application/ld+json">
           {JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
           "name": "Laptap",
-          "url": "https://laptap.in",
-          "logo": "https://laptap.in/logo.png",
+          "url": "https://www.laptap.in",
+          "logo": "https://www.laptap.in/logo.png",
           "description": "India's most trusted platform for selling used laptops and desktops with 7 years of experience",
           "address": {
             "@type": "PostalAddress",
