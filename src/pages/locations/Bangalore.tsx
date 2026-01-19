@@ -35,6 +35,9 @@ const Bangalore = () => {
         <meta name="twitter:image" content="https://www.laptap.in/twitter-image-bangalore.jpg" />
         
         <link rel="canonical" href="https://www.laptap.in/bangalore" />
+        <link rel="alternate" hrefLang="en-IN" href="https://www.laptap.in/bangalore" />
+        <link rel="alternate" hrefLang="en" href="https://www.laptap.in/bangalore" />
+        <link rel="alternate" hrefLang="x-default" href="https://www.laptap.in/bangalore" />
         
         <script type="application/ld+json">
           {JSON.stringify({

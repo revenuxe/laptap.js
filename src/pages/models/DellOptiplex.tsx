@@ -16,6 +16,30 @@ const DellOptiplex = () => {
         <meta name="description" content="Sell your used Dell Optiplex desktop for instant cash. Get the best resale value for Dell Optiplex models. Free doorstep pickup across India." />
         <meta name="keywords" content="sell Dell Optiplex, sell Dell desktop, Dell Optiplex resale value, sell used Dell desktop, Dell desktop buyback India" />
         <link rel="canonical" href="https://www.laptap.in/models/dell-optiplex" />
+        <link rel="alternate" hrefLang="en-IN" href="https://www.laptap.in/models/dell-optiplex" />
+        <link rel="alternate" hrefLang="en" href="https://www.laptap.in/models/dell-optiplex" />
+        <link rel="alternate" hrefLang="x-default" href="https://www.laptap.in/models/dell-optiplex" />
+        <meta property="og:title" content="Sell Dell Optiplex Desktop | Best Price Guaranteed | Laptap" />
+        <meta property="og:description" content="Get instant cash for your Dell Optiplex desktop. Best resale value with free doorstep pickup across India." />
+        <meta property="og:url" content="https://www.laptap.in/models/dell-optiplex" />
+        <meta property="og:type" content="product" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": "Sell Dell Optiplex Desktop",
+            "description": "Sell your used Dell Optiplex desktop for instant cash with best market prices and free doorstep pickup",
+            "brand": { "@type": "Brand", "name": "Dell" },
+            "category": "Desktop Computer",
+            "offers": {
+              "@type": "AggregateOffer",
+              "priceCurrency": "INR",
+              "lowPrice": "5000",
+              "highPrice": "50000",
+              "offerCount": "150"
+            }
+          })}
+        </script>
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

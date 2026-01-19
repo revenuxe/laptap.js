@@ -17,6 +17,36 @@ const DellXPS = () => {
         <meta name="description" content="Sell your used Dell XPS laptop for instant cash. Get the best resale value for Dell XPS 13, XPS 15, XPS 17 models. Free doorstep pickup across India. Instant payment via UPI. Sell Dell XPS 2024, 2023, 2022 models with Intel Core i5, i7, i9 processors." />
         <meta name="keywords" content="sell Dell XPS, sell Dell XPS 13, sell Dell XPS 15, sell Dell XPS 17, Dell XPS resale value, sell used Dell XPS, sell old Dell XPS laptop, Dell XPS buyback, best price Dell XPS, Dell XPS 13 9320, Dell XPS 15 9530, Dell XPS Plus, sell Dell laptop online, instant cash Dell XPS" />
         <link rel="canonical" href="https://www.laptap.in/models/dell-xps" />
+        <link rel="alternate" hrefLang="en-IN" href="https://www.laptap.in/models/dell-xps" />
+        <link rel="alternate" hrefLang="en" href="https://www.laptap.in/models/dell-xps" />
+        <link rel="alternate" hrefLang="x-default" href="https://www.laptap.in/models/dell-xps" />
+        <meta property="og:title" content="Sell Dell XPS Laptop | Best Price Guaranteed | Laptap" />
+        <meta property="og:description" content="Get instant cash for your Dell XPS. Best resale value for XPS 13, 15, 17 models. Free doorstep pickup across India." />
+        <meta property="og:url" content="https://www.laptap.in/models/dell-xps" />
+        <meta property="og:type" content="product" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": "Sell Dell XPS",
+            "description": "Sell your used Dell XPS laptop for instant cash with best market prices and free doorstep pickup across India",
+            "brand": { "@type": "Brand", "name": "Dell" },
+            "category": "Laptop",
+            "offers": {
+              "@type": "AggregateOffer",
+              "priceCurrency": "INR",
+              "lowPrice": "30000",
+              "highPrice": "140000",
+              "offerCount": "200",
+              "availability": "https://schema.org/InStock"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.8",
+              "reviewCount": "1200"
+            }
+          })}
+        </script>
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

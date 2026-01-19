@@ -17,6 +17,30 @@ const BangaloreLenovo = () => {
         <meta name="description" content="Sell your used Lenovo laptop in Bangalore for instant cash. Get the best resale value for Lenovo ThinkPad, IdeaPad, Legion, Yoga models. Free same-day doorstep pickup across all Bangalore areas." />
         <meta name="keywords" content="sell Lenovo laptop Bangalore, sell ThinkPad Bangalore, sell IdeaPad Bangalore, Lenovo laptop resale Bangalore, best price Lenovo laptop Bangalore, sell used Lenovo laptop Bangalore" />
         <link rel="canonical" href="https://www.laptap.in/bangalore/lenovo" />
+        <link rel="alternate" hrefLang="en-IN" href="https://www.laptap.in/bangalore/lenovo" />
+        <link rel="alternate" hrefLang="en" href="https://www.laptap.in/bangalore/lenovo" />
+        <link rel="alternate" hrefLang="x-default" href="https://www.laptap.in/bangalore/lenovo" />
+        <meta property="og:title" content="Sell Lenovo Laptop in Bangalore | Best Price | Laptap" />
+        <meta property="og:description" content="Get instant cash for your Lenovo laptop in Bangalore. Free same-day pickup across Koramangala, Indiranagar, Whitefield." />
+        <meta property="og:url" content="https://www.laptap.in/bangalore/lenovo" />
+        <meta property="og:type" content="website" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": "Sell Lenovo Laptop in Bangalore",
+            "description": "Sell your used Lenovo laptop for instant cash in Bangalore with free doorstep pickup and best market prices",
+            "brand": { "@type": "Brand", "name": "Lenovo" },
+            "offers": {
+              "@type": "AggregateOffer",
+              "priceCurrency": "INR",
+              "lowPrice": "8000",
+              "highPrice": "120000",
+              "offerCount": "350",
+              "areaServed": { "@type": "City", "name": "Bangalore" }
+            }
+          })}
+        </script>
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

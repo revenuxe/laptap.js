@@ -16,6 +16,36 @@ const HPPavilion = () => {
         <meta name="description" content="Sell your used HP Pavilion laptop for instant cash. Get the best resale value for HP Pavilion 14, 15, 16 models. Free doorstep pickup across India with instant payment." />
         <meta name="keywords" content="sell HP Pavilion, sell HP Pavilion laptop, HP Pavilion resale value, sell used HP laptop, HP Pavilion buyback India" />
         <link rel="canonical" href="https://www.laptap.in/models/hp-pavilion" />
+        <link rel="alternate" hrefLang="en-IN" href="https://www.laptap.in/models/hp-pavilion" />
+        <link rel="alternate" hrefLang="en" href="https://www.laptap.in/models/hp-pavilion" />
+        <link rel="alternate" hrefLang="x-default" href="https://www.laptap.in/models/hp-pavilion" />
+        <meta property="og:title" content="Sell HP Pavilion Laptop | Best Price Guaranteed | Laptap" />
+        <meta property="og:description" content="Get instant cash for your HP Pavilion. Best resale value for Pavilion 14, 15, 16, x360 models. Free doorstep pickup across India." />
+        <meta property="og:url" content="https://www.laptap.in/models/hp-pavilion" />
+        <meta property="og:type" content="product" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": "Sell HP Pavilion",
+            "description": "Sell your used HP Pavilion laptop for instant cash with best market prices and free doorstep pickup across India",
+            "brand": { "@type": "Brand", "name": "HP" },
+            "category": "Laptop",
+            "offers": {
+              "@type": "AggregateOffer",
+              "priceCurrency": "INR",
+              "lowPrice": "10000",
+              "highPrice": "80000",
+              "offerCount": "400",
+              "availability": "https://schema.org/InStock"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.7",
+              "reviewCount": "1100"
+            }
+          })}
+        </script>
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

@@ -17,6 +17,35 @@ const IMac = () => {
         <meta name="description" content="Sell your used iMac desktop for instant cash. Get the best resale value for iMac M1, M3, Intel models. Free doorstep pickup across India with instant payment." />
         <meta name="keywords" content="sell iMac, sell iMac desktop, iMac resale value, sell used iMac, iMac buyback, best price iMac India" />
         <link rel="canonical" href="https://www.laptap.in/models/imac" />
+        <link rel="alternate" hrefLang="en-IN" href="https://www.laptap.in/models/imac" />
+        <link rel="alternate" hrefLang="en" href="https://www.laptap.in/models/imac" />
+        <link rel="alternate" hrefLang="x-default" href="https://www.laptap.in/models/imac" />
+        <meta property="og:title" content="Sell iMac Desktop | Best Price Guaranteed | Laptap" />
+        <meta property="og:description" content="Get instant cash for your iMac. Best resale value for M1, M3, Intel models. Free doorstep pickup across India." />
+        <meta property="og:url" content="https://www.laptap.in/models/imac" />
+        <meta property="og:type" content="product" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": "Sell iMac Desktop",
+            "description": "Sell your used iMac desktop for instant cash with best market prices and free doorstep pickup across India",
+            "brand": { "@type": "Brand", "name": "Apple" },
+            "category": "Desktop Computer",
+            "offers": {
+              "@type": "AggregateOffer",
+              "priceCurrency": "INR",
+              "lowPrice": "30000",
+              "highPrice": "200000",
+              "offerCount": "80"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.9",
+              "reviewCount": "450"
+            }
+          })}
+        </script>
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

@@ -17,6 +17,30 @@ const BangaloreDell = () => {
         <meta name="description" content="Sell your used Dell laptop in Bangalore for instant cash. Get the best resale value for Dell XPS, Inspiron, Latitude, Vostro models. Free same-day doorstep pickup across all Bangalore areas. Instant payment via UPI." />
         <meta name="keywords" content="sell Dell laptop Bangalore, sell Dell XPS Bangalore, sell Dell Inspiron Bangalore, Dell laptop resale Bangalore, best price Dell laptop Bangalore, sell used Dell laptop Bangalore" />
         <link rel="canonical" href="https://www.laptap.in/bangalore/dell" />
+        <link rel="alternate" hrefLang="en-IN" href="https://www.laptap.in/bangalore/dell" />
+        <link rel="alternate" hrefLang="en" href="https://www.laptap.in/bangalore/dell" />
+        <link rel="alternate" hrefLang="x-default" href="https://www.laptap.in/bangalore/dell" />
+        <meta property="og:title" content="Sell Dell Laptop in Bangalore | Best Price | Laptap" />
+        <meta property="og:description" content="Get instant cash for your Dell laptop in Bangalore. Free same-day pickup across Koramangala, Indiranagar, Whitefield." />
+        <meta property="og:url" content="https://www.laptap.in/bangalore/dell" />
+        <meta property="og:type" content="website" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": "Sell Dell Laptop in Bangalore",
+            "description": "Sell your used Dell laptop for instant cash in Bangalore with free doorstep pickup and best market prices",
+            "brand": { "@type": "Brand", "name": "Dell" },
+            "offers": {
+              "@type": "AggregateOffer",
+              "priceCurrency": "INR",
+              "lowPrice": "8000",
+              "highPrice": "140000",
+              "offerCount": "500",
+              "areaServed": { "@type": "City", "name": "Bangalore" }
+            }
+          })}
+        </script>
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

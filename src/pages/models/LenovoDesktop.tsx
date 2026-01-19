@@ -16,6 +16,30 @@ const LenovoDesktop = () => {
         <meta name="description" content="Sell your used Lenovo desktop computer for instant cash. Get the best resale value for Lenovo desktop models. Free doorstep pickup across India." />
         <meta name="keywords" content="sell Lenovo desktop, sell Lenovo desktop computer, Lenovo desktop resale value, sell used Lenovo desktop, Lenovo desktop buyback India" />
         <link rel="canonical" href="https://www.laptap.in/models/lenovo-desktop" />
+        <link rel="alternate" hrefLang="en-IN" href="https://www.laptap.in/models/lenovo-desktop" />
+        <link rel="alternate" hrefLang="en" href="https://www.laptap.in/models/lenovo-desktop" />
+        <link rel="alternate" hrefLang="x-default" href="https://www.laptap.in/models/lenovo-desktop" />
+        <meta property="og:title" content="Sell Lenovo Desktop | Best Price Guaranteed | Laptap" />
+        <meta property="og:description" content="Get instant cash for your Lenovo desktop. Best resale value with free doorstep pickup across India." />
+        <meta property="og:url" content="https://www.laptap.in/models/lenovo-desktop" />
+        <meta property="og:type" content="product" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": "Sell Lenovo Desktop",
+            "description": "Sell your used Lenovo desktop computer for instant cash with best market prices and free doorstep pickup",
+            "brand": { "@type": "Brand", "name": "Lenovo" },
+            "category": "Desktop Computer",
+            "offers": {
+              "@type": "AggregateOffer",
+              "priceCurrency": "INR",
+              "lowPrice": "5000",
+              "highPrice": "40000",
+              "offerCount": "100"
+            }
+          })}
+        </script>
       </Helmet>
 
       <div className="min-h-screen flex flex-col">
