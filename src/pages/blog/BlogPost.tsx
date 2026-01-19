@@ -89,7 +89,7 @@ const BlogPost = () => {
         <link rel="canonical" href={`https://www.laptap.in/blog/${post.slug}`} />
         <meta property="og:title" content={post.meta_title} />
         <meta property="og:description" content={post.meta_description} />
-        <meta property="og:url" content={`https://laptap.in/blog/${post.slug}`} />
+        <meta property="og:url" content={`https://www.laptap.in/blog/${post.slug}`} />
         {post.featured_image && <meta property="og:image" content={post.featured_image} />}
         <script type="application/ld+json">
           {JSON.stringify({

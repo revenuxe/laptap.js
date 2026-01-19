@@ -22,7 +22,9 @@ const RepairThankYou = () => {
     <>
       <Helmet>
         <title>Repair Request Confirmed | Laptap</title>
-        <meta name="description" content="Your repair request has been successfully submitted." />
+        <meta name="description" content="Your repair request has been successfully submitted. Track your repair status from your dashboard." />
+        <link rel="canonical" href="https://www.laptap.in/repair/thank-you" />
+        <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
       <div className="min-h-screen flex flex-col">
