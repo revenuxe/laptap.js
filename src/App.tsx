@@ -29,6 +29,7 @@ import BangaloreLenovo from "./pages/locations/brands/BangaloreLenovo";
 import BangaloreHP from "./pages/locations/brands/BangaloreHP";
 import SellLaptopBangalore from "./pages/blog/SellLaptopBangalore";
 import MacBookPro from "./pages/models/MacBookPro";
+import MacBookAir from "./pages/models/MacBookAir";
 import DellXPS from "./pages/models/DellXPS";
 import HPPavilion from "./pages/models/HPPavilion";
 import LenovoThinkPad from "./pages/models/LenovoThinkPad";
@@ -36,6 +37,10 @@ import IMac from "./pages/models/IMac";
 import DellOptiplex from "./pages/models/DellOptiplex";
 import HPDesktop from "./pages/models/HPDesktop";
 import LenovoDesktop from "./pages/models/LenovoDesktop";
+import AsusLaptop from "./pages/models/AsusLaptop";
+import AcerLaptop from "./pages/models/AcerLaptop";
+import SamsungLaptop from "./pages/models/SamsungLaptop";
+import MicrosoftSurface from "./pages/models/MicrosoftSurface";
 import RepairCategory from "./pages/repair/RepairCategory";
 import RepairBrands from "./pages/repair/RepairBrands";
 import RepairForm from "./pages/repair/RepairForm";
@@ -79,6 +84,7 @@ const App = () => (
               <Route path="/bangalore/hp" element={<BangaloreHP />} />
               <Route path="/blog/sell-used-laptop-bangalore" element={<SellLaptopBangalore />} />
               <Route path="/models/macbook-pro" element={<MacBookPro />} />
+              <Route path="/models/macbook-air" element={<MacBookAir />} />
               <Route path="/models/dell-xps" element={<DellXPS />} />
               <Route path="/models/hp-pavilion" element={<HPPavilion />} />
               <Route path="/models/lenovo-thinkpad" element={<LenovoThinkPad />} />
@@ -86,6 +92,10 @@ const App = () => (
               <Route path="/models/dell-optiplex" element={<DellOptiplex />} />
               <Route path="/models/hp-desktop" element={<HPDesktop />} />
               <Route path="/models/lenovo-desktop" element={<LenovoDesktop />} />
+              <Route path="/models/asus-laptop" element={<AsusLaptop />} />
+              <Route path="/models/acer-laptop" element={<AcerLaptop />} />
+              <Route path="/models/samsung-laptop" element={<SamsungLaptop />} />
+              <Route path="/models/microsoft-surface" element={<MicrosoftSurface />} />
               <Route path="/repair" element={<RepairCategory />} />
               <Route path="/repair/brands" element={<RepairBrands />} />
               <Route path="/repair/form" element={<RepairForm />} />
