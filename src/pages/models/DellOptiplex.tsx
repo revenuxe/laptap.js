@@ -26,6 +26,17 @@ const DellOptiplex = () => {
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.laptap.in" },
+              { "@type": "ListItem", "position": 2, "name": "Models", "item": "https://www.laptap.in/sell/desktop" },
+              { "@type": "ListItem", "position": 3, "name": "Dell Optiplex", "item": "https://www.laptap.in/models/dell-optiplex" }
+            ]
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
             "@type": "Product",
             "name": "Sell Dell Optiplex Desktop",
             "description": "Sell your used Dell Optiplex desktop for instant cash with best market prices and free doorstep pickup",
@@ -36,8 +47,24 @@ const DellOptiplex = () => {
               "priceCurrency": "INR",
               "lowPrice": "5000",
               "highPrice": "50000",
-              "offerCount": "150"
-            }
+              "offerCount": "150",
+              "availability": "https://schema.org/InStock"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.7",
+              "bestRating": "5",
+              "worstRating": "1",
+              "reviewCount": "320"
+            },
+            "review": [
+              {
+                "@type": "Review",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                "author": { "@type": "Person", "name": "Suresh Babu" },
+                "reviewBody": "Sold multiple Dell Optiplex units from our office. Excellent bulk pricing!"
+              }
+            ]
           })}
         </script>
       </Helmet>

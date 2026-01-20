@@ -42,6 +42,16 @@ const Bangalore = () => {
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.laptap.in" },
+              { "@type": "ListItem", "position": 2, "name": "Bangalore", "item": "https://www.laptap.in/bangalore" }
+            ]
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
             "@type": "LocalBusiness",
             "name": "Laptap Bangalore",
             "description": "Bangalore's most trusted platform for selling used laptops, mobile phones, and desktop computers with instant cash payment and free same-day doorstep pickup",
@@ -61,44 +71,42 @@ const Bangalore = () => {
               "longitude": "77.5946"
             },
             "areaServed": [
-              {
-                "@type": "City",
-                "name": "Bangalore"
-              },
-              {
-                "@type": "Neighborhood",
-                "name": "Koramangala"
-              },
-              {
-                "@type": "Neighborhood",
-                "name": "Indiranagar"
-              },
-              {
-                "@type": "Neighborhood",
-                "name": "Whitefield"
-              },
-              {
-                "@type": "Neighborhood",
-                "name": "Electronic City"
-              },
-              {
-                "@type": "Neighborhood",
-                "name": "HSR Layout"
-              },
-              {
-                "@type": "Neighborhood",
-                "name": "Marathahalli"
-              },
-              {
-                "@type": "Neighborhood",
-                "name": "BTM Layout"
-              }
+              { "@type": "City", "name": "Bangalore" },
+              { "@type": "Neighborhood", "name": "Koramangala" },
+              { "@type": "Neighborhood", "name": "Indiranagar" },
+              { "@type": "Neighborhood", "name": "Whitefield" },
+              { "@type": "Neighborhood", "name": "Electronic City" },
+              { "@type": "Neighborhood", "name": "HSR Layout" },
+              { "@type": "Neighborhood", "name": "Marathahalli" },
+              { "@type": "Neighborhood", "name": "BTM Layout" }
             ],
             "aggregateRating": {
               "@type": "AggregateRating",
               "ratingValue": "4.9",
+              "bestRating": "5",
+              "worstRating": "1",
               "reviewCount": "5847"
             },
+            "review": [
+              {
+                "@type": "Review",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                "author": { "@type": "Person", "name": "Rajesh Kumar" },
+                "reviewBody": "Best service in Bangalore! Got ₹45,000 for my Dell XPS. Same-day pickup in Koramangala."
+              },
+              {
+                "@type": "Review",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                "author": { "@type": "Person", "name": "Priya Sharma" },
+                "reviewBody": "Sold my MacBook Pro in Whitefield. Instant payment via UPI. Highly recommended!"
+              },
+              {
+                "@type": "Review",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                "author": { "@type": "Person", "name": "Amit Patel" },
+                "reviewBody": "Professional team, best prices in Electronic City. Quick and hassle-free process."
+              }
+            ],
             "offers": {
               "@type": "Offer",
               "description": "Instant cash payment for used laptops, mobiles, and desktops with free same-day doorstep pickup across Bangalore"

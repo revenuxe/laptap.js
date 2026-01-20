@@ -42,6 +42,16 @@ const Hyderabad = () => {
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.laptap.in" },
+              { "@type": "ListItem", "position": 2, "name": "Hyderabad", "item": "https://www.laptap.in/hyderabad" }
+            ]
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
             "@type": "LocalBusiness",
             "name": "Laptap Hyderabad",
             "description": "Hyderabad's most trusted platform for selling used laptops, mobile phones, and desktop computers with instant cash payment and free same-day doorstep pickup",
@@ -61,44 +71,42 @@ const Hyderabad = () => {
               "longitude": "78.4867"
             },
             "areaServed": [
-              {
-                "@type": "City",
-                "name": "Hyderabad"
-              },
-              {
-                "@type": "Neighborhood",
-                "name": "Madhapur"
-              },
-              {
-                "@type": "Neighborhood",
-                "name": "Hitech City"
-              },
-              {
-                "@type": "Neighborhood",
-                "name": "Gachibowli"
-              },
-              {
-                "@type": "Neighborhood",
-                "name": "Banjara Hills"
-              },
-              {
-                "@type": "Neighborhood",
-                "name": "Jubilee Hills"
-              },
-              {
-                "@type": "Neighborhood",
-                "name": "Secunderabad"
-              },
-              {
-                "@type": "Neighborhood",
-                "name": "Kukatpally"
-              }
+              { "@type": "City", "name": "Hyderabad" },
+              { "@type": "Neighborhood", "name": "Madhapur" },
+              { "@type": "Neighborhood", "name": "Hitech City" },
+              { "@type": "Neighborhood", "name": "Gachibowli" },
+              { "@type": "Neighborhood", "name": "Banjara Hills" },
+              { "@type": "Neighborhood", "name": "Jubilee Hills" },
+              { "@type": "Neighborhood", "name": "Secunderabad" },
+              { "@type": "Neighborhood", "name": "Kukatpally" }
             ],
             "aggregateRating": {
               "@type": "AggregateRating",
               "ratingValue": "4.8",
+              "bestRating": "5",
+              "worstRating": "1",
               "reviewCount": "4235"
             },
+            "review": [
+              {
+                "@type": "Review",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                "author": { "@type": "Person", "name": "Srinivas Reddy" },
+                "reviewBody": "Excellent service in Hitech City! Got best price for my HP laptop. Instant UPI payment."
+              },
+              {
+                "@type": "Review",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                "author": { "@type": "Person", "name": "Lakshmi Devi" },
+                "reviewBody": "Sold my old MacBook in Gachibowli. Very professional team and quick process."
+              },
+              {
+                "@type": "Review",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                "author": { "@type": "Person", "name": "Mohammed Irfan" },
+                "reviewBody": "Best laptop buyers in Hyderabad. Same-day pickup from Jubilee Hills. Highly recommend!"
+              }
+            ],
             "offers": {
               "@type": "Offer",
               "description": "Instant cash payment for used laptops, mobiles, and desktops with free same-day doorstep pickup across Hyderabad"

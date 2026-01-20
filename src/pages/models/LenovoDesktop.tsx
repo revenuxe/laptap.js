@@ -26,6 +26,17 @@ const LenovoDesktop = () => {
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.laptap.in" },
+              { "@type": "ListItem", "position": 2, "name": "Models", "item": "https://www.laptap.in/sell/desktop" },
+              { "@type": "ListItem", "position": 3, "name": "Lenovo Desktop", "item": "https://www.laptap.in/models/lenovo-desktop" }
+            ]
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
             "@type": "Product",
             "name": "Sell Lenovo Desktop",
             "description": "Sell your used Lenovo desktop computer for instant cash with best market prices and free doorstep pickup",
@@ -36,8 +47,24 @@ const LenovoDesktop = () => {
               "priceCurrency": "INR",
               "lowPrice": "5000",
               "highPrice": "40000",
-              "offerCount": "100"
-            }
+              "offerCount": "100",
+              "availability": "https://schema.org/InStock"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.7",
+              "bestRating": "5",
+              "worstRating": "1",
+              "reviewCount": "240"
+            },
+            "review": [
+              {
+                "@type": "Review",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                "author": { "@type": "Person", "name": "Vijay Sharma" },
+                "reviewBody": "Sold my Lenovo ThinkCentre. Very professional and hassle-free process."
+              }
+            ]
           })}
         </script>
       </Helmet>

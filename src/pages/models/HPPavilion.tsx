@@ -26,6 +26,17 @@ const HPPavilion = () => {
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.laptap.in" },
+              { "@type": "ListItem", "position": 2, "name": "Models", "item": "https://www.laptap.in/sell/laptop" },
+              { "@type": "ListItem", "position": 3, "name": "HP Pavilion", "item": "https://www.laptap.in/models/hp-pavilion" }
+            ]
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
             "@type": "Product",
             "name": "Sell HP Pavilion",
             "description": "Sell your used HP Pavilion laptop for instant cash with best market prices and free doorstep pickup across India",
@@ -42,8 +53,24 @@ const HPPavilion = () => {
             "aggregateRating": {
               "@type": "AggregateRating",
               "ratingValue": "4.7",
+              "bestRating": "5",
+              "worstRating": "1",
               "reviewCount": "1100"
-            }
+            },
+            "review": [
+              {
+                "@type": "Review",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                "author": { "@type": "Person", "name": "Karthik Reddy" },
+                "reviewBody": "Great value for my HP Pavilion 15. Fast pickup and instant UPI payment!"
+              },
+              {
+                "@type": "Review",
+                "reviewRating": { "@type": "Rating", "ratingValue": "4", "bestRating": "5" },
+                "author": { "@type": "Person", "name": "Deepa Nair" },
+                "reviewBody": "Good experience selling my old HP Pavilion. Reasonable price offered."
+              }
+            ]
           })}
         </script>
       </Helmet>

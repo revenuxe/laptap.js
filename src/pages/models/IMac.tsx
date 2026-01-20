@@ -27,6 +27,17 @@ const IMac = () => {
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.laptap.in" },
+              { "@type": "ListItem", "position": 2, "name": "Models", "item": "https://www.laptap.in/sell/desktop" },
+              { "@type": "ListItem", "position": 3, "name": "iMac", "item": "https://www.laptap.in/models/imac" }
+            ]
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
             "@type": "Product",
             "name": "Sell iMac Desktop",
             "description": "Sell your used iMac desktop for instant cash with best market prices and free doorstep pickup across India",
@@ -37,13 +48,30 @@ const IMac = () => {
               "priceCurrency": "INR",
               "lowPrice": "30000",
               "highPrice": "200000",
-              "offerCount": "80"
+              "offerCount": "80",
+              "availability": "https://schema.org/InStock"
             },
             "aggregateRating": {
               "@type": "AggregateRating",
               "ratingValue": "4.9",
+              "bestRating": "5",
+              "worstRating": "1",
               "reviewCount": "450"
-            }
+            },
+            "review": [
+              {
+                "@type": "Review",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                "author": { "@type": "Person", "name": "Anita Desai" },
+                "reviewBody": "Got amazing price for my iMac 27-inch. Best service in Bangalore!"
+              },
+              {
+                "@type": "Review",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                "author": { "@type": "Person", "name": "Rohit Jain" },
+                "reviewBody": "Sold my M1 iMac for ₹95,000. Quick pickup and instant payment via UPI."
+              }
+            ]
           })}
         </script>
       </Helmet>

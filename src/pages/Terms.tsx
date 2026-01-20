@@ -12,6 +12,16 @@ const Terms = () => {
         <link rel="canonical" href="https://www.laptap.in/terms" />
         <meta property="og:title" content="Terms & Conditions - Laptap" />
         <meta property="og:url" content="https://www.laptap.in/terms" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.laptap.in" },
+              { "@type": "ListItem", "position": 2, "name": "Terms & Conditions", "item": "https://www.laptap.in/terms" }
+            ]
+          })}
+        </script>
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

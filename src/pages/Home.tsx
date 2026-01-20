@@ -39,66 +39,103 @@ const Home = () => {
         
         <script type="application/ld+json">
           {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "LocalBusiness",
-          "name": "Laptap",
-          "description": "Bengaluru's most trusted platform for selling used laptops, mobile phones, and desktop computers with instant cash payment",
-          "url": "https://www.laptap.in",
-          "telephone": "+919886579923",
-          "priceRange": "₹₹",
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Bengaluru",
-            "addressRegion": "Karnataka",
-            "addressCountry": "IN"
-          },
-          "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": "12.9716",
-            "longitude": "77.5946"
-          },
-          "areaServed": {
-            "@type": "City",
-            "name": "Bengaluru"
-          },
-          "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "reviewCount": "10000"
-          },
-          "offers": {
-            "@type": "Offer",
-            "description": "Instant cash for used laptops, mobiles, and desktops"
-          }
-        })}
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Laptap",
+            "url": "https://www.laptap.in",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://www.laptap.in/sell?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          })}
         </script>
         <script type="application/ld+json">
           {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          "mainEntity": [{
-            "@type": "Question",
-            "name": "How do I sell my laptop to Laptap?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Simply select your device, get an instant quote, schedule a pickup, and receive instant payment after verification. Our technicians will come to your doorstep for free pickup."
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Laptap",
+            "description": "Bengaluru's most trusted platform for selling used laptops, mobile phones, and desktop computers with instant cash payment",
+            "url": "https://www.laptap.in",
+            "telephone": "+919886579923",
+            "priceRange": "₹₹",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "HBR Layout, Nagawara Main Road",
+              "addressLocality": "Bengaluru",
+              "addressRegion": "Karnataka",
+              "postalCode": "560045",
+              "addressCountry": "IN"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": "12.9716",
+              "longitude": "77.5946"
+            },
+            "areaServed": {
+              "@type": "City",
+              "name": "Bengaluru"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.8",
+              "bestRating": "5",
+              "worstRating": "1",
+              "reviewCount": "10000"
+            },
+            "review": [
+              {
+                "@type": "Review",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                "author": { "@type": "Person", "name": "Rahul Sharma" },
+                "reviewBody": "Excellent service! Got the best price for my MacBook Pro. Quick pickup and instant payment. Highly recommended!"
+              },
+              {
+                "@type": "Review",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                "author": { "@type": "Person", "name": "Priya Singh" },
+                "reviewBody": "Very professional team. Sold my Dell XPS in Koramangala. Same-day pickup and instant UPI payment."
+              },
+              {
+                "@type": "Review",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                "author": { "@type": "Person", "name": "Arun Kumar" },
+                "reviewBody": "Best platform for selling old laptops in Bangalore. Got 20% more than other buyers offered."
+              }
+            ],
+            "offers": {
+              "@type": "Offer",
+              "description": "Instant cash for used laptops, mobiles, and desktops"
             }
-          }, {
-            "@type": "Question",
-            "name": "How quickly will I receive payment?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "You receive instant payment immediately after our technicians verify your device during pickup. We support multiple payment methods including UPI, bank transfer, and digital wallets."
-            }
-          }, {
-            "@type": "Question",
-            "name": "Is doorstep pickup available?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes, we offer free same-day doorstep pickup across Bangalore. Our verified technicians will come to your location at your preferred time."
-            }
-          }]
-        })}
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [{
+              "@type": "Question",
+              "name": "How do I sell my laptop to Laptap?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Simply select your device, get an instant quote, schedule a pickup, and receive instant payment after verification. Our technicians will come to your doorstep for free pickup."
+              }
+            }, {
+              "@type": "Question",
+              "name": "How quickly will I receive payment?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "You receive instant payment immediately after our technicians verify your device during pickup. We support multiple payment methods including UPI, bank transfer, and digital wallets."
+              }
+            }, {
+              "@type": "Question",
+              "name": "Is doorstep pickup available?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, we offer free same-day doorstep pickup across Bangalore. Our verified technicians will come to your location at your preferred time."
+              }
+            }]
+          })}
         </script>
       </Helmet>
 

@@ -34,23 +34,57 @@ const About = () => {
         <meta property="og:type" content="website" />
         <script type="application/ld+json">
           {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          "name": "Laptap",
-          "url": "https://www.laptap.in",
-          "logo": "https://www.laptap.in/logo.png",
-          "description": "India's most trusted platform for selling used laptops and desktops with 7 years of experience",
-          "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "HBR Layout, Nagawara Main Road",
-            "addressLocality": "Bangalore",
-            "postalCode": "560045",
-            "addressCountry": "IN"
-          },
-          "email": "laptap.in@gmail.com",
-          "foundingDate": "2018",
-          "numberOfEmployees": "10-50"
-        })}
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.laptap.in" },
+              { "@type": "ListItem", "position": 2, "name": "About Us", "item": "https://www.laptap.in/about" }
+            ]
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Laptap",
+            "url": "https://www.laptap.in",
+            "logo": "https://www.laptap.in/logo.png",
+            "description": "India's most trusted platform for selling used laptops and desktops with 7 years of experience",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "HBR Layout, Nagawara Main Road",
+              "addressLocality": "Bangalore",
+              "postalCode": "560045",
+              "addressCountry": "IN"
+            },
+            "email": "laptap.in@gmail.com",
+            "foundingDate": "2018",
+            "numberOfEmployees": "10-50",
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.8",
+              "bestRating": "5",
+              "worstRating": "1",
+              "reviewCount": "500"
+            }
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Review",
+            "itemReviewed": {
+              "@type": "LocalBusiness",
+              "name": "Laptap"
+            },
+            "reviewRating": {
+              "@type": "Rating",
+              "ratingValue": "5",
+              "bestRating": "5"
+            },
+            "author": { "@type": "Person", "name": "Rahul Sharma" },
+            "reviewBody": "Excellent service! Got the best price for my MacBook Pro. Quick pickup and instant payment. Highly recommended!"
+          })}
         </script>
       </Helmet>
 

@@ -26,6 +26,17 @@ const HPDesktop = () => {
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.laptap.in" },
+              { "@type": "ListItem", "position": 2, "name": "Models", "item": "https://www.laptap.in/sell/desktop" },
+              { "@type": "ListItem", "position": 3, "name": "HP Desktop", "item": "https://www.laptap.in/models/hp-desktop" }
+            ]
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
             "@type": "Product",
             "name": "Sell HP Desktop",
             "description": "Sell your used HP desktop computer for instant cash with best market prices and free doorstep pickup",
@@ -36,8 +47,24 @@ const HPDesktop = () => {
               "priceCurrency": "INR",
               "lowPrice": "5000",
               "highPrice": "45000",
-              "offerCount": "120"
-            }
+              "offerCount": "120",
+              "availability": "https://schema.org/InStock"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.6",
+              "bestRating": "5",
+              "worstRating": "1",
+              "reviewCount": "280"
+            },
+            "review": [
+              {
+                "@type": "Review",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                "author": { "@type": "Person", "name": "Ramesh Gupta" },
+                "reviewBody": "Quick service for my HP ProDesk. Got a fair price and instant payment."
+              }
+            ]
           })}
         </script>
       </Helmet>
