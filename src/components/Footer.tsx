@@ -67,24 +67,13 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="mb-4 text-sm font-semibold">Locations</h3>
+            <h3 className="mb-4 text-sm font-semibold">Bangalore</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link to="/bangalore" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Bangalore
+                  Sell Laptop Bangalore
                 </Link>
               </li>
-              <li>
-                <Link to="/hyderabad" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Hyderabad
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="mb-4 text-sm font-semibold">Sell by Brand</h3>
-            <ul className="space-y-2 text-sm">
               <li>
                 <Link to="/bangalore/macbook" className="text-muted-foreground hover:text-foreground transition-colors">
                   Sell MacBook Bangalore
@@ -96,32 +85,103 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/bangalore/lenovo" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Sell Lenovo Bangalore
+                <Link to="/bangalore/hp" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell HP Bangalore
                 </Link>
               </li>
               <li>
-                <Link to="/bangalore/hp" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Sell HP Bangalore
+                <Link to="/bangalore/lenovo" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell Lenovo Bangalore
                 </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="mb-4 text-sm font-semibold">Resources</h3>
+            <h3 className="mb-4 text-sm font-semibold">Hyderabad</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/blog/sell-used-laptop-bangalore" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Sell Laptop Guide
+                <Link to="/hyderabad" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell Laptop Hyderabad
                 </Link>
               </li>
               <li>
-                <Link to="/sell" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Price Calculator
+                <Link to="/hyderabad/macbook" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell MacBook Hyderabad
                 </Link>
               </li>
-              
+              <li>
+                <Link to="/hyderabad/dell" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell Dell Hyderabad
+                </Link>
+              </li>
+              <li>
+                <Link to="/hyderabad/hp" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell HP Hyderabad
+                </Link>
+              </li>
+              <li>
+                <Link to="/hyderabad/lenovo" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell Lenovo Hyderabad
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="mb-4 text-sm font-semibold">Gaming Laptops</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link to="/gaming/asus-rog" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell ASUS ROG
+                </Link>
+              </li>
+              <li>
+                <Link to="/gaming/acer-predator" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell Acer Predator
+                </Link>
+              </li>
+              <li>
+                <Link to="/models/asus-laptop" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell ASUS Laptop
+                </Link>
+              </li>
+              <li>
+                <Link to="/models/acer-laptop" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell Acer Laptop
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="mb-4 text-sm font-semibold">Popular Models</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link to="/models/macbook-pro" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell MacBook Pro
+                </Link>
+              </li>
+              <li>
+                <Link to="/models/macbook-air" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell MacBook Air
+                </Link>
+              </li>
+              <li>
+                <Link to="/models/dell-xps" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell Dell XPS
+                </Link>
+              </li>
+              <li>
+                <Link to="/models/lenovo-thinkpad" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell ThinkPad
+                </Link>
+              </li>
+              <li>
+                <Link to="/models/microsoft-surface" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Sell Surface
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
