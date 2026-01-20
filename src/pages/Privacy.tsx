@@ -12,6 +12,16 @@ const Privacy = () => {
         <link rel="canonical" href="https://www.laptap.in/privacy" />
         <meta property="og:title" content="Privacy Policy - Laptap" />
         <meta property="og:url" content="https://www.laptap.in/privacy" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.laptap.in" },
+              { "@type": "ListItem", "position": 2, "name": "Privacy Policy", "item": "https://www.laptap.in/privacy" }
+            ]
+          })}
+        </script>
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

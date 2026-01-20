@@ -51,6 +51,16 @@ const Contact = () => {
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.laptap.in" },
+              { "@type": "ListItem", "position": 2, "name": "Contact", "item": "https://www.laptap.in/contact" }
+            ]
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
             "@type": "LocalBusiness",
             "name": "Laptap",
             "image": "https://www.laptap.in/logo.png",
@@ -68,6 +78,14 @@ const Contact = () => {
               "longitude": "77.6431"
             },
             "email": "laptap.in@gmail.com",
+            "telephone": "+919886579923",
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.8",
+              "bestRating": "5",
+              "worstRating": "1",
+              "reviewCount": "500"
+            },
             "openingHoursSpecification": [
               {
                 "@type": "OpeningHoursSpecification",

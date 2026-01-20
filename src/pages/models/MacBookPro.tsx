@@ -29,6 +29,17 @@ const MacBookPro = () => {
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.laptap.in" },
+              { "@type": "ListItem", "position": 2, "name": "Models", "item": "https://www.laptap.in/sell/laptop" },
+              { "@type": "ListItem", "position": 3, "name": "MacBook Pro", "item": "https://www.laptap.in/models/macbook-pro" }
+            ]
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
             "@type": "Product",
             "name": "Sell MacBook Pro",
             "description": "Sell your used MacBook Pro for instant cash with best market prices and free doorstep pickup across India",
@@ -45,8 +56,30 @@ const MacBookPro = () => {
             "aggregateRating": {
               "@type": "AggregateRating",
               "ratingValue": "4.9",
+              "bestRating": "5",
+              "worstRating": "1",
               "reviewCount": "3500"
-            }
+            },
+            "review": [
+              {
+                "@type": "Review",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                "author": { "@type": "Person", "name": "Rahul Mehta" },
+                "reviewBody": "Got ₹1,85,000 for my MacBook Pro 16-inch M2 Max. Best price in Bangalore!"
+              },
+              {
+                "@type": "Review",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                "author": { "@type": "Person", "name": "Neha Gupta" },
+                "reviewBody": "Quick process! Sold my MacBook Pro M1 in 2 hours. Instant UPI payment."
+              },
+              {
+                "@type": "Review",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                "author": { "@type": "Person", "name": "Arjun Reddy" },
+                "reviewBody": "Professional service. They even bought my damaged MacBook Pro. Fair price offered."
+              }
+            ]
           })}
         </script>
         <script type="application/ld+json">

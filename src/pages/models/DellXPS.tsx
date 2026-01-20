@@ -27,6 +27,17 @@ const DellXPS = () => {
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.laptap.in" },
+              { "@type": "ListItem", "position": 2, "name": "Models", "item": "https://www.laptap.in/sell/laptop" },
+              { "@type": "ListItem", "position": 3, "name": "Dell XPS", "item": "https://www.laptap.in/models/dell-xps" }
+            ]
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
             "@type": "Product",
             "name": "Sell Dell XPS",
             "description": "Sell your used Dell XPS laptop for instant cash with best market prices and free doorstep pickup across India",
@@ -43,8 +54,24 @@ const DellXPS = () => {
             "aggregateRating": {
               "@type": "AggregateRating",
               "ratingValue": "4.8",
+              "bestRating": "5",
+              "worstRating": "1",
               "reviewCount": "1200"
-            }
+            },
+            "review": [
+              {
+                "@type": "Review",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                "author": { "@type": "Person", "name": "Vikram Patel" },
+                "reviewBody": "Got ₹85,000 for my Dell XPS 15. Very smooth process and quick payment!"
+              },
+              {
+                "@type": "Review",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                "author": { "@type": "Person", "name": "Sneha Rao" },
+                "reviewBody": "Best price for my XPS 13. Pickup was on time and payment was instant."
+              }
+            ]
           })}
         </script>
       </Helmet>

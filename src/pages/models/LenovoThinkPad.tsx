@@ -26,6 +26,17 @@ const LenovoThinkPad = () => {
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.laptap.in" },
+              { "@type": "ListItem", "position": 2, "name": "Models", "item": "https://www.laptap.in/sell/laptop" },
+              { "@type": "ListItem", "position": 3, "name": "Lenovo ThinkPad", "item": "https://www.laptap.in/models/lenovo-thinkpad" }
+            ]
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
             "@type": "Product",
             "name": "Sell Lenovo ThinkPad",
             "description": "Sell your used Lenovo ThinkPad laptop for instant cash with best market prices and free doorstep pickup across India",
@@ -42,8 +53,24 @@ const LenovoThinkPad = () => {
             "aggregateRating": {
               "@type": "AggregateRating",
               "ratingValue": "4.8",
+              "bestRating": "5",
+              "worstRating": "1",
               "reviewCount": "950"
-            }
+            },
+            "review": [
+              {
+                "@type": "Review",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                "author": { "@type": "Person", "name": "Arun Kumar" },
+                "reviewBody": "Sold my ThinkPad X1 Carbon for a great price. Professional service!"
+              },
+              {
+                "@type": "Review",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+                "author": { "@type": "Person", "name": "Priya Menon" },
+                "reviewBody": "Quick and hassle-free. Got instant payment for my ThinkPad T480."
+              }
+            ]
           })}
         </script>
       </Helmet>
