@@ -2,163 +2,243 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.laptap.in/</loc>
-    <lastmod>2026-01-19</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.laptap.in/sell</loc>
-    <lastmod>2026-01-19</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
     <loc>https://www.laptap.in/sell/laptop</loc>
-    <lastmod>2026-01-19</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.laptap.in/sell/desktop</loc>
-    <lastmod>2026-01-19</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.laptap.in/sell/mobile</loc>
-    <lastmod>2026-01-19</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.laptap.in/about</loc>
-    <lastmod>2026-01-19</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.laptap.in/contact</loc>
-    <lastmod>2026-01-19</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.laptap.in/terms</loc>
-    <lastmod>2026-01-19</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.laptap.in/privacy</loc>
-    <lastmod>2026-01-19</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.laptap.in/blog</loc>
-    <lastmod>2026-01-19</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.laptap.in/bangalore</loc>
-    <lastmod>2026-01-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <loc>https://www.laptap.in/blog/sell-used-laptop-bangalore</loc>
+    <lastmod>2026-01-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
+
+  <!-- Location Pages - Bangalore -->
   <url>
-    <loc>https://www.laptap.in/hyderabad</loc>
-    <lastmod>2026-01-19</lastmod>
+    <loc>https://www.laptap.in/bangalore</loc>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.laptap.in/bangalore/macbook</loc>
-    <lastmod>2026-01-19</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://www.laptap.in/bangalore/dell</loc>
-    <lastmod>2026-01-19</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://www.laptap.in/bangalore/hp</loc>
-    <lastmod>2026-01-19</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://www.laptap.in/bangalore/lenovo</loc>
-    <lastmod>2026-01-19</lastmod>
+    <lastmod>2026-01-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Location Pages - Hyderabad -->
+  <url>
+    <loc>https://www.laptap.in/hyderabad</loc>
+    <lastmod>2026-01-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.laptap.in/hyderabad/macbook</loc>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://www.laptap.in/blog/sell-used-laptop-bangalore</loc>
-    <lastmod>2026-01-19</lastmod>
+    <loc>https://www.laptap.in/hyderabad/dell</loc>
+    <lastmod>2026-01-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.laptap.in/hyderabad/hp</loc>
+    <lastmod>2026-01-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.laptap.in/hyderabad/lenovo</loc>
+    <lastmod>2026-01-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Gaming Laptop Pages -->
+  <url>
+    <loc>https://www.laptap.in/gaming/asus-rog</loc>
+    <lastmod>2026-01-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.laptap.in/gaming/acer-predator</loc>
+    <lastmod>2026-01-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Model/Brand Pages -->
+  <url>
+    <loc>https://www.laptap.in/models/macbook-pro</loc>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.laptap.in/models/macbook-pro</loc>
-    <lastmod>2026-01-19</lastmod>
+    <loc>https://www.laptap.in/models/macbook-air</loc>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.laptap.in/models/dell-xps</loc>
-    <lastmod>2026-01-19</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.laptap.in/models/hp-pavilion</loc>
-    <lastmod>2026-01-19</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.laptap.in/models/lenovo-thinkpad</loc>
-    <lastmod>2026-01-19</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.laptap.in/models/asus-laptop</loc>
+    <lastmod>2026-01-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.laptap.in/models/acer-laptop</loc>
+    <lastmod>2026-01-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.laptap.in/models/samsung-laptop</loc>
+    <lastmod>2026-01-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.laptap.in/models/microsoft-surface</loc>
+    <lastmod>2026-01-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Desktop Pages -->
+  <url>
     <loc>https://www.laptap.in/models/imac</loc>
-    <lastmod>2026-01-19</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.laptap.in/models/dell-optiplex</loc>
-    <lastmod>2026-01-19</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.laptap.in/models/hp-desktop</loc>
-    <lastmod>2026-01-19</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.laptap.in/models/lenovo-desktop</loc>
-    <lastmod>2026-01-19</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
+  <!-- Repair Pages -->
   <url>
     <loc>https://www.laptap.in/repair</loc>
-    <lastmod>2026-01-19</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- Dashboard -->
   <url>
     <loc>https://www.laptap.in/dashboard</loc>
-    <lastmod>2026-01-19</lastmod>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>

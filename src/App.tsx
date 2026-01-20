@@ -27,6 +27,10 @@ import BangaloreMacBook from "./pages/locations/brands/BangaloreMacBook";
 import BangaloreDell from "./pages/locations/brands/BangaloreDell";
 import BangaloreLenovo from "./pages/locations/brands/BangaloreLenovo";
 import BangaloreHP from "./pages/locations/brands/BangaloreHP";
+import HyderabadDell from "./pages/locations/brands/HyderabadDell";
+import HyderabadHP from "./pages/locations/brands/HyderabadHP";
+import HyderabadMacBook from "./pages/locations/brands/HyderabadMacBook";
+import HyderabadLenovo from "./pages/locations/brands/HyderabadLenovo";
 import SellLaptopBangalore from "./pages/blog/SellLaptopBangalore";
 import MacBookPro from "./pages/models/MacBookPro";
 import MacBookAir from "./pages/models/MacBookAir";
@@ -41,6 +45,8 @@ import AsusLaptop from "./pages/models/AsusLaptop";
 import AcerLaptop from "./pages/models/AcerLaptop";
 import SamsungLaptop from "./pages/models/SamsungLaptop";
 import MicrosoftSurface from "./pages/models/MicrosoftSurface";
+import AsusROG from "./pages/gaming/AsusROG";
+import AcerPredator from "./pages/gaming/AcerPredator";
 import RepairCategory from "./pages/repair/RepairCategory";
 import RepairBrands from "./pages/repair/RepairBrands";
 import RepairForm from "./pages/repair/RepairForm";
@@ -82,6 +88,10 @@ const App = () => (
               <Route path="/bangalore/dell" element={<BangaloreDell />} />
               <Route path="/bangalore/lenovo" element={<BangaloreLenovo />} />
               <Route path="/bangalore/hp" element={<BangaloreHP />} />
+              <Route path="/hyderabad/dell" element={<HyderabadDell />} />
+              <Route path="/hyderabad/hp" element={<HyderabadHP />} />
+              <Route path="/hyderabad/macbook" element={<HyderabadMacBook />} />
+              <Route path="/hyderabad/lenovo" element={<HyderabadLenovo />} />
               <Route path="/blog/sell-used-laptop-bangalore" element={<SellLaptopBangalore />} />
               <Route path="/models/macbook-pro" element={<MacBookPro />} />
               <Route path="/models/macbook-air" element={<MacBookAir />} />
@@ -96,6 +106,8 @@ const App = () => (
               <Route path="/models/acer-laptop" element={<AcerLaptop />} />
               <Route path="/models/samsung-laptop" element={<SamsungLaptop />} />
               <Route path="/models/microsoft-surface" element={<MicrosoftSurface />} />
+              <Route path="/gaming/asus-rog" element={<AsusROG />} />
+              <Route path="/gaming/acer-predator" element={<AcerPredator />} />
               <Route path="/repair" element={<RepairCategory />} />
               <Route path="/repair/brands" element={<RepairBrands />} />
               <Route path="/repair/form" element={<RepairForm />} />
