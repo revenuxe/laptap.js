@@ -89,55 +89,55 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
           </div>
 
           {/* Category cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
-            <div className="group cursor-pointer rounded-3xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-8 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50" onClick={() => navigate("/sell/laptop")}>
-              <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
-                <Laptop className="h-8 w-8 text-primary" />
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-6 max-w-6xl mx-auto">
+            <div className="group cursor-pointer rounded-2xl sm:rounded-3xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-4 sm:p-8 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50" onClick={() => navigate("/sell/laptop")}>
+              <div className="mb-3 sm:mb-4 inline-flex h-12 w-12 sm:h-16 sm:w-16 items-center justify-center rounded-xl sm:rounded-2xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
+                <Laptop className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
               </div>
-              <h3 className="text-xl font-bold mb-2">Sell Laptop</h3>
-              <p className="text-sm text-muted-foreground">
+              <h3 className="text-base sm:text-xl font-bold mb-1 sm:mb-2">Sell Laptop</h3>
+              <p className="text-xs sm:text-sm text-muted-foreground">
                 Get instant quotes for all laptop brands
               </p>
             </div>
 
-            <div className="group cursor-pointer rounded-3xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-8 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-orange-500/5 hover:to-card/50" onClick={() => navigate("/repair")}>
-              <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-orange-500/10 transition-all group-hover:bg-orange-500/20 group-hover:scale-110">
-                <Wrench className="h-8 w-8 text-orange-500" />
+            <div className="group cursor-pointer rounded-2xl sm:rounded-3xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-4 sm:p-8 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-orange-500/5 hover:to-card/50" onClick={() => navigate("/repair")}>
+              <div className="mb-3 sm:mb-4 inline-flex h-12 w-12 sm:h-16 sm:w-16 items-center justify-center rounded-xl sm:rounded-2xl bg-orange-500/10 transition-all group-hover:bg-orange-500/20 group-hover:scale-110">
+                <Wrench className="h-6 w-6 sm:h-8 sm:w-8 text-orange-500" />
               </div>
-              <h3 className="text-xl font-bold mb-2">Repair Laptop</h3>
-              <p className="text-sm text-muted-foreground">
+              <h3 className="text-base sm:text-xl font-bold mb-1 sm:mb-2">Repair Laptop</h3>
+              <p className="text-xs sm:text-sm text-muted-foreground">
                 Expert repair services for all brands
               </p>
             </div>
 
-            <div className="group cursor-pointer rounded-3xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-8 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50" onClick={() => navigate("/sell/mobile")}>
-              <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
-                <Smartphone className="h-8 w-8 text-primary" />
+            <div className="group cursor-pointer rounded-2xl sm:rounded-3xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-4 sm:p-8 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50" onClick={() => navigate("/sell/mobile")}>
+              <div className="mb-3 sm:mb-4 inline-flex h-12 w-12 sm:h-16 sm:w-16 items-center justify-center rounded-xl sm:rounded-2xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
+                <Smartphone className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
               </div>
-              <h3 className="text-xl font-bold mb-2">Sell Mobile</h3>
-              <p className="text-sm text-muted-foreground">
+              <h3 className="text-base sm:text-xl font-bold mb-1 sm:mb-2">Sell Mobile</h3>
+              <p className="text-xs sm:text-sm text-muted-foreground">
                 Get instant quotes for all mobile brands
               </p>
             </div>
             
-            <div className="group cursor-pointer rounded-3xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-8 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50" onClick={() => navigate("/sell/desktop")}>
-              <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
-                <Monitor className="h-8 w-8 text-primary" />
+            <div className="group cursor-pointer rounded-2xl sm:rounded-3xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-4 sm:p-8 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50" onClick={() => navigate("/sell/desktop")}>
+              <div className="mb-3 sm:mb-4 inline-flex h-12 w-12 sm:h-16 sm:w-16 items-center justify-center rounded-xl sm:rounded-2xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
+                <Monitor className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
               </div>
-              <h3 className="text-xl font-bold mb-2">Sell Desktop</h3>
-              <p className="text-sm text-muted-foreground">
+              <h3 className="text-base sm:text-xl font-bold mb-1 sm:mb-2">Sell Desktop</h3>
+              <p className="text-xs sm:text-sm text-muted-foreground">
                 Best prices for desktop computers
               </p>
             </div>
 
             <Dialog open={formOpen} onOpenChange={setFormOpen}>
               <DialogTrigger asChild>
-                <div className="group cursor-pointer rounded-3xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-8 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50">
-                  <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
-                    <FileText className="h-8 w-8 text-primary" />
+                <div className="col-span-2 sm:col-span-2 lg:col-span-1 max-w-[280px] sm:max-w-none mx-auto w-full group cursor-pointer rounded-2xl sm:rounded-3xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-4 sm:p-8 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50">
+                  <div className="mb-3 sm:mb-4 inline-flex h-12 w-12 sm:h-16 sm:w-16 items-center justify-center rounded-xl sm:rounded-2xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
+                    <FileText className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold mb-2">Simple Form</h3>
-                  <p className="text-sm text-muted-foreground">
+                  <h3 className="text-base sm:text-xl font-bold mb-1 sm:mb-2">Simple Form</h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground">
                     Quick inquiry form
                   </p>
                 </div>
