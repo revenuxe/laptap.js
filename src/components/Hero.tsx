@@ -33,7 +33,7 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
   );
   
   const defaultDescription = "Get the best price for your device with instant quotes, free doorstep pickup, and instant secure payment.";
-  return <section className="relative overflow-hidden bg-gradient-to-b from-background via-muted/20 to-background md:py-32 py-[20px]">
+  return <section className="relative overflow-hidden bg-gradient-to-b from-background via-muted/20 to-background py-8 sm:py-12 md:py-32">
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-20 left-10 h-72 w-72 rounded-full bg-primary/5 blur-3xl" />
