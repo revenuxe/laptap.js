@@ -63,11 +63,11 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-8 sm:mb-12">
-            <Button variant="cta" size="lg" onClick={() => navigate("/sell")} className="min-w-[180px] sm:min-w-[200px] h-11 sm:h-12 text-sm sm:text-base">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-8 sm:mb-12 px-4 sm:px-0">
+            <Button variant="cta" size="lg" onClick={() => navigate("/sell")} className="w-full sm:w-auto sm:min-w-[240px] h-12 sm:h-13 text-sm sm:text-base">
               Sell Now
             </Button>
-            <Button variant="outline" size="lg" onClick={() => navigate("/sell")} className="min-w-[180px] sm:min-w-[200px] h-11 sm:h-12 text-sm sm:text-base">
+            <Button variant="outline" size="lg" onClick={() => navigate("/sell")} className="w-full sm:w-auto sm:min-w-[240px] h-12 sm:h-13 text-sm sm:text-base">
               Get Instant Quote
             </Button>
           </div>
