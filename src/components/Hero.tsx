@@ -33,7 +33,7 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
   );
   
   const defaultDescription = "Get the best price for your device with instant quotes, free doorstep pickup, and instant secure payment.";
-  return <section className="relative overflow-hidden bg-gradient-to-b from-background via-muted/20 to-background md:py-32 py-[20px]">
+  return <section className="relative overflow-hidden bg-gradient-to-b from-background via-muted/20 to-background py-8 sm:py-12 md:py-32">
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-20 left-10 h-72 w-72 rounded-full bg-primary/5 blur-3xl" />
@@ -43,47 +43,47 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
       <div className="container">
         <div className="mx-auto max-w-4xl text-center">
           {/* Badge */}
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
-            <Zap className="h-4 w-4" />
+          <div className="mb-4 sm:mb-6 inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium text-primary">
+            <Zap className="h-3 w-3 sm:h-4 sm:w-4" />
             Instant Price Quotes Available
           </div>
 
           {/* Main heading */}
-          <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+          <h1 className="mb-4 sm:mb-6 text-2xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-7xl">
             {title || defaultTitle}
           </h1>
           
-          <p className="mb-8 text-lg text-muted-foreground md:text-xl max-w-2xl mx-auto">
+          <p className="mb-6 sm:mb-8 text-sm sm:text-lg text-muted-foreground md:text-xl max-w-2xl mx-auto">
             {description || defaultDescription}
           </p>
 
           {/* Search bar */}
-          <div className="mb-12">
+          <div className="mb-8 sm:mb-12">
             <DeviceSearch />
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Button variant="cta" size="lg" onClick={() => navigate("/sell")} className="min-w-[200px]">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-8 sm:mb-12">
+            <Button variant="cta" size="lg" onClick={() => navigate("/sell")} className="min-w-[180px] sm:min-w-[200px] h-11 sm:h-12 text-sm sm:text-base">
               Sell Now
             </Button>
-            <Button variant="outline" size="lg" onClick={() => navigate("/sell")} className="min-w-[200px]">
+            <Button variant="outline" size="lg" onClick={() => navigate("/sell")} className="min-w-[180px] sm:min-w-[200px] h-11 sm:h-12 text-sm sm:text-base">
               Get Instant Quote
             </Button>
           </div>
 
           {/* Trust indicators */}
-          <div className="flex flex-wrap justify-center gap-6 mb-12 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <Shield className="h-4 w-4 text-primary" />
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mb-8 sm:mb-12 text-xs sm:text-sm text-muted-foreground">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <Shield className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
               <span>100% Secure</span>
             </div>
-            <div className="flex items-center gap-2">
-              <TrendingUp className="h-4 w-4 text-primary" />
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <TrendingUp className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
               <span>Best Market Prices</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Zap className="h-4 w-4 text-primary" />
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <Zap className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
               <span>Instant Payment</span>
             </div>
           </div>

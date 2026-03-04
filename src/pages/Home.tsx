@@ -145,8 +145,8 @@ const Home = () => {
           <Hero />
           
           {/* Referral Card Section */}
-          <section className="py-12 bg-muted/30">
-            <div className="container max-w-2xl">
+          <section className="py-8 sm:py-12 bg-muted/30">
+            <div className="container max-w-2xl px-4">
               <ReferralCard />
             </div>
           </section>
