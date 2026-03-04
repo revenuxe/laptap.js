@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Laptop, Monitor, Smartphone, ChevronRight, Loader2, TrendingUp, Zap, Search } from "lucide-react";
+import { Laptop, Monitor, Smartphone, ChevronRight, Loader2, TrendingUp, Zap, Search, FileText } from "lucide-react";
 import { toast } from "sonner";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { MobileSellForm } from "@/components/MobileSellForm";
