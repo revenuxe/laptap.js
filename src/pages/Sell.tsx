@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Database } from "@/integrations/supabase/types";
@@ -17,11 +18,12 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Laptop, Monitor, Smartphone, ChevronRight, Loader2, TrendingUp, Zap, Search } from "lucide-react";
+import { Laptop, Monitor, Smartphone, ChevronRight, Loader2, TrendingUp, Zap, Search, FileText } from "lucide-react";
 import { toast } from "sonner";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { MobileSellForm } from "@/components/MobileSellForm";
 import whatsappIcon from "@/assets/whatsapp.svg";
+import SimpleForm from "@/components/SimpleForm";
 
 type Step = "category" | "selection_method" | "brand" | "series" | "model" | "switch_on" | "config" | "additional" | "functionality" | "screen_condition" | "age" | "physical_condition" | "accessories" | "price" | "confirm";
 
@@ -31,6 +33,7 @@ const Sell = () => {
   const { user } = useAuth();
   
   const [step, setStep] = useState<Step>("category");
+  const [simpleFormOpen, setSimpleFormOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [transitionLoading, setTransitionLoading] = useState(false);
   const [loadingFromSlug, setLoadingFromSlug] = useState(false);
@@ -612,50 +615,46 @@ const Sell = () => {
 
           {/* Selection Method */}
           {step === "selection_method" && (
-            <div className="space-y-6">
-              <div className="text-center mb-6">
+            <div className="space-y-4 md:space-y-6">
+              <div className="text-center mb-4 md:mb-6">
                 <h2 className="text-xl md:text-2xl font-bold mb-2">Choose Your Selling Method</h2>
                 <p className="text-sm text-muted-foreground">Pick the option that works best for you</p>
               </div>
               
-              <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
-                {/* WhatsApp Card */}
-                <Card className="group relative overflow-hidden cursor-pointer border-2 hover:border-[#25D366] hover:shadow-lg transition-all duration-300 hover:scale-105 flex flex-col">
+              <div className="max-w-2xl mx-auto space-y-4">
+                {/* WhatsApp Card - Full Width */}
+                <Card 
+                  className="group relative overflow-hidden cursor-pointer border-2 hover:border-[#25D366] hover:shadow-lg transition-all duration-300"
+                  onClick={() => {
+                    const whatsappNumber = "919886579923";
+                    const message = `Hi! I want to sell my ${category}.`;
+                    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+                    window.open(url, '_blank');
+                  }}
+                >
                   <div className="absolute top-2 right-2 bg-[#25D366] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
                     RECOMMENDED
                   </div>
-                  <div 
-                    className="p-4 md:p-6 flex flex-col flex-1"
-                    onClick={() => {
-                      const whatsappNumber = "919886579923";
-                      const message = `Hi! I want to sell my ${category}.`;
-                      const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-                      window.open(url, '_blank');
-                    }}
-                  >
-                    <div className="flex justify-center mb-3 md:mb-4">
-                      <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-xl bg-[#25D366]/10 group-hover:bg-[#25D366]/20 transition-colors">
-                        <img src={whatsappIcon} alt="WhatsApp" className="w-10 h-10 md:w-12 md:h-12" />
-                      </div>
+                  <div className="p-5 md:p-8 flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+                    <div className="w-16 h-16 md:w-20 md:h-20 flex-shrink-0 flex items-center justify-center rounded-xl bg-[#25D366]/10 group-hover:bg-[#25D366]/20 transition-colors">
+                      <img src={whatsappIcon} alt="WhatsApp" className="w-10 h-10 md:w-12 md:h-12" />
                     </div>
-                    
-                    <div className="text-center space-y-1 mb-3 md:mb-4">
-                      <h3 className="text-base md:text-lg font-bold">Sell on WhatsApp</h3>
-                      <p className="text-xs text-[#25D366] font-medium">Instant Response</p>
+                    <div className="text-center sm:text-left flex-1">
+                      <h3 className="text-lg md:text-xl font-bold mb-1">Sell on WhatsApp</h3>
+                      <p className="text-xs md:text-sm text-[#25D366] font-medium mb-1">Instant Response • Fastest Way to Sell</p>
+                      <p className="text-xs text-muted-foreground">Chat with us directly and get an instant quote within minutes</p>
                     </div>
-                    
-                    <div className="mt-auto">
-                      <Button className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white h-9 md:h-10 text-sm font-semibold">
-                        Continue
-                      </Button>
-                    </div>
+                    <Button className="bg-[#25D366] hover:bg-[#20BA5A] text-white h-10 md:h-12 px-6 md:px-8 text-sm md:text-base font-semibold flex-shrink-0 w-full sm:w-auto">
+                      Chat Now
+                    </Button>
                   </div>
                 </Card>
 
-                {/* Evaluate Now Card */}
-                <Card className="group cursor-pointer border-2 hover:border-primary hover:shadow-lg transition-all duration-300 hover:scale-105 flex flex-col">
-                  <div 
-                    className="p-4 md:p-6 flex flex-col flex-1"
+                {/* Evaluate Now + Simple Form - Side by Side */}
+                <div className="grid grid-cols-2 gap-3 md:gap-4">
+                  {/* Evaluate Now Card */}
+                  <Card 
+                    className="group cursor-pointer border-2 hover:border-primary hover:shadow-lg transition-all duration-300 hover:scale-105 flex flex-col"
                     onClick={async () => {
                       setLoadingFromSlug(true);
                       await fetchBrands();
@@ -663,24 +662,49 @@ const Sell = () => {
                       setStep("brand");
                     }}
                   >
-                    <div className="flex justify-center mb-3 md:mb-4">
-                      <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                        <TrendingUp className="w-10 h-10 md:w-12 md:h-12 text-primary" />
+                    <div className="p-4 md:p-6 flex flex-col flex-1 items-center text-center">
+                      <div className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors mb-3">
+                        <TrendingUp className="w-7 h-7 md:w-8 md:h-8 text-primary" />
+                      </div>
+                      <h3 className="text-sm md:text-lg font-bold mb-1">Evaluate Now</h3>
+                      <p className="text-[11px] md:text-xs text-muted-foreground mb-3 md:mb-4">Get a detailed quote for your device</p>
+                      <div className="mt-auto w-full">
+                        <Button variant="cta" className="w-full h-9 md:h-10 text-xs md:text-sm font-semibold">
+                          Start
+                        </Button>
                       </div>
                     </div>
-                    
-                    <div className="text-center space-y-1 mb-3 md:mb-4">
-                      <h3 className="text-base md:text-lg font-bold">Evaluate Now</h3>
-                      <p className="text-xs text-muted-foreground font-medium">Detailed Quote</p>
-                    </div>
-                    
-                    <div className="mt-auto">
-                      <Button variant="cta" className="w-full h-9 md:h-10 text-sm font-semibold">
-                        Start
-                      </Button>
-                    </div>
-                  </div>
-                </Card>
+                  </Card>
+
+                  {/* Simple Form Card */}
+                  <Dialog open={simpleFormOpen} onOpenChange={setSimpleFormOpen}>
+                    <DialogTrigger asChild>
+                      <Card className="group cursor-pointer border-2 hover:border-primary hover:shadow-lg transition-all duration-300 hover:scale-105 flex flex-col">
+                        <div className="p-4 md:p-6 flex flex-col flex-1 items-center text-center">
+                          <div className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors mb-3">
+                            <FileText className="w-7 h-7 md:w-8 md:h-8 text-primary" />
+                          </div>
+                          <h3 className="text-sm md:text-lg font-bold mb-1">Quick Form</h3>
+                          <p className="text-[11px] md:text-xs text-muted-foreground mb-3 md:mb-4">Submit details & we'll call you back</p>
+                          <div className="mt-auto w-full">
+                            <Button variant="outline" className="w-full h-9 md:h-10 text-xs md:text-sm font-semibold">
+                              Fill Form
+                            </Button>
+                          </div>
+                        </div>
+                      </Card>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Get Quick Quote</DialogTitle>
+                        <DialogDescription>
+                          Fill in your details and we'll get back to you with the best price.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <SimpleForm defaultSellingType={category} onSuccess={() => setSimpleFormOpen(false)} />
+                    </DialogContent>
+                  </Dialog>
+                </div>
               </div>
             </div>
           )}
