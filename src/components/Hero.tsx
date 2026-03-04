@@ -58,7 +58,7 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
           </p>
 
           {/* Search bar */}
-          <div className="mb-12">
+          <div className="mb-8 sm:mb-12">
             <DeviceSearch />
           </div>
 
