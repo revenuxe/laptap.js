@@ -23,6 +23,7 @@ import { toast } from "sonner";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { MobileSellForm } from "@/components/MobileSellForm";
 import whatsappIcon from "@/assets/whatsapp.svg";
+import SimpleForm from "@/components/SimpleForm";
 
 type Step = "category" | "selection_method" | "brand" | "series" | "model" | "switch_on" | "config" | "additional" | "functionality" | "screen_condition" | "age" | "physical_condition" | "accessories" | "price" | "confirm";
 
