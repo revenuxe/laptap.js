@@ -73,17 +73,17 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
           </div>
 
           {/* Trust indicators */}
-          <div className="flex flex-wrap justify-center gap-6 mb-12 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <Shield className="h-4 w-4 text-primary" />
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mb-8 sm:mb-12 text-xs sm:text-sm text-muted-foreground">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <Shield className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
               <span>100% Secure</span>
             </div>
-            <div className="flex items-center gap-2">
-              <TrendingUp className="h-4 w-4 text-primary" />
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <TrendingUp className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
               <span>Best Market Prices</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Zap className="h-4 w-4 text-primary" />
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <Zap className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
               <span>Instant Payment</span>
             </div>
           </div>
