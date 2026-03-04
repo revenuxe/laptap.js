@@ -9,7 +9,7 @@ interface HeroFormProps {
 
 const HeroForm = ({ defaultSellingType, title, description }: HeroFormProps) => {
   return (
-    <Card className="p-6 md:p-8 max-w-md mx-auto">
+    <Card className="p-4 sm:p-6 md:p-8 max-w-md mx-auto rounded-2xl">
       <h3 className="text-2xl font-bold mb-2">
         {title || "Get Instant Quote"}
       </h3>
