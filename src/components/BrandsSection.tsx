@@ -24,7 +24,6 @@ export function BrandsSection() {
 
   async function loadBrands() {
     try {
-      // Get laptop category first
       const { data: categoryData } = await supabase
         .from('categories')
         .select('id')
@@ -39,9 +38,7 @@ export function BrandsSection() {
           .order('name')
           .limit(8);
         
-        if (data) {
-          setBrands(data);
-        }
+        if (data) setBrands(data);
       }
     } catch (error) {
       console.error('Failed to load brands:', error);
@@ -57,26 +54,26 @@ export function BrandsSection() {
   if (loading || brands.length === 0) return null;
 
   return (
-    <section className="py-16 md:py-24 bg-muted/30">
+    <section className="py-10 sm:py-16 md:py-24 bg-muted/30">
       <div className="container">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
             Brands We Buy
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-sm sm:text-lg text-muted-foreground max-w-2xl mx-auto">
             We accept laptops from all major brands. Get the best price for your device today.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto mb-8">
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-4 gap-2.5 sm:gap-4 md:gap-6 max-w-5xl mx-auto mb-6 sm:mb-8">
           {brands.map((brand) => (
             <Card
               key={brand.id}
-              className="cursor-pointer p-6 hover:border-primary hover:shadow-lg transition-all group"
+              className="cursor-pointer p-3 sm:p-6 hover:border-primary hover:shadow-lg transition-all group rounded-xl sm:rounded-lg"
               onClick={() => handleBrandClick(brand.slug)}
             >
               {brand.logo_url ? (
-                <div className="aspect-square flex items-center justify-center overflow-hidden rounded-md bg-background p-4">
+                <div className="aspect-square flex items-center justify-center overflow-hidden rounded-lg bg-background p-2 sm:p-4">
                   <img 
                     src={brand.logo_url.startsWith('http') 
                       ? brand.logo_url 
@@ -90,13 +87,13 @@ export function BrandsSection() {
                   />
                 </div>
               ) : (
-                <div className="aspect-square flex items-center justify-center bg-background rounded-md">
-                  <span className="text-2xl font-bold text-muted-foreground">
+                <div className="aspect-square flex items-center justify-center bg-background rounded-lg">
+                  <span className="text-xl sm:text-2xl font-bold text-muted-foreground">
                     {brand.name.charAt(0)}
                   </span>
                 </div>
               )}
-              <h3 className="font-semibold text-center mt-3 text-sm group-hover:text-primary transition-colors">
+              <h3 className="font-semibold text-center mt-2 sm:mt-3 text-xs sm:text-sm group-hover:text-primary transition-colors">
                 {brand.name}
               </h3>
             </Card>
@@ -105,9 +102,9 @@ export function BrandsSection() {
 
         <div className="text-center">
           <Button
-            size="lg"
+            size="sm"
             onClick={() => navigate('/sell/laptop')}
-            className="group"
+            className="group sm:size-lg"
           >
             View All Brands
             <ChevronRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
