@@ -49,11 +49,11 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
           </div>
 
           {/* Main heading */}
-          <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+          <h1 className="mb-4 sm:mb-6 text-2xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-7xl">
             {title || defaultTitle}
           </h1>
           
-          <p className="mb-8 text-lg text-muted-foreground md:text-xl max-w-2xl mx-auto">
+          <p className="mb-6 sm:mb-8 text-sm sm:text-lg text-muted-foreground md:text-xl max-w-2xl mx-auto">
             {description || defaultDescription}
           </p>
 
