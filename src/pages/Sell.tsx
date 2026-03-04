@@ -33,6 +33,7 @@ const Sell = () => {
   const { user } = useAuth();
   
   const [step, setStep] = useState<Step>("category");
+  const [simpleFormOpen, setSimpleFormOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [transitionLoading, setTransitionLoading] = useState(false);
   const [loadingFromSlug, setLoadingFromSlug] = useState(false);
