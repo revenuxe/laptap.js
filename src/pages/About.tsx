@@ -235,6 +235,28 @@ const About = () => {
                     </div>
                   </CardContent>
                 </Card>
+
+                {/* Built by Revenuxe */}
+                <div className="mt-8 text-center">
+                  <Card className="border-primary/10 bg-card/30 backdrop-blur-sm inline-block">
+                    <CardContent className="px-8 py-5 flex items-center gap-3">
+                      <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <Sparkles className="h-4 w-4 text-primary" />
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        Platform designed & developed by{" "}
+                        <a 
+                          href="https://revenuxe.com" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="font-semibold text-primary hover:underline"
+                        >
+                          Revenuxe.com
+                        </a>
+                      </p>
+                    </CardContent>
+                  </Card>
+                </div>
               </div>
             </div>
           </section>
