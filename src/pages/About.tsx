@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Users, Award, ShoppingBag, CheckCircle, Sparkles } from "lucide-react";
+import { Users, Award, ShoppingBag, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 const About = () => {
