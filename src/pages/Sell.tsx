@@ -626,7 +626,7 @@ const Sell = () => {
                 <Card 
                   className="group relative overflow-hidden cursor-pointer border-2 hover:border-[#25D366] hover:shadow-lg transition-all duration-300"
                   onClick={() => {
-                    const whatsappNumber = "919886579923";
+                    const whatsappNumber = "916360039957";
                     const message = `Hi! I want to sell my ${category}.`;
                     const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
                     window.open(url, '_blank');

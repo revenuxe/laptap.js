@@ -78,7 +78,7 @@ const Contact = () => {
               "longitude": "77.6431"
             },
             "email": "laptap.in@gmail.com",
-            "telephone": "+919886579923",
+            "telephone": "+916360039957",
             "aggregateRating": {
               "@type": "AggregateRating",
               "ratingValue": "4.8",
@@ -153,8 +153,8 @@ const Contact = () => {
                         </div>
                         <div>
                           <h3 className="font-semibold mb-1">Phone</h3>
-                          <a href="tel:+919886579923" className="text-primary hover:underline">
-                            +91 98865 79923
+                          <a href="tel:+916360039957" className="text-primary hover:underline">
+                            +91 63600 39957
                           </a>
                         </div>
                       </div>
