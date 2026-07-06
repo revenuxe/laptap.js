@@ -1,0 +1,24 @@
+import { createStart } from "@tanstack/react-start";
+import { renderErrorPage } from "./lib/error-page";
+
+export const startInstance = createStart(() => {
+  return {
+    requestMiddleware: [
+      async ({ next }: { next: () => Promise<Response> }) => {
+        try {
+          return await next();
+        } catch (error) {
+          const status = (error as { statusCode?: number })?.statusCode;
+          if (typeof status === "number" && status >= 300 && status < 500) {
+            throw error;
+          }
+          console.error(error);
+          return new Response(renderErrorPage(), {
+            status: 500,
+            headers: { "content-type": "text/html; charset=utf-8" },
+          });
+        }
+      },
+    ],
+  };
+});
