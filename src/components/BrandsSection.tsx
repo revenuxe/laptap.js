@@ -9,8 +9,8 @@ interface Brand {
   id: string;
   name: string;
   logo_url: string | null;
-  category_id: string;
-  slug: string;
+  category_id: string | null;
+  slug: string | null;
 }
 
 export function BrandsSection() {
@@ -70,7 +70,7 @@ export function BrandsSection() {
             <Card
               key={brand.id}
               className="cursor-pointer p-3 sm:p-6 hover:border-primary hover:shadow-lg transition-all group rounded-xl sm:rounded-lg"
-              onClick={() => handleBrandClick(brand.slug)}
+              onClick={() => brand.slug && handleBrandClick(brand.slug)}
             >
               {brand.logo_url ? (
                 <div className="aspect-square flex items-center justify-center overflow-hidden rounded-lg bg-background p-2 sm:p-4">

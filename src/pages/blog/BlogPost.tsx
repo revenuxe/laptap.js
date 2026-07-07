@@ -19,7 +19,7 @@ const BlogPost = () => {
       const { data, error } = await supabase
         .from('blogs')
         .select('*')
-        .eq('slug', slug)
+        .eq('slug', slug ?? '')
         .eq('published', true)
         .single();
       
@@ -143,12 +143,12 @@ const BlogPost = () => {
                   </div>
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4" />
-                    <time dateTime={post.created_at}>
-                      {new Date(post.created_at).toLocaleDateString('en-US', {
+                    <time dateTime={post.created_at ?? undefined}>
+                      {post.created_at ? new Date(post.created_at).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric'
-                      })}
+                      }) : ''}
                     </time>
                   </div>
                 </div>

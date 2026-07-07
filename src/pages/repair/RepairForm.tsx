@@ -102,7 +102,7 @@ const RepairForm = () => {
     const { data, error } = await supabase
       .from('brands')
       .select('name')
-      .eq('id', brandId)
+      .eq('id', brandId ?? '')
       .single();
 
     if (error || !data) {
@@ -126,7 +126,7 @@ const RepairForm = () => {
       const { data, error } = await supabase
         .from('repair_requests')
         .insert([{
-          user_id: user.id,
+          user_id: user!.id,
           brand_id: brandId,
           model_name: values.model,
           customer_name: values.name,

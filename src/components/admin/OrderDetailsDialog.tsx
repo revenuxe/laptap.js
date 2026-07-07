@@ -178,8 +178,8 @@ export function OrderDetailsDialog({
               <div>
                 <h3 className="font-semibold mb-2">Accessories</h3>
                 <div className="flex flex-wrap gap-2">
-                  {Object.entries(order.accessories).map(([key, value]) => 
-                    value && <Badge key={key} variant="secondary">{key}</Badge>
+                  {Object.entries(order.accessories as Record<string, unknown>).map(([key, value]) => 
+                    value ? <Badge key={key} variant="secondary">{key}</Badge> : null
                   )}
                 </div>
               </div>

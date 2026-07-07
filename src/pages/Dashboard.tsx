@@ -49,7 +49,7 @@ const Dashboard = () => {
           )
         )
       `)
-      .eq('user_id', user?.id)
+      .eq('user_id', user?.id ?? '')
       .order('created_at', { ascending: false });
 
     if (error) {
@@ -68,7 +68,7 @@ const Dashboard = () => {
         *,
         brands (name)
       `)
-      .eq('user_id', user?.id)
+      .eq('user_id', user?.id ?? '')
       .order('created_at', { ascending: false });
 
     if (error) {
@@ -129,7 +129,7 @@ const Dashboard = () => {
         // Get all referred user IDs
         const referredUserIds = referralData
           .map(r => r.referred_user_id)
-          .filter(Boolean);
+          .filter((id): id is string => !!id);
 
         if (referredUserIds.length > 0) {
           // Fetch all profiles in one query
