@@ -150,7 +150,7 @@ export const BlogsTab = () => {
                   <div className="flex items-center gap-2 mb-2">
                     <h3 className="text-lg font-semibold">{blog.title}</h3>
                     <Switch
-                      checked={blog.published}
+                      checked={!!blog.published}
                       onCheckedChange={(checked) =>
                         togglePublishMutation.mutate({ id: blog.id, published: checked })
                       }
@@ -162,7 +162,7 @@ export const BlogsTab = () => {
                   <p className="text-sm text-muted-foreground mb-2">{blog.excerpt}</p>
                   <div className="flex items-center gap-4 text-xs text-muted-foreground">
                     <span>Category: {blog.category}</span>
-                    <span>Created: {new Date(blog.created_at).toLocaleDateString()}</span>
+                    <span>Created: {blog.created_at ? new Date(blog.created_at).toLocaleDateString() : '—'}</span>
                   </div>
                 </div>
                 <div className="flex gap-2">

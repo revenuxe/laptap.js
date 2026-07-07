@@ -9,8 +9,8 @@ interface Brand {
   id: string;
   name: string;
   logo_url: string | null;
-  category_id: string;
-  slug: string;
+  category_id: string | null;
+  slug: string | null;
 }
 
 export function BrandsSection() {
