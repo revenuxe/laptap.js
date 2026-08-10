@@ -16,7 +16,7 @@ India's most trusted platform for selling used laptops, desktops, and mobile pho
 Create `.env.local` in the project root:
 
 ```env
-NEXT_PUBLIC_SUPABASE_URL=https://ziuuektwmuwqdeiafnkz.supabase.co
+NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
