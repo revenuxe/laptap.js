@@ -20,10 +20,9 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Laptop, Monitor, Smartphone, ChevronRight, Loader2, TrendingUp, Zap, Search, FileText } from "lucide-react";
+import { Laptop, Monitor, ChevronRight, Loader2, TrendingUp, Zap, Search, FileText } from "lucide-react";
 import { toast } from "sonner";
 import { CountdownTimer } from "@/components/CountdownTimer";
-import { MobileSellForm } from "@/components/MobileSellForm";
 
 import SimpleForm from "@/components/SimpleForm";
 
@@ -41,7 +40,7 @@ export const SellClient = () => {
   const [loadingFromSlug, setLoadingFromSlug] = useState(false);
   
   // Form data
-  const [category, setCategory] = useState<"laptop" | "desktop" | "mobile" | "">("" );
+  const [category, setCategory] = useState<"laptop" | "desktop" | "">("");
   const [brands, setBrands] = useState<any[]>([]);
   const [selectedBrand, setSelectedBrand] = useState<any>(null);
   const [seriesList, setSeriesList] = useState<any[]>([]);
@@ -156,7 +155,7 @@ export const SellClient = () => {
 
       // Load category
       if (categorySlug) {
-        const cat = categorySlug as "laptop" | "desktop" | "mobile";
+        const cat = categorySlug as "laptop" | "desktop";
         setCategory(cat);
         
         // Get category ID first
@@ -224,7 +223,7 @@ export const SellClient = () => {
         setStep("category");
       }
     } catch (error) {
-      console.error('Error loading from URL:', error);
+      console.error('Error loading from URL params:', error);
       setStep("category");
     } finally {
       setLoadingFromSlug(false);
@@ -368,7 +367,7 @@ export const SellClient = () => {
     setPriceBreakdown(result.breakdown);
   };
 
-  const handleCategorySelect = (selected: "laptop" | "desktop" | "mobile") => {
+  const handleCategorySelect = (selected: "laptop" | "desktop") => {
     setCategory(selected);
     setStep("selection_method");
     router.push(`/sell/${selected}`);
@@ -536,12 +535,12 @@ export const SellClient = () => {
       return `Sell ${selectedBrand.name} ${selectedSeries.name} | Laptap.in`;
     }
     if (selectedBrand) {
-      return `Sell ${selectedBrand.name} ${category === 'laptop' ? 'Laptop' : category === 'mobile' ? 'Mobile' : 'Desktop'} | Laptap.in`;
+      return `Sell ${selectedBrand.name} ${category === 'laptop' ? 'Laptop' : 'Desktop'} | Laptap.in`;
     }
     if (category) {
-      return `Sell ${category === 'laptop' ? 'Laptop' : category === 'mobile' ? 'Mobile' : 'Desktop'} | Get Instant Quote | Laptap.in`;
+      return `Sell ${category === 'laptop' ? 'Laptop' : 'Desktop'} | Get Instant Quote | Laptap.in`;
     }
-    return 'Sell Your Laptop, Mobile or Desktop | Laptap.in';
+    return 'Sell Your Laptop or Desktop | Laptap.in';
   };
 
   const getMetaDescription = () => {
@@ -578,24 +577,17 @@ export const SellClient = () => {
           </div>
 
           {/* Category Selection */}
+          {/* Category Selection */}
           {step === "category" && (
             <div className="space-y-6">
               <h2 className="text-xl font-semibold text-center">Select Device Category</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
                 <Card
                   className="cursor-pointer p-8 hover:border-primary hover:shadow-lg transition-all"
                   onClick={() => handleCategorySelect("laptop")}
                 >
                   <Laptop className="mx-auto mb-4 h-16 w-16 text-primary" />
                   <h3 className="text-center text-lg font-semibold">Laptop</h3>
-                </Card>
-
-                <Card
-                  className="cursor-pointer p-8 hover:border-primary hover:shadow-lg transition-all"
-                  onClick={() => handleCategorySelect("mobile")}
-                >
-                  <Smartphone className="mx-auto mb-4 h-16 w-16 text-primary" />
-                  <h3 className="text-center text-lg font-semibold">Mobile</h3>
                 </Card>
                 
                 <Card
@@ -878,11 +870,7 @@ export const SellClient = () => {
                 variant="cta" 
                 className="w-full"
                 onClick={() => { 
-                  if (category === "mobile") {
-                    setStep("config"); // For mobile, skip switch_on and go to mobile form
-                  } else {
-                    setStep("switch_on"); // For laptop/desktop, continue with standard flow
-                  }
+                  setStep("switch_on");
                   window.scrollTo(0, 0); 
                 }}
               >
@@ -891,26 +879,8 @@ export const SellClient = () => {
             </Card>
           )}
 
-          {/* Mobile Sell Form - Comprehensive form for mobiles */}
-          {step === "config" && category === "mobile" && selectedModel && selectedBrand && (
-            <div className="max-w-4xl mx-auto">
-              <MobileSellForm
-                basePrice={parseFloat(selectedModel.base_price)}
-                brandName={selectedBrand.name}
-                modelName={selectedModel.name}
-                onPriceCalculated={(finalPrice, displayPrice, breakdown) => {
-                  setEstimatedPrice(finalPrice);
-                  setDisplayedPrice(displayPrice);
-                  setPriceBreakdown(breakdown);
-                  setStep("price");
-                  window.scrollTo(0, 0);
-                }}
-              />
-            </div>
-          )}
-
-          {/* Switch On Check - Only for Laptop/Desktop */}
-          {step === "switch_on" && category !== "mobile" && (
+          {/* Switch On Check */}
+          {step === "switch_on" && (
             <Card className="p-8 max-w-2xl mx-auto space-y-6">
               <div className="text-center mb-6">
                 <h2 className="text-2xl font-semibold mb-2">Does the {category} switch on?</h2>
@@ -942,7 +912,7 @@ export const SellClient = () => {
           )}
 
           {/* System Configuration - Only for Laptop/Desktop */}
-          {step === "config" && category !== "mobile" && (
+          {step === "config" && (
             <Card className="p-4 md:p-8 max-w-2xl mx-auto space-y-4 md:space-y-6">
               <div className="text-center mb-4 md:mb-6">
                 <h2 className="text-xl md:text-2xl font-semibold mb-2">Select the system configuration of your device?</h2>
@@ -1078,7 +1048,7 @@ export const SellClient = () => {
           )}
 
           {/* Additional Features - Only for Laptop/Desktop */}
-          {step === "additional" && category !== "mobile" && (
+          {step === "additional" && (
             <Card className="p-4 md:p-8 max-w-2xl mx-auto space-y-4 md:space-y-6">
               <div className="text-center mb-4 md:mb-6">
                 <p className="text-sm md:text-base text-muted-foreground mb-2">Please select your device additional features</p>
@@ -1146,7 +1116,7 @@ export const SellClient = () => {
           )}
 
           {/* Functionality Check - Only for Laptop/Desktop */}
-          {step === "functionality" && category !== "mobile" && (
+          {step === "functionality" && (
             <Card className="p-8 max-w-2xl mx-auto space-y-6">
               <div className="text-center mb-6">
                 <h2 className="text-2xl font-semibold mb-2">Does your device function properly?</h2>
@@ -1187,7 +1157,7 @@ export const SellClient = () => {
           )}
 
           {/* Screen Condition - Only for Laptop/Desktop */}
-          {step === "screen_condition" && category !== "mobile" && (
+          {step === "screen_condition" && (
             <Card className="p-4 md:p-8 max-w-2xl mx-auto space-y-4 md:space-y-6">
               <div className="text-center mb-4 md:mb-6">
                 <h2 className="text-xl md:text-2xl font-semibold mb-2">Select the screen condition of your device?</h2>
@@ -1254,7 +1224,7 @@ export const SellClient = () => {
           )}
 
           {/* Device Age - Only for Laptop/Desktop */}
-          {step === "age" && category !== "mobile" && (
+          {step === "age" && (
             <Card className="p-8 max-w-2xl mx-auto space-y-6">
               <div className="text-center mb-6">
                 <h2 className="text-2xl font-semibold mb-2">Age of your device</h2>
@@ -1293,7 +1263,7 @@ export const SellClient = () => {
           )}
 
           {/* Physical Condition - Only for Laptop/Desktop */}
-          {step === "physical_condition" && category !== "mobile" && (
+          {step === "physical_condition" && (
             <Card className="p-8 max-w-2xl mx-auto space-y-6">
               <div className="text-center mb-6">
                 <h2 className="text-2xl font-semibold mb-2">Select the physical condition of your device?</h2>
@@ -1365,7 +1335,7 @@ export const SellClient = () => {
           )}
 
           {/* Accessories - Only for Laptop/Desktop */}
-          {step === "accessories" && category !== "mobile" && (
+          {step === "accessories" && (
             <Card className="p-8 max-w-2xl mx-auto space-y-6">
               <div className="text-center mb-6">
                 <h2 className="text-2xl font-semibold mb-2">Available Accessories</h2>

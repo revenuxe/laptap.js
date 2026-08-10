@@ -9,7 +9,6 @@ import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { OrdersTab } from '@/components/admin/OrdersTab';
 import { CatalogTab } from '@/components/admin/CatalogTab';
-import { MobileCatalogTab } from '@/components/admin/MobileCatalogTab';
 import { BlogsTab } from '@/components/admin/BlogsTab';
 import ReferralsTab from '@/components/admin/ReferralsTab';
 import FormsTab from '@/components/admin/FormsTab';
@@ -52,7 +51,6 @@ const Admin = () => {
             <TabsList>
               <TabsTrigger value="orders">Orders</TabsTrigger>
               <TabsTrigger value="catalog">Device Catalog</TabsTrigger>
-              <TabsTrigger value="mobile">Mobile Catalogue</TabsTrigger>
               <TabsTrigger value="referrals">Referrals</TabsTrigger>
               <TabsTrigger value="forms">Forms</TabsTrigger>
               <TabsTrigger value="blogs">Blogs</TabsTrigger>
@@ -65,10 +63,6 @@ const Admin = () => {
 
             <TabsContent value="catalog">
               <CatalogTab />
-            </TabsContent>
-
-            <TabsContent value="mobile">
-              <MobileCatalogTab />
             </TabsContent>
 
             <TabsContent value="referrals">

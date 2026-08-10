@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { Laptop, Monitor, Smartphone, Shield, TrendingUp, Zap, Wrench, FileText } from "lucide-react";
+import { Laptop, Monitor, Shield, TrendingUp, Zap, Wrench, FileText } from "lucide-react";
 import { DeviceSearch } from "@/components/DeviceSearch";
 import { useState } from "react";
 import {
@@ -27,7 +27,7 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
   
   const defaultTitle = (
     <>
-      Sell Your Laptop, Mobile or Desktop{" "}
+      Sell Your Laptop or Desktop{" "}
       <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
         Instantly
       </span>
@@ -87,7 +87,7 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
           </div>
 
           {/* Category cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto">
             <div className="group cursor-pointer rounded-2xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-3 sm:p-5 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50" onClick={() => router.push("/sell/laptop")}>
               <div className="mb-2 sm:mb-3 inline-flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
                 <Laptop className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
@@ -107,16 +107,6 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
                 Expert repair services for all brands
               </p>
             </div>
-
-            <div className="group cursor-pointer rounded-2xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-3 sm:p-5 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50" onClick={() => router.push("/sell/mobile")}>
-              <div className="mb-2 sm:mb-3 inline-flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
-                <Smartphone className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
-              </div>
-              <h3 className="text-sm sm:text-base font-bold mb-1">Sell Mobile</h3>
-              <p className="text-[11px] sm:text-xs text-muted-foreground">
-                Instant quotes for all mobile brands
-              </p>
-            </div>
             
             <div className="group cursor-pointer rounded-2xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-3 sm:p-5 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50" onClick={() => router.push("/sell/desktop")}>
               <div className="mb-2 sm:mb-3 inline-flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
@@ -130,7 +120,7 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
 
             <Dialog open={formOpen} onOpenChange={setFormOpen}>
               <DialogTrigger asChild>
-                <div className="col-span-2 sm:col-span-2 lg:col-span-1 max-w-[280px] sm:max-w-none mx-auto w-full group cursor-pointer rounded-2xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-3 sm:p-5 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50">
+                <div className="group cursor-pointer rounded-2xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-3 sm:p-5 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50">
                   <div className="mb-2 sm:mb-3 inline-flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
                     <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
                   </div>

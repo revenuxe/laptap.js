@@ -134,7 +134,6 @@ const SimpleForm = ({ defaultSellingType, onSuccess }: SimpleFormProps) => {
                 </FormControl>
                 <SelectContent>
                   <SelectItem value="laptop">Laptop</SelectItem>
-                  <SelectItem value="mobile">Mobile</SelectItem>
                   <SelectItem value="desktop">Desktop</SelectItem>
                 </SelectContent>
               </Select>
