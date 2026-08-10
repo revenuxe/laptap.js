@@ -2,38 +2,38 @@
 
 DO $$
 DECLARE
-  -- Existing series IDs from database
-  acer_aspire UUID := '3b1c1001-b2ca-4be4-9e04-3de784111f6a';
-  acer_predator UUID := 'aa4cef29-f524-40a5-a0ae-dcc872cab7db';
-  acer_swift UUID := 'd23b8d74-1b0b-4a91-b31f-2c0254480230';
-  apple_air UUID := '64f2e519-88ef-412f-a3d9-b600e15bda49';
-  apple_pro UUID := 'fe4a80ce-4c2d-4850-95bb-699746e936d9';
-  asus_rog UUID := '72b40f5d-1dba-4caf-92b9-d808010916ab';
-  dell_xps UUID := '59a61385-8a47-4e8a-9419-6f3367af120b';
-  hp_14 UUID := '204c3d38-0563-4e4b-b51b-4e9aa623417d';
-  hp_15 UUID := '61f74e3b-908f-4668-bb4f-d3f883cd0640';
-  hp_elite UUID := '614f9397-805b-48c2-9fa8-fb362823787c';
-  hp_envy UUID := 'a75ff40f-2a58-4f76-b0e8-1e37fb17ad23';
-  hp_g UUID := '3bf450db-17b9-44d2-9693-fdb658359e65';
-  hp_notebook UUID := '578692f9-a0bf-4947-a46c-761a289dfce7';
-  hp_omen UUID := 'f2134259-45e8-4e4e-a79c-c3a2554d9b69';
-  hp_pav UUID := 'f9b7c9c9-bc15-4240-9266-30b379adc18a';
-  hp_pav_gaming UUID := '3e12e418-76e9-48b5-aacb-dc59f7161363';
-  hp_probook UUID := '3dc6437a-cf72-420a-905d-5559c0c908e7';
-  hp_slate UUID := '6b2dd55d-cf7a-480d-96dd-821ec3b38de7';
-  hp_spectre UUID := '51c8d2bc-48f6-4de5-b86d-8aa73b2214de';
-  hp_stream UUID := '7a09a2d3-ab86-4b99-bfc2-293f94876c59';
-  hp_victus UUID := 'f17628fb-9278-4256-9a12-d3e2377a494c';
-  hp_zbook UUID := '64beeb25-f5d9-40ac-8f87-63fc9967f857';
+  -- Series IDs lookup
+  acer_aspire UUID;
+  acer_predator UUID;
+  acer_swift UUID;
+  apple_air UUID;
+  apple_pro UUID;
+  asus_rog UUID;
+  dell_xps UUID;
+  hp_14 UUID;
+  hp_15 UUID;
+  hp_elite UUID;
+  hp_envy UUID;
+  hp_g UUID;
+  hp_notebook UUID;
+  hp_omen UUID;
+  hp_pav UUID;
+  hp_pav_gaming UUID;
+  hp_probook UUID;
+  hp_slate UUID;
+  hp_spectre UUID;
+  hp_stream UUID;
+  hp_victus UUID;
+  hp_zbook UUID;
   
   -- Brand IDs
-  lenovo_id UUID := '602874a0-44a8-446d-b8f2-de5007d324a8';
-  asus_id UUID := 'ea89c935-b9da-4d79-9606-f757c85c3b1c';
-  dell_id UUID := '794432de-c963-4547-81c3-567693b82f97';
-  samsung_id UUID := '08c8bce5-5065-40a5-ab62-afe4650167c0';
-  microsoft_id UUID := 'e0456691-7e59-4a54-90be-7da9062b4f01';
-  msi_id UUID := '694764b9-b042-46f9-a699-a43921a05637';
-  lg_id UUID := '59977348-6cf8-46bb-a85f-a6714aeceeb6';
+  lenovo_id UUID;
+  asus_id UUID;
+  dell_id UUID;
+  samsung_id UUID;
+  microsoft_id UUID;
+  msi_id UUID;
+  lg_id UUID;
   
   -- New series
   lenovo_thinkpad UUID;
@@ -50,6 +50,98 @@ DECLARE
   msi_prestige UUID;
   lg_gram UUID;
 BEGIN
+  -- Look up or create brand IDs
+  SELECT id INTO lenovo_id FROM brands WHERE lower(name) = 'lenovo' LIMIT 1;
+  IF lenovo_id IS NULL THEN INSERT INTO brands (name) VALUES ('Lenovo') RETURNING id INTO lenovo_id; END IF;
+
+  SELECT id INTO asus_id FROM brands WHERE lower(name) = 'asus' LIMIT 1;
+  IF asus_id IS NULL THEN INSERT INTO brands (name) VALUES ('Asus') RETURNING id INTO asus_id; END IF;
+
+  SELECT id INTO dell_id FROM brands WHERE lower(name) = 'dell' LIMIT 1;
+  IF dell_id IS NULL THEN INSERT INTO brands (name) VALUES ('Dell') RETURNING id INTO dell_id; END IF;
+
+  SELECT id INTO samsung_id FROM brands WHERE lower(name) = 'samsung' LIMIT 1;
+  IF samsung_id IS NULL THEN INSERT INTO brands (name) VALUES ('Samsung') RETURNING id INTO samsung_id; END IF;
+
+  SELECT id INTO microsoft_id FROM brands WHERE lower(name) = 'microsoft' LIMIT 1;
+  IF microsoft_id IS NULL THEN INSERT INTO brands (name) VALUES ('Microsoft') RETURNING id INTO microsoft_id; END IF;
+
+  SELECT id INTO msi_id FROM brands WHERE lower(name) = 'msi' LIMIT 1;
+  IF msi_id IS NULL THEN INSERT INTO brands (name) VALUES ('MSI') RETURNING id INTO msi_id; END IF;
+
+  SELECT id INTO lg_id FROM brands WHERE lower(name) = 'lg' LIMIT 1;
+  IF lg_id IS NULL THEN INSERT INTO brands (name) VALUES ('LG') RETURNING id INTO lg_id; END IF;
+
+  -- Look up existing series IDs
+  SELECT id INTO dell_xps FROM series WHERE brand_id = dell_id AND lower(name) LIKE '%xps%' LIMIT 1;
+  IF dell_xps IS NULL THEN INSERT INTO series (brand_id, name) VALUES (dell_id, 'XPS') RETURNING id INTO dell_xps; END IF;
+
+  SELECT id INTO asus_rog FROM series WHERE brand_id = asus_id AND lower(name) LIKE '%rog%' LIMIT 1;
+  IF asus_rog IS NULL THEN INSERT INTO series (brand_id, name) VALUES (asus_id, 'ROG') RETURNING id INTO asus_rog; END IF;
+
+  -- Acer series
+  SELECT s.id INTO acer_aspire FROM series s JOIN brands b ON s.brand_id = b.id WHERE lower(b.name) = 'acer' AND lower(s.name) LIKE '%aspire%' LIMIT 1;
+  SELECT s.id INTO acer_predator FROM series s JOIN brands b ON s.brand_id = b.id WHERE lower(b.name) = 'acer' AND lower(s.name) LIKE '%predator%' LIMIT 1;
+  SELECT s.id INTO acer_swift FROM series s JOIN brands b ON s.brand_id = b.id WHERE lower(b.name) = 'acer' AND lower(s.name) LIKE '%swift%' LIMIT 1;
+
+  -- Apple series
+  SELECT s.id INTO apple_air FROM series s JOIN brands b ON s.brand_id = b.id WHERE lower(b.name) = 'apple' AND lower(s.name) LIKE '%air%' LIMIT 1;
+  SELECT s.id INTO apple_pro FROM series s JOIN brands b ON s.brand_id = b.id WHERE lower(b.name) = 'apple' AND lower(s.name) LIKE '%pro%' LIMIT 1;
+
+  -- HP series
+  DECLARE
+    hp_brand_id UUID;
+  BEGIN
+    SELECT id INTO hp_brand_id FROM brands WHERE lower(name) = 'hp' LIMIT 1;
+    IF hp_brand_id IS NULL THEN INSERT INTO brands (name) VALUES ('HP') RETURNING id INTO hp_brand_id; END IF;
+
+    SELECT s.id INTO hp_14 FROM series s WHERE s.brand_id = hp_brand_id AND lower(s.name) = 'hp 14' LIMIT 1;
+    IF hp_14 IS NULL THEN INSERT INTO series (brand_id, name) VALUES (hp_brand_id, 'HP 14') RETURNING id INTO hp_14; END IF;
+
+    SELECT s.id INTO hp_15 FROM series s WHERE s.brand_id = hp_brand_id AND lower(s.name) = 'hp 15' LIMIT 1;
+    IF hp_15 IS NULL THEN INSERT INTO series (brand_id, name) VALUES (hp_brand_id, 'HP 15') RETURNING id INTO hp_15; END IF;
+
+    SELECT s.id INTO hp_elite FROM series s WHERE s.brand_id = hp_brand_id AND lower(s.name) LIKE '%elite%' LIMIT 1;
+    IF hp_elite IS NULL THEN INSERT INTO series (brand_id, name) VALUES (hp_brand_id, 'EliteBook') RETURNING id INTO hp_elite; END IF;
+
+    SELECT s.id INTO hp_envy FROM series s WHERE s.brand_id = hp_brand_id AND lower(s.name) LIKE '%envy%' LIMIT 1;
+    IF hp_envy IS NULL THEN INSERT INTO series (brand_id, name) VALUES (hp_brand_id, 'Envy') RETURNING id INTO hp_envy; END IF;
+
+    SELECT s.id INTO hp_g FROM series s WHERE s.brand_id = hp_brand_id AND lower(s.name) LIKE '%g series%' LIMIT 1;
+    IF hp_g IS NULL THEN INSERT INTO series (brand_id, name) VALUES (hp_brand_id, 'G Series') RETURNING id INTO hp_g; END IF;
+
+    SELECT s.id INTO hp_notebook FROM series s WHERE s.brand_id = hp_brand_id AND lower(s.name) LIKE '%notebook%' LIMIT 1;
+    IF hp_notebook IS NULL THEN INSERT INTO series (brand_id, name) VALUES (hp_brand_id, 'Notebook') RETURNING id INTO hp_notebook; END IF;
+
+    SELECT s.id INTO hp_omen FROM series s WHERE s.brand_id = hp_brand_id AND lower(s.name) LIKE '%omen%' LIMIT 1;
+    IF hp_omen IS NULL THEN INSERT INTO series (brand_id, name) VALUES (hp_brand_id, 'Omen') RETURNING id INTO hp_omen; END IF;
+
+    SELECT s.id INTO hp_pav FROM series s WHERE s.brand_id = hp_brand_id AND lower(s.name) LIKE '%pavilion%' AND lower(s.name) NOT LIKE '%gaming%' LIMIT 1;
+    IF hp_pav IS NULL THEN INSERT INTO series (brand_id, name) VALUES (hp_brand_id, 'Pavilion') RETURNING id INTO hp_pav; END IF;
+
+    SELECT s.id INTO hp_pav_gaming FROM series s WHERE s.brand_id = hp_brand_id AND lower(s.name) LIKE '%pavilion gaming%' LIMIT 1;
+    IF hp_pav_gaming IS NULL THEN INSERT INTO series (brand_id, name) VALUES (hp_brand_id, 'Pavilion Gaming') RETURNING id INTO hp_pav_gaming; END IF;
+
+    SELECT s.id INTO hp_probook FROM series s WHERE s.brand_id = hp_brand_id AND lower(s.name) LIKE '%probook%' LIMIT 1;
+    IF hp_probook IS NULL THEN INSERT INTO series (brand_id, name) VALUES (hp_brand_id, 'ProBook') RETURNING id INTO hp_probook; END IF;
+
+    SELECT s.id INTO hp_slate FROM series s WHERE s.brand_id = hp_brand_id AND lower(s.name) LIKE '%slate%' LIMIT 1;
+    IF hp_slate IS NULL THEN INSERT INTO series (brand_id, name) VALUES (hp_brand_id, 'SlateBook') RETURNING id INTO hp_slate; END IF;
+
+    SELECT s.id INTO hp_spectre FROM series s WHERE s.brand_id = hp_brand_id AND lower(s.name) LIKE '%spectre%' LIMIT 1;
+    IF hp_spectre IS NULL THEN INSERT INTO series (brand_id, name) VALUES (hp_brand_id, 'Spectre') RETURNING id INTO hp_spectre; END IF;
+
+    SELECT s.id INTO hp_stream FROM series s WHERE s.brand_id = hp_brand_id AND lower(s.name) LIKE '%stream%' LIMIT 1;
+    IF hp_stream IS NULL THEN INSERT INTO series (brand_id, name) VALUES (hp_brand_id, 'Stream') RETURNING id INTO hp_stream; END IF;
+
+    SELECT s.id INTO hp_victus FROM series s WHERE s.brand_id = hp_brand_id AND lower(s.name) LIKE '%victus%' LIMIT 1;
+    IF hp_victus IS NULL THEN INSERT INTO series (brand_id, name) VALUES (hp_brand_id, 'Victus') RETURNING id INTO hp_victus; END IF;
+
+    SELECT s.id INTO hp_zbook FROM series s WHERE s.brand_id = hp_brand_id AND lower(s.name) LIKE '%zbook%' LIMIT 1;
+    IF hp_zbook IS NULL THEN INSERT INTO series (brand_id, name) VALUES (hp_brand_id, 'ZBook') RETURNING id INTO hp_zbook; END IF;
+  END;
+
+
 
   -- DELL XPS MODELS (existing series)
   INSERT INTO models (series_id, name, base_price, active) VALUES

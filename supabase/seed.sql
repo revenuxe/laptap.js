@@ -86,3 +86,16 @@ BEGIN
     (dell_brand_id, 'Latitude')
   ON CONFLICT DO NOTHING;
 END $$;
+
+-- Populate brand logos with high quality SVG URLs
+UPDATE public.brands SET logo_url = 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg' WHERE lower(name) = 'apple';
+UPDATE public.brands SET logo_url = 'https://upload.wikimedia.org/wikipedia/commons/1/18/Dell_logo_2016.svg' WHERE lower(name) = 'dell';
+UPDATE public.brands SET logo_url = 'https://upload.wikimedia.org/wikipedia/commons/a/ad/HP_logo_2012.svg' WHERE lower(name) = 'hp';
+UPDATE public.brands SET logo_url = 'https://upload.wikimedia.org/wikipedia/commons/b/b8/Lenovo_logo_2015.svg' WHERE lower(name) = 'lenovo';
+UPDATE public.brands SET logo_url = 'https://upload.wikimedia.org/wikipedia/commons/2/2e/ASUS_Logo.svg' WHERE lower(name) = 'asus';
+UPDATE public.brands SET logo_url = 'https://upload.wikimedia.org/wikipedia/commons/a/a1/Acer_Logo.svg' WHERE lower(name) = 'acer';
+UPDATE public.brands SET logo_url = 'https://upload.wikimedia.org/wikipedia/commons/3/3a/MSI_logo.svg' WHERE lower(name) = 'msi';
+UPDATE public.brands SET logo_url = 'https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg' WHERE lower(name) = 'samsung';
+UPDATE public.brands SET logo_url = 'https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg' WHERE lower(name) = 'microsoft';
+UPDATE public.brands SET logo_url = 'https://upload.wikimedia.org/wikipedia/commons/b/bf/LG_logo_%282015%29.svg' WHERE lower(name) = 'lg';
+

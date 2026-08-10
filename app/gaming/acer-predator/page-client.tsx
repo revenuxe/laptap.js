@@ -145,20 +145,19 @@ export const PageClient = () => {
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
                 {[
-                  { name: "Predator Helios 16 (2024)", series: "Flagship Gaming", price: "₹90K-1.8L" },
-                  { name: "Predator Helios 18", series: "Premium Large Screen", price: "₹1L-1.7L" },
-                  { name: "Predator Helios 300 (2023)", series: "Popular Gaming", price: "₹60K-1.2L" },
-                  { name: "Predator Triton 500 SE", series: "Slim Gaming", price: "₹70K-1.4L" },
-                  { name: "Predator Triton 17 X", series: "Desktop Replacement", price: "₹90K-1.6L" },
-                  { name: "Nitro 16 (2024)", series: "Mid-Range Gaming", price: "₹45K-85K" },
-                  { name: "Nitro 5 (2022-2023)", series: "Budget Gaming", price: "₹30K-60K" },
-                  { name: "Nitro V 15", series: "Entry Gaming", price: "₹25K-45K" },
-                  { name: "Predator Helios Neo 16", series: "Value Flagship", price: "₹55K-1L" },
+                  { name: "Predator Helios 16 (2024)", series: "Flagship Gaming" },
+                  { name: "Predator Helios 18", series: "Premium Large Screen" },
+                  { name: "Predator Helios 300 (2023)", series: "Popular Gaming" },
+                  { name: "Predator Triton 500 SE", series: "Slim Gaming" },
+                  { name: "Predator Triton 17 X", series: "Desktop Replacement" },
+                  { name: "Nitro 16 (2024)", series: "Mid-Range Gaming" },
+                  { name: "Nitro 5 (2022-2023)", series: "Budget Gaming" },
+                  { name: "Nitro V 15", series: "Entry Gaming" },
+                  { name: "Predator Helios Neo 16", series: "Value Flagship" },
                 ].map((model, index) => (
                   <div key={index} className="p-6 rounded-2xl border-2 border-border bg-card hover:border-primary transition-all">
                     <h3 className="font-bold text-lg mb-1">{model.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-2">{model.series}</p>
-                    <p className="text-primary font-semibold">{model.price}</p>
+                    <p className="text-sm text-muted-foreground">{model.series}</p>
                   </div>
                 ))}
               </div>

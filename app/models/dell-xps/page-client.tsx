@@ -59,20 +59,19 @@ export const PageClient = () => {
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
                 {[
-                  { name: "Dell XPS 17 9730", year: "2024 (13th Gen Intel)", price: "₹60,000 - ₹1,40,000" },
-                  { name: "Dell XPS 15 9530", year: "2024 (13th Gen Intel)", price: "₹50,000 - ₹1,10,000" },
-                  { name: "Dell XPS 13 Plus 9320", year: "2024 (12th Gen Intel)", price: "₹45,000 - ₹85,000" },
-                  { name: "Dell XPS 13 9315", year: "2023 (12th Gen Intel)", price: "₹40,000 - ₹75,000" },
-                  { name: "Dell XPS 17 9720", year: "2023 (12th Gen Intel)", price: "₹55,000 - ₹1,20,000" },
-                  { name: "Dell XPS 15 9520", year: "2022 (12th Gen Intel)", price: "₹45,000 - ₹95,000" },
-                  { name: "Dell XPS 13 9310", year: "2021 (11th Gen Intel)", price: "₹35,000 - ₹65,000" },
-                  { name: "Dell XPS 15 9510", year: "2021 (11th Gen Intel)", price: "₹40,000 - ₹85,000" },
-                  { name: "Dell XPS 13 9300", year: "2020 (10th Gen Intel)", price: "₹30,000 - ₹55,000" },
+                  { name: "Dell XPS 17 9730", year: "2024 (13th Gen Intel)" },
+                  { name: "Dell XPS 15 9530", year: "2024 (13th Gen Intel)" },
+                  { name: "Dell XPS 13 Plus 9320", year: "2024 (12th Gen Intel)" },
+                  { name: "Dell XPS 13 9315", year: "2023 (12th Gen Intel)" },
+                  { name: "Dell XPS 17 9720", year: "2023 (12th Gen Intel)" },
+                  { name: "Dell XPS 15 9520", year: "2022 (12th Gen Intel)" },
+                  { name: "Dell XPS 13 9310", year: "2021 (11th Gen Intel)" },
+                  { name: "Dell XPS 15 9510", year: "2021 (11th Gen Intel)" },
+                  { name: "Dell XPS 13 9300", year: "2020 (10th Gen Intel)" },
                 ].map((model, index) => (
                   <div key={index} className="p-6 rounded-2xl border-2 border-border bg-card hover:border-primary transition-all">
                     <h3 className="font-bold text-lg mb-2">{model.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-3">{model.year}</p>
-                    <p className="text-primary font-semibold">{model.price}</p>
+                    <p className="text-sm text-muted-foreground">{model.year}</p>
                   </div>
                 ))}
               </div>

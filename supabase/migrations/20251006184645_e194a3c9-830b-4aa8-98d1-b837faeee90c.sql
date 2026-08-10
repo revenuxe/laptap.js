@@ -315,23 +315,19 @@ INSERT INTO public.categories (name, slug)
 VALUES ('Laptop', 'laptop'), ('Desktop', 'desktop')
 ON CONFLICT (slug) DO NOTHING;
 
--- Insert sample brands
+-- Insert sample brands if not exists
 DO $$
 DECLARE
   laptop_id UUID;
 BEGIN
   SELECT id INTO laptop_id FROM public.categories WHERE slug = 'laptop';
   
-  INSERT INTO public.brands (name, category_id) VALUES
-    ('Apple', laptop_id),
-    ('Dell', laptop_id),
-    ('HP', laptop_id),
-    ('Lenovo', laptop_id),
-    ('Asus', laptop_id),
-    ('Acer', laptop_id),
-    ('MSI', laptop_id),
-    ('Microsoft', laptop_id)
-  ON CONFLICT DO NOTHING;
+  INSERT INTO public.brands (name, category_id)
+  SELECT b.name, laptop_id
+  FROM (VALUES ('Apple'), ('Dell'), ('HP'), ('Lenovo'), ('Asus'), ('Acer'), ('MSI'), ('Microsoft')) AS b(name)
+  WHERE NOT EXISTS (
+    SELECT 1 FROM public.brands existing WHERE existing.name = b.name AND (existing.category_id = laptop_id OR existing.category_id IS NULL)
+  );
 END $$;
 
 -- Insert default global pricing rules if not exists

@@ -177,41 +177,68 @@ export const SellClient = () => {
           .single();
         
         // Load brand if in URL
-        if (brandSlug && categoryData) {
-          const { data: brandData, error: brandError } = await supabase
+        if (brandSlug) {
+          let { data: brandData, error: brandError } = categoryData ? await supabase
             .from('brands')
             .select('*')
             .eq('slug', brandSlug)
             .eq('category_id', categoryData.id)
-            .maybeSingle();
+            .maybeSingle() : { data: null, error: null };
           
-          if (brandData && !brandError) {
+          if (!brandData) {
+            const { data: fallbackBrand } = await supabase
+              .from('brands')
+              .select('*')
+              .eq('slug', brandSlug)
+              .maybeSingle();
+            brandData = fallbackBrand;
+          }
+          
+          if (brandData) {
             setSelectedBrand(brandData);
             
             // Load series if in URL
             if (seriesSlug) {
-              const { data: seriesData, error: seriesError } = await supabase
+              let { data: seriesData, error: seriesError } = await supabase
                 .from('series')
                 .select('*')
                 .eq('slug', seriesSlug)
                 .eq('brand_id', brandData.id)
                 .maybeSingle();
               
-              if (seriesData && !seriesError) {
+              if (!seriesData) {
+                const { data: fallbackSeries } = await supabase
+                  .from('series')
+                  .select('*')
+                  .eq('slug', seriesSlug)
+                  .maybeSingle();
+                seriesData = fallbackSeries;
+              }
+              
+              if (seriesData) {
                 setSelectedSeries(seriesData);
                 
                 // Load model if in URL
                 if (modelSlug) {
-                  const { data: modelData, error: modelError } = await supabase
+                  let { data: modelData, error: modelError } = await supabase
                     .from('models')
                     .select('*')
                     .eq('slug', modelSlug)
                     .eq('series_id', seriesData.id)
                     .maybeSingle();
                   
-                  if (modelData && !modelError) {
+                  if (!modelData) {
+                    const { data: fallbackModel } = await supabase
+                      .from('models')
+                      .select('*')
+                      .eq('slug', modelSlug)
+                      .maybeSingle();
+                    modelData = fallbackModel;
+                  }
+
+                  if (modelData) {
                     setSelectedModel(modelData);
-                    setStep("model"); // Show "Get Upto" price page first
+                    setStep("model");
                   } else {
                     setStep("model");
                   }
@@ -385,24 +412,52 @@ export const SellClient = () => {
     window.scrollTo(0, 0);
   };
 
-  const handleBrandSelect = (brand: any) => {
+  const handleBrandSelect = async (brand: any) => {
     setSelectedBrand(brand);
     setSelectedSeries(null);
     setSelectedModel(null);
+    setStep("series");
+    try {
+      const { data } = await supabase
+        .from('series')
+        .select('id, name, slug, brand_id, image_url')
+        .eq('brand_id', brand.id)
+        .order('name');
+      setSeriesList(data || []);
+    } catch (err) {
+      console.error('Error pre-fetching series:', err);
+    }
     router.push(`/sell/${category}/${brand.slug}`);
     window.scrollTo(0, 0);
   };
 
-  const handleSeriesSelect = (series: any) => {
+  const handleSeriesSelect = async (series: any) => {
     setSelectedSeries(series);
     setSelectedModel(null);
-    router.push(`/sell/${category}/${selectedBrand.slug}/${series.slug}`);
+    setStep("model");
+    try {
+      const { data } = await supabase
+        .from('models')
+        .select('id, name, slug, series_id, base_price, thumbnail_url, description, active')
+        .eq('series_id', series.id)
+        .eq('active', true);
+
+      const sortedModels = (data || []).sort((a, b) => {
+        const yearA = parseInt(a.name.match(/\b(19|20)\d{2}\b/)?.[0] || '0');
+        const yearB = parseInt(b.name.match(/\b(19|20)\d{2}\b/)?.[0] || '0');
+        return yearB - yearA;
+      });
+      setModels(sortedModels);
+    } catch (err) {
+      console.error('Error pre-fetching models:', err);
+    }
+    router.push(`/sell/${category}/${selectedBrand?.slug || 'brand'}/${series.slug}`);
     window.scrollTo(0, 0);
   };
 
   const handleModelSelect = (model: any) => {
     setSelectedModel(model);
-    router.push(`/sell/${category}/${selectedBrand.slug}/${selectedSeries.slug}/${model.slug}`);
+    router.push(`/sell/${category}/${selectedBrand?.slug || 'brand'}/${selectedSeries?.slug || 'series'}/${model.slug}`);
     window.scrollTo(0, 0);
   };
 
@@ -809,32 +864,42 @@ export const SellClient = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                {models
-                  .filter(model => model.name.toLowerCase().includes(modelSearch.toLowerCase()))
-                  .map((model) => (
-                  <Card
-                    key={model.id}
-                    className="cursor-pointer p-4 hover:border-primary hover:shadow-lg transition-all"
-                    onClick={() => handleModelSelect(model)}
-                  >
-                    {model.thumbnail_url && (
-                      <div className="aspect-square mb-3 overflow-hidden rounded-md bg-muted">
-                        <img 
-                          src={model.thumbnail_url.startsWith('http') ? model.thumbnail_url : supabase.storage.from('model-thumbnails').getPublicUrl(model.thumbnail_url).data.publicUrl}
-                          alt={model.name}
-                          className="h-full w-full object-cover"
-                          onError={(e) => {
-                            e.currentTarget.style.display = 'none';
-                          }}
-                        />
-                      </div>
-                    )}
-                    <h3 className="font-semibold text-sm mb-1">{model.name}</h3>
-                    <p className="text-xs text-muted-foreground">₹{parseFloat(model.base_price).toLocaleString()}</p>
-                  </Card>
-                ))}
-              </div>
+              {models.length === 0 ? (
+                <div className="text-center py-12 border-2 border-dashed rounded-2xl p-6 max-w-md mx-auto">
+                  <Laptop className="h-10 w-10 mx-auto text-muted-foreground mb-3" />
+                  <h3 className="text-lg font-semibold mb-1">No Models Found</h3>
+                  <p className="text-xs text-muted-foreground mb-4">We couldn't find listed models for this series yet.</p>
+                  <Button variant="outline" size="sm" onClick={() => setSimpleFormOpen(true)}>
+                    Request Quick Quote
+                  </Button>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-4">
+                  {models
+                    .filter(model => model.name.toLowerCase().includes(modelSearch.toLowerCase()))
+                    .map((model) => (
+                    <Card
+                      key={model.id}
+                      className="cursor-pointer p-4 hover:border-primary hover:shadow-lg transition-all"
+                      onClick={() => handleModelSelect(model)}
+                    >
+                      {model.thumbnail_url && (
+                        <div className="aspect-square mb-3 overflow-hidden rounded-md bg-muted">
+                          <img 
+                            src={model.thumbnail_url.startsWith('http') ? model.thumbnail_url : supabase.storage.from('model-thumbnails').getPublicUrl(model.thumbnail_url).data.publicUrl}
+                            alt={model.name}
+                            className="h-full w-full object-cover"
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                            }}
+                          />
+                        </div>
+                      )}
+                      <h3 className="font-semibold text-sm text-center sm:text-left">{model.name}</h3>
+                    </Card>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 

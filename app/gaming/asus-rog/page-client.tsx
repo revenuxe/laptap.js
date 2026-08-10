@@ -145,20 +145,19 @@ export const PageClient = () => {
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
                 {[
-                  { name: "ROG Zephyrus G14 (2024)", series: "Premium 14\" Gaming", price: "₹80K-1.4L" },
-                  { name: "ROG Zephyrus G15/G16", series: "Premium 15/16\" Gaming", price: "₹90K-1.8L" },
-                  { name: "ROG Strix G15/G17", series: "Performance Gaming", price: "₹50K-1.2L" },
-                  { name: "ROG Strix SCAR 15/17", series: "Esports Gaming", price: "₹70K-1.6L" },
-                  { name: "ROG Flow Z13/X13", series: "Gaming Convertibles", price: "₹60K-1.3L" },
-                  { name: "ROG Zephyrus Duo 16", series: "Dual-Screen Gaming", price: "₹1L-2L+" },
-                  { name: "ROG Zephyrus M16", series: "Creator Gaming", price: "₹70K-1.4L" },
-                  { name: "ROG Strix G (2021-2023)", series: "Previous Gen Gaming", price: "₹35K-80K" },
-                  { name: "TUF Gaming Series", series: "Budget Gaming", price: "₹25K-60K" },
+                  { name: "ROG Zephyrus G14 (2024)", series: "Premium 14\" Gaming" },
+                  { name: "ROG Zephyrus G15/G16", series: "Premium 15/16\" Gaming" },
+                  { name: "ROG Strix G15/G17", series: "Performance Gaming" },
+                  { name: "ROG Strix SCAR 15/17", series: "Esports Gaming" },
+                  { name: "ROG Flow Z13/X13", series: "Gaming Convertibles" },
+                  { name: "ROG Zephyrus Duo 16", series: "Dual-Screen Gaming" },
+                  { name: "ROG Zephyrus M16", series: "Creator Gaming" },
+                  { name: "ROG Strix G (2021-2023)", series: "Previous Gen Gaming" },
+                  { name: "TUF Gaming Series", series: "Budget Gaming" },
                 ].map((model, index) => (
                   <div key={index} className="p-6 rounded-2xl border-2 border-border bg-card hover:border-primary transition-all">
                     <h3 className="font-bold text-lg mb-1">{model.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-2">{model.series}</p>
-                    <p className="text-primary font-semibold">{model.price}</p>
+                    <p className="text-sm text-muted-foreground">{model.series}</p>
                   </div>
                 ))}
               </div>
