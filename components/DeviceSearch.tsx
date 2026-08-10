@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from '@/lib/supabase/client';
 import { Input } from '@/components/ui/input';
@@ -52,7 +53,6 @@ export function DeviceSearch() {
         .order('name');
       
       if (data) {
-        // Filter unique by clean name & ensure logo_url is present
         const uniqueBrands: Brand[] = [];
         const seenNames = new Set<string>();
 
@@ -128,12 +128,6 @@ export function DeviceSearch() {
     setShowResults(false);
   };
 
-  const handleBrandClick = (brandSlug: string) => {
-    router.push(`/sell/laptop/${brandSlug}`);
-    setSearchQuery('');
-    setShowResults(false);
-  };
-
   const getLogoUrl = (logoUrl: string | null) => {
     if (!logoUrl) return null;
     if (logoUrl.startsWith('http')) return logoUrl;
@@ -192,9 +186,9 @@ export function DeviceSearch() {
         {brands.slice(0, 8).map(brand => {
           const logoSrc = getLogoUrl(brand.logo_url);
           return (
-            <button
+            <Link
               key={brand.id}
-              onClick={() => handleBrandClick(brand.slug)}
+              href={`/sell/laptop/${brand.slug}`}
               className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-border bg-card/80 hover:bg-accent hover:border-primary/50 shadow-sm transition-all text-xs sm:text-sm font-medium hover:scale-105"
             >
               {logoSrc ? (
@@ -208,7 +202,7 @@ export function DeviceSearch() {
                 />
               ) : null}
               <span>{brand.name}</span>
-            </button>
+            </Link>
           );
         })}
       </div>

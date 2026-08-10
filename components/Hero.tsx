@@ -1,7 +1,7 @@
 "use client";
 
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import { Laptop, Monitor, Shield, TrendingUp, Zap, Wrench, FileText } from "lucide-react";
 import { DeviceSearch } from "@/components/DeviceSearch";
 import { useState } from "react";
@@ -22,7 +22,6 @@ interface HeroProps {
 }
 
 const Hero = ({ location, title, description }: HeroProps = {}) => {
-  const router = useRouter();
   const [formOpen, setFormOpen] = useState(false);
   
   const defaultTitle = (
@@ -62,11 +61,11 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-6 sm:mb-8 px-4 sm:px-0">
-            <Button variant="cta" size="lg" onClick={() => router.push("/sell/laptop")} className="w-full sm:w-auto sm:min-w-[220px] h-11 sm:h-12 text-sm sm:text-base">
-              Sell Now
+            <Button variant="cta" size="lg" asChild className="w-full sm:w-auto sm:min-w-[220px] h-11 sm:h-12 text-sm sm:text-base">
+              <Link href="/sell/laptop">Sell Now</Link>
             </Button>
-            <Button variant="outline" size="lg" onClick={() => router.push("/sell/laptop")} className="w-full sm:w-auto sm:min-w-[220px] h-11 sm:h-12 text-sm sm:text-base">
-              Get Instant Quote
+            <Button variant="outline" size="lg" asChild className="w-full sm:w-auto sm:min-w-[220px] h-11 sm:h-12 text-sm sm:text-base">
+              <Link href="/sell/laptop">Get Instant Quote</Link>
             </Button>
           </div>
 
@@ -88,7 +87,7 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
 
           {/* Category cards */}
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto">
-            <div className="group cursor-pointer rounded-2xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-3 sm:p-5 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50" onClick={() => router.push("/sell/laptop")}>
+            <Link href="/sell/laptop" className="block group rounded-2xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-3 sm:p-5 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50">
               <div className="mb-2 sm:mb-3 inline-flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
                 <Laptop className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
               </div>
@@ -96,9 +95,9 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
               <p className="text-[11px] sm:text-xs text-muted-foreground">
                 Instant quotes for all laptop brands
               </p>
-            </div>
+            </Link>
 
-            <div className="group cursor-pointer rounded-2xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-3 sm:p-5 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-orange-500/5 hover:to-card/50" onClick={() => router.push("/repair")}>
+            <Link href="/repair" className="block group rounded-2xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-3 sm:p-5 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-orange-500/5 hover:to-card/50">
               <div className="mb-2 sm:mb-3 inline-flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-orange-500/10 transition-all group-hover:bg-orange-500/20 group-hover:scale-110">
                 <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-orange-500" />
               </div>
@@ -106,9 +105,9 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
               <p className="text-[11px] sm:text-xs text-muted-foreground">
                 Expert repair services for all brands
               </p>
-            </div>
+            </Link>
             
-            <div className="group cursor-pointer rounded-2xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-3 sm:p-5 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50" onClick={() => router.push("/sell/desktop")}>
+            <Link href="/sell/desktop" className="block group rounded-2xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-3 sm:p-5 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50">
               <div className="mb-2 sm:mb-3 inline-flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
                 <Monitor className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
               </div>
@@ -116,7 +115,7 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
               <p className="text-[11px] sm:text-xs text-muted-foreground">
                 Best prices for desktop computers
               </p>
-            </div>
+            </Link>
 
             <Dialog open={formOpen} onOpenChange={setFormOpen}>
               <DialogTrigger asChild>

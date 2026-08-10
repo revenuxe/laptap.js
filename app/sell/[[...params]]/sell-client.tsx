@@ -386,36 +386,24 @@ export const SellClient = () => {
   };
 
   const handleBrandSelect = (brand: any) => {
-    setTransitionLoading(true);
     setSelectedBrand(brand);
     setSelectedSeries(null);
     setSelectedModel(null);
-    setTimeout(() => {
-      router.push(`/sell/${category}/${brand.slug}`);
-      setTransitionLoading(false);
-      window.scrollTo(0, 0);
-    }, 300);
+    router.push(`/sell/${category}/${brand.slug}`);
+    window.scrollTo(0, 0);
   };
 
   const handleSeriesSelect = (series: any) => {
-    setTransitionLoading(true);
     setSelectedSeries(series);
     setSelectedModel(null);
-    setTimeout(() => {
-      router.push(`/sell/${category}/${selectedBrand.slug}/${series.slug}`);
-      setTransitionLoading(false);
-      window.scrollTo(0, 0);
-    }, 300);
+    router.push(`/sell/${category}/${selectedBrand.slug}/${series.slug}`);
+    window.scrollTo(0, 0);
   };
 
   const handleModelSelect = (model: any) => {
-    setTransitionLoading(true);
     setSelectedModel(model);
-    setTimeout(() => {
-      router.push(`/sell/${category}/${selectedBrand.slug}/${selectedSeries.slug}/${model.slug}`);
-      setTransitionLoading(false);
-      window.scrollTo(0, 0);
-    }, 300);
+    router.push(`/sell/${category}/${selectedBrand.slug}/${selectedSeries.slug}/${model.slug}`);
+    window.scrollTo(0, 0);
   };
 
   const handleCalculatePrice = async () => {

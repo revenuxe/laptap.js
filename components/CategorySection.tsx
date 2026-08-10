@@ -1,12 +1,11 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { Laptop, Monitor, Smartphone, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { Laptop, ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 const CategorySection = () => {
-  const router = useRouter();
   const repairService = {
     icon: Laptop,
     title: "Repair Laptop",
@@ -56,9 +55,11 @@ const CategorySection = () => {
                   </ul>
                 </div>
                 
-                <Button variant="cta" size="sm" className="group-hover:shadow-lg transition-all flex-shrink-0 sm:size-default" onClick={() => router.push(repairService.path)}>
-                  Book Repair
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                <Button variant="cta" size="sm" asChild className="group-hover:shadow-lg transition-all flex-shrink-0 sm:size-default">
+                  <Link href={repairService.path}>
+                    Book Repair
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </Button>
               </div>
             </div>

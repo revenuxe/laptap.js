@@ -37,14 +37,14 @@ const Header = () => {
         <div className="flex items-center gap-2 sm:gap-4">
           {!user ? (
             <>
-              <Button variant="outline" size="sm" onClick={() => router.push("/auth")} className="text-xs sm:text-sm h-8 sm:h-9">
-                Login
+              <Button variant="outline" size="sm" asChild className="text-xs sm:text-sm h-8 sm:h-9">
+                <Link href="/auth">Login</Link>
               </Button>
             </>
           ) : (
             <>
-              <Button variant="cta" size="sm" onClick={() => router.push("/sell")} className="hidden sm:inline-flex">
-                Sell Now
+              <Button variant="cta" size="sm" asChild className="hidden sm:inline-flex">
+                <Link href="/sell">Sell Now</Link>
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -55,8 +55,8 @@ const Header = () => {
                 <DropdownMenuContent align="end" className="rounded-xl">
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => router.push("/dashboard")}>Dashboard</DropdownMenuItem>
-                  {isAdmin && <DropdownMenuItem onClick={() => router.push("/admin/dashboard")}>Admin Panel</DropdownMenuItem>}
+                  <DropdownMenuItem asChild><Link href="/dashboard">Dashboard</Link></DropdownMenuItem>
+                  {isAdmin && <DropdownMenuItem asChild><Link href="/admin/dashboard">Admin Panel</Link></DropdownMenuItem>}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleSignOut}>
                     <LogOut className="mr-2 h-4 w-4" />

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { supabase } from '@/lib/supabase/client';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -16,7 +16,6 @@ interface Brand {
 }
 
 export function BrandsSection() {
-  const router = useRouter();
   const [brands, setBrands] = useState<Brand[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -49,10 +48,6 @@ export function BrandsSection() {
     }
   }
 
-  const handleBrandClick = (brandSlug: string) => {
-    router.push(`/sell/laptop/${brandSlug}`);
-  };
-
   if (loading || brands.length === 0) return null;
 
   return (
@@ -69,47 +64,51 @@ export function BrandsSection() {
 
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-4 gap-2.5 sm:gap-4 md:gap-6 max-w-5xl mx-auto mb-6 sm:mb-8">
           {brands.map((brand) => (
-            <Card
+            <Link
               key={brand.id}
-              className="cursor-pointer p-3 sm:p-6 hover:border-primary hover:shadow-lg transition-all group rounded-xl sm:rounded-lg"
-              onClick={() => brand.slug && handleBrandClick(brand.slug)}
+              href={`/sell/laptop/${brand.slug || ''}`}
+              className="block"
             >
-              {brand.logo_url ? (
-                <div className="aspect-square flex items-center justify-center overflow-hidden rounded-lg bg-background p-2 sm:p-4">
-                  <img 
-                    src={brand.logo_url.startsWith('http') 
-                      ? brand.logo_url 
-                      : supabase.storage.from('brand-logos').getPublicUrl(brand.logo_url).data.publicUrl
-                    }
-                    alt={brand.name}
-                    className="h-full w-full object-contain group-hover:scale-110 transition-transform"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                    }}
-                  />
-                </div>
-              ) : (
-                <div className="aspect-square flex items-center justify-center bg-background rounded-lg">
-                  <span className="text-xl sm:text-2xl font-bold text-muted-foreground">
-                    {brand.name.charAt(0)}
-                  </span>
-                </div>
-              )}
-              <h3 className="font-semibold text-center mt-2 sm:mt-3 text-xs sm:text-sm group-hover:text-primary transition-colors">
-                {brand.name}
-              </h3>
-            </Card>
+              <Card className="cursor-pointer p-3 sm:p-6 hover:border-primary hover:shadow-lg transition-all group rounded-xl sm:rounded-lg">
+                {brand.logo_url ? (
+                  <div className="aspect-square flex items-center justify-center overflow-hidden rounded-lg bg-background p-2 sm:p-4">
+                    <img 
+                      src={brand.logo_url.startsWith('http') 
+                        ? brand.logo_url 
+                        : supabase.storage.from('brand-logos').getPublicUrl(brand.logo_url).data.publicUrl
+                      }
+                      alt={brand.name}
+                      className="h-full w-full object-contain group-hover:scale-110 transition-transform"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div className="aspect-square flex items-center justify-center bg-background rounded-lg">
+                    <span className="text-xl sm:text-2xl font-bold text-muted-foreground">
+                      {brand.name.charAt(0)}
+                    </span>
+                  </div>
+                )}
+                <h3 className="font-semibold text-center mt-2 sm:mt-3 text-xs sm:text-sm group-hover:text-primary transition-colors">
+                  {brand.name}
+                </h3>
+              </Card>
+            </Link>
           ))}
         </div>
 
         <div className="text-center">
           <Button
             size="sm"
-            onClick={() => router.push('/sell/laptop')}
+            asChild
             className="group sm:size-lg"
           >
-            View All Brands
-            <ChevronRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            <Link href="/sell/laptop">
+              View All Brands
+              <ChevronRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </Button>
         </div>
       </div>
