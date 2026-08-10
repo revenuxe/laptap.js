@@ -16,7 +16,6 @@ import { OrderDetailsDialog } from './OrderDetailsDialog';
 export function OrdersTab() {
   const [orders, setOrders] = useState<any[]>([]);
   const [repairOrders, setRepairOrders] = useState<any[]>([]);
-  const [filteredOrders, setFilteredOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -24,7 +23,6 @@ export function OrdersTab() {
   // Filter states
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
-  const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [priceRange, setPriceRange] = useState<string>('all');
   const [dateRange, setDateRange] = useState<string>('all');
 
@@ -35,7 +33,6 @@ export function OrdersTab() {
 
   const fetchOrders = async () => {
     try {
-      // Fetch sell requests with models data including category
       const { data: sellRequestsData, error: sellRequestsError } = await supabase
         .from('sell_requests')
         .select(`
@@ -64,10 +61,8 @@ export function OrdersTab() {
         return;
       }
 
-      // Get unique user IDs
       const userIds = [...new Set(sellRequestsData.map(sr => sr.user_id))];
 
-      // Fetch profiles for these users
       const { data: profilesData, error: profilesError } = await supabase
         .from('profiles')
         .select('id, full_name, email')
@@ -75,24 +70,20 @@ export function OrdersTab() {
 
       if (profilesError) throw profilesError;
 
-      // Create a map of profiles by user_id
       const profilesMap = new Map(
         (profilesData || []).map(profile => [profile.id, profile])
       );
 
-      // Combine the data
       const ordersWithProfiles = sellRequestsData.map(order => ({
         ...order,
         profiles: profilesMap.get(order.user_id) || null
       }));
 
       setOrders(ordersWithProfiles);
-      setFilteredOrders(ordersWithProfiles);
     } catch (error) {
       toast.error('Failed to fetch orders');
       console.error('Error fetching orders:', error);
       setOrders([]);
-      setFilteredOrders([]);
     } finally {
       setLoading(false);
     }
@@ -117,42 +108,8 @@ export function OrdersTab() {
     }
   };
 
-  // Helper function to categorize device type using actual category from database
-  const getDeviceCategory = (order: any) => {
-    const categorySlug = order.models?.series?.brands?.categories?.slug?.toLowerCase() || '';
-    
-    if (categorySlug === 'mobile') {
-      return 'mobile';
-    } else if (categorySlug === 'laptop') {
-      return 'laptop';
-    } else if (categorySlug === 'desktop') {
-      return 'desktop';
-    }
-    return 'laptop'; // Default to laptop
-  };
-
-  // Helper function to categorize order stage
-  const getOrderStage = (status: string) => {
-    const pickupStages = ['quoted', 'pickup_scheduled', 'picked_up'];
-    return pickupStages.includes(status) ? 'pickup' : 'repair';
-  };
-
-  // Filter orders by category, stage, and other filters
-  const getFilteredOrders = (deviceType: 'mobile' | 'laptop', stage: 'pickup' | 'repair') => {
-    let filtered = orders.filter(order => {
-      const category = getDeviceCategory(order);
-      const orderStage = getOrderStage(order.status);
-      
-      // Filter by device type (mobile or laptop/desktop)
-      const matchesDevice = deviceType === 'mobile' 
-        ? category === 'mobile'
-        : ['laptop', 'desktop'].includes(category);
-      
-      // Filter by stage
-      const matchesStage = orderStage === stage;
-      
-      return matchesDevice && matchesStage;
-    });
+  const getFilteredOrders = () => {
+    let filtered = orders;
 
     // Search filter
     if (searchQuery) {
@@ -207,11 +164,6 @@ export function OrdersTab() {
     return filtered;
   };
 
-  // Update filteredOrders based on all filters
-  useEffect(() => {
-    setFilteredOrders(orders);
-  }, [orders]);
-
   const getStatusColor = (status: string) => {
     const colors: Record<string, string> = {
       quoted: 'bg-blue-500',
@@ -225,81 +177,7 @@ export function OrdersTab() {
     return colors[status] || 'bg-gray-500';
   };
 
-  const renderOrdersTable = (deviceType: 'mobile' | 'laptop', stage: 'pickup' | 'repair') => {
-    const filtered = getFilteredOrders(deviceType, stage);
-    
-    return (
-      <div className="overflow-x-auto">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>ID</TableHead>
-              <TableHead>Customer</TableHead>
-              <TableHead>Device</TableHead>
-              <TableHead>Price</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Date</TableHead>
-              <TableHead>Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {filtered.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
-                  {searchQuery || statusFilter !== 'all' || priceRange !== 'all' || dateRange !== 'all'
-                    ? 'No orders match your filters' 
-                    : 'No orders found'}
-                </TableCell>
-              </TableRow>
-            ) : (
-              filtered.map((order) => (
-              <TableRow key={order.id}>
-                <TableCell className="font-mono text-xs">
-                  {order.id.slice(0, 8)}
-                </TableCell>
-                <TableCell>
-                  <div className="text-sm">
-                    <div className="font-medium">{order.config?.customer_name || order.profiles?.full_name || 'Unknown'}</div>
-                    <div className="text-muted-foreground">{order.config?.customer_mobile || order.profiles?.phone}</div>
-                    <div className="text-xs text-muted-foreground">{order.profiles?.email}</div>
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <div className="text-sm">
-                    {order.models?.series?.brands?.name} {order.models?.series?.name}
-                  </div>
-                  <div className="text-xs text-muted-foreground">{order.models?.name}</div>
-                </TableCell>
-                <TableCell className="font-semibold">
-                  ₹{order.estimated_price?.toLocaleString()}
-                </TableCell>
-                <TableCell>
-                  <Badge className={getStatusColor(order.status)}>
-                    {order.status.replace('_', ' ')}
-                  </Badge>
-                </TableCell>
-                <TableCell className="text-sm text-muted-foreground">
-                  {new Date(order.created_at).toLocaleDateString()}
-                </TableCell>
-                <TableCell>
-                  <Button 
-                    variant="ghost" 
-                    size="sm"
-                    onClick={() => {
-                      setSelectedOrder(order);
-                      setDialogOpen(true);
-                    }}
-                  >
-                    <Eye className="h-4 w-4" />
-                  </Button>
-                </TableCell>
-              </TableRow>
-            )))}
-          </TableBody>
-        </Table>
-      </div>
-    );
-  };
+  const filteredOrders = getFilteredOrders();
 
   if (loading) {
     return <div className="p-6">Loading orders...</div>;
@@ -380,60 +258,76 @@ export function OrdersTab() {
         </TabsList>
 
         <TabsContent value="sell">
-          <Tabs defaultValue="laptop" className="space-y-4">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="laptop">Laptop / Desktop</TabsTrigger>
-              <TabsTrigger value="mobile">Mobile</TabsTrigger>
-            </TabsList>
-
-            {/* Laptop/Desktop Tab Content */}
-            <TabsContent value="laptop">
-              <Tabs defaultValue="pickup" className="space-y-4">
-                <TabsList>
-                  <TabsTrigger value="pickup">Pickup Orders</TabsTrigger>
-                  <TabsTrigger value="repair">Processing / Repair</TabsTrigger>
-                </TabsList>
-
-                <TabsContent value="pickup">
-                  <div className="mb-3 text-sm text-muted-foreground">
-                    {getFilteredOrders('laptop', 'pickup').length} orders in pickup stage
-                  </div>
-                  {renderOrdersTable('laptop', 'pickup')}
-                </TabsContent>
-
-                <TabsContent value="repair">
-                  <div className="mb-3 text-sm text-muted-foreground">
-                    {getFilteredOrders('laptop', 'repair').length} orders in processing/repair stage
-                  </div>
-                  {renderOrdersTable('laptop', 'repair')}
-                </TabsContent>
-              </Tabs>
-            </TabsContent>
-
-            {/* Mobile Tab Content */}
-            <TabsContent value="mobile">
-              <Tabs defaultValue="pickup" className="space-y-4">
-                <TabsList>
-                  <TabsTrigger value="pickup">Pickup Orders</TabsTrigger>
-                  <TabsTrigger value="repair">Processing / Repair</TabsTrigger>
-                </TabsList>
-
-                <TabsContent value="pickup">
-                  <div className="mb-3 text-sm text-muted-foreground">
-                    {getFilteredOrders('mobile', 'pickup').length} orders in pickup stage
-                  </div>
-                  {renderOrdersTable('mobile', 'pickup')}
-                </TabsContent>
-
-                <TabsContent value="repair">
-                  <div className="mb-3 text-sm text-muted-foreground">
-                    {getFilteredOrders('mobile', 'repair').length} orders in processing/repair stage
-                  </div>
-                  {renderOrdersTable('mobile', 'repair')}
-                </TabsContent>
-              </Tabs>
-            </TabsContent>
-          </Tabs>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>ID</TableHead>
+                  <TableHead>Customer</TableHead>
+                  <TableHead>Device</TableHead>
+                  <TableHead>Price</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredOrders.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
+                      {searchQuery || statusFilter !== 'all' || priceRange !== 'all' || dateRange !== 'all'
+                        ? 'No orders match your filters' 
+                        : 'No orders found'}
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  filteredOrders.map((order) => (
+                    <TableRow key={order.id}>
+                      <TableCell className="font-mono text-xs">
+                        {order.id.slice(0, 8)}
+                      </TableCell>
+                      <TableCell>
+                        <div className="text-sm">
+                          <div className="font-medium">{order.config?.customer_name || order.profiles?.full_name || 'Unknown'}</div>
+                          <div className="text-muted-foreground">{order.config?.customer_mobile || order.profiles?.phone}</div>
+                          <div className="text-xs text-muted-foreground">{order.profiles?.email}</div>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="text-sm">
+                          {order.models?.series?.brands?.name} {order.models?.series?.name}
+                        </div>
+                        <div className="text-xs text-muted-foreground">{order.models?.name}</div>
+                      </TableCell>
+                      <TableCell className="font-semibold">
+                        ₹{order.estimated_price?.toLocaleString()}
+                      </TableCell>
+                      <TableCell>
+                        <Badge className={getStatusColor(order.status)}>
+                          {order.status.replace('_', ' ')}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-sm text-muted-foreground">
+                        {new Date(order.created_at).toLocaleDateString()}
+                      </TableCell>
+                      <TableCell>
+                        <Button 
+                          variant="ghost" 
+                          size="sm"
+                          onClick={() => {
+                            setSelectedOrder(order);
+                            setDialogOpen(true);
+                          }}
+                        >
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </TabsContent>
 
         <TabsContent value="repair">
