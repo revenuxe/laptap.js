@@ -6,7 +6,7 @@ import { X } from "lucide-react";
 
 const WhatsAppFloat = () => {
   const [showPopup, setShowPopup] = useState(false);
-  const whatsappNumber = "916360039957";
+  const whatsappNumber = "919886579923";
   const message = "Hi! I want to sell my device.";
 
   useEffect(() => {

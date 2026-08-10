@@ -81,8 +81,8 @@ export default function HomePage() {
             description:
               "Bengaluru's most trusted platform for selling used laptops, mobile phones, and desktop computers with instant cash payment",
             url: "https://www.laptap.in",
-            telephone: "+916360039957",
-            priceRange: "â‚¹â‚¹",
+            telephone: "+919886579923",
+            priceRange: "₹₹",
             address: {
               "@type": "PostalAddress",
               streetAddress: "HBR Layout, Nagawara Main Road",

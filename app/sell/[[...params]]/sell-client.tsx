@@ -97,7 +97,7 @@ export const SellClient = () => {
       // Only load from URL if we're not restoring saved state
       loadFromUrlParams();
     }
-  }, [params.category, params.brand, params.series, params.model]);
+  }, [JSON.stringify(params)]);
 
   // Restore form state after login
   useEffect(() => {
@@ -148,9 +148,15 @@ export const SellClient = () => {
     setLoadingFromSlug(true);
     
     try {
+      const urlSegments = Array.isArray(params?.params) ? params.params : [];
+      const categorySlug = urlSegments[0] || params?.category;
+      const brandSlug = urlSegments[1] || params?.brand;
+      const seriesSlug = urlSegments[2] || params?.series;
+      const modelSlug = urlSegments[3] || params?.model;
+
       // Load category
-      if (params.category) {
-        const cat = params.category as "laptop" | "desktop" | "mobile";
+      if (categorySlug) {
+        const cat = categorySlug as "laptop" | "desktop" | "mobile";
         setCategory(cat);
         
         // Get category ID first
@@ -161,11 +167,11 @@ export const SellClient = () => {
           .single();
         
         // Load brand if in URL
-        if (params.brand && categoryData) {
+        if (brandSlug && categoryData) {
           const { data: brandData, error: brandError } = await supabase
             .from('brands')
             .select('*')
-            .eq('slug', params.brand)
+            .eq('slug', brandSlug)
             .eq('category_id', categoryData.id)
             .maybeSingle();
           
@@ -173,11 +179,11 @@ export const SellClient = () => {
             setSelectedBrand(brandData);
             
             // Load series if in URL
-            if (params.series) {
+            if (seriesSlug) {
               const { data: seriesData, error: seriesError } = await supabase
                 .from('series')
                 .select('*')
-                .eq('slug', params.series)
+                .eq('slug', seriesSlug)
                 .eq('brand_id', brandData.id)
                 .maybeSingle();
               
@@ -185,11 +191,11 @@ export const SellClient = () => {
                 setSelectedSeries(seriesData);
                 
                 // Load model if in URL
-                if (params.model) {
+                if (modelSlug) {
                   const { data: modelData, error: modelError } = await supabase
                     .from('models')
                     .select('*')
-                    .eq('slug', params.model)
+                    .eq('slug', modelSlug)
                     .eq('series_id', seriesData.id)
                     .maybeSingle();
                   
@@ -616,7 +622,7 @@ export const SellClient = () => {
                 <Card 
                   className="group relative overflow-hidden cursor-pointer border-2 hover:border-[#25D366] hover:shadow-lg transition-all duration-300"
                   onClick={() => {
-                    const whatsappNumber = "916360039957";
+                    const whatsappNumber = "919886579923";
                     const message = `Hi! I want to sell my ${category}.`;
                     const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
                     window.open(url, '_blank');

@@ -100,8 +100,8 @@ export const PageClient = () => {
                         </div>
                         <div>
                           <h3 className="font-semibold mb-1">Phone</h3>
-                          <a href="tel:+916360039957" className="text-primary hover:underline">
-                            +91 63600 39957
+                          <a href="tel:+919886579923" className="text-primary hover:underline">
+                            +91 98865 79923
                           </a>
                         </div>
                       </div>
