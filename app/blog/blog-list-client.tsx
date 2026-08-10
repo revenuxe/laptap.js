@@ -1,0 +1,110 @@
+"use client";
+
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import Link from "next/link";
+import { Calendar, ArrowRight } from "lucide-react";
+import { Card } from "@/components/ui/card";
+
+interface BlogPost {
+  id: string | number;
+  title: string;
+  excerpt: string;
+  created_at: string | null;
+  category: string;
+  slug: string;
+}
+
+const fallbackPosts: BlogPost[] = [
+  {
+    id: 1,
+    title: "Top 10 Things to Check Before Buying a Refurbished Laptop",
+    excerpt: "Learn the essential factors to consider when purchasing a refurbished laptop to ensure you get the best value for your money.",
+    created_at: "2025-10-01",
+    category: "Buying Guide",
+    slug: "buying-refurbished-laptop-guide",
+  },
+  {
+    id: 2,
+    title: "How to Prepare Your Laptop for Sale: A Complete Guide",
+    excerpt: "Step-by-step instructions on backing up data, wiping your device, and getting the best price when selling your laptop.",
+    created_at: "2025-09-28",
+    category: "Selling Tips",
+    slug: "prepare-laptop-for-sale",
+  },
+  {
+    id: 3,
+    title: "Refurbished vs New Laptops: Which Should You Choose?",
+    excerpt: "Compare the pros and cons of refurbished and new laptops to make an informed decision for your needs and budget.",
+    created_at: "2025-09-25",
+    category: "Comparison",
+    slug: "refurbished-vs-new-laptops",
+  },
+];
+
+export function BlogListClient({ blogPosts }: { blogPosts: BlogPost[] | null }) {
+  const displayPosts = blogPosts && blogPosts.length > 0 ? blogPosts : fallbackPosts;
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-1">
+        {/* Hero Section */}
+        <section className="py-16 md:py-24 bg-gradient-to-br from-primary/5 to-secondary/5">
+          <div className="container">
+            <div className="max-w-3xl mx-auto text-center">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6">Laptap Blog</h1>
+              <p className="text-lg text-muted-foreground">
+                Expert insights, guides, and tips for buying and selling laptops
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Blog Posts Section */}
+        <section className="py-16 md:py-24">
+          <div className="container">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {displayPosts.map((post) => (
+                <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                  <div className="p-6">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+                      <Calendar className="h-4 w-4" />
+                      <time dateTime={post.created_at ?? undefined}>
+                        {post.created_at ? new Date(post.created_at).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        }) : ""}
+                      </time>
+                    </div>
+                    <span className="inline-block px-3 py-1 text-xs font-semibold bg-primary/10 text-primary rounded-full mb-3">
+                      {post.category}
+                    </span>
+                    <h2 className="text-xl font-bold mb-3 line-clamp-2">{post.title}</h2>
+                    <p className="text-muted-foreground mb-4 line-clamp-3">{post.excerpt}</p>
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className="inline-flex items-center gap-2 text-primary hover:underline font-medium"
+                    >
+                      Read More <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </div>
+                </Card>
+              ))}
+            </div>
+
+            {blogPosts && blogPosts.length > 0 && (
+              <div className="mt-12 text-center">
+                <p className="text-muted-foreground">
+                  More articles coming soon! Stay tuned for expert insights and guides.
+                </p>
+              </div>
+            )}
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </div>
+  );
+}

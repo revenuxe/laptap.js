@@ -13,10 +13,10 @@ serve(async (req) => {
 
   try {
     const { topic, keywords, category } = await req.json();
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+    const API_KEY = Deno.env.get("GEMINI_API_KEY") || Deno.env.get("OPENAI_API_KEY");
 
-    if (!LOVABLE_API_KEY) {
-      throw new Error("LOVABLE_API_KEY is not configured");
+    if (!API_KEY) {
+      throw new Error("AI API Key (GEMINI_API_KEY or OPENAI_API_KEY) is not configured");
     }
 
     console.log("Generating blog for topic:", topic);
@@ -28,20 +28,14 @@ CRITICAL REQUIREMENTS:
 1. Word Count: 2500-2700 words (THIS IS MANDATORY)
 2. Writing Style: Natural, conversational, and helpful - as if written by a human expert
 3. Readability: Write at a 12-year-old reading level (simple, clear language)
-4. Structure:
-   - Compelling introduction (hook the reader emotionally)
-   - Use H2 headings for main sections (##)
-   - Use bullet points and numbered lists for clarity
-   - Include 4 sections where images should be placed with marker: [IMAGE_PLACEHOLDER_X] where X is 1-4
-   - Conclusion with clear call-to-action
-
-5. Content Quality:
-   - Show real expertise with specific examples
-   - Include case studies or scenarios (make them realistic)
-   - Add statistics or data points (mark with "studies show" or "according to experts")
-   - Use long-tail keywords naturally: ${keywords.join(", ")}
-   - Make it emotional and relatable
-   - Do NOT include image placeholders - content only
+4. Keywords to naturally include: ${keywords.join(', ')}
+5. Structure:
+   - Catchy Title
+   - Intro (engaging hook, human storytelling)
+   - Multiple H2 Sections with detailed sub-points
+   - Bulleted/Numbered lists for readability
+   - Real-world advice and practical tips
+   - Conclusion with clear CTA to sell device on Laptap
 
 6. SEO Best Practices:
    - Use keywords naturally throughout (no stuffing)
@@ -52,14 +46,14 @@ CRITICAL REQUIREMENTS:
 
 Please write the full blog post now. Remember: 2500-2700 words is mandatory.`;
 
-    const contentResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const contentResponse = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
+        Authorization: `Bearer ${API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
+        model: "gemini-2.5-flash",
         messages: [
           { role: "system", content: "You are an expert blog writer who creates engaging, SEO-optimized content that sounds completely natural and human-written." },
           { role: "user", content: contentPrompt }
@@ -83,14 +77,14 @@ Format your response as JSON:
   "description": "your meta description here"
 }`;
 
-    const metaResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const metaResponse = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
+        Authorization: `Bearer ${API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
+        model: "gemini-2.5-flash",
         messages: [
           { role: "system", content: "You create compelling, emotional meta titles and descriptions. Always respond with valid JSON." },
           { role: "user", content: metaPrompt }
@@ -111,79 +105,27 @@ Format your response as JSON:
 
     console.log("Meta information generated");
 
-    // Step 3: Generate featured image
-    const imagePrompt = `Professional high-quality photo of a modern laptop on a clean desk with natural lighting, realistic, detailed, 4K quality`;
-
-    let featuredImageUrl = "";
-
-    try {
-      console.log("Generating featured image...");
-      
-      const imageResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${LOVABLE_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "google/gemini-2.5-flash-image-preview",
-          messages: [
-            {
-              role: "user",
-              content: imagePrompt
-            }
-          ],
-          modalities: ["image", "text"]
-        }),
-      });
-
-      const imageData = await imageResponse.json();
-      
-      if (imageData.choices?.[0]?.message?.images?.[0]?.image_url?.url) {
-        featuredImageUrl = imageData.choices[0].message.images[0].image_url.url;
-        console.log("Featured image generated successfully");
-      } else {
-        console.error("Failed to generate featured image");
-      }
-    } catch (imageError) {
-      console.error("Error generating featured image:", imageError);
-    }
-
-    // Step 4: Clean up content (remove any image placeholders)
-    let finalContent = blogContent.replace(/\[IMAGE_PLACEHOLDER_\d+\]/g, "");
-
-    // Generate slug from topic
-    const slug = topic.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-
-    // Create excerpt (first 160 characters)
-    const plainText = blogContent.replace(/[#*\[\]]/g, '').trim();
-    const excerpt = plainText.substring(0, 157) + '...';
+    const slug = topic.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
 
     return new Response(
       JSON.stringify({
         title: topic,
         slug,
-        excerpt,
-        content: finalContent,
+        content: blogContent,
+        excerpt: metaInfo.description,
         metaTitle: metaInfo.title,
         metaDescription: metaInfo.description,
         category,
-        featuredImage: featuredImageUrl,
         keywords,
-        wordCount: blogContent.split(' ').length
+        wordCount: blogContent.split(' ').length,
       }),
-      {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      }
+      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
-  } catch (error) {
-    console.error("Error generating blog:", error);
+  } catch (error: any) {
+    console.error("Error in generate-blog function:", error);
     return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      }
+      JSON.stringify({ error: error.message }),
+      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
 });

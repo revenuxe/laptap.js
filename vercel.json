@@ -10,23 +10,6 @@
       ],
       "destination": "https://www.laptap.in/:path*",
       "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "http://www.laptap.in"
-        }
-      ],
-      "destination": "https://www.laptap.in/:path*",
-      "permanent": true
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
     }
   ]
 }

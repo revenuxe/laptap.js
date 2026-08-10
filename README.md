@@ -1,73 +1,36 @@
-# Welcome to your Lovable project
+# Laptap — Tech Resale & Repair Platform
 
-## Project info
+India's most trusted platform for selling used laptops, desktops, and mobile phones with instant cash payment and free doorstep pickup. Built with Next.js 14, React 18, Tailwind CSS, and Supabase.
 
-**URL**: https://lovable.dev/projects/8634ed88-7ded-4005-ac7c-a28d0fcb92ac
+## Tech Stack
 
-## How can I edit this code?
+- **Framework**: [Next.js 14](https://nextjs.org/) (App Router, SSR)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) + [ShadCN/UI](https://ui.shadcn.com/)
+- **Backend & Auth**: [Supabase](https://supabase.com/)
+- **State & Data**: React Query (TanStack), React Hook Form, Zod
 
-There are several ways of editing your application.
+## Getting Started
 
-**Use Lovable**
+### Environment Setup
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/8634ed88-7ded-4005-ac7c-a28d0fcb92ac) and start prompting.
+Create `.env.local` in the project root:
 
-Changes made via Lovable will be committed automatically to this repo.
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://ziuuektwmuwqdeiafnkz.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
-**Use your preferred IDE**
+### Development
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Build
 
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/8634ed88-7ded-4005-ac7c-a28d0fcb92ac) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+```bash
+npm run build
+npm run start
+```
