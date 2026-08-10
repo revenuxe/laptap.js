@@ -33,14 +33,19 @@ export const SellClient = () => {
   const router = useRouter();
   const { user } = useAuth();
   
-  const [step, setStep] = useState<Step>("category");
+  const urlSegments = Array.isArray(params?.params) ? params.params : [];
+  const initialCatSlug = urlSegments[0] || params?.category;
+  const initialCategory = (initialCatSlug === "laptop" || initialCatSlug === "desktop") ? initialCatSlug as "laptop" | "desktop" : "";
+  const initialStep: Step = initialCategory ? (urlSegments[1] ? "brand" : "selection_method") : "category";
+
+  const [step, setStep] = useState<Step>(initialStep);
   const [simpleFormOpen, setSimpleFormOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [transitionLoading, setTransitionLoading] = useState(false);
   const [loadingFromSlug, setLoadingFromSlug] = useState(false);
   
   // Form data
-  const [category, setCategory] = useState<"laptop" | "desktop" | "">("");
+  const [category, setCategory] = useState<"laptop" | "desktop" | "">(initialCategory);
   const [brands, setBrands] = useState<any[]>([]);
   const [selectedBrand, setSelectedBrand] = useState<any>(null);
   const [seriesList, setSeriesList] = useState<any[]>([]);
@@ -144,8 +149,6 @@ export const SellClient = () => {
   }, [user]);
 
   const loadFromUrlParams = async () => {
-    setLoadingFromSlug(true);
-    
     try {
       const urlSegments = Array.isArray(params?.params) ? params.params : [];
       const categorySlug = urlSegments[0] || params?.category;
@@ -157,6 +160,14 @@ export const SellClient = () => {
       if (categorySlug) {
         const cat = categorySlug as "laptop" | "desktop";
         setCategory(cat);
+
+        // Fast path: If no brand slug, we already know step is selection_method
+        if (!brandSlug) {
+          setStep("selection_method");
+          return;
+        }
+
+        setLoadingFromSlug(true);
         
         // Get category ID first
         const { data: categoryData } = await supabase
