@@ -59,15 +59,15 @@ export const PageClient = () => {
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
                 {[
-                  { name: "Dell XPS 17 9730", year: "2024 (13th Gen Intel)", price: "Ã¢â€šÂ¹60,000 - Ã¢â€šÂ¹1,40,000" },
-                  { name: "Dell XPS 15 9530", year: "2024 (13th Gen Intel)", price: "Ã¢â€šÂ¹50,000 - Ã¢â€šÂ¹1,10,000" },
-                  { name: "Dell XPS 13 Plus 9320", year: "2024 (12th Gen Intel)", price: "Ã¢â€šÂ¹45,000 - Ã¢â€šÂ¹85,000" },
-                  { name: "Dell XPS 13 9315", year: "2023 (12th Gen Intel)", price: "Ã¢â€šÂ¹40,000 - Ã¢â€šÂ¹75,000" },
-                  { name: "Dell XPS 17 9720", year: "2023 (12th Gen Intel)", price: "Ã¢â€šÂ¹55,000 - Ã¢â€šÂ¹1,20,000" },
-                  { name: "Dell XPS 15 9520", year: "2022 (12th Gen Intel)", price: "Ã¢â€šÂ¹45,000 - Ã¢â€šÂ¹95,000" },
-                  { name: "Dell XPS 13 9310", year: "2021 (11th Gen Intel)", price: "Ã¢â€šÂ¹35,000 - Ã¢â€šÂ¹65,000" },
-                  { name: "Dell XPS 15 9510", year: "2021 (11th Gen Intel)", price: "Ã¢â€šÂ¹40,000 - Ã¢â€šÂ¹85,000" },
-                  { name: "Dell XPS 13 9300", year: "2020 (10th Gen Intel)", price: "Ã¢â€šÂ¹30,000 - Ã¢â€šÂ¹55,000" },
+                  { name: "Dell XPS 17 9730", year: "2024 (13th Gen Intel)", price: "₹60,000 - ₹1,40,000" },
+                  { name: "Dell XPS 15 9530", year: "2024 (13th Gen Intel)", price: "₹50,000 - ₹1,10,000" },
+                  { name: "Dell XPS 13 Plus 9320", year: "2024 (12th Gen Intel)", price: "₹45,000 - ₹85,000" },
+                  { name: "Dell XPS 13 9315", year: "2023 (12th Gen Intel)", price: "₹40,000 - ₹75,000" },
+                  { name: "Dell XPS 17 9720", year: "2023 (12th Gen Intel)", price: "₹55,000 - ₹1,20,000" },
+                  { name: "Dell XPS 15 9520", year: "2022 (12th Gen Intel)", price: "₹45,000 - ₹95,000" },
+                  { name: "Dell XPS 13 9310", year: "2021 (11th Gen Intel)", price: "₹35,000 - ₹65,000" },
+                  { name: "Dell XPS 15 9510", year: "2021 (11th Gen Intel)", price: "₹40,000 - ₹85,000" },
+                  { name: "Dell XPS 13 9300", year: "2020 (10th Gen Intel)", price: "₹30,000 - ₹55,000" },
                 ].map((model, index) => (
                   <div key={index} className="p-6 rounded-2xl border-2 border-border bg-card hover:border-primary transition-all">
                     <h3 className="font-bold text-lg mb-2">{model.name}</h3>
@@ -124,19 +124,19 @@ export const PageClient = () => {
                   <Link href="/models/macbook-pro" className="text-primary hover:underline font-medium">
                     Sell MacBook Pro
                   </Link>
-                  <span className="text-muted-foreground">Ã¢â‚¬Â¢</span>
+                  <span className="text-muted-foreground">•</span>
                   <Link href="/models/hp-pavilion" className="text-primary hover:underline font-medium">
                     Sell HP Pavilion
                   </Link>
-                  <span className="text-muted-foreground">Ã¢â‚¬Â¢</span>
+                  <span className="text-muted-foreground">•</span>
                   <Link href="/models/lenovo-thinkpad" className="text-primary hover:underline font-medium">
                     Sell Lenovo ThinkPad
                   </Link>
-                  <span className="text-muted-foreground">Ã¢â‚¬Â¢</span>
+                  <span className="text-muted-foreground">•</span>
                   <Link href="/about" className="text-primary hover:underline font-medium">
                     About Us
                   </Link>
-                  <span className="text-muted-foreground">Ã¢â‚¬Â¢</span>
+                  <span className="text-muted-foreground">•</span>
                   <Link href="/" className="text-primary hover:underline font-medium">
                     Homepage
                   </Link>

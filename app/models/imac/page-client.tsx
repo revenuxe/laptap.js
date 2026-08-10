@@ -48,19 +48,19 @@ export const PageClient = () => {
                     <Link href="/models/macbook-pro" className="text-primary hover:underline font-medium">
                       Sell MacBook Pro
                     </Link>
-                    <span className="text-muted-foreground">Ã¢â‚¬Â¢</span>
+                    <span className="text-muted-foreground">•</span>
                     <Link href="/models/dell-xps" className="text-primary hover:underline font-medium">
                       Sell Dell XPS
                     </Link>
-                    <span className="text-muted-foreground">Ã¢â‚¬Â¢</span>
+                    <span className="text-muted-foreground">•</span>
                     <Link href="/bangalore" className="text-primary hover:underline font-medium">
                       Sell in Bangalore
                     </Link>
-                    <span className="text-muted-foreground">Ã¢â‚¬Â¢</span>
+                    <span className="text-muted-foreground">•</span>
                     <Link href="/blog" className="text-primary hover:underline font-medium">
                       Read Our Blog
                     </Link>
-                    <span className="text-muted-foreground">Ã¢â‚¬Â¢</span>
+                    <span className="text-muted-foreground">•</span>
                     <Link href="/" className="text-primary hover:underline font-medium">
                       Homepage
                     </Link>

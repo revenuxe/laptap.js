@@ -287,7 +287,7 @@ export function ModelsManager() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="basePrice">Base Price (â‚¹) *</Label>
+                  <Label htmlFor="basePrice">Base Price (₹) *</Label>
                   <Input
                     id="basePrice"
                     type="number"
@@ -369,7 +369,7 @@ export function ModelsManager() {
                   <TableCell>{model.name}</TableCell>
                   <TableCell>{model.series?.name}</TableCell>
                   <TableCell>{model.series?.brands?.name}</TableCell>
-                  <TableCell>â‚¹{model.base_price}</TableCell>
+                  <TableCell>₹{model.base_price}</TableCell>
                   <TableCell>
                     <span className={`px-2 py-1 rounded text-xs ${model.active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
                       {model.active ? 'Active' : 'Inactive'}

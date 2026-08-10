@@ -192,9 +192,9 @@ export function OrderDetailsDialog({
               <div>
                 <h3 className="font-semibold mb-2">Pricing</h3>
                 <div className="space-y-1 text-sm">
-                  <p><strong>Estimated Price:</strong> â‚¹{order.estimated_price?.toLocaleString()}</p>
+                  <p><strong>Estimated Price:</strong> ₹{order.estimated_price?.toLocaleString()}</p>
                   {order.final_price && (
-                    <p><strong>Final Price:</strong> â‚¹{order.final_price?.toLocaleString()}</p>
+                    <p><strong>Final Price:</strong> ₹{order.final_price?.toLocaleString()}</p>
                   )}
                 </div>
               </div>

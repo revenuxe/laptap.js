@@ -74,7 +74,7 @@ const ReferralCard = () => {
         <div className="mx-auto mb-2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary/10 flex items-center justify-center">
           <Gift className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
         </div>
-        <CardTitle className="text-lg sm:text-2xl">Refer a Friend, Earn â‚¹200</CardTitle>
+        <CardTitle className="text-lg sm:text-2xl">Refer a Friend, Earn ₹200</CardTitle>
         <CardDescription className="text-xs sm:text-base">
           Get rewarded for every successful laptop sale through your referral
         </CardDescription>
@@ -92,7 +92,7 @@ const ReferralCard = () => {
               </div>
             </div>
             <div className="text-xs sm:text-sm text-muted-foreground text-center">
-              Share your unique link with friends. When they sell their laptop, you earn â‚¹200!
+              Share your unique link with friends. When they sell their laptop, you earn ₹200!
             </div>
           </>
         ) : (

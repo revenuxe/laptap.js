@@ -34,7 +34,7 @@ export function PriceBreakdown({ breakdown }: PriceBreakdownProps) {
       {/* Base Price */}
       <div className="flex justify-between items-center pb-3 border-b">
         <span className="text-sm">Base Price</span>
-        <span className="font-semibold">â‚¹{breakdown.basePrice.toLocaleString()}</span>
+        <span className="font-semibold">₹{breakdown.basePrice.toLocaleString()}</span>
       </div>
 
       {/* Deductions */}
@@ -47,7 +47,7 @@ export function PriceBreakdown({ breakdown }: PriceBreakdownProps) {
               <Minus className="h-3 w-3 text-destructive" />
               <span>Brand Depreciation</span>
             </div>
-            <span className="text-destructive">-â‚¹{breakdown.deductions.initialDep.toLocaleString()}</span>
+            <span className="text-destructive">-₹{breakdown.deductions.initialDep.toLocaleString()}</span>
           </div>
         )}
 
@@ -57,7 +57,7 @@ export function PriceBreakdown({ breakdown }: PriceBreakdownProps) {
               <Minus className="h-3 w-3 text-destructive" />
               <span>Age Depreciation</span>
             </div>
-            <span className="text-destructive">-â‚¹{breakdown.deductions.ageDep.toLocaleString()}</span>
+            <span className="text-destructive">-₹{breakdown.deductions.ageDep.toLocaleString()}</span>
           </div>
         )}
 
@@ -67,7 +67,7 @@ export function PriceBreakdown({ breakdown }: PriceBreakdownProps) {
               <Minus className="h-3 w-3 text-destructive" />
               <span>Physical Condition</span>
             </div>
-            <span className="text-destructive">-â‚¹{breakdown.deductions.physicalDep.toLocaleString()}</span>
+            <span className="text-destructive">-₹{breakdown.deductions.physicalDep.toLocaleString()}</span>
           </div>
         )}
 
@@ -77,7 +77,7 @@ export function PriceBreakdown({ breakdown }: PriceBreakdownProps) {
               <Minus className="h-3 w-3 text-destructive" />
               <span>Screen Condition</span>
             </div>
-            <span className="text-destructive">-â‚¹{breakdown.deductions.screenDep.toLocaleString()}</span>
+            <span className="text-destructive">-₹{breakdown.deductions.screenDep.toLocaleString()}</span>
           </div>
         )}
 
@@ -87,7 +87,7 @@ export function PriceBreakdown({ breakdown }: PriceBreakdownProps) {
               <Minus className="h-3 w-3 text-destructive" />
               <span>Functional Issues</span>
             </div>
-            <span className="text-destructive">-â‚¹{breakdown.deductions.functionalDep.toLocaleString()}</span>
+            <span className="text-destructive">-₹{breakdown.deductions.functionalDep.toLocaleString()}</span>
           </div>
         )}
       </div>
@@ -103,7 +103,7 @@ export function PriceBreakdown({ breakdown }: PriceBreakdownProps) {
                 <Plus className="h-3 w-3 text-green-600" />
                 <span>Premium Specs</span>
               </div>
-              <span className="text-green-600">+â‚¹{breakdown.additions.specs.toLocaleString()}</span>
+              <span className="text-green-600">+₹{breakdown.additions.specs.toLocaleString()}</span>
             </div>
           )}
 
@@ -113,7 +113,7 @@ export function PriceBreakdown({ breakdown }: PriceBreakdownProps) {
                 <Plus className="h-3 w-3 text-green-600" />
                 <span>Competitive Bonus</span>
               </div>
-              <span className="text-green-600">+â‚¹{breakdown.additions.competitiveBonus.toLocaleString()}</span>
+              <span className="text-green-600">+₹{breakdown.additions.competitiveBonus.toLocaleString()}</span>
             </div>
           )}
         </div>

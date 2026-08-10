@@ -77,7 +77,7 @@ export const PageClient = () => {
                           <h3 className="font-semibold mb-1">Address</h3>
                           <p className="text-muted-foreground">
                             HBR Layout, Nagawara Main Road<br />
-                            Bangalore Ã¢â‚¬â€œ 560045, Karnataka, India
+                            Bangalore – 560045, Karnataka, India
                           </p>
                         </div>
                       </div>

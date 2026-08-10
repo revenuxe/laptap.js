@@ -271,7 +271,7 @@ export function OrdersTab() {
                   <div className="text-xs text-muted-foreground">{order.models?.name}</div>
                 </TableCell>
                 <TableCell className="font-semibold">
-                  â‚¹{order.estimated_price?.toLocaleString()}
+                  ₹{order.estimated_price?.toLocaleString()}
                 </TableCell>
                 <TableCell>
                   <Badge className={getStatusColor(order.status)}>
@@ -349,11 +349,11 @@ export function OrdersTab() {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Prices</SelectItem>
-            <SelectItem value="under10k">Under â‚¹10,000</SelectItem>
-            <SelectItem value="10k-25k">â‚¹10,000 - â‚¹25,000</SelectItem>
-            <SelectItem value="25k-50k">â‚¹25,000 - â‚¹50,000</SelectItem>
-            <SelectItem value="50k-100k">â‚¹50,000 - â‚¹1,00,000</SelectItem>
-            <SelectItem value="above100k">Above â‚¹1,00,000</SelectItem>
+            <SelectItem value="under10k">Under ₹10,000</SelectItem>
+            <SelectItem value="10k-25k">₹10,000 - ₹25,000</SelectItem>
+            <SelectItem value="25k-50k">₹25,000 - ₹50,000</SelectItem>
+            <SelectItem value="50k-100k">₹50,000 - ₹1,00,000</SelectItem>
+            <SelectItem value="above100k">Above ₹1,00,000</SelectItem>
           </SelectContent>
         </Select>
 

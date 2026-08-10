@@ -50,7 +50,7 @@ export const PageClient = () => {
 
                 <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-primary">Ã¢â€šÂ¹2L+</div>
+                    <div className="text-3xl font-bold text-primary">₹2L+</div>
                     <div className="text-sm text-muted-foreground">Max Payout</div>
                   </div>
                   <div className="text-center">
@@ -58,7 +58,7 @@ export const PageClient = () => {
                     <div className="text-sm text-muted-foreground">ROG Sold</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-primary">4.9Ã¢Ëœâ€¦</div>
+                    <div className="text-3xl font-bold text-primary">4.9★</div>
                     <div className="text-sm text-muted-foreground">Rating</div>
                   </div>
                   <div className="text-center">
@@ -145,15 +145,15 @@ export const PageClient = () => {
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
                 {[
-                  { name: "ROG Zephyrus G14 (2024)", series: "Premium 14\" Gaming", price: "Ã¢â€šÂ¹80K-1.4L" },
-                  { name: "ROG Zephyrus G15/G16", series: "Premium 15/16\" Gaming", price: "Ã¢â€šÂ¹90K-1.8L" },
-                  { name: "ROG Strix G15/G17", series: "Performance Gaming", price: "Ã¢â€šÂ¹50K-1.2L" },
-                  { name: "ROG Strix SCAR 15/17", series: "Esports Gaming", price: "Ã¢â€šÂ¹70K-1.6L" },
-                  { name: "ROG Flow Z13/X13", series: "Gaming Convertibles", price: "Ã¢â€šÂ¹60K-1.3L" },
-                  { name: "ROG Zephyrus Duo 16", series: "Dual-Screen Gaming", price: "Ã¢â€šÂ¹1L-2L+" },
-                  { name: "ROG Zephyrus M16", series: "Creator Gaming", price: "Ã¢â€šÂ¹70K-1.4L" },
-                  { name: "ROG Strix G (2021-2023)", series: "Previous Gen Gaming", price: "Ã¢â€šÂ¹35K-80K" },
-                  { name: "TUF Gaming Series", series: "Budget Gaming", price: "Ã¢â€šÂ¹25K-60K" },
+                  { name: "ROG Zephyrus G14 (2024)", series: "Premium 14\" Gaming", price: "₹80K-1.4L" },
+                  { name: "ROG Zephyrus G15/G16", series: "Premium 15/16\" Gaming", price: "₹90K-1.8L" },
+                  { name: "ROG Strix G15/G17", series: "Performance Gaming", price: "₹50K-1.2L" },
+                  { name: "ROG Strix SCAR 15/17", series: "Esports Gaming", price: "₹70K-1.6L" },
+                  { name: "ROG Flow Z13/X13", series: "Gaming Convertibles", price: "₹60K-1.3L" },
+                  { name: "ROG Zephyrus Duo 16", series: "Dual-Screen Gaming", price: "₹1L-2L+" },
+                  { name: "ROG Zephyrus M16", series: "Creator Gaming", price: "₹70K-1.4L" },
+                  { name: "ROG Strix G (2021-2023)", series: "Previous Gen Gaming", price: "₹35K-80K" },
+                  { name: "TUF Gaming Series", series: "Budget Gaming", price: "₹25K-60K" },
                 ].map((model, index) => (
                   <div key={index} className="p-6 rounded-2xl border-2 border-border bg-card hover:border-primary transition-all">
                     <h3 className="font-bold text-lg mb-1">{model.name}</h3>

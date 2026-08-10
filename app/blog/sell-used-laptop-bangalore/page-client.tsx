@@ -40,9 +40,9 @@ export const PageClient = () => {
                 </p>
 
                 <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground">
-                  <span>ÃƒÂ°Ã…Â¸Ã¢â‚¬Å“Ã¢â‚¬Â¦ Updated Jan 2024</span>
-                  <span>ÃƒÂ¢Ã‚ÂÃ‚Â±ÃƒÂ¯Ã‚Â¸Ã‚Â 15 min read</span>
-                  <span>ÃƒÂ°Ã…Â¸Ã¢â‚¬â„¢Ã‚Â¡ Expert Guide</span>
+                  <span>📅 Updated Jan 2024</span>
+                  <span> 15 min read</span>
+                  <span>💡 Expert Guide</span>
                 </div>
               </div>
             </div>
@@ -52,7 +52,7 @@ export const PageClient = () => {
           <section className="py-8 bg-muted/30">
             <div className="container max-w-4xl">
               <div className="p-6 rounded-2xl bg-card border border-border">
-                <h2 className="text-xl font-bold mb-4">ÃƒÂ°Ã…Â¸Ã¢â‚¬Å“Ã¢â‚¬Â¹ Table of Contents</h2>
+                <h2 className="text-xl font-bold mb-4">📋 Table of Contents</h2>
                 <div className="grid md:grid-cols-2 gap-3 text-sm">
                   <a href="#introduction" className="text-primary hover:underline">1. Introduction</a>
                   <a href="#why-sell" className="text-primary hover:underline">2. Why Sell Your Laptop in Bangalore?</a>
@@ -80,7 +80,7 @@ export const PageClient = () => {
                   Bangalore, India's Silicon Valley, is home to over 12 million people and thousands of tech professionals. With rapid technology upgrades, the city generates massive demand for used laptops while simultaneously creating opportunities to sell old devices. Whether you're upgrading to the latest MacBook Pro M3, switching from Dell to HP, or simply need quick cash, Bangalore offers numerous options to sell your used laptop.
                 </p>
                 <p className="text-muted-foreground leading-relaxed mb-4">
-                  In 2024, the used laptop market in Bangalore is thriving with an estimated ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹500+ crore annual turnover. Areas like Koramangala, Indiranagar, Whitefield, and Electronic City see hundreds of laptop transactions daily. However, getting the best price requires knowledge of market rates, trusted platforms, and smart negotiation strategies.
+                  In 2024, the used laptop market in Bangalore is thriving with an estimated ₹500+ crore annual turnover. Areas like Koramangala, Indiranagar, Whitefield, and Electronic City see hundreds of laptop transactions daily. However, getting the best price requires knowledge of market rates, trusted platforms, and smart negotiation strategies.
                 </p>
                 <p className="text-muted-foreground leading-relaxed">
                   This comprehensive guide will help you router the entire process of selling your used laptop in Bangalore - from initial preparation to final payment, ensuring you get maximum value while avoiding common pitfalls.
@@ -130,7 +130,7 @@ export const PageClient = () => {
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                    <span><strong>Upgrade Funding:</strong> Use proceeds to offset costs of new laptop purchases (ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹20,000-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹80,000 typical recovery)</span>
+                    <span><strong>Upgrade Funding:</strong> Use proceeds to offset costs of new laptop purchases (₹20,000-₹80,000 typical recovery)</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
@@ -182,7 +182,7 @@ export const PageClient = () => {
                       </li>
                     </ul>
                     <div className="bg-primary/10 p-4 rounded-lg">
-                      <p className="text-sm"><strong>ÃƒÂ°Ã…Â¸Ã¢â‚¬â„¢Ã‚Â¡ Pro Tip:</strong> Laptap provides the highest resale values in Bangalore with 4.9ÃƒÂ¢Ã‹Å“Ã¢â‚¬Â¦ rating from 5000+ sellers across Koramangala, Indiranagar, Whitefield.</p>
+                      <p className="text-sm"><strong>💡 Pro Tip:</strong> Laptap provides the highest resale values in Bangalore with 4.9★ rating from 5000+ sellers across Koramangala, Indiranagar, Whitefield.</p>
                     </div>
                   </div>
 
@@ -199,20 +199,20 @@ export const PageClient = () => {
                     </p>
                     <div className="grid md:grid-cols-2 gap-3 text-sm">
                       <div>
-                        <strong className="text-foreground">ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ Pros:</strong>
+                        <strong className="text-foreground">✓ Pros:</strong>
                         <ul className="text-muted-foreground mt-1 space-y-1">
-                          <li>ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ Instant cash in hand</li>
-                          <li>ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ Multiple buyers = better negotiation</li>
-                          <li>ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ No waiting period</li>
+                          <li>• Instant cash in hand</li>
+                          <li>• Multiple buyers = better negotiation</li>
+                          <li>• No waiting period</li>
                         </ul>
                       </div>
                       <div>
-                        <strong className="text-foreground">ÃƒÂ¢Ã‚ÂÃ…â€™ Cons:</strong>
+                        <strong className="text-foreground"> Cons:</strong>
                         <ul className="text-muted-foreground mt-1 space-y-1">
-                          <li>ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ Prices 20-30% lower than online</li>
-                          <li>ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ Travel required (traffic, parking)</li>
-                          <li>ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ Aggressive negotiation tactics</li>
-                          <li>ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ No data security guarantees</li>
+                          <li>• Prices 20-30% lower than online</li>
+                          <li>• Travel required (traffic, parking)</li>
+                          <li>• Aggressive negotiation tactics</li>
+                          <li>• No data security guarantees</li>
                         </ul>
                       </div>
                     </div>
@@ -228,20 +228,20 @@ export const PageClient = () => {
                     </div>
                     <div className="grid md:grid-cols-2 gap-3 text-sm">
                       <div>
-                        <strong className="text-foreground">ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ Pros:</strong>
+                        <strong className="text-foreground">✓ Pros:</strong>
                         <ul className="text-muted-foreground mt-1 space-y-1">
-                          <li>ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ Set your own price</li>
-                          <li>ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ Direct buyer interaction</li>
-                          <li>ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ Potentially 10-15% more than dealers</li>
+                          <li>• Set your own price</li>
+                          <li>• Direct buyer interaction</li>
+                          <li>• Potentially 10-15% more than dealers</li>
                         </ul>
                       </div>
                       <div>
-                        <strong className="text-foreground">ÃƒÂ¢Ã‚ÂÃ…â€™ Cons:</strong>
+                        <strong className="text-foreground"> Cons:</strong>
                         <ul className="text-muted-foreground mt-1 space-y-1">
-                          <li>ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ Time-consuming (1-3 weeks typical)</li>
-                          <li>ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ Fake buyers, safety concerns</li>
-                          <li>ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ Meeting strangers for demos</li>
-                          <li>ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ Payment fraud risks</li>
+                          <li>• Time-consuming (1-3 weeks typical)</li>
+                          <li>• Fake buyers, safety concerns</li>
+                          <li>• Meeting strangers for demos</li>
+                          <li>• Payment fraud risks</li>
                         </ul>
                       </div>
                     </div>
@@ -262,7 +262,7 @@ export const PageClient = () => {
                 </div>
 
                 <div className="mt-8 p-6 rounded-xl bg-primary/10 border border-primary">
-                  <h3 className="text-xl font-bold mb-3">ÃƒÂ°Ã…Â¸Ã…Â½Ã‚Â¯ Recommendation for Bangalore Sellers</h3>
+                  <h3 className="text-xl font-bold mb-3">🎯 Recommendation for Bangalore Sellers</h3>
                   <p className="text-muted-foreground">
                     For 90% of laptop sales in Bangalore, <strong>online buyback platforms like Laptap</strong> provide the best combination of price, convenience, and security. Use SP Road/Commercial Street only if you need cash within 1 hour and don't mind getting 20-30% less.
                   </p>
@@ -274,7 +274,7 @@ export const PageClient = () => {
                 <h2 className="text-3xl font-bold mb-6">Preparing Your Laptop for Sale: 10-Step Checklist</h2>
                 
                 <p className="text-muted-foreground mb-6">
-                  Proper preparation can increase your laptop's resale value by ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹3,000-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹10,000 in Bangalore's competitive market. Follow these steps:
+                  Proper preparation can increase your laptop's resale value by ₹3,000-₹10,000 in Bangalore's competitive market. Follow these steps:
                 </p>
 
                 <div className="space-y-4">
@@ -292,22 +292,22 @@ export const PageClient = () => {
                     {
                       title: "3. Deauthorize Software Licenses",
                       desc: "Adobe Creative Suite, Microsoft Office, Antivirus allow limited devices. Deauthorize to use licenses on new laptop.",
-                      tip: "Worth ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹10,000+ in license value that you can reuse."
+                      tip: "Worth ₹10,000+ in license value that you can reuse."
                     },
                     {
                       title: "4. Factory Reset / Format",
                       desc: "Windows: Settings > Update & Security > Recovery > Reset. Mac: Restart > Cmd+R > Disk Utility > Erase.",
-                      tip: "Professional buyers verify this. Skipping reduces price by ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹2,000-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹5,000."
+                      tip: "Professional buyers verify this. Skipping reduces price by ₹2,000-₹5,000."
                     },
                     {
                       title: "5. Clean Physically",
-                      desc: "Wipe screen, keyboard, trackpad with microfiber cloth. Remove dust from vents, ports. Clean appearance = ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹1,000-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹3,000 extra.",
-                      tip: "Bangalore dust accumulates fast. Compressed air cans available at SP Road (ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹200-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹300)."
+                      desc: "Wipe screen, keyboard, trackpad with microfiber cloth. Remove dust from vents, ports. Clean appearance = ₹1,000-₹3,000 extra.",
+                      tip: "Bangalore dust accumulates fast. Compressed air cans available at SP Road (₹200-₹300)."
                     },
                     {
                       title: "6. Gather Original Accessories",
                       desc: "Charger, box, warranty card, purchase invoice. Having original packaging increases value by 10-15%.",
-                      tip: "Original Apple/Dell chargers alone worth ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹2,000-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹5,000 in Bangalore market."
+                      tip: "Original Apple/Dell chargers alone worth ₹2,000-₹5,000 in Bangalore market."
                     },
                     {
                       title: "7. Check for Hardware Issues",
@@ -334,7 +334,7 @@ export const PageClient = () => {
                       <h3 className="font-bold mb-2">{step.title}</h3>
                       <p className="text-sm text-muted-foreground mb-2">{step.desc}</p>
                       <div className="bg-primary/10 p-3 rounded-lg text-sm">
-                        <strong>ÃƒÂ°Ã…Â¸Ã¢â‚¬â„¢Ã‚Â¡ {step.tip}</strong>
+                        <strong>💡 {step.tip}</strong>
                       </div>
                     </div>
                   ))}
@@ -362,32 +362,32 @@ export const PageClient = () => {
                       <tr>
                         <td className="border border-border p-3 font-medium">MacBook Pro 16" M3 Max</td>
                         <td className="border border-border p-3">2024</td>
-                        <td className="border border-border p-3 text-primary font-semibold">ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹1,20,000 - ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹2,50,000</td>
+                        <td className="border border-border p-3 text-primary font-semibold">₹1,20,000 - ₹2,50,000</td>
                       </tr>
                       <tr className="bg-muted/30">
                         <td className="border border-border p-3 font-medium">MacBook Air M2</td>
                         <td className="border border-border p-3">2023</td>
-                        <td className="border border-border p-3 text-primary font-semibold">ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹55,000 - ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹85,000</td>
+                        <td className="border border-border p-3 text-primary font-semibold">₹55,000 - ₹85,000</td>
                       </tr>
                       <tr>
                         <td className="border border-border p-3 font-medium">Dell XPS 15 (i7, 16GB)</td>
                         <td className="border border-border p-3">2023</td>
-                        <td className="border border-border p-3 text-primary font-semibold">ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹50,000 - ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹95,000</td>
+                        <td className="border border-border p-3 text-primary font-semibold">₹50,000 - ₹95,000</td>
                       </tr>
                       <tr className="bg-muted/30">
                         <td className="border border-border p-3 font-medium">HP Pavilion (i5, 8GB)</td>
                         <td className="border border-border p-3">2022</td>
-                        <td className="border border-border p-3 text-primary font-semibold">ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹25,000 - ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹40,000</td>
+                        <td className="border border-border p-3 text-primary font-semibold">₹25,000 - ₹40,000</td>
                       </tr>
                       <tr>
                         <td className="border border-border p-3 font-medium">Lenovo ThinkPad X1</td>
                         <td className="border border-border p-3">2021</td>
-                        <td className="border border-border p-3 text-primary font-semibold">ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹35,000 - ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹65,000</td>
+                        <td className="border border-border p-3 text-primary font-semibold">₹35,000 - ₹65,000</td>
                       </tr>
                       <tr className="bg-muted/30">
                         <td className="border border-border p-3 font-medium">Asus VivoBook (i3, 4GB)</td>
                         <td className="border border-border p-3">2020</td>
-                        <td className="border border-border p-3 text-primary font-semibold">ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹15,000 - ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹25,000</td>
+                        <td className="border border-border p-3 text-primary font-semibold">₹15,000 - ₹25,000</td>
                       </tr>
                     </tbody>
                   </table>
@@ -416,28 +416,28 @@ export const PageClient = () => {
                   </div>
 
                   <div className="p-4 rounded-xl bg-card border border-border">
-                    <h4 className="font-bold mb-2">3. Processor Impact (ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹5,000-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹20,000 difference)</h4>
+                    <h4 className="font-bold mb-2">3. Processor Impact (₹5,000-₹20,000 difference)</h4>
                     <p className="text-sm text-muted-foreground">
                       Intel i3/Celeron: Budget segment<br/>
-                      Intel i5/AMD Ryzen 5: +ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹8,000-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹12,000<br/>
-                      Intel i7/AMD Ryzen 7: +ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹15,000-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹25,000<br/>
-                      Intel i9/Apple M-series: Premium +ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹30,000-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹80,000
+                      Intel i5/AMD Ryzen 5: +₹8,000-₹12,000<br/>
+                      Intel i7/AMD Ryzen 7: +₹15,000-₹25,000<br/>
+                      Intel i9/Apple M-series: Premium +₹30,000-₹80,000
                     </p>
                   </div>
 
                   <div className="p-4 rounded-xl bg-card border border-border">
-                    <h4 className="font-bold mb-2">4. RAM & Storage (ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹3,000-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹15,000 boost)</h4>
+                    <h4 className="font-bold mb-2">4. RAM & Storage (₹3,000-₹15,000 boost)</h4>
                     <p className="text-sm text-muted-foreground">
                       4GB RAM: Entry level<br/>
-                      8GB RAM: +ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹3,000-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹5,000<br/>
-                      16GB RAM: +ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹8,000-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹12,000<br/>
-                      32GB+ RAM: +ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹15,000-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹25,000<br/>
-                      SSD vs HDD: +ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹5,000-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹10,000 (256GB SSD preferred in Bangalore market)
+                      8GB RAM: +₹3,000-₹5,000<br/>
+                      16GB RAM: +₹8,000-₹12,000<br/>
+                      32GB+ RAM: +₹15,000-₹25,000<br/>
+                      SSD vs HDD: +₹5,000-₹10,000 (256GB SSD preferred in Bangalore market)
                     </p>
                   </div>
 
                   <div className="p-4 rounded-xl bg-card border border-border">
-                    <h4 className="font-bold mb-2">5. Physical Condition (ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹5,000-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹20,000 variation)</h4>
+                    <h4 className="font-bold mb-2">5. Physical Condition (₹5,000-₹20,000 variation)</h4>
                     <p className="text-sm text-muted-foreground">
                       <strong>Excellent (90-95%):</strong> Like new, no scratches, perfect screen<br/>
                       <strong>Good (70-85%):</strong> Minor wear, small scratches acceptable<br/>
@@ -480,42 +480,42 @@ export const PageClient = () => {
                       title: "Get Instant Online Quote (2 minutes)",
                       desc: "Visit Laptap.in, select your laptop brand (Apple, Dell, HP, Lenovo, Asus), series, model, and configuration. Answer condition questions honestly.",
                       result: "Receive instant price quote based on current Bangalore market rates.",
-                      time: "ÃƒÂ¢Ã‚ÂÃ‚Â±ÃƒÂ¯Ã‚Â¸Ã‚Â 2 minutes"
+                      time: " 2 minutes"
                     },
                     {
                       step: "2",
                       title: "Schedule Free Doorstep Pickup (1 minute)",
                       desc: "Choose convenient time slot (morning 10AM-1PM, afternoon 2PM-5PM, evening 5PM-8PM). Enter your Bangalore address - Koramangala, Indiranagar, Whitefield, HSR, etc.",
                       result: "Confirmation SMS/email with technician details and estimated arrival time.",
-                      time: "ÃƒÂ¢Ã‚ÂÃ‚Â±ÃƒÂ¯Ã‚Â¸Ã‚Â 1 minute"
+                      time: " 1 minute"
                     },
                     {
                       step: "3",
                       title: "Wait for Doorstep Visit (2-4 hours in Bangalore)",
                       desc: "Verified technician with ID proof arrives at your location. Professional, courteous service guaranteed.",
                       result: "No need to travel to SP Road or Commercial Street, saving 2-3 hours.",
-                      time: "ÃƒÂ¢Ã‚ÂÃ‚Â±ÃƒÂ¯Ã‚Â¸Ã‚Â 2-4 hours waiting"
+                      time: " 2-4 hours waiting"
                     },
                     {
                       step: "4",
                       title: "Laptop Verification (10-15 minutes)",
                       desc: "Technician checks: Power on/off, display quality, keyboard/trackpad functionality, ports (USB, HDMI), WiFi/Bluetooth, battery health, physical condition, specifications match.",
                       result: "Final price confirmed (matches quote if condition accurate).",
-                      time: "ÃƒÂ¢Ã‚ÂÃ‚Â±ÃƒÂ¯Ã‚Â¸Ã‚Â 10-15 minutes"
+                      time: " 10-15 minutes"
                     },
                     {
                       step: "5",
                       title: "Instant Payment (2 minutes)",
-                      desc: "Choose payment method: UPI (PhonePe, GPay, Paytm), Bank Transfer (NEFT/IMPS), Cash (up to ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹50,000).",
+                      desc: "Choose payment method: UPI (PhonePe, GPay, Paytm), Bank Transfer (NEFT/IMPS), Cash (up to ₹50,000).",
                       result: "Money in your account immediately after laptop handover.",
-                      time: "ÃƒÂ¢Ã‚ÂÃ‚Â±ÃƒÂ¯Ã‚Â¸Ã‚Â 2 minutes"
+                      time: " 2 minutes"
                     },
                     {
                       step: "6",
                       title: "Data Wiping Certificate (Optional)",
                       desc: "Professional data wiping performed with industry-standard tools. Certificate provided for your records.",
                       result: "100% peace of mind about data security.",
-                      time: "ÃƒÂ¢Ã‚ÂÃ‚Â±ÃƒÂ¯Ã‚Â¸Ã‚Â Done after pickup"
+                      time: " Done after pickup"
                     }
                   ].map((item, index) => (
                     <div key={index} className="relative pl-16 pb-8 border-l-2 border-dashed border-primary/30 last:border-l-0 last:pb-0">
@@ -529,7 +529,7 @@ export const PageClient = () => {
                         </div>
                         <p className="text-sm text-muted-foreground mb-3">{item.desc}</p>
                         <div className="bg-primary/10 p-3 rounded-lg text-sm">
-                          <strong>ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ Result:</strong> {item.result}
+                          <strong>✓ Result:</strong> {item.result}
                         </div>
                       </div>
                     </div>
@@ -537,7 +537,7 @@ export const PageClient = () => {
                 </div>
 
                 <div className="mt-8 p-6 rounded-xl bg-primary/10 border border-primary text-center">
-                  <h3 className="text-xl font-bold mb-3">ÃƒÂ°Ã…Â¸Ã…Â½Ã‚Â¯ Total Time: 2-4 Hours</h3>
+                  <h3 className="text-xl font-bold mb-3">🎯 Total Time: 2-4 Hours</h3>
                   <p className="text-muted-foreground mb-4">
                     From quote to payment in under 4 hours - fastest way to sell laptops in Bangalore. 
                     Compare this to 1-3 weeks on OLX/Quikr or full day trip to SP Road.
@@ -576,7 +576,7 @@ export const PageClient = () => {
                     {
                       area: "Electronic City",
                       desc: "Tech park employees upgrading frequently. High volume sales area. Competitive pricing.",
-                      popular: "All mid-range laptops (ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹20K-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹60K)"
+                      popular: "All mid-range laptops (₹20K-₹60K)"
                     },
                     {
                       area: "HSR Layout",
@@ -586,7 +586,7 @@ export const PageClient = () => {
                     {
                       area: "Marathahalli",
                       desc: "Student-friendly area. Budget laptop demand. Quick cash for older models.",
-                      popular: "Entry-level laptops (ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹15K-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹35K)"
+                      popular: "Entry-level laptops (₹15K-₹35K)"
                     },
                     {
                       area: "BTM Layout",
@@ -626,52 +626,52 @@ export const PageClient = () => {
                 <div className="grid md:grid-cols-2 gap-6">
                   {[
                     {
-                      icon: "ÃƒÂ°Ã…Â¸Ã…Â½Ã‚Â¯",
+                      icon: "🎯",
                       title: "Sell Before Major Apple/Dell Launches",
                       tip: "Prices drop 10-15% after new model announcements. Sell 2-3 months before (typically September for Apple, January for Dell/HP)."
                     },
                     {
-                      icon: "ÃƒÂ°Ã…Â¸Ã¢â‚¬â„¢Ã‚Â°",
+                      icon: "💰",
                       title: "Keep Original Packaging & Accessories",
-                      tip: "Original box, charger, warranty card add ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹2,000-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹5,000 value in Bangalore's quality-conscious market."
+                      tip: "Original box, charger, warranty card add ₹2,000-₹5,000 value in Bangalore's quality-conscious market."
                     },
                     {
-                      icon: "ÃƒÂ°Ã…Â¸Ã¢â‚¬Å“Ã‚Â±",
+                      icon: "📱",
                       title: "Compare Multiple Platforms",
-                      tip: "Get quotes from 2-3 online platforms. Typically vary by ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹2,000-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹5,000. Choose highest offer with good reviews."
+                      tip: "Get quotes from 2-3 online platforms. Typically vary by ₹2,000-₹5,000. Choose highest offer with good reviews."
                     },
                     {
-                      icon: "ÃƒÂ°Ã…Â¸Ã¢â‚¬ÂÃ¢â‚¬â„¢",
+                      icon: "",
                       title: "Never Share Passwords/OTPs",
                       tip: "Legitimate buyers never ask for email passwords, banking OTPs, or social media logins. Red flag for fraud."
                     },
                     {
-                      icon: "ÃƒÂ¢Ã…â€œÃ‚Â¨",
+                      icon: "✨",
                       title: "Minor Upgrades Worth It",
-                      tip: "Cleaning, replacing worn keyboard stickers costs ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹500 but adds ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹2,000-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹3,000 value. Good ROI."
+                      tip: "Cleaning, replacing worn keyboard stickers costs ₹500 but adds ₹2,000-₹3,000 value. Good ROI."
                     },
                     {
-                      icon: "ÃƒÂ¢Ã‚ÂÃ‚Â°",
+                      icon: "",
                       title: "Sell During Peak Seasons",
                       tip: "July-August (college admissions), December-January (bonuses) see 15-20% higher prices than off-seasons."
                     },
                     {
-                      icon: "ÃƒÂ°Ã…Â¸Ã¢â‚¬Å“Ã‚Â¸",
+                      icon: "📸",
                       title: "Quality Photos Matter",
                       tip: "For OLX listings: 8-10 clear photos from all angles. Good lighting (natural afternoon light in Bangalore)."
                     },
                     {
-                      icon: "ÃƒÂ°Ã…Â¸Ã¢â‚¬â„¢Ã‚Â»",
+                      icon: "💻",
                       title: "Mention Upgrades Clearly",
                       tip: "Upgraded RAM/SSD after purchase? Mention it! Buyers appreciate transparency and pay more."
                     },
                     {
-                      icon: "ÃƒÂ°Ã…Â¸Ã‚Â¤Ã‚Â",
+                      icon: "",
                       title: "Honest Condition Description",
                       tip: "Over-promising leads to price negotiations at pickup. Honesty = smooth transactions."
                     },
                     {
-                      icon: "ÃƒÂ°Ã…Â¸Ã…Â½Ã¢â‚¬Å“",
+                      icon: "🎓",
                       title: "Corporate Laptops Need De-registration",
                       tip: "Company-issued laptops: Get proper clearance, remove asset tags, deregister from domain. Adds legitimacy."
                     }
@@ -692,43 +692,43 @@ export const PageClient = () => {
                 <div className="space-y-4">
                   {[
                     {
-                      mistake: "ÃƒÂ¢Ã‚ÂÃ…â€™ Accepting First Low Offer on SP Road",
-                      fix: "ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ Visit 3-4 shops on SP Road or get online quotes first. Price variations of ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹5,000-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹15,000 common.",
-                      loss: "Typical loss: ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹8,000-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹20,000"
+                      mistake: " Accepting First Low Offer on SP Road",
+                      fix: "✓ Visit 3-4 shops on SP Road or get online quotes first. Price variations of ₹5,000-₹15,000 common.",
+                      loss: "Typical loss: ₹8,000-₹20,000"
                     },
                     {
-                      mistake: "ÃƒÂ¢Ã‚ÂÃ…â€™ Meeting Unknown OLX Buyers Alone at Night",
-                      fix: "ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ Meet in public places (cafes in Koramangala, Indiranagar during daytime) or use verified doorstep services.",
+                      mistake: " Meeting Unknown OLX Buyers Alone at Night",
+                      fix: "✓ Meet in public places (cafes in Koramangala, Indiranagar during daytime) or use verified doorstep services.",
                       loss: "Safety risk, potential fraud"
                     },
                     {
-                      mistake: "ÃƒÂ¢Ã‚ÂÃ…â€™ Not Backing Up Data Before Sale",
-                      fix: "ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ Backup to cloud/external drive first. Once sold, data gone forever. Photos, documents, projects irreplaceable.",
+                      mistake: " Not Backing Up Data Before Sale",
+                      fix: "✓ Backup to cloud/external drive first. Once sold, data gone forever. Photos, documents, projects irreplaceable.",
                       loss: "Data loss worth lakhs"
                     },
                     {
-                      mistake: "ÃƒÂ¢Ã‚ÂÃ…â€™ Lying About Laptop Condition",
-                      fix: "ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ Disclose all issues honestly. Buyers test thoroughly anyway. Transparency builds trust, faster sales.",
+                      mistake: " Lying About Laptop Condition",
+                      fix: "✓ Disclose all issues honestly. Buyers test thoroughly anyway. Transparency builds trust, faster sales.",
                       loss: "Deal cancellations, wasted time"
                     },
                     {
-                      mistake: "ÃƒÂ¢Ã‚ÂÃ…â€™ Selling Too Late (4+ years old)",
-                      fix: "ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ Sell within 3 years for 40-50% recovery. Beyond 4 years, drops to 20-25% of original price.",
-                      loss: "ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹10,000-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹30,000 in depreciation"
+                      mistake: " Selling Too Late (4+ years old)",
+                      fix: "✓ Sell within 3 years for 40-50% recovery. Beyond 4 years, drops to 20-25% of original price.",
+                      loss: "₹10,000-₹30,000 in depreciation"
                     },
                     {
-                      mistake: "ÃƒÂ¢Ã‚ÂÃ…â€™ Ignoring Screen/Battery Issues",
-                      fix: "ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ Cracked screen repair costs ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹5,000 but reduces sale price by ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹8,000-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹15,000. Consider fixing first.",
-                      loss: "ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹3,000-ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹10,000 extra loss"
+                      mistake: " Ignoring Screen/Battery Issues",
+                      fix: "✓ Cracked screen repair costs ₹5,000 but reduces sale price by ₹8,000-₹15,000. Consider fixing first.",
+                      loss: "₹3,000-₹10,000 extra loss"
                     },
                     {
-                      mistake: "ÃƒÂ¢Ã‚ÂÃ…â€™ Accepting Partial/Delayed Payments",
-                      fix: "ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ Demand full payment before laptop handover. No checks, only UPI/cash. Delayed payment = potential fraud.",
+                      mistake: " Accepting Partial/Delayed Payments",
+                      fix: "✓ Demand full payment before laptop handover. No checks, only UPI/cash. Delayed payment = potential fraud.",
                       loss: "Risk of never getting paid"
                     },
                     {
-                      mistake: "ÃƒÂ¢Ã‚ÂÃ…â€™ Not Removing Personal Data Properly",
-                      fix: "ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ Factory reset not enough. Use disk wiping tools (DBAN for Windows, Disk Utility for Mac). Identity theft risk otherwise.",
+                      mistake: " Not Removing Personal Data Properly",
+                      fix: "✓ Factory reset not enough. Use disk wiping tools (DBAN for Windows, Disk Utility for Mac). Identity theft risk otherwise.",
                       loss: "Personal data compromise"
                     }
                   ].map((item, index) => (
@@ -738,7 +738,7 @@ export const PageClient = () => {
                         <p className="text-green-600 font-semibold">{item.fix}</p>
                       </div>
                       <div className="bg-muted/50 p-3 rounded-lg text-sm text-muted-foreground">
-                        <strong>ÃƒÂ°Ã…Â¸Ã¢â‚¬â„¢Ã‚Â¸ Potential Loss:</strong> {item.loss}
+                        <strong>💸 Potential Loss:</strong> {item.loss}
                       </div>
                     </div>
                   ))}
@@ -757,7 +757,7 @@ export const PageClient = () => {
                     },
                     {
                       q: "Can I sell laptop with broken screen in Bangalore?",
-                      a: "Yes! Broken/cracked screen laptops accepted with 40-60% price reduction depending on model. MacBook screen damage: -ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹15,000 to -ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹30,000. Regular laptop screen: -ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹3,000 to -ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹8,000."
+                      a: "Yes! Broken/cracked screen laptops accepted with 40-60% price reduction depending on model. MacBook screen damage: -₹15,000 to -₹30,000. Regular laptop screen: -₹3,000 to -₹8,000."
                     },
                     {
                       q: "Do I need to factory reset before selling in Bangalore?",

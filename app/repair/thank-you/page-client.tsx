@@ -49,19 +49,19 @@ export const PageClient = () => {
                 <h2 className="text-xl font-semibold">What's Next?</h2>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-2">
-                    <span className="text-primary">Ã¢Å“â€œ</span>
+                    <span className="text-primary">✓œ</span>
                     <span className="text-sm text-muted-foreground">
                       Our team will review your request and contact you within 24 hours
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-primary">Ã¢Å“â€œ</span>
+                    <span className="text-primary">✓œ</span>
                     <span className="text-sm text-muted-foreground">
                       You can track your repair status from your dashboard
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-primary">Ã¢Å“â€œ</span>
+                    <span className="text-primary">✓œ</span>
                     <span className="text-sm text-muted-foreground">
                       We'll schedule a pickup at your convenience
                     </span>

@@ -167,7 +167,7 @@ const ReferralsTab = () => {
                       {referral.status}
                     </Badge>
                   </TableCell>
-                  <TableCell>â‚¹{referral.reward_amount}</TableCell>
+                  <TableCell>₹{referral.reward_amount}</TableCell>
                   <TableCell>
                     {new Date(referral.created_at).toLocaleDateString()}
                   </TableCell>

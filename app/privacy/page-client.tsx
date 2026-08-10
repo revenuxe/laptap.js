@@ -166,7 +166,7 @@ export const PageClient = () => {
                 </p>
                 <p className="mt-2">
                   <strong>Email:</strong> laptap.in@gmail.com<br />
-                  <strong>Address:</strong> HBR Layout, Nagawara Main Road, Bangalore Ã¢â‚¬â€œ 560045
+                  <strong>Address:</strong> HBR Layout, Nagawara Main Road, Bangalore – 560045
                 </p>
               </section>
 

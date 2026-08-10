@@ -50,7 +50,7 @@ export const PageClient = () => {
 
                 <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-primary">Ã¢â€šÂ¹1.8L+</div>
+                    <div className="text-3xl font-bold text-primary">₹1.8L+</div>
                     <div className="text-sm text-muted-foreground">Max Payout</div>
                   </div>
                   <div className="text-center">
@@ -58,7 +58,7 @@ export const PageClient = () => {
                     <div className="text-sm text-muted-foreground">Predators Sold</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-primary">4.8Ã¢Ëœâ€¦</div>
+                    <div className="text-3xl font-bold text-primary">4.8★</div>
                     <div className="text-sm text-muted-foreground">Rating</div>
                   </div>
                   <div className="text-center">
@@ -145,15 +145,15 @@ export const PageClient = () => {
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
                 {[
-                  { name: "Predator Helios 16 (2024)", series: "Flagship Gaming", price: "Ã¢â€šÂ¹90K-1.8L" },
-                  { name: "Predator Helios 18", series: "Premium Large Screen", price: "Ã¢â€šÂ¹1L-1.7L" },
-                  { name: "Predator Helios 300 (2023)", series: "Popular Gaming", price: "Ã¢â€šÂ¹60K-1.2L" },
-                  { name: "Predator Triton 500 SE", series: "Slim Gaming", price: "Ã¢â€šÂ¹70K-1.4L" },
-                  { name: "Predator Triton 17 X", series: "Desktop Replacement", price: "Ã¢â€šÂ¹90K-1.6L" },
-                  { name: "Nitro 16 (2024)", series: "Mid-Range Gaming", price: "Ã¢â€šÂ¹45K-85K" },
-                  { name: "Nitro 5 (2022-2023)", series: "Budget Gaming", price: "Ã¢â€šÂ¹30K-60K" },
-                  { name: "Nitro V 15", series: "Entry Gaming", price: "Ã¢â€šÂ¹25K-45K" },
-                  { name: "Predator Helios Neo 16", series: "Value Flagship", price: "Ã¢â€šÂ¹55K-1L" },
+                  { name: "Predator Helios 16 (2024)", series: "Flagship Gaming", price: "₹90K-1.8L" },
+                  { name: "Predator Helios 18", series: "Premium Large Screen", price: "₹1L-1.7L" },
+                  { name: "Predator Helios 300 (2023)", series: "Popular Gaming", price: "₹60K-1.2L" },
+                  { name: "Predator Triton 500 SE", series: "Slim Gaming", price: "₹70K-1.4L" },
+                  { name: "Predator Triton 17 X", series: "Desktop Replacement", price: "₹90K-1.6L" },
+                  { name: "Nitro 16 (2024)", series: "Mid-Range Gaming", price: "₹45K-85K" },
+                  { name: "Nitro 5 (2022-2023)", series: "Budget Gaming", price: "₹30K-60K" },
+                  { name: "Nitro V 15", series: "Entry Gaming", price: "₹25K-45K" },
+                  { name: "Predator Helios Neo 16", series: "Value Flagship", price: "₹55K-1L" },
                 ].map((model, index) => (
                   <div key={index} className="p-6 rounded-2xl border-2 border-border bg-card hover:border-primary transition-all">
                     <h3 className="font-bold text-lg mb-1">{model.name}</h3>

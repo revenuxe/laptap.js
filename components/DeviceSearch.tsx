@@ -6,7 +6,6 @@ import { supabase } from '@/lib/supabase/client';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { Search, Laptop } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 interface Brand {
   id: string;
@@ -45,43 +44,64 @@ export function DeviceSearch() {
   }, []);
 
   async function loadBrands() {
-    const { data } = await (supabase
-      .from('brands')
-      .select('id, name, logo_url, slug') as any);
-    
-    if (data) {
-      setBrands(data as Brand[]);
+    try {
+      const { data } = await supabase
+        .from('brands')
+        .select('id, name, logo_url, slug')
+        .not('logo_url', 'is', null)
+        .order('name');
+      
+      if (data) {
+        // Filter unique by clean name & ensure logo_url is present
+        const uniqueBrands: Brand[] = [];
+        const seenNames = new Set<string>();
+
+        (data as Brand[]).forEach(brand => {
+          const cleanName = brand.name.trim();
+          if (cleanName && !seenNames.has(cleanName.toLowerCase()) && brand.logo_url) {
+            seenNames.add(cleanName.toLowerCase());
+            uniqueBrands.push({ ...brand, name: cleanName });
+          }
+        });
+
+        setBrands(uniqueBrands);
+      }
+    } catch (error) {
+      console.error('Error loading brands:', error);
     }
   }
 
   async function loadModels() {
-    const { data } = await supabase
-      .from('models')
-      .select(`
-        id,
-        name,
-        slug,
-        series (
+    try {
+      const { data } = await supabase
+        .from('models')
+        .select(`
           id,
           name,
           slug,
-          brand_id,
-          brands (
+          series (
+            id,
             name,
-            slug
+            slug,
+            brand_id,
+            brands (
+              name,
+              slug
+            )
           )
-        )
-      `)
-      .eq('active', true);
-    
-    if (data) {
-      // Sort by year (newest first), extracting year from model name
-      const sortedModels = (data as Model[]).sort((a, b) => {
-        const yearA = parseInt(a.name.match(/\b(19|20)\d{2}\b/)?.[0] || '0');
-        const yearB = parseInt(b.name.match(/\b(19|20)\d{2}\b/)?.[0] || '0');
-        return yearB - yearA; // Descending order (newest first)
-      });
-      setModels(sortedModels);
+        `)
+        .eq('active', true);
+      
+      if (data) {
+        const sortedModels = (data as Model[]).sort((a, b) => {
+          const yearA = parseInt(a.name.match(/\b(19|20)\d{2}\b/)?.[0] || '0');
+          const yearB = parseInt(b.name.match(/\b(19|20)\d{2}\b/)?.[0] || '0');
+          return yearB - yearA;
+        });
+        setModels(sortedModels);
+      }
+    } catch (error) {
+      console.error('Error loading models:', error);
     }
   }
 
@@ -102,8 +122,7 @@ export function DeviceSearch() {
     }
   };
 
-  const handleModelClick = async (model: Model) => {
-    // router with hierarchical slug-based URL
+  const handleModelClick = (model: Model) => {
     router.push(`/sell/laptop/${model.series.brands.slug}/${model.series.slug}/${model.slug}`);
     setSearchQuery('');
     setShowResults(false);
@@ -113,6 +132,12 @@ export function DeviceSearch() {
     router.push(`/sell/laptop/${brandSlug}`);
     setSearchQuery('');
     setShowResults(false);
+  };
+
+  const getLogoUrl = (logoUrl: string | null) => {
+    if (!logoUrl) return null;
+    if (logoUrl.startsWith('http')) return logoUrl;
+    return supabase.storage.from('brand-logos').getPublicUrl(logoUrl).data.publicUrl;
   };
 
   return (
@@ -159,19 +184,33 @@ export function DeviceSearch() {
         </Card>
       )}
 
-      <div className="mt-6 flex flex-wrap gap-3 justify-center">
-        <p className="w-full text-center text-sm text-muted-foreground mb-2">Popular Brands:</p>
-        {brands.slice(0, 6).map(brand => (
-          <Button
-            key={brand.id}
-            variant="outline"
-            size="sm"
-            onClick={() => handleBrandClick(brand.slug)}
-            className="rounded-full"
-          >
-            {brand.name}
-          </Button>
-        ))}
+      {/* Popular Brands with Real Logo Images */}
+      <div className="mt-5 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+        <span className="w-full text-center text-xs sm:text-sm font-medium text-muted-foreground mb-1">
+          Popular Brands:
+        </span>
+        {brands.slice(0, 8).map(brand => {
+          const logoSrc = getLogoUrl(brand.logo_url);
+          return (
+            <button
+              key={brand.id}
+              onClick={() => handleBrandClick(brand.slug)}
+              className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-border bg-card/80 hover:bg-accent hover:border-primary/50 shadow-sm transition-all text-xs sm:text-sm font-medium hover:scale-105"
+            >
+              {logoSrc ? (
+                <img
+                  src={logoSrc}
+                  alt={brand.name}
+                  className="h-4 w-4 sm:h-5 sm:w-5 object-contain"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+              ) : null}
+              <span>{brand.name}</span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );

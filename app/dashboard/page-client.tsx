@@ -235,7 +235,7 @@ export const PageClient = () => {
                       </div>
                       <div className="flex items-center gap-4">
                         <div className="text-right">
-                          <p className="font-bold text-primary">Ã¢â€šÂ¹{request.estimated_price.toLocaleString()}</p>
+                          <p className="font-bold text-primary">₹{request.estimated_price.toLocaleString()}</p>
                           <Badge>{getStatusLabel(request.status)}</Badge>
                         </div>
                         <Button 
@@ -315,7 +315,7 @@ export const PageClient = () => {
                     <CardTitle>Your Referral Program</CardTitle>
                   </div>
                   <CardDescription>
-                    Earn Ã¢â€šÂ¹200 for every successful laptop sale through your referral
+                    Earn ₹200 for every successful laptop sale through your referral
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -375,7 +375,7 @@ export const PageClient = () => {
                               </Badge>
                               {ref.status === 'successful' && (
                                 <p className="text-sm font-semibold text-green-600">
-                                  +Ã¢â€šÂ¹{ref.reward_amount}
+                                  +₹{ref.reward_amount}
                                 </p>
                               )}
                             </div>

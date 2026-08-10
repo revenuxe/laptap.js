@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.laptap.in"),
   title: {
-    default: "Sell Used Laptop and Desktop in Bangalore | Same-Day Cash â€“ Laptap",
+    default: "Sell Used Laptop and Desktop in Bangalore | Same-Day Cash – Laptap",
     template: "%s | Laptap",
   },
   description:
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "https://www.laptap.in/",
-    title: "Sell Used Laptop and Desktop in Bangalore | Same-Day Cash â€“ Laptap",
+    title: "Sell Used Laptop and Desktop in Bangalore | Same-Day Cash – Laptap",
     description:
       "Sell used laptop & desktop in Bangalore at the best price. Instant quote, same-day pickup, quick cash, and 500+ happy customers.",
     siteName: "Laptap",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sell Used Laptop and Desktop in Bangalore | Same-Day Cash â€“ Laptap",
+    title: "Sell Used Laptop and Desktop in Bangalore | Same-Day Cash – Laptap",
     description:
       "Sell used laptop & desktop in Bangalore at the best price. Instant quote, same-day pickup, quick cash, and 500+ happy customers.",
     images: ["/og-image.webp"],
@@ -106,7 +106,7 @@ export default function RootLayout({
               "@type": "LocalBusiness",
               name: "Laptap",
               image: "https://www.laptap.in/logo.png",
-              priceRange: "â‚¹â‚¹",
+              priceRange: "₹₹",
               address: {
                 "@type": "PostalAddress",
                 streetAddress: "HBR Layout, Nagawara Main Road",

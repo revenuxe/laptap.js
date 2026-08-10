@@ -273,7 +273,7 @@ export const PageClient = () => {
                   },
                   {
                     q: "How much can I get for my MacBook in Bangalore?",
-                    a: "MacBook resale prices in Bangalore: MacBook Pro M3 (Ã¢â€šÂ¹90,000-Ã¢â€šÂ¹2,50,000), MacBook Air M2 (Ã¢â€šÂ¹55,000-Ã¢â€šÂ¹1,10,000), MacBook Pro M1 (Ã¢â€šÂ¹45,000-Ã¢â€šÂ¹1,50,000), Intel MacBooks (Ã¢â€šÂ¹25,000-Ã¢â€šÂ¹80,000). Exact price depends on model, year, storage, RAM, and condition. Get instant quote online for Bangalore-specific pricing."
+                    a: "MacBook resale prices in Bangalore: MacBook Pro M3 (₹90,000-₹2,50,000), MacBook Air M2 (₹55,000-₹1,10,000), MacBook Pro M1 (₹45,000-₹1,50,000), Intel MacBooks (₹25,000-₹80,000). Exact price depends on model, year, storage, RAM, and condition. Get instant quote online for Bangalore-specific pricing."
                   },
                   {
                     q: "How quickly can I sell my MacBook in Bangalore?",
@@ -289,7 +289,7 @@ export const PageClient = () => {
                   },
                   {
                     q: "Is selling MacBook in Bangalore safe with Laptap?",
-                    a: "Absolutely safe! We provide: 1) Verified technicians with ID proof for doorstep visits across Bangalore, 2) Professional data wiping certified by Apple standards, 3) Instant payment via secure UPI/bank transfer, 4) 4.9Ã¢Ëœâ€¦ rating from 5000+ Bangalore customers. Your MacBook and data are 100% secure with us."
+                    a: "Absolutely safe! We provide: 1) Verified technicians with ID proof for doorstep visits across Bangalore, 2) Professional data wiping certified by Apple standards, 3) Instant payment via secure UPI/bank transfer, 4) 4.9★ rating from 5000+ Bangalore customers. Your MacBook and data are 100% secure with us."
                   }
                 ].map((faq, index) => (
                   <div key={index} className="p-6 rounded-2xl bg-card border border-border">
