@@ -68,7 +68,6 @@ export default function RootLayout({
   return (
     <html lang="en-IN">
       <head>
-        <link rel="canonical" href="https://www.laptap.in/" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -79,6 +78,7 @@ export default function RootLayout({
               url: "https://www.laptap.in",
               logo: "https://www.laptap.in/logo.png",
               description: "India's most trusted platform for selling used laptops and desktops",
+              telephone: "+919886579923",
               address: {
                 "@type": "PostalAddress",
                 streetAddress: "HBR Layout, Nagawara Main Road",
@@ -89,6 +89,7 @@ export default function RootLayout({
               },
               contactPoint: {
                 "@type": "ContactPoint",
+                telephone: "+919886579923",
                 email: "laptap.in@gmail.com",
                 contactType: "Customer Service",
                 areaServed: "IN",
@@ -106,6 +107,7 @@ export default function RootLayout({
               "@type": "LocalBusiness",
               name: "Laptap",
               image: "https://www.laptap.in/logo.png",
+              telephone: "+919886579923",
               priceRange: "₹₹",
               address: {
                 "@type": "PostalAddress",

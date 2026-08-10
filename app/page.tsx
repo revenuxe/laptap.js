@@ -2,18 +2,16 @@ import type { Metadata } from "next";
 import { HomeClient } from "./home-client";
 
 export const metadata: Metadata = {
-  title: "Sell Old Laptop, Mobile & Desktop Online in Bengaluru | Instant Cash Payment | Laptap",
+  title: "Sell Old Laptop & Desktop Online in Bengaluru | Instant Cash Payment | Laptap",
   description:
-    "Sell your old laptop, mobile phone, or desktop computer for instant cash in Bengaluru. Get best prices, free doorstep pickup, instant payment within 24 hours. Trusted by 10,000+ sellers across India.",
+    "Sell your old laptop or desktop computer for instant cash in Bengaluru. Get best prices, free doorstep pickup, instant payment within 24 hours. Trusted by 10,000+ sellers across India.",
   keywords: [
     "sell old laptop Bengaluru",
     "sell used laptop online",
-    "sell mobile phone Bengaluru",
     "sell desktop computer",
     "laptop buyback India",
     "instant cash for laptop",
     "sell MacBook Bengaluru",
-    "sell iPhone Bengaluru",
     "sell gaming laptop",
     "sell Dell laptop",
     "sell HP laptop",
@@ -26,9 +24,9 @@ export const metadata: Metadata = {
     "quick cash for electronics Bengaluru",
   ],
   openGraph: {
-    title: "Sell Old Laptop, Mobile & Desktop for Instant Cash | Laptap Bengaluru",
+    title: "Sell Old Laptop & Desktop for Instant Cash | Laptap Bengaluru",
     description:
-      "Get the best price for your used electronics. Free pickup, instant evaluation, and payment within 24 hours. Bengaluru's most trusted platform for selling laptops and mobiles.",
+      "Get the best price for your used electronics. Free pickup, instant evaluation, and payment within 24 hours. Bengaluru's most trusted platform for selling laptops.",
     type: "website",
     url: "https://www.laptap.in",
     images: [{ url: "/og-image.jpg" }],
@@ -37,7 +35,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sell Old Laptop, Mobile & Desktop for Instant Cash | Laptap",
+    title: "Sell Old Laptop & Desktop for Instant Cash | Laptap",
     description:
       "Bengaluru's trusted platform for selling used electronics. Best prices, free pickup, instant payment.",
     images: ["/twitter-image.jpg"],
@@ -79,7 +77,7 @@ export default function HomePage() {
             "@type": "LocalBusiness",
             name: "Laptap",
             description:
-              "Bengaluru's most trusted platform for selling used laptops, mobile phones, and desktop computers with instant cash payment",
+              "Bengaluru's most trusted platform for selling used laptops and desktop computers with instant cash payment",
             url: "https://www.laptap.in",
             telephone: "+919886579923",
             priceRange: "₹₹",
@@ -129,7 +127,7 @@ export default function HomePage() {
             ],
             offers: {
               "@type": "Offer",
-              description: "Instant cash for used laptops, mobiles, and desktops",
+              description: "Instant cash for used laptops and desktops",
             },
           }),
         }}

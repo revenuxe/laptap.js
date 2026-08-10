@@ -22,7 +22,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: "https://www.laptap.in/sell", lastModified: new Date(), changeFrequency: "daily", priority: 0.95 },
     { url: "https://www.laptap.in/sell/laptop", lastModified: new Date(), changeFrequency: "daily", priority: 0.9 },
     { url: "https://www.laptap.in/sell/desktop", lastModified: new Date(), changeFrequency: "daily", priority: 0.9 },
-    { url: "https://www.laptap.in/sell/mobile", lastModified: new Date(), changeFrequency: "daily", priority: 0.9 },
     { url: "https://www.laptap.in/about", lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: "https://www.laptap.in/contact", lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: "https://www.laptap.in/terms", lastModified: new Date(), changeFrequency: "yearly", priority: 0.5 },
