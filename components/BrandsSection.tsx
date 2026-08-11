@@ -15,9 +15,19 @@ interface Brand {
   slug: string | null;
 }
 
+const DEFAULT_BRANDS: Brand[] = [
+  { id: 'apple', name: 'Apple', logo_url: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg', category_id: null, slug: 'apple' },
+  { id: 'dell', name: 'Dell', logo_url: 'https://upload.wikimedia.org/wikipedia/commons/1/18/Dell_logo_2016.svg', category_id: null, slug: 'dell' },
+  { id: 'hp', name: 'HP', logo_url: 'https://upload.wikimedia.org/wikipedia/commons/a/ad/HP_logo_2012.svg', category_id: null, slug: 'hp' },
+  { id: 'lenovo', name: 'Lenovo', logo_url: 'https://upload.wikimedia.org/wikipedia/commons/b/b8/Lenovo_logo_2015.svg', category_id: null, slug: 'lenovo' },
+  { id: 'asus', name: 'Asus', logo_url: 'https://upload.wikimedia.org/wikipedia/commons/2/2e/ASUS_Logo.svg', category_id: null, slug: 'asus' },
+  { id: 'acer', name: 'Acer', logo_url: 'https://upload.wikimedia.org/wikipedia/commons/a/a1/Acer_Logo.svg', category_id: null, slug: 'acer' },
+  { id: 'msi', name: 'MSI', logo_url: 'https://upload.wikimedia.org/wikipedia/commons/3/3a/MSI_logo.svg', category_id: null, slug: 'msi' },
+  { id: 'samsung', name: 'Samsung', logo_url: 'https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg', category_id: null, slug: 'samsung' },
+];
+
 export function BrandsSection() {
-  const [brands, setBrands] = useState<Brand[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [brands, setBrands] = useState<Brand[]>(DEFAULT_BRANDS);
 
   useEffect(() => {
     loadBrands();
@@ -39,16 +49,12 @@ export function BrandsSection() {
           .order('name')
           .limit(8);
         
-        if (data) setBrands(data);
+        if (data && data.length > 0) setBrands(data);
       }
     } catch (error) {
       console.error('Failed to load brands:', error);
-    } finally {
-      setLoading(false);
     }
   }
-
-  if (loading || brands.length === 0) return null;
 
   return (
     <section className="py-10 sm:py-16 md:py-24 bg-muted/30">
@@ -115,3 +121,4 @@ export function BrandsSection() {
     </section>
   );
 }
+

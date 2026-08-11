@@ -8,13 +8,6 @@ import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { Search, Laptop } from 'lucide-react';
 
-interface Brand {
-  id: string;
-  name: string;
-  logo_url: string | null;
-  slug: string;
-}
-
 interface Model {
   id: string;
   name: string;
@@ -31,45 +24,59 @@ interface Model {
   };
 }
 
+const POPULAR_BRANDS = [
+  {
+    name: "Acer",
+    slug: "acer",
+    logo_url: "https://upload.wikimedia.org/wikipedia/commons/a/a1/Acer_Logo.svg",
+  },
+  {
+    name: "Apple",
+    slug: "apple",
+    logo_url: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg",
+  },
+  {
+    name: "Asus",
+    slug: "asus",
+    logo_url: "https://upload.wikimedia.org/wikipedia/commons/2/2e/ASUS_Logo.svg",
+  },
+  {
+    name: "Dell",
+    slug: "dell",
+    logo_url: "https://upload.wikimedia.org/wikipedia/commons/1/18/Dell_logo_2016.svg",
+  },
+  {
+    name: "HP",
+    slug: "hp",
+    logo_url: "https://upload.wikimedia.org/wikipedia/commons/a/ad/HP_logo_2012.svg",
+  },
+  {
+    name: "Lenovo",
+    slug: "lenovo",
+    logo_url: "https://upload.wikimedia.org/wikipedia/commons/b/b8/Lenovo_logo_2015.svg",
+  },
+  {
+    name: "LG",
+    slug: "lg",
+    logo_url: "https://upload.wikimedia.org/wikipedia/commons/b/bf/LG_logo_%282015%29.svg",
+  },
+  {
+    name: "Microsoft",
+    slug: "microsoft",
+    logo_url: "https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg",
+  },
+];
+
 export function DeviceSearch() {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
-  const [brands, setBrands] = useState<Brand[]>([]);
   const [models, setModels] = useState<Model[]>([]);
   const [filteredModels, setFilteredModels] = useState<Model[]>([]);
   const [showResults, setShowResults] = useState(false);
 
   useEffect(() => {
-    loadBrands();
     loadModels();
   }, []);
-
-  async function loadBrands() {
-    try {
-      const { data } = await supabase
-        .from('brands')
-        .select('id, name, logo_url, slug')
-        .not('logo_url', 'is', null)
-        .order('name');
-      
-      if (data) {
-        const uniqueBrands: Brand[] = [];
-        const seenNames = new Set<string>();
-
-        (data as Brand[]).forEach(brand => {
-          const cleanName = brand.name.trim();
-          if (cleanName && !seenNames.has(cleanName.toLowerCase()) && brand.logo_url) {
-            seenNames.add(cleanName.toLowerCase());
-            uniqueBrands.push({ ...brand, name: cleanName });
-          }
-        });
-
-        setBrands(uniqueBrands);
-      }
-    } catch (error) {
-      console.error('Error loading brands:', error);
-    }
-  }
 
   async function loadModels() {
     try {
@@ -128,12 +135,6 @@ export function DeviceSearch() {
     setShowResults(false);
   };
 
-  const getLogoUrl = (logoUrl: string | null) => {
-    if (!logoUrl) return null;
-    if (logoUrl.startsWith('http')) return logoUrl;
-    return supabase.storage.from('brand-logos').getPublicUrl(logoUrl).data.publicUrl;
-  };
-
   return (
     <div className="relative w-full max-w-2xl mx-auto">
       <div className="relative">
@@ -178,34 +179,30 @@ export function DeviceSearch() {
         </Card>
       )}
 
-      {/* Popular Brands with Real Logo Images */}
+      {/* Popular Brands (Static for instant rendering) */}
       <div className="mt-5 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
         <span className="w-full text-center text-xs sm:text-sm font-medium text-muted-foreground mb-1">
           Popular Brands:
         </span>
-        {brands.slice(0, 8).map(brand => {
-          const logoSrc = getLogoUrl(brand.logo_url);
-          return (
-            <Link
-              key={brand.id}
-              href={`/sell/laptop/${brand.slug}`}
-              className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-border bg-card/80 hover:bg-accent hover:border-primary/50 shadow-sm transition-all text-xs sm:text-sm font-medium hover:scale-105"
-            >
-              {logoSrc ? (
-                <img
-                  src={logoSrc}
-                  alt={brand.name}
-                  className="h-4 w-4 sm:h-5 sm:w-5 object-contain"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                  }}
-                />
-              ) : null}
-              <span>{brand.name}</span>
-            </Link>
-          );
-        })}
+        {POPULAR_BRANDS.map(brand => (
+          <Link
+            key={brand.slug}
+            href={`/sell/laptop/${brand.slug}`}
+            className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-border bg-card/80 hover:bg-accent hover:border-primary/50 shadow-sm transition-all text-xs sm:text-sm font-medium hover:scale-105"
+          >
+            <img
+              src={brand.logo_url}
+              alt={brand.name}
+              className="h-4 w-4 sm:h-5 sm:w-5 object-contain"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+              }}
+            />
+            <span>{brand.name}</span>
+          </Link>
+        ))}
       </div>
     </div>
   );
 }
+

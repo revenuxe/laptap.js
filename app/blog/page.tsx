@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { BlogListClient } from "./blog-list-client";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export const metadata: Metadata = {
   title: "Laptap Blog - Laptop Buying Guides, Selling Tips & Tech Insights",
   description:
