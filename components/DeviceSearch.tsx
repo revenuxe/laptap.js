@@ -56,11 +56,6 @@ const POPULAR_BRANDS = [
     logo_url: "https://upload.wikimedia.org/wikipedia/commons/b/b8/Lenovo_logo_2015.svg",
   },
   {
-    name: "LG",
-    slug: "lg",
-    logo_url: "https://upload.wikimedia.org/wikipedia/commons/b/bf/LG_logo_%282015%29.svg",
-  },
-  {
     name: "Microsoft",
     slug: "microsoft",
     logo_url: "https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg",
