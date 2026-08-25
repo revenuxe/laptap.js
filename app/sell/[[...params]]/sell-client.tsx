@@ -80,6 +80,10 @@ export const SellClient = () => {
   const [displayedPrice, setDisplayedPrice] = useState(0);
   const [marketingBonus, setMarketingBonus] = useState(0);
   const [priceBreakdown, setPriceBreakdown] = useState<any>(null);
+  const [evaluationFlow, setEvaluationFlow] = useState<any>(null);
+  const [evaluationPlatform, setEvaluationPlatform] = useState<"apple" | "windows" | null>(null);
+  const [customQuestions, setCustomQuestions] = useState<any[]>([]);
+  const [customAnswers, setCustomAnswers] = useState<Record<string, string[]>>({});
   const [offerExpired, setOfferExpired] = useState(false);
   
   const [address, setAddress] = useState("");
@@ -91,6 +95,21 @@ export const SellClient = () => {
   const [brandSearch, setBrandSearch] = useState("");
   const [seriesSearch, setSeriesSearch] = useState("");
   const [modelSearch, setModelSearch] = useState("");
+  const isMac = evaluationPlatform ? evaluationPlatform === "apple" : selectedBrand?.name?.toLowerCase() === "apple";
+  const question = (key: string, fallback: string) => evaluationFlow?.questions?.[key] || fallback;
+
+  useEffect(() => {
+    (async () => {
+      if (!selectedBrand?.id) return;
+      const { data } = await (supabase as any).from("evaluation_programs").select("platform,flow,brand_ids").eq("active", true);
+      const selectedProgram = data?.find((program: any) => program.brand_ids?.includes(selectedBrand.id));
+      if (selectedProgram) {
+        setEvaluationFlow(selectedProgram.flow); setEvaluationPlatform(selectedProgram.platform);
+        const { data: questions } = await (supabase as any).from("evaluation_questions").select("*").eq("program_id", selectedProgram.id).eq("active", true).order("sort_order");
+        setCustomQuestions(questions || []);
+      }
+    })();
+  }, [selectedBrand?.id]);
 
   // Load data from URL params on mount
   useEffect(() => {
@@ -383,6 +402,19 @@ export const SellClient = () => {
   const calculateRealTimePrice = async () => {
     if (!selectedModel || !selectedBrand) return;
 
+    // Prices come from the database-managed calculation, not hard-coded browser rules.
+    const { data: quote, error } = await (supabase as any).rpc("calculate_evaluation_quote", {
+      _model_id: selectedModel.id,
+      _answers: { age_months: ageMonths, physical_condition: physicalCondition, screen_condition: screenCondition, functionality_issues: functionalityIssues, config },
+    });
+    if (!error && quote) {
+      setEstimatedPrice(Number(quote.standard_price));
+      setDisplayedPrice(Number(quote.offer_price));
+      setMarketingBonus(Number(quote.offer_bonus));
+      setPriceBreakdown(null);
+      return;
+    }
+
     const result = calculateDynamicPrice(
       parseFloat(selectedModel.base_price),
       selectedBrand.name,
@@ -492,6 +524,7 @@ export const SellClient = () => {
         functionalityIssues,
         accessories,
         config,
+        custom_answers: customAnswers,
         estimatedPrice,
         displayedPrice,
         marketingBonus,
@@ -947,7 +980,7 @@ export const SellClient = () => {
           {step === "switch_on" && (
             <Card className="p-8 max-w-2xl mx-auto space-y-6">
               <div className="text-center mb-6">
-                <h2 className="text-2xl font-semibold mb-2">Does the {category} switch on?</h2>
+                <h2 className="text-2xl font-semibold mb-2">{question("switch_on", `Does the ${category} switch on?`)}</h2>
                 <p className="text-muted-foreground">We currently only accept devices that switch on without any issues</p>
               </div>
               <RadioGroup value={switchesOn === null ? "" : switchesOn.toString()} onValueChange={(v) => setSwitchesOn(v === "true")}>
@@ -979,8 +1012,8 @@ export const SellClient = () => {
           {step === "config" && (
             <Card className="p-4 md:p-8 max-w-2xl mx-auto space-y-4 md:space-y-6">
               <div className="text-center mb-4 md:mb-6">
-                <h2 className="text-xl md:text-2xl font-semibold mb-2">Select the system configuration of your device?</h2>
-                <p className="text-sm md:text-base text-muted-foreground">Please select your device system configuration</p>
+                <h2 className="text-xl md:text-2xl font-semibold mb-2">{evaluationFlow?.[isMac ? "mac" : "windows"]?.title || (isMac ? "Confirm your Mac configuration" : "Confirm your Windows PC configuration")}</h2>
+                <p className="text-sm md:text-base text-muted-foreground">Choose only what matches your device. This keeps the quote accurate.</p>
               </div>
               <div className="space-y-4 md:space-y-6">
                 <div>
@@ -990,6 +1023,7 @@ export const SellClient = () => {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-background z-50">
+                     {!isMac && <>
                      {/* Intel Processors */}
     <SelectItem value="i3">Intel Core i3</SelectItem>
     <SelectItem value="i5">Intel Core i5</SelectItem>
@@ -1001,8 +1035,10 @@ export const SellClient = () => {
     <SelectItem value="ryzen_5">AMD Ryzen 5</SelectItem>
     <SelectItem value="ryzen_7">AMD Ryzen 7</SelectItem>
     <SelectItem value="ryzen_9">AMD Ryzen 9</SelectItem>
+                    </>}
 
     {/* Apple Silicon Processors */}
+    {isMac && <>
     <SelectItem value="m1">Apple M1</SelectItem>
     <SelectItem value="m1_pro">Apple M1 Pro</SelectItem>
     <SelectItem value="m1_max">Apple M1 Max</SelectItem>
@@ -1022,10 +1058,11 @@ export const SellClient = () => {
     <SelectItem value="m4_pro">Apple M4 Pro</SelectItem>
     <SelectItem value="m4_max">Apple M4 Max</SelectItem>
     <SelectItem value="m4_ultra">Apple M4 Ultra</SelectItem>
+    </>}
                     </SelectContent>
                   </Select>
                 </div>
-                <div>
+                {!isMac && <div>
                   <Label className="text-base md:text-lg font-semibold mb-2 md:mb-3 block">Generation</Label>
                   <Select value={config.generation} onValueChange={(v) => setConfig({ ...config, generation: v })}>
                     <SelectTrigger className="bg-background h-12 md:h-14 text-sm md:text-lg">
@@ -1071,7 +1108,7 @@ export const SellClient = () => {
                       )}
                     </SelectContent>
                   </Select>
-                </div>
+                </div>}
                 <div>
                   <Label className="text-base md:text-lg font-semibold mb-2 md:mb-3 block">RAM</Label>
                   <Select value={config.ram} onValueChange={(v) => setConfig({ ...config, ram: v })}>
@@ -1148,7 +1185,7 @@ export const SellClient = () => {
                     </Card>
                   </RadioGroup>
                 </div>
-                <div>
+                {!isMac && <div>
                   <Label className="text-lg font-semibold mb-3 block">External Graphics Card (NVIDIA/ AMD)</Label>
                   <p className="text-sm text-muted-foreground mb-3">Check your device's external graphics cards</p>
                   <RadioGroup value={config.has_graphics_card} onValueChange={(v) => setConfig({ ...config, has_graphics_card: v })}>
@@ -1171,7 +1208,7 @@ export const SellClient = () => {
                       </div>
                     </Card>
                   </RadioGroup>
-                </div>
+                </div>}
               </div>
               <Button variant="cta" className="w-full" onClick={() => { setStep("functionality"); window.scrollTo(0, 0); }}>
                 Continue <ChevronRight className="ml-2 h-4 w-4" />
@@ -1183,7 +1220,7 @@ export const SellClient = () => {
           {step === "functionality" && (
             <Card className="p-8 max-w-2xl mx-auto space-y-6">
               <div className="text-center mb-6">
-                <h2 className="text-2xl font-semibold mb-2">Does your device function properly?</h2>
+                <h2 className="text-2xl font-semibold mb-2">{question("functionality", "Does your device function properly?")}</h2>
                 <p className="text-muted-foreground">Please choose appropriate condition to get accurate quote</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1224,7 +1261,7 @@ export const SellClient = () => {
           {step === "screen_condition" && (
             <Card className="p-4 md:p-8 max-w-2xl mx-auto space-y-4 md:space-y-6">
               <div className="text-center mb-4 md:mb-6">
-                <h2 className="text-xl md:text-2xl font-semibold mb-2">Select the screen condition of your device?</h2>
+                <h2 className="text-xl md:text-2xl font-semibold mb-2">{question("screen_condition", "Select the screen condition of your device?")}</h2>
                 <p className="text-sm md:text-base text-muted-foreground">The better condition your device is in, we will pay you more</p>
               </div>
               <RadioGroup value={screenCondition} onValueChange={setScreenCondition}>
@@ -1330,7 +1367,7 @@ export const SellClient = () => {
           {step === "physical_condition" && (
             <Card className="p-8 max-w-2xl mx-auto space-y-6">
               <div className="text-center mb-6">
-                <h2 className="text-2xl font-semibold mb-2">Select the physical condition of your device?</h2>
+                <h2 className="text-2xl font-semibold mb-2">{question("physical_condition", "Select the physical condition of your device?")}</h2>
                 <p className="text-muted-foreground">The better condition your device is in, we will pay you more</p>
               </div>
               <RadioGroup value={physicalCondition} onValueChange={(value) => setPhysicalCondition(value as typeof physicalCondition)}>
@@ -1402,7 +1439,7 @@ export const SellClient = () => {
           {step === "accessories" && (
             <Card className="p-8 max-w-2xl mx-auto space-y-6">
               <div className="text-center mb-6">
-                <h2 className="text-2xl font-semibold mb-2">Available Accessories</h2>
+                <h2 className="text-2xl font-semibold mb-2">{question("accessories", "Available Accessories")}</h2>
                 <p className="text-muted-foreground">Select all accessories you have with the device</p>
                 <p className="text-xs text-muted-foreground mt-2 italic">Note: Accessories are tracked for verification but do not affect the price</p>
               </div>
@@ -1426,6 +1463,17 @@ export const SellClient = () => {
                   </Card>
                 ))}
               </div>
+              {customQuestions.map((question) => (
+                <div key={question.id} className="space-y-3 border-t pt-5">
+                  <div><h3 className="font-semibold">{question.title}</h3>{question.helper_text && <p className="text-sm text-muted-foreground">{question.helper_text}</p>}</div>
+                  <div className="space-y-2">
+                    {(question.options || []).map((choice: any) => {
+                      const checked = (customAnswers[question.id] || []).includes(choice.id);
+                      return <Card key={choice.id} className={`cursor-pointer p-3 ${checked ? "border-primary bg-primary/5" : ""}`} onClick={() => setCustomAnswers(previous => ({ ...previous, [question.id]: question.input_type === "multiple" ? (checked ? previous[question.id].filter(id => id !== choice.id) : [...(previous[question.id] || []), choice.id]) : [choice.id] }))}><div className="flex items-center gap-3"><Checkbox checked={checked} /><Label className="cursor-pointer flex-1">{choice.label}</Label></div></Card>;
+                    })}
+                  </div>
+                </div>
+              ))}
               <Button variant="cta" className="w-full" onClick={handleCalculatePrice}>
                 Get Final Price <ChevronRight className="ml-2 h-4 w-4" />
               </Button>

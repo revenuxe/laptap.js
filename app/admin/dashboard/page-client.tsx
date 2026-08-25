@@ -12,6 +12,7 @@ import { CatalogTab } from '@/components/admin/CatalogTab';
 import { BlogsTab } from '@/components/admin/BlogsTab';
 import ReferralsTab from '@/components/admin/ReferralsTab';
 import FormsTab from '@/components/admin/FormsTab';
+import { EvaluationManager } from '@/components/admin/EvaluationManager';
 
 const Admin = () => {
   const router = useRouter();
@@ -55,6 +56,7 @@ const Admin = () => {
               <TabsList className="inline-flex h-11 items-center justify-start rounded-xl bg-muted p-1 text-muted-foreground w-max min-w-full sm:w-full sm:justify-center">
                 <TabsTrigger value="orders" className="whitespace-nowrap shrink-0 px-3.5 sm:px-5 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all">Orders</TabsTrigger>
                 <TabsTrigger value="catalog" className="whitespace-nowrap shrink-0 px-3.5 sm:px-5 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all">Device Catalog</TabsTrigger>
+                <TabsTrigger value="evaluation" className="whitespace-nowrap shrink-0 px-3.5 sm:px-5 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all">Evaluation & Pricing</TabsTrigger>
                 <TabsTrigger value="referrals" className="whitespace-nowrap shrink-0 px-3.5 sm:px-5 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all">Referrals</TabsTrigger>
                 <TabsTrigger value="forms" className="whitespace-nowrap shrink-0 px-3.5 sm:px-5 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all">Forms</TabsTrigger>
                 <TabsTrigger value="blogs" className="whitespace-nowrap shrink-0 px-3.5 sm:px-5 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all">Blogs</TabsTrigger>
@@ -68,6 +70,9 @@ const Admin = () => {
 
             <TabsContent value="catalog" className="focus-visible:outline-none">
               <CatalogTab />
+            </TabsContent>
+            <TabsContent value="evaluation" className="focus-visible:outline-none">
+              <EvaluationManager />
             </TabsContent>
 
             <TabsContent value="referrals" className="focus-visible:outline-none">

@@ -1,0 +1,23 @@
+-- Default questions are a starting checklist. Admin can edit every label, choice and deduction later.
+INSERT INTO public.evaluation_questions (program_id,title,helper_text,input_type,options,sort_order)
+SELECT p.id, q.title, q.helper, q.input_type, q.options::jsonb, q.sort_order
+FROM public.evaluation_programs p
+CROSS JOIN (VALUES
+  ('Activation Lock & device management','Before selling, sign out of Apple ID and remove Find My Mac / organisation management.','single','[{"id":"clear","label":"Apple ID removed and no company management","deduction_percent":0,"deduction_amount":0},{"id":"unsure","label":"Not sure — needs checking","deduction_percent":15,"deduction_amount":0},{"id":"locked","label":"Activation Lock or company MDM is active","deduction_percent":60,"deduction_amount":0}]',1),
+  ('Battery health','Check System Settings → Battery → Battery Health if possible.','single','[{"id":"healthy","label":"Normal / 85%+ maximum capacity","deduction_percent":0,"deduction_amount":0},{"id":"service","label":"Service recommended or 75–84% capacity","deduction_percent":8,"deduction_amount":0},{"id":"poor","label":"Below 75%, swollen, or shuts down","deduction_percent":18,"deduction_amount":1000}]',2),
+  ('Liquid damage','Check for past spills, corrosion or liquid-damage warning.','single','[{"id":"none","label":"No liquid damage","deduction_percent":0,"deduction_amount":0},{"id":"past","label":"Past spill, but device works normally","deduction_percent":12,"deduction_amount":500},{"id":"active","label":"Liquid damage affects operation","deduction_percent":30,"deduction_amount":1500}]',3),
+  ('Original Apple charger','Include the charger you will hand over.','single','[{"id":"original","label":"Original charger included and working","deduction_percent":0,"deduction_amount":0},{"id":"compatible","label":"Compatible charger included","deduction_percent":0,"deduction_amount":300},{"id":"none","label":"No charger","deduction_percent":0,"deduction_amount":1000}]',4)
+) AS q(title,helper,input_type,options,sort_order)
+WHERE p.platform='apple' AND NOT EXISTS (SELECT 1 FROM public.evaluation_questions e WHERE e.program_id=p.id AND e.title=q.title);
+
+INSERT INTO public.evaluation_questions (program_id,title,helper_text,input_type,options,sort_order)
+SELECT p.id, q.title, q.helper, q.input_type, q.options::jsonb, q.sort_order
+FROM public.evaluation_programs p
+CROSS JOIN (VALUES
+  ('BIOS, BitLocker & company management','Remove BIOS password, BitLocker recovery lock and work/school device management.','single','[{"id":"clear","label":"No password, lock or company management","deduction_percent":0,"deduction_amount":0},{"id":"unsure","label":"Not sure — needs checking","deduction_percent":15,"deduction_amount":0},{"id":"locked","label":"BIOS/BitLocker/MDM lock is active","deduction_percent":55,"deduction_amount":0}]',1),
+  ('Battery backup','Use the device normally on battery and select the closest result.','single','[{"id":"healthy","label":"More than 2 hours backup","deduction_percent":0,"deduction_amount":0},{"id":"fair","label":"1–2 hours backup","deduction_percent":6,"deduction_amount":0},{"id":"poor","label":"Less than 1 hour, dead or swollen battery","deduction_percent":15,"deduction_amount":1000}]',2),
+  ('Storage and boot','Confirm Windows starts and the drive is detected.','single','[{"id":"working","label":"Windows starts normally and storage works","deduction_percent":0,"deduction_amount":0},{"id":"slow","label":"Very slow boot or storage warning","deduction_percent":8,"deduction_amount":500},{"id":"failed","label":"Does not boot / drive not detected","deduction_percent":30,"deduction_amount":1500}]',3),
+  ('Dedicated graphics card','Only answer if the laptop has NVIDIA/AMD graphics.','single','[{"id":"na","label":"No dedicated graphics card","deduction_percent":0,"deduction_amount":0},{"id":"working","label":"Dedicated graphics works correctly","deduction_percent":0,"deduction_amount":0},{"id":"faulty","label":"Graphics artifacting, crashes or not detected","deduction_percent":18,"deduction_amount":1500}]',4),
+  ('Power adapter','Include the charger you will hand over.','single','[{"id":"original","label":"Original charger included and working","deduction_percent":0,"deduction_amount":0},{"id":"compatible","label":"Compatible charger included","deduction_percent":0,"deduction_amount":300},{"id":"none","label":"No charger","deduction_percent":0,"deduction_amount":800}]',5)
+) AS q(title,helper,input_type,options,sort_order)
+WHERE p.platform='windows' AND NOT EXISTS (SELECT 1 FROM public.evaluation_questions e WHERE e.program_id=p.id AND e.title=q.title);
