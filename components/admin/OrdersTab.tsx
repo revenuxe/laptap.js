@@ -119,6 +119,7 @@ export function OrdersTab() {
         order.profiles?.email?.toLowerCase().includes(query) ||
         order.models?.series?.brands?.name?.toLowerCase().includes(query) ||
         order.models?.name?.toLowerCase().includes(query) ||
+        order.order_number?.toLowerCase().includes(query) ||
         order.id?.toLowerCase().includes(query)
       );
     }
@@ -261,7 +262,7 @@ export function OrdersTab() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>ID</TableHead>
+                  <TableHead>Order #</TableHead>
                   <TableHead>Customer</TableHead>
                   <TableHead>Device</TableHead>
                   <TableHead>Date</TableHead>
@@ -281,7 +282,7 @@ export function OrdersTab() {
                   filteredOrders.map((order) => (
                     <TableRow key={order.id}>
                       <TableCell className="font-mono text-xs">
-                        {order.id.slice(0, 8)}
+                        {order.order_number || order.id.slice(0, 8)}
                       </TableCell>
                       <TableCell>
                         <div className="text-sm">

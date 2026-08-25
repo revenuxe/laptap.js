@@ -482,6 +482,7 @@ export type Database = {
           final_price: number | null
           id: string
           model_id: string
+          order_number: string
           pincode: string | null
           status: Database["public"]["Enums"]["order_status"] | null
           updated_at: string | null
@@ -498,6 +499,7 @@ export type Database = {
           final_price?: number | null
           id?: string
           model_id: string
+          order_number?: string
           pincode?: string | null
           status?: Database["public"]["Enums"]["order_status"] | null
           updated_at?: string | null
@@ -514,6 +516,7 @@ export type Database = {
           final_price?: number | null
           id?: string
           model_id?: string
+          order_number?: string
           pincode?: string | null
           status?: Database["public"]["Enums"]["order_status"] | null
           updated_at?: string | null

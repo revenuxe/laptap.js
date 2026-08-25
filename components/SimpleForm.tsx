@@ -26,7 +26,7 @@ interface SimpleFormProps {
   defaultSellingType?: string | null;
   defaultModel?: string;
   defaultModelId?: string;
-  onSuccess?: () => void;
+  onSuccess?: (orderNumber?: string) => void;
 }
 
 const SimpleForm = ({ defaultSellingType, defaultModel, defaultModelId, onSuccess }: SimpleFormProps) => {
@@ -40,8 +40,9 @@ const SimpleForm = ({ defaultSellingType, defaultModel, defaultModelId, onSucces
     setIsSubmitting(true);
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      const { error } = isSellOrder
-        ? await supabase.from("sell_requests").insert({
+      let orderNumber: string | undefined;
+      if (isSellOrder) {
+        const { data: order, error } = await supabase.from("sell_requests").insert({
             user_id: user?.id || null,
             model_id: defaultModelId!,
             age_months: 0,
@@ -49,12 +50,16 @@ const SimpleForm = ({ defaultSellingType, defaultModel, defaultModelId, onSucces
             estimated_price: 0,
             pincode: data.pincode || null,
             config: { customer_name: data.name, customer_mobile: data.phone, booking_source: "model_selection" },
-          } as any)
-        : await supabase.from("simple_forms").insert({ user_id: user?.id || null, name: data.name, phone: data.phone, selling_type: data.selling_type, model: data.model });
-      if (error) throw error;
+          } as any).select("order_number").single();
+        if (error) throw error;
+        orderNumber = order?.order_number;
+      } else {
+        const { error } = await supabase.from("simple_forms").insert({ user_id: user?.id || null, name: data.name, phone: data.phone, selling_type: data.selling_type, model: data.model });
+        if (error) throw error;
+      }
       toast({ title: isSellOrder ? "Pickup request received!" : "Form submitted successfully!", description: "We’ll contact you shortly." });
       form.reset();
-      onSuccess?.();
+      onSuccess?.(orderNumber);
     } catch (error) {
       console.error("Error submitting form:", error);
       toast({ title: "Unable to submit", description: "Please try again later.", variant: "destructive" });

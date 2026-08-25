@@ -117,7 +117,7 @@ export function OrderDetailsDialog({
           <DialogHeader>
             <DialogTitle>Order Details</DialogTitle>
             <DialogDescription>
-              Order ID: {order.id}
+              Order #: {order.order_number || order.id}
             </DialogDescription>
           </DialogHeader>
 
