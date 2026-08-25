@@ -35,11 +35,12 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 interface SimpleFormProps {
-  defaultSellingType?: string;
+  defaultSellingType?: string | null;
+  defaultModel?: string;
   onSuccess?: () => void;
 }
 
-const SimpleForm = ({ defaultSellingType, onSuccess }: SimpleFormProps) => {
+const SimpleForm = ({ defaultSellingType, defaultModel, onSuccess }: SimpleFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
@@ -49,7 +50,7 @@ const SimpleForm = ({ defaultSellingType, onSuccess }: SimpleFormProps) => {
       name: "",
       phone: "",
       selling_type: defaultSellingType || "",
-      model: "",
+      model: defaultModel || "",
     },
   });
 

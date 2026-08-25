@@ -28,7 +28,7 @@ const Header = () => {
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center space-x-8">
           <Link href="/" className="text-sm font-medium hover:text-primary transition-colors">Home</Link>
-          <Link href="/sell" className="text-sm font-medium hover:text-primary transition-colors">Sell Device</Link>
+          <Link href="/sell/laptop" className="text-sm font-medium hover:text-primary transition-colors">Sell Device</Link>
           <Link href="/about" className="text-sm font-medium hover:text-primary transition-colors">About</Link>
           <Link href="/blog" className="text-sm font-medium hover:text-primary transition-colors">Blog</Link>
           {user && <Link href="/dashboard" className="text-sm font-medium hover:text-primary transition-colors">Dashboard</Link>}
@@ -44,7 +44,7 @@ const Header = () => {
           ) : (
             <>
               <Button variant="cta" size="sm" asChild className="hidden sm:inline-flex">
-                <Link href="/sell">Sell Now</Link>
+                <Link href="/sell/laptop">Sell Now</Link>
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -83,7 +83,7 @@ const Header = () => {
         <div className="md:hidden border-t bg-background/98 backdrop-blur animate-in slide-in-from-top-2 duration-200">
           <nav className="container py-4 flex flex-col gap-1">
             <Link href="/" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium py-2.5 px-3 rounded-xl hover:bg-muted transition-colors">Home</Link>
-            <Link href="/sell" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium py-2.5 px-3 rounded-xl hover:bg-muted transition-colors">Sell Device</Link>
+            <Link href="/sell/laptop" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium py-2.5 px-3 rounded-xl hover:bg-muted transition-colors">Sell Device</Link>
             <Link href="/repair" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium py-2.5 px-3 rounded-xl hover:bg-muted transition-colors">Repair</Link>
             <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium py-2.5 px-3 rounded-xl hover:bg-muted transition-colors">About</Link>
             <Link href="/blog" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium py-2.5 px-3 rounded-xl hover:bg-muted transition-colors">Blog</Link>
@@ -92,7 +92,7 @@ const Header = () => {
               <>
                 <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium py-2.5 px-3 rounded-xl hover:bg-muted transition-colors">Dashboard</Link>
                 <div className="pt-2 px-3">
-                  <Button variant="cta" className="w-full" size="sm" onClick={() => { router.push("/sell"); setMobileMenuOpen(false); }}>
+                  <Button variant="cta" className="w-full" size="sm" onClick={() => { router.push("/sell/laptop"); setMobileMenuOpen(false); }}>
                     Sell Now
                   </Button>
                 </div>

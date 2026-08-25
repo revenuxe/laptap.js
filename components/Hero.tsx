@@ -87,46 +87,28 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
 
           {/* Category cards */}
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto">
-            <Link href="/sell/laptop" className="block group rounded-2xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-3 sm:p-5 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50">
-              <div className="mb-2 sm:mb-3 inline-flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
-                <Laptop className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
-              </div>
-              <h3 className="text-sm sm:text-base font-bold mb-1">Sell Laptop</h3>
-              <p className="text-[11px] sm:text-xs text-muted-foreground">
-                Instant quotes for all laptop brands
-              </p>
+            <Link href="/sell/laptop" className="group block overflow-hidden rounded-xl bg-white p-0 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-card">
+              <div className="h-28 bg-center bg-no-repeat sm:h-36" style={{ backgroundImage: "url('/assets/sell-methods.png')", backgroundSize: "300% auto", backgroundPosition: "0% center", backgroundColor: "#e9f5f3" }} />
+              <div className="p-3 text-center"><h3 className="text-sm font-bold text-slate-900 sm:text-base dark:text-white">Sell Laptops</h3><p className="mt-1 text-[11px] text-muted-foreground">Select your model</p></div>
             </Link>
 
-            <Link href="/repair" className="block group rounded-2xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-3 sm:p-5 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-orange-500/5 hover:to-card/50">
-              <div className="mb-2 sm:mb-3 inline-flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-orange-500/10 transition-all group-hover:bg-orange-500/20 group-hover:scale-110">
-                <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-orange-500" />
-              </div>
-              <h3 className="text-sm sm:text-base font-bold mb-1">Repair Laptop</h3>
-              <p className="text-[11px] sm:text-xs text-muted-foreground">
-                Expert repair services for all brands
-              </p>
+            <Link href="/repair" className="group block overflow-hidden rounded-xl bg-white p-0 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-card">
+              <div className="h-28 bg-center bg-no-repeat sm:h-36" style={{ backgroundImage: "url('/assets/sell-methods.png')", backgroundSize: "300% auto", backgroundPosition: "50% center", backgroundColor: "#e9f5f3" }} />
+              <div className="p-3 text-center"><h3 className="text-sm font-bold text-slate-900 sm:text-base dark:text-white">Repair Laptops</h3><p className="mt-1 text-[11px] text-muted-foreground">Trusted service experts</p></div>
             </Link>
             
-            <Link href="/sell/desktop" className="block group rounded-2xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-3 sm:p-5 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50">
-              <div className="mb-2 sm:mb-3 inline-flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
-                <Monitor className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
-              </div>
-              <h3 className="text-sm sm:text-base font-bold mb-1">Sell Desktop</h3>
-              <p className="text-[11px] sm:text-xs text-muted-foreground">
-                Best prices for desktop computers
-              </p>
+            <Link href="/sell/desktop" className="group block overflow-hidden rounded-xl bg-white p-0 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-card">
+              <div className="h-28 bg-center bg-no-repeat sm:h-36" style={{ backgroundImage: "url('/assets/sell-methods.png')", backgroundSize: "300% auto", backgroundPosition: "100% center", backgroundColor: "#e9f5f3" }} />
+              <div className="p-3 text-center"><h3 className="text-sm font-bold text-slate-900 sm:text-base dark:text-white">Sell Desktops</h3><p className="mt-1 text-[11px] text-muted-foreground">Select your model</p></div>
             </Link>
 
             <Dialog open={formOpen} onOpenChange={setFormOpen}>
               <DialogTrigger asChild>
-                <div className="group cursor-pointer rounded-2xl border-2 border-border bg-gradient-to-br from-card to-card/50 p-3 sm:p-5 transition-all hover:border-primary hover:shadow-xl hover:scale-105 hover:bg-gradient-to-br hover:from-primary/5 hover:to-card/50">
-                  <div className="mb-2 sm:mb-3 inline-flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
-                    <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+                <div className="group cursor-pointer overflow-hidden rounded-xl bg-white p-0 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-card">
+                  <div className="flex h-28 items-center justify-center bg-[#e7f6ee] sm:h-36">
+                    <FileText className="h-12 w-12 text-emerald-600 transition-transform duration-300 group-hover:scale-110" />
                   </div>
-                  <h3 className="text-sm sm:text-base font-bold mb-1">Simple Form</h3>
-                  <p className="text-[11px] sm:text-xs text-muted-foreground">
-                    Quick inquiry form
-                  </p>
+                  <div className="p-3 text-center"><h3 className="text-sm font-bold text-slate-900 sm:text-base dark:text-white">Simple Form</h3><p className="mt-1 text-[11px] text-muted-foreground">We’ll call you back</p></div>
                 </div>
               </DialogTrigger>
               <DialogContent>
