@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from "next/navigation";
 import { useAuth } from '@/contexts/AuthContext';
 import Header from "@/components/Header";
@@ -15,6 +15,17 @@ import FormsTab from '@/components/admin/FormsTab';
 const Admin = () => {
   const router = useRouter();
   const { isAdmin, loading } = useAuth();
+  const [activeTab, setActiveTab] = useState("orders");
+
+  useEffect(() => {
+    const savedTab = window.localStorage.getItem("laptap-admin-active-tab");
+    if (savedTab) setActiveTab(savedTab);
+  }, []);
+
+  const changeTab = (tab: string) => {
+    setActiveTab(tab);
+    window.localStorage.setItem("laptap-admin-active-tab", tab);
+  };
 
   useEffect(() => {
     if (!loading && !isAdmin) {
@@ -48,7 +59,7 @@ const Admin = () => {
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Admin Panel</h1>
           </div>
 
-          <Tabs defaultValue="orders" className="space-y-6">
+          <Tabs value={activeTab} onValueChange={changeTab} className="space-y-6">
             {/* Scrollable Horizontal Navigation for Mobile */}
             <div className="w-full overflow-x-auto pb-2 scrollbar-none">
               <TabsList className="inline-flex h-11 items-center justify-start rounded-xl bg-muted p-1 text-muted-foreground w-max min-w-full sm:w-full sm:justify-center">
