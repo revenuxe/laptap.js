@@ -485,7 +485,7 @@ export type Database = {
           pincode: string | null
           status: Database["public"]["Enums"]["order_status"] | null
           updated_at: string | null
-          user_id: string
+          user_id: string | null
         }
         Insert: {
           accessories?: Json | null
@@ -501,7 +501,7 @@ export type Database = {
           pincode?: string | null
           status?: Database["public"]["Enums"]["order_status"] | null
           updated_at?: string | null
-          user_id: string
+          user_id?: string | null
         }
         Update: {
           accessories?: Json | null
@@ -517,7 +517,7 @@ export type Database = {
           pincode?: string | null
           status?: Database["public"]["Enums"]["order_status"] | null
           updated_at?: string | null
-          user_id?: string
+          user_id?: string | null
         }
         Relationships: [
           {

@@ -61,12 +61,11 @@ export function OrdersTab() {
         return;
       }
 
-      const userIds = [...new Set(sellRequestsData.map(sr => sr.user_id))];
+      const userIds: string[] = [...new Set(sellRequestsData.map(sr => sr.user_id).filter((id): id is string => Boolean(id)))];
 
-      const { data: profilesData, error: profilesError } = await supabase
-        .from('profiles')
-        .select('id, full_name, email')
-        .in('id', userIds);
+      const { data: profilesData, error: profilesError } = userIds.length
+        ? await supabase.from('profiles').select('id, full_name, email').in('id', userIds)
+        : { data: [], error: null };
 
       if (profilesError) throw profilesError;
 
@@ -76,7 +75,7 @@ export function OrdersTab() {
 
       const ordersWithProfiles = sellRequestsData.map(order => ({
         ...order,
-        profiles: profilesMap.get(order.user_id) || null
+        profiles: order.user_id ? profilesMap.get(order.user_id) || null : null
       }));
 
       setOrders(ordersWithProfiles);

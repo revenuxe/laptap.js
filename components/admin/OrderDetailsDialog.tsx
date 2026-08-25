@@ -129,6 +129,7 @@ export function OrderDetailsDialog({
                 <p><strong>Name:</strong> {order.customer_name || order.config?.customer_name || order.profiles?.full_name || 'Not provided'}</p>
                 <p><strong>Email:</strong> {order.customer_email || order.profiles?.email || 'Not provided'}</p>
                 <p><strong>Phone:</strong> {order.customer_phone || order.config?.customer_mobile || order.profiles?.phone || 'Not provided'}</p>
+                {orderType === 'sell' && <p><strong>Pincode:</strong> {order.pincode || 'Not provided'}</p>}
               </div>
             </div>
 
