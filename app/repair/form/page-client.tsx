@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from "next/navigation";
-import { useAuth } from '@/contexts/AuthContext';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -50,12 +49,10 @@ export const PageClient = () => {
   const searchParams = useSearchParams();
   const brandId = searchParams.get('brand');
   const category = searchParams.get('category') || 'laptop';
-  const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [brandName, setBrandName] = useState('');
   const [subcategories, setSubcategories] = useState<string[]>([]);
   const [modelOpen, setModelOpen] = useState(false);
-  const [authChecked, setAuthChecked] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -71,34 +68,12 @@ export const PageClient = () => {
   });
 
   useEffect(() => {
-    const checkAuth = async () => {
-      if (!user) {
-        const currentPath = `/repair/form?brand=${brandId}&category=${category}`;
-        router.push(`/auth?redirect=${encodeURIComponent(currentPath)}`);
-        return;
-      }
-      setAuthChecked(true);
-      
-      // Fetch user email to pre-fill
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('email')
-        .eq('id', user.id)
-        .maybeSingle();
-      
-      if (profile?.email) {
-        form.setValue('email', profile.email);
-      }
-    };
-
     if (!brandId) {
       router.push('/repair/brands');
       return;
     }
-    
-    checkAuth();
     fetchBrand();
-  }, [brandId, user]);
+  }, [brandId]);
 
   const fetchBrand = async () => {
     const { data, error } = await supabase
@@ -128,7 +103,7 @@ export const PageClient = () => {
       const { data, error } = await supabase
         .from('repair_requests')
         .insert([{
-          user_id: user!.id,
+          user_id: null,
           brand_id: brandId,
           model_name: values.model,
           customer_name: values.name,
@@ -163,12 +138,7 @@ export const PageClient = () => {
         <Header />
         
         <main className="flex-1 py-12 md:py-20">
-          {!authChecked ? (
-            <div className="container max-w-2xl flex items-center justify-center min-h-[400px]">
-              <Loader2 className="h-8 w-8 animate-spin" />
-            </div>
-          ) : (
-            <div className="container max-w-2xl">
+          <div className="container max-w-2xl">
             <h1 className="mb-4 text-3xl font-bold tracking-tight text-center">Book Repair Service</h1>
             <p className="mb-8 text-center text-muted-foreground">
               Fill in the details for your {brandName} {category} repair
@@ -362,7 +332,6 @@ export const PageClient = () => {
               </Form>
             </Card>
           </div>
-          )}
         </main>
 
         <Footer />

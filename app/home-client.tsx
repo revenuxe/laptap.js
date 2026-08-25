@@ -2,7 +2,6 @@
 
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import ReferralCard from "@/components/ReferralCard";
 import CategorySection from "@/components/CategorySection";
 import Features from "@/components/Features";
 import HowItWorks from "@/components/HowItWorks";
@@ -21,13 +20,6 @@ export function HomeClient() {
       <Header />
       <main className="flex-1">
         <Hero />
-        
-        {/* Referral Card Section */}
-        <section className="py-8 sm:py-12 bg-muted/30">
-          <div className="container max-w-2xl px-4">
-            <ReferralCard />
-          </div>
-        </section>
         
         <CategorySection />
         <Stats />

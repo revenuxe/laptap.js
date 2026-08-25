@@ -424,7 +424,7 @@ export type Database = {
           preferred_date: string | null
           status: string
           updated_at: string
-          user_id: string
+          user_id: string | null
         }
         Insert: {
           brand_id?: string | null
@@ -441,7 +441,7 @@ export type Database = {
           preferred_date?: string | null
           status?: string
           updated_at?: string
-          user_id: string
+          user_id?: string | null
         }
         Update: {
           brand_id?: string | null
@@ -458,7 +458,7 @@ export type Database = {
           preferred_date?: string | null
           status?: string
           updated_at?: string
-          user_id?: string
+          user_id?: string | null
         }
         Relationships: [
           {

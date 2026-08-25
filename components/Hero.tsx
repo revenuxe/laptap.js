@@ -88,17 +88,17 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
           {/* Category cards */}
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto">
             <Link href="/sell/laptop" className="group block overflow-hidden rounded-2xl border border-slate-200 bg-white p-0 shadow-[0_8px_22px_-14px_rgba(15,23,42,0.42)] ring-1 ring-slate-100 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_18px_32px_-16px_rgba(37,99,235,0.45)] dark:border-slate-700 dark:bg-card dark:ring-slate-800">
-              <div className="flex h-28 items-center justify-center bg-[#e9f5f3] sm:h-36"><img src="/assets/sell-laptop-cutout.png" alt="Laptop" className="h-full w-full object-contain p-2" /></div>
+              <div className="flex h-28 items-center justify-center bg-[#e9f5f3] sm:h-36"><img src="/assets/sell-laptop-cutout.webp" alt="Laptop" className="h-full w-full object-contain p-2" /></div>
               <div className="p-3 text-center"><h3 className="text-sm font-bold text-slate-900 sm:text-base dark:text-white">Sell Laptops</h3><p className="mt-1 text-[11px] text-muted-foreground">Select your model</p></div>
             </Link>
 
             <Link href="/repair" className="group block overflow-hidden rounded-2xl border border-slate-200 bg-white p-0 shadow-[0_8px_22px_-14px_rgba(15,23,42,0.42)] ring-1 ring-slate-100 transition-all duration-300 hover:-translate-y-1 hover:border-orange-400/50 hover:shadow-[0_18px_32px_-16px_rgba(234,88,12,0.45)] dark:border-slate-700 dark:bg-card dark:ring-slate-800">
-              <div className="flex h-28 items-center justify-center bg-[#e9f5f3] sm:h-36"><img src="/assets/repair-laptop-cutout.png" alt="Laptop repair" className="h-full w-full object-contain p-2" /></div>
+              <div className="flex h-28 items-center justify-center bg-[#e9f5f3] sm:h-36"><img src="/assets/repair-laptop-cutout.webp" alt="Laptop repair" className="h-full w-full object-contain p-2" /></div>
               <div className="p-3 text-center"><h3 className="text-sm font-bold text-slate-900 sm:text-base dark:text-white">Repair Laptops</h3><p className="mt-1 text-[11px] text-muted-foreground">Trusted service experts</p></div>
             </Link>
             
             <Link href="/sell/desktop" className="group block overflow-hidden rounded-2xl border border-slate-200 bg-white p-0 shadow-[0_8px_22px_-14px_rgba(15,23,42,0.42)] ring-1 ring-slate-100 transition-all duration-300 hover:-translate-y-1 hover:border-violet-400/50 hover:shadow-[0_18px_32px_-16px_rgba(124,58,237,0.45)] dark:border-slate-700 dark:bg-card dark:ring-slate-800">
-              <div className="flex h-28 items-center justify-center bg-[#e9f5f3] sm:h-36"><img src="/assets/sell-desktop-cutout.png" alt="Desktop computer" className="h-full w-full object-contain p-2" /></div>
+              <div className="flex h-28 items-center justify-center bg-[#e9f5f3] sm:h-36"><img src="/assets/sell-desktop-cutout.webp" alt="Desktop computer" className="h-full w-full object-contain p-2" /></div>
               <div className="p-3 text-center"><h3 className="text-sm font-bold text-slate-900 sm:text-base dark:text-white">Sell Desktops</h3><p className="mt-1 text-[11px] text-muted-foreground">Select your model</p></div>
             </Link>
 

@@ -1,107 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/contexts/AuthContext";
-import { LogOut, User, Menu, X } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 
 const Header = () => {
-  const router = useRouter();
-  const { user, signOut, isAdmin } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const closeMenu = () => setMobileMenuOpen(false);
 
-  const handleSignOut = async () => {
-    await signOut();
-    router.push("/");
-  };
-
-  return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 sm:h-16 md:h-20 items-center justify-between">
-        <Link href="/" className="flex items-center space-x-2">
-          <img src="/assets/laptop_logo.webp" alt="Laptap Logo" className="h-10 sm:h-12 md:h-14" />
-        </Link>
-
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center space-x-8">
-          <Link href="/" className="text-sm font-medium hover:text-primary transition-colors">Home</Link>
-          <Link href="/sell/laptop" className="text-sm font-medium hover:text-primary transition-colors">Sell Device</Link>
-          <Link href="/about" className="text-sm font-medium hover:text-primary transition-colors">About</Link>
-          <Link href="/blog" className="text-sm font-medium hover:text-primary transition-colors">Blog</Link>
-          {user && <Link href="/dashboard" className="text-sm font-medium hover:text-primary transition-colors">Dashboard</Link>}
-        </nav>
-
-        <div className="flex items-center gap-2 sm:gap-4">
-          {!user ? (
-            <>
-              <Button variant="outline" size="sm" asChild className="text-xs sm:text-sm h-8 sm:h-9">
-                <Link href="/auth">Login</Link>
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button variant="cta" size="sm" asChild className="hidden sm:inline-flex">
-                <Link href="/sell/laptop">Sell Now</Link>
-              </Button>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-9 sm:w-9">
-                    <User className="h-4 w-4 sm:h-5 sm:w-5" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="rounded-xl">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem asChild><Link href="/dashboard">Dashboard</Link></DropdownMenuItem>
-                  {isAdmin && <DropdownMenuItem asChild><Link href="/admin/dashboard">Admin Panel</Link></DropdownMenuItem>}
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleSignOut}>
-                    <LogOut className="mr-2 h-4 w-4" />
-                    Sign Out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </>
-          )}
-
-          {/* Mobile hamburger */}
-          <button
-            className="md:hidden p-1.5 rounded-lg hover:bg-muted transition-colors"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden border-t bg-background/98 backdrop-blur animate-in slide-in-from-top-2 duration-200">
-          <nav className="container py-4 flex flex-col gap-1">
-            <Link href="/" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium py-2.5 px-3 rounded-xl hover:bg-muted transition-colors">Home</Link>
-            <Link href="/sell/laptop" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium py-2.5 px-3 rounded-xl hover:bg-muted transition-colors">Sell Device</Link>
-            <Link href="/repair" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium py-2.5 px-3 rounded-xl hover:bg-muted transition-colors">Repair</Link>
-            <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium py-2.5 px-3 rounded-xl hover:bg-muted transition-colors">About</Link>
-            <Link href="/blog" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium py-2.5 px-3 rounded-xl hover:bg-muted transition-colors">Blog</Link>
-            <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium py-2.5 px-3 rounded-xl hover:bg-muted transition-colors">Contact</Link>
-            {user && (
-              <>
-                <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium py-2.5 px-3 rounded-xl hover:bg-muted transition-colors">Dashboard</Link>
-                <div className="pt-2 px-3">
-                  <Button variant="cta" className="w-full" size="sm" onClick={() => { router.push("/sell/laptop"); setMobileMenuOpen(false); }}>
-                    Sell Now
-                  </Button>
-                </div>
-              </>
-            )}
-          </nav>
-        </div>
-      )}
-    </header>
-  );
+  return <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <div className="container flex h-14 items-center justify-between sm:h-16 md:h-20">
+      <Link href="/" className="flex items-center space-x-2" aria-label="Laptap home"><img src="/assets/laptop_logo.webp" alt="Laptap" className="h-10 sm:h-12 md:h-14" /></Link>
+      <nav className="hidden items-center space-x-8 md:flex"><Link href="/" className="text-sm font-medium transition-colors hover:text-primary">Home</Link><Link href="/sell/laptop" className="text-sm font-medium transition-colors hover:text-primary">Sell Device</Link><Link href="/repair" className="text-sm font-medium transition-colors hover:text-primary">Repair</Link><Link href="/about" className="text-sm font-medium transition-colors hover:text-primary">About</Link><Link href="/blog" className="text-sm font-medium transition-colors hover:text-primary">Blog</Link></nav>
+      <div className="flex items-center gap-2"><Button variant="cta" size="sm" asChild className="hidden sm:inline-flex"><Link href="/sell/laptop">Sell Now</Link></Button><button className="rounded-lg p-1.5 transition-colors hover:bg-muted md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle navigation">{mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}</button></div>
+    </div>
+    {mobileMenuOpen && <div className="animate-in slide-in-from-top-2 border-t bg-background/98 duration-200 md:hidden"><nav className="container flex flex-col gap-1 py-4"><Link href="/" onClick={closeMenu} className="rounded-xl px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted">Home</Link><Link href="/sell/laptop" onClick={closeMenu} className="rounded-xl px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted">Sell Device</Link><Link href="/repair" onClick={closeMenu} className="rounded-xl px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted">Repair</Link><Link href="/about" onClick={closeMenu} className="rounded-xl px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted">About</Link><Link href="/blog" onClick={closeMenu} className="rounded-xl px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted">Blog</Link><Link href="/contact" onClick={closeMenu} className="rounded-xl px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted">Contact</Link><div className="px-3 pt-2"><Button variant="cta" className="w-full" asChild><Link href="/sell/laptop" onClick={closeMenu}>Sell Now</Link></Button></div></nav></div>}
+  </header>;
 };
+
 export default Header;
