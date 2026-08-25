@@ -156,14 +156,12 @@ export function OrderDetailsDialog({
                   <p><strong>Brand:</strong> {order.models?.series?.brands?.name}</p>
                   <p><strong>Series:</strong> {order.models?.series?.name}</p>
                   <p><strong>Model:</strong> {order.models?.name}</p>
-                  <p><strong>Condition:</strong> {order.condition}</p>
-                  <p><strong>Age:</strong> {order.age_months} months</p>
                 </div>
               </div>
             )}
 
             {/* Configuration */}
-            {orderType === 'sell' && order.config && Object.keys(order.config).length > 0 && (
+            {orderType === 'sell' && order.config && (order.config.cpu || order.config.generation || order.config.ram || order.config.storage || order.config.screen_size) && (
               <div>
                 <h3 className="font-semibold mb-2">Configuration</h3>
                 <div className="space-y-1 text-sm">
@@ -189,7 +187,7 @@ export function OrderDetailsDialog({
             )}
 
             {/* Pricing */}
-            {orderType === 'sell' && (
+            {false && (
               <div>
                 <h3 className="font-semibold mb-2">Pricing</h3>
                 <div className="space-y-1 text-sm">
@@ -210,8 +208,8 @@ export function OrderDetailsDialog({
               </div>
             )}
 
-            {/* Status Update */}
-            <div>
+            {/* Repair status update */}
+            {orderType === 'repair' && <div>
               <h3 className="font-semibold mb-2">Update Status</h3>
               <div className="flex gap-2">
                 <Select value={status} onValueChange={setStatus}>
@@ -234,7 +232,7 @@ export function OrderDetailsDialog({
                   {updating ? 'Updating...' : 'Update'}
                 </Button>
               </div>
-            </div>
+            </div>}
 
             {/* Timestamps */}
             <div className="pt-4 border-t text-xs text-muted-foreground">

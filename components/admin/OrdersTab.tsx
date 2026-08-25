@@ -202,8 +202,8 @@ export function OrdersTab() {
           />
         </div>
 
-        {/* Status Filter */}
-        <Select value={statusFilter} onValueChange={setStatusFilter}>
+        {/* Status is retained internally but not shown for contact-first sell orders. */}
+        <div className="hidden"><Select value={statusFilter} onValueChange={setStatusFilter}>
           <SelectTrigger>
             <SelectValue placeholder="All Status" />
           </SelectTrigger>
@@ -217,10 +217,10 @@ export function OrdersTab() {
             <SelectItem value="paid">Paid</SelectItem>
             <SelectItem value="cancelled">Cancelled</SelectItem>
           </SelectContent>
-        </Select>
+        </Select></div>
 
-        {/* Price Range Filter */}
-        <Select value={priceRange} onValueChange={setPriceRange}>
+        {/* Pricing is no longer part of the sell contact flow. */}
+        <div className="hidden"><Select value={priceRange} onValueChange={setPriceRange}>
           <SelectTrigger>
             <SelectValue placeholder="Price Range" />
           </SelectTrigger>
@@ -232,7 +232,7 @@ export function OrdersTab() {
             <SelectItem value="50k-100k">₹50,000 - ₹1,00,000</SelectItem>
             <SelectItem value="above100k">Above ₹1,00,000</SelectItem>
           </SelectContent>
-        </Select>
+        </Select></div>
 
         {/* Date Range Filter */}
         <Select value={dateRange} onValueChange={setDateRange}>
@@ -264,8 +264,6 @@ export function OrdersTab() {
                   <TableHead>ID</TableHead>
                   <TableHead>Customer</TableHead>
                   <TableHead>Device</TableHead>
-                  <TableHead>Price</TableHead>
-                  <TableHead>Status</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead>Actions</TableHead>
                 </TableRow>
@@ -298,10 +296,10 @@ export function OrdersTab() {
                         </div>
                         <div className="text-xs text-muted-foreground">{order.models?.name}</div>
                       </TableCell>
-                      <TableCell className="font-semibold">
+                      <TableCell className="hidden font-semibold">
                         ₹{order.estimated_price?.toLocaleString()}
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="hidden">
                         <Badge className={getStatusColor(order.status)}>
                           {order.status.replace('_', ' ')}
                         </Badge>
