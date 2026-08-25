@@ -22,7 +22,7 @@ const Header = () => {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 sm:h-16 md:h-20 items-center justify-between">
         <Link href="/" className="flex items-center space-x-2">
-          <img src="/assets/laptop_logo.webp" alt="Laptap Logo" className="h-8 sm:h-10 md:h-12" />
+          <img src="/assets/laptop_logo.webp" alt="Laptap Logo" className="h-10 sm:h-12 md:h-14" />
         </Link>
 
         {/* Desktop Nav */}

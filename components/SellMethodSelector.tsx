@@ -16,7 +16,7 @@ export function SellMethodSelector({ category, onEvaluate, onForm }: Props) {
         <div className="flex flex-col items-center gap-4 p-5 sm:flex-row sm:gap-6 sm:p-7">
           <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-[#25D366]/10 transition group-hover:bg-[#25D366]/20"><img src="/assets/whatsapp.svg" alt="WhatsApp" className="h-10 w-10" /></div>
           <div className="flex-1 text-center sm:text-left"><h3 className="text-lg font-bold">Sell through WhatsApp</h3><p className="text-sm font-medium text-[#25D366]">Instant response · Fastest way to sell</p><p className="mt-1 text-xs text-muted-foreground">Chat directly with our team and get help booking your pickup.</p></div>
-          <Button className="w-full bg-[#25D366] font-semibold hover:bg-[#20BA5A] sm:w-auto">Chat now</Button>
+          <Button className="w-full bg-[#168a45] font-semibold text-white hover:bg-[#116b35] sm:w-auto">Chat now</Button>
         </div>
       </Card>
     </a>
