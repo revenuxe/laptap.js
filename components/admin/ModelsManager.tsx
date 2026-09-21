@@ -28,6 +28,8 @@ export function ModelsManager() {
   const [active, setActive] = useState(true);
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
   const [thumbnailUrl, setThumbnailUrl] = useState("");
+  const [thumbnailUrlError, setThumbnailUrlError] = useState("");
+  const [thumbnailPreviewFailed, setThumbnailPreviewFailed] = useState(false);
 
   // Top bar filter state
   const [filterBrandId, setFilterBrandId] = useState<string>("all");
@@ -152,7 +154,7 @@ export function ModelsManager() {
           description,
           sku,
           active,
-          thumbnail_url: thumbnailUrl,
+          thumbnail_url: thumbnailUrl.trim(),
         })
         .select()
         .single();
@@ -183,7 +185,7 @@ export function ModelsManager() {
 
   const updateMutation = useMutation({
     mutationFn: async () => {
-      let finalThumbnailUrl = thumbnailUrl;
+      let finalThumbnailUrl = thumbnailUrl.trim();
 
       if (thumbnailFile) {
         finalThumbnailUrl = await uploadImage(thumbnailFile, editingModel.id);
@@ -239,6 +241,8 @@ export function ModelsManager() {
     setActive(true);
     setThumbnailFile(null);
     setThumbnailUrl("");
+    setThumbnailUrlError("");
+    setThumbnailPreviewFailed(false);
     setEditingModel(null);
   };
 
@@ -262,8 +266,30 @@ export function ModelsManager() {
     setDescription(model.description || "");
     setSku(model.sku || "");
     setActive(model.active);
+    setThumbnailFile(null);
     setThumbnailUrl(model.thumbnail_url || "");
+    setThumbnailUrlError("");
+    setThumbnailPreviewFailed(false);
     setOpen(true);
+  };
+
+  const validateThumbnailUrl = (value: string) => {
+    if (!value.trim()) return "";
+
+    try {
+      const url = new URL(value.trim());
+      return url.protocol === "https:" || url.protocol === "http:"
+        ? ""
+        : "Use a full http:// or https:// image URL.";
+    } catch {
+      return "Enter a valid image URL.";
+    }
+  };
+
+  const handleThumbnailUrlChange = (value: string) => {
+    setThumbnailUrl(value);
+    setThumbnailUrlError(validateThumbnailUrl(value));
+    setThumbnailPreviewFailed(false);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -285,6 +311,13 @@ export function ModelsManager() {
     const fileValidation = validateImageFile(thumbnailFile);
     if (!fileValidation.valid) {
       toast.error(fileValidation.error);
+      return;
+    }
+
+    const urlError = validateThumbnailUrl(thumbnailUrl);
+    if (urlError) {
+      setThumbnailUrlError(urlError);
+      toast.error(urlError);
       return;
     }
     
@@ -433,7 +466,29 @@ export function ModelsManager() {
                 />
               </div>
               <div>
-                <Label htmlFor="thumbnail">Thumbnail Image</Label>
+                <Label htmlFor="thumbnailUrl">Thumbnail Image URL</Label>
+                <Input
+                  id="thumbnailUrl"
+                  type="url"
+                  inputMode="url"
+                  value={thumbnailUrl}
+                  onChange={(e) => handleThumbnailUrlChange(e.target.value)}
+                  placeholder="https://example.com/laptop-image.jpg"
+                  className="rounded-xl"
+                  aria-invalid={Boolean(thumbnailUrlError)}
+                  aria-describedby={thumbnailUrlError ? "thumbnailUrl-error" : undefined}
+                />
+                {thumbnailUrlError && (
+                  <p id="thumbnailUrl-error" className="mt-1 text-sm text-destructive">
+                    {thumbnailUrlError}
+                  </p>
+                )}
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Paste a direct public image link, or upload an image below. An upload takes priority.
+                </p>
+              </div>
+              <div>
+                <Label htmlFor="thumbnail">Upload Thumbnail Image</Label>
                 <Input
                   id="thumbnail"
                   type="file"
@@ -441,8 +496,18 @@ export function ModelsManager() {
                   onChange={(e) => setThumbnailFile(e.target.files?.[0] || null)}
                   className="rounded-xl"
                 />
-                {thumbnailUrl && !thumbnailFile && (
-                  <img src={thumbnailUrl} alt="Current thumbnail" className="mt-2 h-20 object-contain rounded-lg" />
+                {thumbnailUrl && !thumbnailFile && !thumbnailUrlError && !thumbnailPreviewFailed && (
+                  <img
+                    src={thumbnailUrl}
+                    alt="Thumbnail preview"
+                    className="mt-2 h-20 object-contain rounded-lg"
+                    onError={() => setThumbnailPreviewFailed(true)}
+                  />
+                )}
+                {thumbnailPreviewFailed && !thumbnailFile && (
+                  <p className="mt-2 text-sm text-destructive">
+                    This image could not be previewed. Check that the URL is public and points directly to an image.
+                  </p>
                 )}
               </div>
               <div className="flex items-center space-x-2">
