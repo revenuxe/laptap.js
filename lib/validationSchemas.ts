@@ -65,15 +65,6 @@ export const modelSchema = z.object({
   seriesId: z
     .string()
     .uuid({ message: "Invalid series selection" }),
-  basePrice: z
-    .string()
-    .min(1, { message: "Price is required" })
-    .refine((val) => !isNaN(parseFloat(val)) && parseFloat(val) > 0, {
-      message: "Price must be a positive number",
-    })
-    .refine((val) => parseFloat(val) <= 10000000, {
-      message: "Price must be less than 1 crore",
-    }),
   description: z
     .string()
     .trim()

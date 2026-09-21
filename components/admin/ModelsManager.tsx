@@ -22,7 +22,6 @@ export function ModelsManager() {
   const [name, setName] = useState("");
   const [seriesId, setSeriesId] = useState("");
   const [brandId, setBrandId] = useState("");
-  const [basePrice, setBasePrice] = useState("");
   const [description, setDescription] = useState("");
   const [sku, setSku] = useState("");
   const [active, setActive] = useState(true);
@@ -43,7 +42,7 @@ export function ModelsManager() {
       const draft = JSON.parse(window.sessionStorage.getItem("laptap-admin-model-draft") || "null");
       if (draft) {
         setOpen(Boolean(draft.open)); setEditingModel(draft.editingModelId ? { id: draft.editingModelId } : null);
-        setName(draft.name || ""); setSeriesId(draft.seriesId || ""); setBrandId(draft.brandId || ""); setBasePrice(draft.basePrice || "");
+        setName(draft.name || ""); setSeriesId(draft.seriesId || ""); setBrandId(draft.brandId || "");
         setDescription(draft.description || ""); setSku(draft.sku || ""); setActive(draft.active !== false); setThumbnailUrl(draft.thumbnailUrl || "");
         setFilterBrandId(draft.filterBrandId || "all"); setFilterSeriesId(draft.filterSeriesId || "all");
       }
@@ -53,8 +52,8 @@ export function ModelsManager() {
 
   useEffect(() => {
     if (!draftHydrated) return;
-    window.sessionStorage.setItem("laptap-admin-model-draft", JSON.stringify({ open, editingModelId: editingModel?.id, name, seriesId, brandId, basePrice, description, sku, active, thumbnailUrl, filterBrandId, filterSeriesId }));
-  }, [draftHydrated, open, editingModel, name, seriesId, brandId, basePrice, description, sku, active, thumbnailUrl, filterBrandId, filterSeriesId]);
+    window.sessionStorage.setItem("laptap-admin-model-draft", JSON.stringify({ open, editingModelId: editingModel?.id, name, seriesId, brandId, description, sku, active, thumbnailUrl, filterBrandId, filterSeriesId }));
+  }, [draftHydrated, open, editingModel, name, seriesId, brandId, description, sku, active, thumbnailUrl, filterBrandId, filterSeriesId]);
 
   const { data: brands } = useQuery({
     queryKey: ["brands"],
@@ -169,7 +168,7 @@ export function ModelsManager() {
         .insert({
           name,
           series_id: seriesId,
-          base_price: parseFloat(basePrice),
+          base_price: 0,
           description,
           sku,
           active,
@@ -215,7 +214,6 @@ export function ModelsManager() {
         .update({
           name,
           series_id: seriesId,
-          base_price: parseFloat(basePrice),
           description,
           sku,
           active,
@@ -254,7 +252,6 @@ export function ModelsManager() {
     setName("");
     setSeriesId("");
     setBrandId("");
-    setBasePrice("");
     setDescription("");
     setSku("");
     setActive(true);
@@ -282,7 +279,6 @@ export function ModelsManager() {
     setName(model.name);
     setSeriesId(model.series_id);
     setBrandId(model.series?.brands?.id || model.series?.brand_id || "");
-    setBasePrice(model.base_price.toString());
     setDescription(model.description || "");
     setSku(model.sku || "");
     setActive(model.active);
@@ -318,7 +314,6 @@ export function ModelsManager() {
     const validation = modelSchema.safeParse({ 
       name, 
       seriesId, 
-      basePrice, 
       description, 
       sku 
     });
@@ -452,28 +447,14 @@ export function ModelsManager() {
                   required
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="basePrice">Base Price (₹) *</Label>
-                  <Input
-                    id="basePrice"
-                    type="number"
-                    step="0.01"
-                    value={basePrice}
-                    onChange={(e) => setBasePrice(e.target.value)}
-                    className="rounded-xl"
-                    required
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="sku">SKU</Label>
-                  <Input
-                    id="sku"
-                    value={sku}
-                    onChange={(e) => setSku(e.target.value)}
-                    className="rounded-xl"
-                  />
-                </div>
+              <div>
+                <Label htmlFor="sku">SKU</Label>
+                <Input
+                  id="sku"
+                  value={sku}
+                  onChange={(e) => setSku(e.target.value)}
+                  className="rounded-xl"
+                />
               </div>
               <div>
                 <Label htmlFor="description">Description</Label>
@@ -587,9 +568,6 @@ export function ModelsManager() {
                   <h3 className="font-semibold text-sm sm:text-base text-slate-900 dark:text-slate-100">
                     {model.name}
                   </h3>
-                  <p className="text-xs sm:text-sm font-semibold text-blue-600 dark:text-blue-400 mt-0.5">
-                    ₹{model.base_price != null ? Number(model.base_price).toLocaleString('en-IN') : '0'}
-                  </p>
                 </div>
               </div>
 
