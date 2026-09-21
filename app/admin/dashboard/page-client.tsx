@@ -71,23 +71,23 @@ const Admin = () => {
               </TabsList>
             </div>
 
-            <TabsContent value="orders" className="focus-visible:outline-none">
+            <TabsContent value="orders" forceMount className="focus-visible:outline-none data-[state=inactive]:hidden">
               <OrdersTab />
             </TabsContent>
 
-            <TabsContent value="catalog" className="focus-visible:outline-none">
+            <TabsContent value="catalog" forceMount className="focus-visible:outline-none data-[state=inactive]:hidden">
               <CatalogTab />
             </TabsContent>
 
-            <TabsContent value="forms" className="focus-visible:outline-none">
+            <TabsContent value="forms" forceMount className="focus-visible:outline-none data-[state=inactive]:hidden">
               <FormsTab />
             </TabsContent>
 
-            <TabsContent value="blogs" className="focus-visible:outline-none">
+            <TabsContent value="blogs" forceMount className="focus-visible:outline-none data-[state=inactive]:hidden">
               <BlogsTab />
             </TabsContent>
 
-            <TabsContent value="analytics" className="focus-visible:outline-none">
+            <TabsContent value="analytics" forceMount className="focus-visible:outline-none data-[state=inactive]:hidden">
               <Card className="p-4 sm:p-6">
                 <h2 className="text-lg sm:text-xl font-semibold mb-4">Analytics</h2>
                 <p className="text-sm text-muted-foreground">
