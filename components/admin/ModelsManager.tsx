@@ -34,8 +34,27 @@ export function ModelsManager() {
   // Top bar filter state
   const [filterBrandId, setFilterBrandId] = useState<string>("all");
   const [filterSeriesId, setFilterSeriesId] = useState<string>("all");
+  const [draftHydrated, setDraftHydrated] = useState(false);
 
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    try {
+      const draft = JSON.parse(window.sessionStorage.getItem("laptap-admin-model-draft") || "null");
+      if (draft) {
+        setOpen(Boolean(draft.open)); setEditingModel(draft.editingModelId ? { id: draft.editingModelId } : null);
+        setName(draft.name || ""); setSeriesId(draft.seriesId || ""); setBrandId(draft.brandId || ""); setBasePrice(draft.basePrice || "");
+        setDescription(draft.description || ""); setSku(draft.sku || ""); setActive(draft.active !== false); setThumbnailUrl(draft.thumbnailUrl || "");
+        setFilterBrandId(draft.filterBrandId || "all"); setFilterSeriesId(draft.filterSeriesId || "all");
+      }
+    } catch { /* Ignore an invalid or old browser draft. */ }
+    setDraftHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!draftHydrated) return;
+    window.sessionStorage.setItem("laptap-admin-model-draft", JSON.stringify({ open, editingModelId: editingModel?.id, name, seriesId, brandId, basePrice, description, sku, active, thumbnailUrl, filterBrandId, filterSeriesId }));
+  }, [draftHydrated, open, editingModel, name, seriesId, brandId, basePrice, description, sku, active, thumbnailUrl, filterBrandId, filterSeriesId]);
 
   const { data: brands } = useQuery({
     queryKey: ["brands"],
@@ -244,6 +263,7 @@ export function ModelsManager() {
     setThumbnailUrlError("");
     setThumbnailPreviewFailed(false);
     setEditingModel(null);
+    window.sessionStorage.removeItem("laptap-admin-model-draft");
   };
 
   const handleOpenAddModal = () => {

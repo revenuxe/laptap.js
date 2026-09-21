@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase/client";
 import { seriesSchema, validateImageFile } from "@/lib/validationSchemas";
@@ -23,8 +23,25 @@ export function SeriesManager() {
   const [imageUrl, setImageUrl] = useState("");
 
   const [filterBrandId, setFilterBrandId] = useState<string>("all");
+  const [draftHydrated, setDraftHydrated] = useState(false);
 
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    try {
+      const draft = JSON.parse(window.sessionStorage.getItem("laptap-admin-series-draft") || "null");
+      if (draft) {
+        setOpen(Boolean(draft.open)); setEditingSeries(draft.editingSeriesId ? { id: draft.editingSeriesId } : null);
+        setName(draft.name || ""); setBrandId(draft.brandId || ""); setImageUrl(draft.imageUrl || ""); setFilterBrandId(draft.filterBrandId || "all");
+      }
+    } catch { /* Ignore an invalid or old browser draft. */ }
+    setDraftHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!draftHydrated) return;
+    window.sessionStorage.setItem("laptap-admin-series-draft", JSON.stringify({ open, editingSeriesId: editingSeries?.id, name, brandId, imageUrl, filterBrandId }));
+  }, [draftHydrated, open, editingSeries, name, brandId, imageUrl, filterBrandId]);
 
   const { data: brands } = useQuery({
     queryKey: ["brands"],
@@ -149,6 +166,7 @@ export function SeriesManager() {
     setImageFile(null);
     setImageUrl("");
     setEditingSeries(null);
+    window.sessionStorage.removeItem("laptap-admin-series-draft");
   };
 
   const handleOpenAddModal = () => {

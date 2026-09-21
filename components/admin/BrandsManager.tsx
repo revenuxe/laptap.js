@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase/client";
 import { brandSchema, validateImageFile } from "@/lib/validationSchemas";
@@ -22,7 +22,24 @@ export function BrandsManager() {
   const [categoryId, setCategoryId] = useState("");
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoUrl, setLogoUrl] = useState("");
+  const [draftHydrated, setDraftHydrated] = useState(false);
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    try {
+      const draft = JSON.parse(window.sessionStorage.getItem("laptap-admin-brand-draft") || "null");
+      if (draft) {
+        setOpen(Boolean(draft.open)); setEditingBrand(draft.editingBrandId ? { id: draft.editingBrandId } : null);
+        setName(draft.name || ""); setCountry(draft.country || ""); setCategoryId(draft.categoryId || ""); setLogoUrl(draft.logoUrl || "");
+      }
+    } catch { /* Ignore an invalid or old browser draft. */ }
+    setDraftHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!draftHydrated) return;
+    window.sessionStorage.setItem("laptap-admin-brand-draft", JSON.stringify({ open, editingBrandId: editingBrand?.id, name, country, categoryId, logoUrl }));
+  }, [draftHydrated, open, editingBrand, name, country, categoryId, logoUrl]);
 
   const { data: brands, isLoading } = useQuery({
     queryKey: ["brands"],
@@ -144,6 +161,7 @@ export function BrandsManager() {
     setLogoFile(null);
     setLogoUrl("");
     setEditingBrand(null);
+    window.sessionStorage.removeItem("laptap-admin-brand-draft");
   };
 
   const handleEdit = (brand: any) => {
