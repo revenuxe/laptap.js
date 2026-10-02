@@ -14,8 +14,10 @@ const QuickLinks = () => {
 
   const links = [
     { text: "Sell Used Laptop Bangalore", url: "/bangalore" },
-    { text: "Sell Old Laptop Hyderabad", url: "/hyderabad" },
     { text: "Sell MacBook Bangalore", url: "/bangalore/macbook" },
+    { text: "Sell Dell Laptop Bangalore", url: "/bangalore/dell" },
+    { text: "Sell HP Laptop Bangalore", url: "/bangalore/hp" },
+    { text: "Sell Lenovo Laptop Bangalore", url: "/bangalore/lenovo" },
     { text: "Sell Dell Laptop Online", url: "/models/dell-xps" },
     { text: "Sell HP Laptop India", url: "/models/hp-pavilion" },
     { text: "Sell Lenovo ThinkPad", url: "/models/lenovo-thinkpad" },

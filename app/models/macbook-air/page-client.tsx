@@ -119,7 +119,7 @@ export const PageClient = () => {
 
                 <h3 className="text-2xl font-bold text-foreground mt-8">Free Doorstep Pickup Across India</h3>
                 <p>
-                  Forget the hassle of visiting multiple shops or dealing with unreliable buyers. Our verified technicians provide free same-day doorstep pickup service across all major Indian cities including Bangalore, Mumbai, Delhi, Hyderabad, Chennai, and Pune.
+                  Forget the hassle of visiting multiple shops or dealing with unreliable buyers. Our verified technicians provide free same-day doorstep pickup service across Bangalore — Koramangala, Indiranagar, Whitefield, Electronic City, HSR Layout, Marathahalli, and all major areas.
                 </p>
 
                 <h3 className="text-2xl font-bold text-foreground mt-8">Instant Payment & Safe Transaction</h3>

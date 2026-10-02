@@ -41,17 +41,18 @@ const Footer = () => {
               <li><Link href="/bangalore/dell" className="text-muted-foreground hover:text-foreground transition-colors">Sell Dell</Link></li>
               <li><Link href="/bangalore/hp" className="text-muted-foreground hover:text-foreground transition-colors">Sell HP</Link></li>
               <li><Link href="/bangalore/lenovo" className="text-muted-foreground hover:text-foreground transition-colors">Sell Lenovo</Link></li>
+              <li><Link href="/sell/desktop" className="text-muted-foreground hover:text-foreground transition-colors">Sell Desktop</Link></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="mb-3 sm:mb-4 text-xs sm:text-sm font-semibold">Hyderabad</h3>
+            <h3 className="mb-3 sm:mb-4 text-xs sm:text-sm font-semibold">Areas We Serve</h3>
             <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
-              <li><Link href="/hyderabad" className="text-muted-foreground hover:text-foreground transition-colors">Sell Laptop</Link></li>
-              <li><Link href="/hyderabad/macbook" className="text-muted-foreground hover:text-foreground transition-colors">Sell MacBook</Link></li>
-              <li><Link href="/hyderabad/dell" className="text-muted-foreground hover:text-foreground transition-colors">Sell Dell</Link></li>
-              <li><Link href="/hyderabad/hp" className="text-muted-foreground hover:text-foreground transition-colors">Sell HP</Link></li>
-              <li><Link href="/hyderabad/lenovo" className="text-muted-foreground hover:text-foreground transition-colors">Sell Lenovo</Link></li>
+              <li><span className="text-muted-foreground">Koramangala</span></li>
+              <li><span className="text-muted-foreground">Indiranagar</span></li>
+              <li><span className="text-muted-foreground">Whitefield</span></li>
+              <li><span className="text-muted-foreground">Electronic City</span></li>
+              <li><span className="text-muted-foreground">HSR Layout</span></li>
             </ul>
           </div>
 

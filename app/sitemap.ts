@@ -34,12 +34,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: "https://www.laptap.in/bangalore/dell", lastModified: new Date(), changeFrequency: "weekly", priority: 0.85 },
     { url: "https://www.laptap.in/bangalore/hp", lastModified: new Date(), changeFrequency: "weekly", priority: 0.85 },
     { url: "https://www.laptap.in/bangalore/lenovo", lastModified: new Date(), changeFrequency: "weekly", priority: 0.85 },
-    // Location Pages - Hyderabad
-    { url: "https://www.laptap.in/hyderabad", lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
-    { url: "https://www.laptap.in/hyderabad/macbook", lastModified: new Date(), changeFrequency: "weekly", priority: 0.85 },
-    { url: "https://www.laptap.in/hyderabad/dell", lastModified: new Date(), changeFrequency: "weekly", priority: 0.85 },
-    { url: "https://www.laptap.in/hyderabad/hp", lastModified: new Date(), changeFrequency: "weekly", priority: 0.85 },
-    { url: "https://www.laptap.in/hyderabad/lenovo", lastModified: new Date(), changeFrequency: "weekly", priority: 0.85 },
     // Gaming
     { url: "https://www.laptap.in/gaming/asus-rog", lastModified: new Date(), changeFrequency: "weekly", priority: 0.85 },
     { url: "https://www.laptap.in/gaming/acer-predator", lastModified: new Date(), changeFrequency: "weekly", priority: 0.85 },
