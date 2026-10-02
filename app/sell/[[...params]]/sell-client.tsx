@@ -282,7 +282,7 @@ export const SellClient = () => {
           )}
 
           {step === "booking" && modelObj && brandObj && categorySlug && (
-            <ModelBookingCard category={categorySlug} brand={brandObj.name} model={modelObj.name} modelId={modelObj.id} />
+            <ModelBookingCard key={modelObj.id} category={categorySlug} brand={brandObj.name} model={modelObj.name} modelId={modelObj.id} modelImage={modelObj.image_url || modelObj.thumbnail_url} />
           )}
           {/* If booking step but objects not yet resolved from URL, show spinner */}
           {step === "booking" && (!modelObj || !brandObj) && (
