@@ -4,7 +4,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import Script from "next/script";
 import { Suspense } from "react";
-import TopLoader from "@/components/TopLoader";
+import PageLoader from "@/components/PageLoader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -158,7 +158,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <Suspense fallback={null}>
-          <TopLoader />
+          <PageLoader />
         </Suspense>
         <Providers>{children}</Providers>
       </body>
