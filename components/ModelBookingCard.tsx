@@ -20,13 +20,16 @@ export function ModelBookingCard({ category, brand, model, modelId, modelImage }
     <Card className="mx-auto grid max-w-5xl overflow-hidden rounded-3xl border-slate-200/80 bg-white shadow-[0_16px_60px_-24px_rgba(15,23,42,0.2)] md:grid-cols-[0.95fr_1.05fr]">
       <section className="flex flex-col border-b border-slate-200/70 bg-gradient-to-br from-slate-50 to-emerald-50/60 p-6 sm:p-8 md:border-b-0 md:border-r md:p-10">
         <span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700"><span className="h-2 w-2 rounded-full bg-emerald-500" />Your selected device</span>
-        <div className="relative my-5 flex h-44 items-center justify-center sm:h-56 md:my-8 md:h-64">
-          <div className="absolute h-36 w-36 rounded-full bg-white/80 sm:h-48 sm:w-48" />
-          <img src={image} alt={image === fallbackImage ? `${category} illustration` : deviceName} onError={() => { if (modelImage && image !== fallbackImage) setFailedImage(modelImage); }} className="relative h-full w-full object-contain p-2 drop-shadow-xl" />
+        <div className="my-6 flex items-center gap-4 sm:gap-5">
+          <div className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-white/90 bg-white/80 p-2 shadow-sm sm:h-28 sm:w-28">
+            <img src={image} alt={image === fallbackImage ? `${category} illustration` : deviceName} onError={() => { if (modelImage && image !== fallbackImage) setFailedImage(modelImage); }} className="h-full w-full object-contain drop-shadow-sm" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-500 sm:text-xs">{category}</p>
+            <h2 className="mt-1.5 break-words text-xl font-bold leading-tight tracking-tight text-slate-900 sm:text-2xl">{deviceName}</h2>
+            <p className="mt-2 text-xs leading-relaxed text-slate-500 sm:text-sm">Ready for its next chapter. Share your details to arrange a pickup at your doorstep.</p>
+          </div>
         </div>
-        <p className="text-xs font-medium uppercase tracking-widest text-slate-500">{category}</p>
-        <h2 className="mt-2 text-2xl font-bold leading-tight tracking-tight text-slate-900 sm:text-3xl">{deviceName}</h2>
-        <p className="mt-3 text-sm leading-relaxed text-slate-500">Ready for its next chapter. Share your details to arrange a pickup at your doorstep.</p>
         <div className="mt-6 flex items-center gap-3 border-t border-slate-200/80 pt-6 md:mt-auto"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-emerald-700"><Truck className="h-5 w-5" /></span><div><p className="text-sm font-semibold text-slate-800">Free doorstep pickup</p><p className="mt-1 text-xs text-slate-500">Our team will call to arrange a convenient time</p></div></div>
       </section>
       <section className="p-6 sm:p-8 md:p-10">
