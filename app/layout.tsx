@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import Script from "next/script";
+import { Suspense } from "react";
+import TopLoader from "@/components/TopLoader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -155,6 +157,9 @@ export default function RootLayout({
         </Script>
       </head>
       <body className={inter.className}>
+        <Suspense fallback={null}>
+          <TopLoader />
+        </Suspense>
         <Providers>{children}</Providers>
       </body>
     </html>

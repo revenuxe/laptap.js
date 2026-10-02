@@ -58,7 +58,19 @@ export const SellClient = () => {
   const brandSlug = route[1] || null;
   const seriesSlug = route[2] || null;
   const modelSlug = route[3] || null;
-  const step = deriveStep(route, catalog);
+  const urlStep = deriveStep(route, catalog);
+
+  // Optimistic step override: set instantly on user click, before router.push takes effect.
+  // This eliminates the 1-3 frame gap where useParams() still returns the old URL.
+  const [stepOverride, setStepOverride] = useState<Step | null>(null);
+  const step = stepOverride ?? urlStep;
+
+  // Clear the override once the URL catches up
+  useEffect(() => {
+    if (stepOverride && urlStep === stepOverride) {
+      setStepOverride(null);
+    }
+  }, [urlStep, stepOverride]);
 
   // ── Fetch brands when category is known ──
   useEffect(() => {
@@ -148,28 +160,33 @@ export const SellClient = () => {
     }
   }, [modelSlug, models]);
 
-  // ── Navigation handlers — only change the URL (source of truth) ──
+  // ── Navigation handlers ──
+  // Set stepOverride FIRST so the UI updates instantly, then push to router.
   const pickCategory = (value: Category) => {
+    setStepOverride("method");
     setCatalog(false);
     setSearch("");
     router.push(`/sell/${value}`);
   };
   const pickBrand = (value: CatalogItem) => {
-    setBrandObj(value); // set immediately so heading doesn't wait for re-fetch
+    setStepOverride("series");
+    setBrandObj(value);
     setSearch("");
     setCatalog(true);
     router.push(`/sell/${categorySlug}/${value.slug}`);
   };
   const pickSeries = (value: CatalogItem) => {
-    setSeriesObj(value); // set immediately
+    setStepOverride("model");
+    setSeriesObj(value);
     setSearch("");
     router.push(`/sell/${categorySlug}/${brandSlug}/${value.slug}`);
   };
   const pickModel = (value: CatalogItem) => {
-    setModelObj(value); // set immediately
+    setStepOverride("booking");
+    setModelObj(value);
     router.push(`/sell/${categorySlug}/${brandSlug}/${seriesSlug}/${value.slug}`);
   };
-  const onEvaluate = () => { setCatalog(true); };
+  const onEvaluate = () => { setStepOverride("brand"); setCatalog(true); };
   const onForm = () => { setFormOpen(true); };
 
   // ── Rendering helpers ──
