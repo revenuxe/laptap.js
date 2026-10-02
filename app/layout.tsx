@@ -5,6 +5,7 @@ import { Providers } from "./providers";
 import Script from "next/script";
 import { Suspense } from "react";
 import PageLoader from "@/components/PageLoader";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -160,6 +161,7 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <PageLoader />
         </Suspense>
+        <ScrollToTop />
         <Providers>{children}</Providers>
       </body>
     </html>
