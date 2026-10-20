@@ -1,12 +1,6 @@
-import type { Metadata } from "next";
+import { landingMetadata } from "@/lib/landing-metadata";
 import { PageClient } from "./page-client";
 
-export const metadata: Metadata = {
-  title: "Sell Used Laptop in Bangalore | Best Prices, Free Pickup - Laptap",
-  description: "Sell your used laptop at the best price with free doorstep pickup and instant cash payment.",
-  alternates: { canonical: "https://www.laptap.in/bangalore" },
-};
+export const metadata = landingMetadata("bangalore", "/bangalore");
 
-export default function Page() {
-  return <PageClient />;
-}
+export default function Page() { return <PageClient />; }

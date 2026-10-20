@@ -12,11 +12,11 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.laptap.in"),
   title: {
-    default: "Sell Used Laptop and Desktop in Bangalore | Same-Day Cash – Laptap",
+    default: "Sell Used Laptop & Desktop in Bangalore | Laptap",
     template: "%s | Laptap",
   },
   description:
-    "Sell used laptop & desktop in Bangalore at the best price. Instant quote, same-day pickup, quick cash, and 500+ happy customers. Trusted, safe & hassle-free",
+    "Sell your used laptop or desktop in Bangalore. Choose your model, share its condition, and discuss assessment and pickup availability with Laptap.",
   keywords: [
     "sell laptop bangalore",
     "sell desktop",
@@ -33,19 +33,19 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "https://www.laptap.in/",
-    title: "Sell Used Laptop and Desktop in Bangalore | Same-Day Cash – Laptap",
+    title: "Sell Used Laptop & Desktop in Bangalore | Laptap",
     description:
-      "Sell used laptop & desktop in Bangalore at the best price. Instant quote, same-day pickup, quick cash, and 500+ happy customers.",
+      "Choose your laptop or desktop, share the details, and discuss assessment and pickup in Bangalore.",
     siteName: "Laptap",
     locale: "en_IN",
-    images: [{ url: "/og-image.webp", width: 1200, height: 630 }],
+    images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sell Used Laptop and Desktop in Bangalore | Same-Day Cash – Laptap",
+    title: "Sell Used Laptop & Desktop in Bangalore | Laptap",
     description:
-      "Sell used laptop & desktop in Bangalore at the best price. Instant quote, same-day pickup, quick cash, and 500+ happy customers.",
-    images: ["/og-image.webp"],
+      "Choose your laptop or desktop, share the details, and discuss assessment and pickup in Bangalore.",
+    images: ["/opengraph-image"],
   },
   robots: {
     index: true,
@@ -79,7 +79,7 @@ export default function RootLayout({
               "@type": "Organization",
               name: "Laptap",
               url: "https://www.laptap.in",
-              logo: "https://www.laptap.in/logo.png",
+              logo: "https://www.laptap.in/assets/laptop_logo.webp",
               description: "India's most trusted platform for selling used laptops and desktops",
               telephone: "+919886579923",
               address: {
@@ -109,7 +109,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
               name: "Laptap",
-              image: "https://www.laptap.in/logo.png",
+              image: "https://www.laptap.in/assets/laptop_logo.webp",
               telephone: "+919886579923",
               priceRange: "₹₹",
               address: {
@@ -135,11 +135,7 @@ export default function RootLayout({
                   closes: "19:00",
                 },
               ],
-              aggregateRating: {
-                "@type": "AggregateRating",
-                ratingValue: "4.8",
-                reviewCount: "500",
-              },
+
             }),
           }}
         />
@@ -158,6 +154,7 @@ export default function RootLayout({
         </Script>
       </head>
       <body className={inter.className}>
+        <a href="#main-content" className="skip-link">Skip to content</a>
         <Suspense fallback={null}>
           <PageLoader />
         </Suspense>

@@ -1,0 +1,399 @@
+{
+  "pages": 65,
+  "internalLinks": 85,
+  "localImages": 5,
+  "failures": [],
+  "warnings": [],
+  "results": [
+    {
+      "route": "/",
+      "title": "Sell Used Laptop &amp; Desktop in Bangalore",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in"
+    },
+    {
+      "route": "/sell",
+      "title": "Sell Your Laptop or Desktop | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/sell"
+    },
+    {
+      "route": "/sell/laptop",
+      "title": "Sell Used Laptop Online | Instant Quote &amp; Cash Payment - Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/sell/laptop"
+    },
+    {
+      "route": "/sell/desktop",
+      "title": "Sell Used Desktop Online | Instant Quote &amp; Cash Payment - Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/sell/desktop"
+    },
+    {
+      "route": "/about",
+      "title": "About Us - Laptap | India&#x27;s Trusted Platform for Selling Used Laptops",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/about"
+    },
+    {
+      "route": "/contact",
+      "title": "Contact Us - Laptap | Get in Touch for Selling Your Laptop",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/contact"
+    },
+    {
+      "route": "/terms",
+      "title": "Terms of Service - Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/terms"
+    },
+    {
+      "route": "/privacy",
+      "title": "Privacy Policy - Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/privacy"
+    },
+    {
+      "route": "/blog",
+      "title": "Laptap Blog - Laptop Buying Guides, Selling Tips &amp; Tech Insights",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/blog"
+    },
+    {
+      "route": "/bangalore",
+      "title": "Sell Laptop or Desktop in Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore"
+    },
+    {
+      "route": "/bangalore/macbook",
+      "title": "Sell MacBook in Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/macbook"
+    },
+    {
+      "route": "/bangalore/dell",
+      "title": "Sell Dell Laptop in Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/dell"
+    },
+    {
+      "route": "/bangalore/hp",
+      "title": "Sell HP Laptop in Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/hp"
+    },
+    {
+      "route": "/bangalore/lenovo",
+      "title": "Sell Lenovo Laptop in Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/lenovo"
+    },
+    {
+      "route": "/gaming/asus-rog",
+      "title": "Sell ASUS ROG Gaming Laptop in Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/gaming/asus-rog"
+    },
+    {
+      "route": "/gaming/acer-predator",
+      "title": "Sell Acer Predator Gaming Laptop in Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/gaming/acer-predator"
+    },
+    {
+      "route": "/models/macbook-pro",
+      "title": "Sell MacBook Pro in Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/models/macbook-pro"
+    },
+    {
+      "route": "/models/macbook-air",
+      "title": "Sell MacBook Air in Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/models/macbook-air"
+    },
+    {
+      "route": "/models/dell-xps",
+      "title": "Sell Dell XPS Laptop in Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/models/dell-xps"
+    },
+    {
+      "route": "/models/hp-pavilion",
+      "title": "Sell HP Pavilion Laptop in Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/models/hp-pavilion"
+    },
+    {
+      "route": "/models/lenovo-thinkpad",
+      "title": "Sell Lenovo ThinkPad in Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/models/lenovo-thinkpad"
+    },
+    {
+      "route": "/models/asus-laptop",
+      "title": "Sell ASUS Laptop in Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/models/asus-laptop"
+    },
+    {
+      "route": "/models/acer-laptop",
+      "title": "Sell Acer Laptop in Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/models/acer-laptop"
+    },
+    {
+      "route": "/models/samsung-laptop",
+      "title": "Sell Samsung Laptop in Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/models/samsung-laptop"
+    },
+    {
+      "route": "/models/microsoft-surface",
+      "title": "Sell Microsoft Surface in Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/models/microsoft-surface"
+    },
+    {
+      "route": "/models/imac",
+      "title": "Sell iMac in Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/models/imac"
+    },
+    {
+      "route": "/models/dell-optiplex",
+      "title": "Sell Dell OptiPlex in Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/models/dell-optiplex"
+    },
+    {
+      "route": "/models/hp-desktop",
+      "title": "Sell HP Desktop in Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/models/hp-desktop"
+    },
+    {
+      "route": "/models/lenovo-desktop",
+      "title": "Sell Lenovo Desktop in Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/models/lenovo-desktop"
+    },
+    {
+      "route": "/repair",
+      "title": "Laptop &amp; Desktop Repair Services - Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/repair"
+    },
+    {
+      "route": "/bangalore/areas",
+      "title": "Sell Laptop &amp; Desktop in Bangalore | Browse All Areas | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas"
+    },
+    {
+      "route": "/bangalore/areas/koramangala",
+      "title": "Sell Used Laptop &amp; Desktop in Koramangala, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/koramangala"
+    },
+    {
+      "route": "/bangalore/areas/indiranagar",
+      "title": "Sell Used Laptop &amp; Desktop in Indiranagar, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/indiranagar"
+    },
+    {
+      "route": "/bangalore/areas/whitefield",
+      "title": "Sell Used Laptop &amp; Desktop in Whitefield, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/whitefield"
+    },
+    {
+      "route": "/bangalore/areas/electronic-city",
+      "title": "Sell Used Laptop &amp; Desktop in Electronic City, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/electronic-city"
+    },
+    {
+      "route": "/bangalore/areas/hsr-layout",
+      "title": "Sell Used Laptop &amp; Desktop in HSR Layout, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/hsr-layout"
+    },
+    {
+      "route": "/bangalore/areas/marathahalli",
+      "title": "Sell Used Laptop &amp; Desktop in Marathahalli, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/marathahalli"
+    },
+    {
+      "route": "/bangalore/areas/btm-layout",
+      "title": "Sell Used Laptop &amp; Desktop in BTM Layout, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/btm-layout"
+    },
+    {
+      "route": "/bangalore/areas/jayanagar",
+      "title": "Sell Used Laptop &amp; Desktop in Jayanagar, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/jayanagar"
+    },
+    {
+      "route": "/bangalore/areas/jp-nagar",
+      "title": "Sell Used Laptop &amp; Desktop in JP Nagar, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/jp-nagar"
+    },
+    {
+      "route": "/bangalore/areas/banashankari",
+      "title": "Sell Used Laptop &amp; Desktop in Banashankari, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/banashankari"
+    },
+    {
+      "route": "/bangalore/areas/malleshwaram",
+      "title": "Sell Used Laptop &amp; Desktop in Malleshwaram, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/malleshwaram"
+    },
+    {
+      "route": "/bangalore/areas/rajajinagar",
+      "title": "Sell Used Laptop &amp; Desktop in Rajajinagar, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/rajajinagar"
+    },
+    {
+      "route": "/bangalore/areas/yelahanka",
+      "title": "Sell Used Laptop &amp; Desktop in Yelahanka, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/yelahanka"
+    },
+    {
+      "route": "/bangalore/areas/hebbal",
+      "title": "Sell Used Laptop &amp; Desktop in Hebbal, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/hebbal"
+    },
+    {
+      "route": "/bangalore/areas/bellandur",
+      "title": "Sell Used Laptop &amp; Desktop in Bellandur, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/bellandur"
+    },
+    {
+      "route": "/bangalore/areas/sarjapur-road",
+      "title": "Sell Used Laptop &amp; Desktop in Sarjapur Road, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/sarjapur-road"
+    },
+    {
+      "route": "/bangalore/areas/bommanahalli",
+      "title": "Sell Used Laptop &amp; Desktop in Bommanahalli, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/bommanahalli"
+    },
+    {
+      "route": "/bangalore/areas/bannerghatta-road",
+      "title": "Sell Used Laptop &amp; Desktop in Bannerghatta Road, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/bannerghatta-road"
+    },
+    {
+      "route": "/bangalore/areas/rt-nagar",
+      "title": "Sell Used Laptop &amp; Desktop in RT Nagar, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/rt-nagar"
+    },
+    {
+      "route": "/bangalore/areas/sadashivanagar",
+      "title": "Sell Used Laptop &amp; Desktop in Sadashivanagar, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/sadashivanagar"
+    },
+    {
+      "route": "/bangalore/areas/cv-raman-nagar",
+      "title": "Sell Used Laptop &amp; Desktop in CV Raman Nagar, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/cv-raman-nagar"
+    },
+    {
+      "route": "/bangalore/areas/frazer-town",
+      "title": "Sell Used Laptop &amp; Desktop in Frazer Town, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/frazer-town"
+    },
+    {
+      "route": "/bangalore/areas/domlur",
+      "title": "Sell Used Laptop &amp; Desktop in Domlur, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/domlur"
+    },
+    {
+      "route": "/bangalore/areas/kr-puram",
+      "title": "Sell Used Laptop &amp; Desktop in KR Puram, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/kr-puram"
+    },
+    {
+      "route": "/bangalore/areas/mahadevapura",
+      "title": "Sell Used Laptop &amp; Desktop in Mahadevapura, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/mahadevapura"
+    },
+    {
+      "route": "/bangalore/areas/varthur",
+      "title": "Sell Used Laptop &amp; Desktop in Varthur, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/varthur"
+    },
+    {
+      "route": "/bangalore/areas/kadugodi",
+      "title": "Sell Used Laptop &amp; Desktop in Kadugodi, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/kadugodi"
+    },
+    {
+      "route": "/bangalore/areas/brookefield",
+      "title": "Sell Used Laptop &amp; Desktop in Brookefield, Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/bangalore/areas/brookefield"
+    },
+    {
+      "route": "/blog/best-place-to-sell-used-laptop-bangalore",
+      "title": "Where to Sell a Used Laptop in Bangalore | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/blog/best-place-to-sell-used-laptop-bangalore"
+    },
+    {
+      "route": "/blog/prepare-laptop-for-sale",
+      "title": "Prepare Your Laptop for Sale: A Safe Checklist | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/blog/prepare-laptop-for-sale"
+    },
+    {
+      "route": "/blog/buying-refurbished-laptop-guide",
+      "title": "Refurbished Laptop Buying Guide: 10 Checks | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/blog/buying-refurbished-laptop-guide"
+    },
+    {
+      "route": "/blog/refurbished-vs-new-laptops",
+      "title": "Refurbished vs New Laptops: Which to Choose? | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/blog/refurbished-vs-new-laptops"
+    },
+    {
+      "route": "/blog/sell-used-laptop-bangalore",
+      "title": "Sell Your Used Laptop in Bangalore: A Guide | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/blog/sell-used-laptop-bangalore"
+    },
+    {
+      "route": "/blog/how-to-get-highest-resale-value-for-laptop",
+      "title": "Laptop Resale Value: How to Compare Better Offers | Laptap",
+      "h1s": 1,
+      "canonical": "https://www.laptap.in/blog/how-to-get-highest-resale-value-for-laptop"
+    }
+  ]
+}

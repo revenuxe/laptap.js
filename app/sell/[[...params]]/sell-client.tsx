@@ -8,6 +8,8 @@ import Footer from "@/components/Footer";
 import SimpleForm from "@/components/SimpleForm";
 import { ModelBookingCard } from "@/components/ModelBookingCard";
 import { SellMethodSelector } from "@/components/SellMethodSelector";
+import { withTimeout } from "@/lib/request-timeout";
+import Link from "next/link";
 import { supabase } from "@/lib/supabase/client";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -52,6 +54,8 @@ export const SellClient = () => {
   const [loadingBrands, setLoadingBrands] = useState(false);
   const [loadingSeries, setLoadingSeries] = useState(false);
   const [loadingModels, setLoadingModels] = useState(false);
+  const [catalogError, setCatalogError] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
 
   // Derive current step from URL — deterministic, no flicker
   const categorySlug = (route[0] === "laptop" || route[0] === "desktop") ? route[0] as Category : null;
@@ -74,64 +78,77 @@ export const SellClient = () => {
 
   // ── Fetch brands when category is known ──
   useEffect(() => {
-    if (!categorySlug) { setBrands([]); setBrandObj(null); return; }
+    if (!categorySlug) { setBrands([]); setBrandObj(null); setLoadingBrands(false); return; }
 
     let cancelled = false;
     setLoadingBrands(true);
-    (async () => {
-      const { data: categoryRow } = await supabase
+    setCatalogError(false);
+    withTimeout((async () => {
+      const { data: categoryRow, error: categoryError } = await supabase
         .from("categories").select("id").eq("slug", categorySlug).maybeSingle();
       if (cancelled) return;
-      if (!categoryRow) { setLoadingBrands(false); return; }
-      const { data } = await supabase
+      if (categoryError) throw categoryError;
+      if (!categoryRow) { setBrands([]); setBrandObj(null); return; }
+      const { data, error } = await supabase
         .from("brands").select("*").eq("category_id", categoryRow.id).order("name");
+      if (error) throw error;
       if (cancelled) return;
       const items = (data || []) as CatalogItem[];
       setBrands(items);
       if (brandSlug) setBrandObj(items.find(i => i.slug === brandSlug) || null);
       setLoadingBrands(false);
-    })();
+    })()).catch(() => {
+      if (!cancelled) { setCatalogError(true); setLoadingBrands(false); cancelled = true; }
+    }).finally(() => { if (!cancelled) setLoadingBrands(false); });
 
     return () => { cancelled = true; };
-  }, [categorySlug, brandSlug]);
+  }, [categorySlug, brandSlug, retryCount]);
 
   // ── Fetch series when brand is resolved ──
   useEffect(() => {
-    if (!brandObj) { setSeries([]); setSeriesObj(null); return; }
+    if (!brandObj) { setSeries([]); setSeriesObj(null); setLoadingSeries(false); return; }
 
     let cancelled = false;
     setLoadingSeries(true);
-    (async () => {
-      const { data } = await supabase
+    setCatalogError(false);
+    withTimeout((async () => {
+      const { data, error } = await supabase
         .from("series").select("*").eq("brand_id", brandObj.id).order("name");
+      if (error) throw error;
       if (cancelled) return;
       const items = (data || []) as CatalogItem[];
       setSeries(items);
       if (seriesSlug) setSeriesObj(items.find(i => i.slug === seriesSlug) || null);
       setLoadingSeries(false);
-    })();
+    })()).catch(() => {
+      if (!cancelled) { setCatalogError(true); setLoadingSeries(false); cancelled = true; }
+    }).finally(() => { if (!cancelled) setLoadingSeries(false); });
 
     return () => { cancelled = true; };
-  }, [brandObj?.id, seriesSlug]);
+  }, [brandObj?.id, seriesSlug, retryCount]);
 
   // ── Fetch models when series is resolved ──
   useEffect(() => {
-    if (!seriesObj) { setModels([]); setModelObj(null); return; }
+    if (!seriesObj) { setModels([]); setModelObj(null); setLoadingModels(false); return; }
 
     let cancelled = false;
     setLoadingModels(true);
-    (async () => {
-      const { data } = await supabase
+    setCatalogError(false);
+    withTimeout((async () => {
+      const { data, error } = await supabase
         .from("models").select("*").eq("series_id", seriesObj.id).eq("active", true).order("name");
+      if (error) throw error;
       if (cancelled) return;
       const items = (data || []) as CatalogItem[];
       setModels(items);
       if (modelSlug) setModelObj(items.find(i => i.slug === modelSlug) || null);
       setLoadingModels(false);
-    })();
+    })()).catch(() => {
+      if (!cancelled) { setCatalogError(true); setLoadingModels(false); cancelled = true; }
+    }).finally(() => { if (!cancelled) setLoadingModels(false); });
 
     return () => { cancelled = true; };
-  }, [seriesObj?.id, modelSlug]);
+  }, [seriesObj?.id, modelSlug, retryCount]);
 
   // ── Sync resolved objects when URL changes (browser back/forward) ──
   // When URL shortens, clear objects for removed segments
@@ -232,13 +249,14 @@ export const SellClient = () => {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      <main className="flex-1 bg-muted/20 py-10">
+      <main id="main-content" className="flex-1 bg-muted/20 py-10">
         <div className="container max-w-7xl px-4">
           <div className="mb-8 text-center">
             <h1 className="text-3xl font-bold">Sell your device</h1>
             <p className="mt-2 text-muted-foreground">Quick, simple and convenient.</p>
           </div>
 
+          {catalogError && <div role="alert" className="mb-6 rounded-xl border bg-white p-5 text-center"><p>Unable to load device details. Please try again.</p><button onClick={() => setRetryCount(count => count + 1)} className="mt-3 rounded-lg bg-primary px-4 py-2 text-white">Try again</button></div>}
           {step === "category" && (
             <div className="mx-auto grid max-w-xl gap-4 sm:grid-cols-2">
               <Card className="cursor-pointer p-8 text-center" onClick={() => pickCategory("laptop")}>
@@ -285,12 +303,13 @@ export const SellClient = () => {
             <ModelBookingCard key={modelObj.id} category={categorySlug} brand={brandObj.name} model={modelObj.name} modelId={modelObj.id} modelImage={modelObj.image_url || modelObj.thumbnail_url} />
           )}
           {/* If booking step but objects not yet resolved from URL, show spinner */}
-          {step === "booking" && (!modelObj || !brandObj) && (
+          {step === "booking" && (!modelObj || !brandObj) && !catalogError && (loadingBrands || loadingSeries || loadingModels) && (
             <div className="flex items-center justify-center py-20">
               <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
             </div>
           )}
 
+          {step === "booking" && (!modelObj || !brandObj) && !catalogError && !loadingBrands && !loadingSeries && !loadingModels && <div className="py-12 text-center"><h2 className="text-xl font-semibold">This device is unavailable</h2><Link href="/sell" className="mt-4 inline-block text-primary underline">Choose another device</Link><button onClick={onForm} className="ml-4 text-primary underline">Request a callback</button></div>}
           <Dialog open={formOpen} onOpenChange={setFormOpen}>
             <DialogContent>
               <DialogHeader>

@@ -1,5 +1,7 @@
 "use client";
+import SellingGuides from "@/components/SellingGuides";
 
+import MobileBottomNav from "@/components/MobileBottomNav";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import CategorySection from "@/components/CategorySection";
@@ -16,20 +18,23 @@ import QuickLinks from "@/components/QuickLinks";
 
 export function HomeClient() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="reference-home min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1">
-        <Hero />
+      <main id="main-content" className="flex-1">
+        <Hero referenceStyle />
         
         <CategorySection />
         <Stats />
         <BrandsSection />
+        <HowItWorks />
         <Features />
+        <SellingGuides />
         <FAQ />
       </main>
       <QuickLinks />
       <Footer />
-      <WhatsAppFloat />
+      <div className="hidden md:block"><WhatsAppFloat /></div>
+      <MobileBottomNav />
     </div>
   );
 }

@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase/client';
-import { toast } from 'sonner';
+import { withTimeout } from '@/lib/request-timeout';
 
 interface AuthContextType {
   user: User | null;
@@ -28,52 +28,68 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const currentUserId = userId || user?.id;
     if (!currentUserId) return false;
     
-    const { data, error } = await supabase
+    const { data, error } = await withTimeout(supabase
       .from('user_roles')
       .select('role')
       .eq('user_id', currentUserId)
       .eq('role', 'admin')
-      .maybeSingle();
+      .maybeSingle());
 
     return !error && !!data;
   };
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        
-        if (session?.user) {
-          setLoading(true);
-          setTimeout(async () => {
-            const isAdminUser = await checkAdminRole(session.user.id);
-            setIsAdmin(isAdminUser);
-            setLoading(false);
-          }, 0);
-        } else {
-          setIsAdmin(false);
-          setLoading(false);
-        }
-      }
-    );
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      
-      if (session?.user) {
-        setTimeout(async () => {
-          const isAdminUser = await checkAdminRole(session.user.id);
-          setIsAdmin(isAdminUser);
-          setLoading(false);
-        }, 0);
-      } else {
+    let disposed = false;
+    let revision = 0;
+    let roleUserId: string | null = null;
+    let roleTimer: ReturnType<typeof setTimeout> | undefined;
+    const startupTimer = setTimeout(() => { if (!disposed) setLoading(false); }, 15000);
+    const applySession = (nextSession: Session | null) => {
+      if (disposed) return;
+      setSession(nextSession);
+      setUser(nextSession?.user ?? null);
+      // Token refreshes do not change roles or restart the account loader.
+      if (nextSession?.user.id && roleUserId === nextSession.user.id) return;
+      roleUserId = nextSession?.user.id ?? null;
+      const currentRevision = ++revision;
+      clearTimeout(roleTimer);
+      setIsAdmin(false);
+      if (!nextSession?.user) {
+        clearTimeout(startupTimer);
         setLoading(false);
+        return;
       }
+      setLoading(true);
+      // Run database calls outside Supabase's auth notification lock.
+      roleTimer = setTimeout(async () => {
+        try {
+          const admin = await checkAdminRole(nextSession.user.id);
+          if (!disposed && revision === currentRevision) setIsAdmin(admin);
+        } catch (error) {
+          console.error('Unable to check account role:', error);
+        } finally {
+          if (!disposed && revision === currentRevision) {
+            clearTimeout(startupTimer);
+            setLoading(false);
+          }
+        }
+      }, 0);
+    };
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, nextSession) => applySession(nextSession));
+    const initialRevision = revision;
+    withTimeout(supabase.auth.getSession()).then(({ data: { session: restoredSession }, error }) => {
+      if (error) throw error;
+      if (!disposed && revision === initialRevision) applySession(restoredSession);
+    }).catch(error => {
+      console.error('Unable to restore session:', error);
+      if (!disposed && revision === initialRevision) setLoading(false);
     });
-
-    return () => subscription.unsubscribe();
+    return () => {
+      disposed = true;
+      clearTimeout(startupTimer);
+      clearTimeout(roleTimer);
+      subscription.unsubscribe();
+    };
   }, []);
 
   const signUp = async (email: string, password: string, fullName: string) => {

@@ -4,9 +4,9 @@ import { Search, Calculator, Truck, Banknote } from "lucide-react";
 
 const steps = [
   { icon: Search, number: "01", title: "Select Your Device", description: "Choose your device brand, model, and specifications from our catalog" },
-  { icon: Calculator, number: "02", title: "Get Instant Quote", description: "Answer a few questions about condition and get an instant price estimate" },
-  { icon: Truck, number: "03", title: "Schedule Pickup", description: "Choose a convenient time for free doorstep pickup - we come to you" },
-  { icon: Banknote, number: "04", title: "Receive Payment", description: "Get paid instantly after our experts verify your device" },
+  { icon: Calculator, number: "02", title: "Share the Details", description: "Describe the configuration, working condition, and included accessories" },
+  { icon: Truck, number: "03", title: "Discuss Pickup", description: "Share your pincode and confirm collection availability with the team" },
+  { icon: Banknote, number: "04", title: "Agree and Handover", description: "Review the verified assessment and payment arrangements before completing the sale" },
 ];
 
 const HowItWorks = () => {
@@ -18,7 +18,7 @@ const HowItWorks = () => {
             How It Works
           </h2>
           <p className="text-sm sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-            Four simple steps to turn your old device into instant cash
+            Know what to expect from device selection to handover
           </p>
         </div>
 

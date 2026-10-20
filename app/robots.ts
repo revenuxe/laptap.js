@@ -6,15 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/admin/", "/dashboard/", "/auth/", "/track/"],
-      },
-      {
-        userAgent: "Googlebot",
-        allow: "/",
-      },
-      {
-        userAgent: "Bingbot",
-        allow: "/",
+        disallow: ["/admin", "/dashboard", "/auth", "/track/", "/repair/thank-you"],
       },
     ],
     sitemap: "https://www.laptap.in/sitemap.xml",

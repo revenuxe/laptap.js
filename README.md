@@ -16,9 +16,11 @@ India's most trusted platform for selling used laptops, desktops, and mobile pho
 Create `.env.local` in the project root:
 
 ```env
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_your_key
 ```
+
+Use the same variables in your hosting environment before building. Only `sb_publishable_` keys are accepted; legacy anon keys and `sb_secret_` keys must not be used here. The publishable key is intentionally visible in browser JavaScript. Protect data with Supabase RLS and server-side authorization.
 
 ### Development
 

@@ -27,7 +27,7 @@ export const PageClient = () => {
       <div className="min-h-screen flex flex-col">
         <Header />
         
-        <main className="flex-1 py-12 md:py-20">
+        <main id="main-content" className="flex-1 py-12 md:py-20">
           <div className="container max-w-2xl">
             <Card className="p-8 text-center">
               <div className="flex justify-center mb-6">

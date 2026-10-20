@@ -7,47 +7,16 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+import { sellingFaqs } from "@/lib/selling-faq";
+
 interface FAQProps {
   location?: string;
 }
 
 const FAQ = ({ location }: FAQProps) => {
-  const locationText = location || "India";
+  const locationText = location || "Bangalore";
 
-  const faqs = [
-    {
-      question: `How do I sell my old laptop in ${locationText}?`,
-      answer: `Selling your old laptop in ${locationText} is simple with Laptap. First, get an instant quote by selecting your laptop brand and model on our website. Then schedule a free doorstep pickup at your convenience. Our verified technicians will visit your location, inspect the device, and provide instant payment via UPI, bank transfer, or cash.`,
-    },
-    {
-      question: `What is the best price for my used laptop in ${locationText}?`,
-      answer: `Laptap offers the most competitive prices for used laptops in ${locationText}. The price depends on your laptop's brand, model, specifications, age, and physical condition. Our advanced pricing algorithm ensures you get up to 30% more than other buyers.`,
-    },
-    {
-      question: `Which laptop brands do you buy in ${locationText}?`,
-      answer: `We buy all major laptop brands in ${locationText} including Apple MacBook, Dell, HP, Lenovo, Asus, Acer, Microsoft Surface, and gaming laptops. We accept all brands and models in any working condition.`,
-    },
-    {
-      question: `How quickly will I receive payment?`,
-      answer: `You receive instant payment immediately after our technicians verify your laptop during the doorstep pickup. The verification process takes only 10-15 minutes, and payment is transferred instantly via UPI, IMPS bank transfer, or cash.`,
-    },
-    {
-      question: `Is doorstep pickup really free in ${locationText}?`,
-      answer: `Yes, we offer completely free same-day doorstep pickup across all areas of ${locationText}. There are no hidden charges or fees. Our verified technicians will come to your home or office at your preferred time slot.`,
-    },
-    {
-      question: `Can I sell a broken or damaged laptop?`,
-      answer: `Absolutely! We buy laptops in all conditions - working, broken, damaged, or non-functional. Whether your laptop has a cracked screen, dead battery, water damage, or motherboard issues, we'll still make you a fair offer.`,
-    },
-    {
-      question: `What documents do I need to sell my laptop?`,
-      answer: `You need a valid government-issued ID proof (Aadhaar card, PAN card, driver's license, or passport). If you have the original purchase invoice, that helps but is not required.`,
-    },
-    {
-      question: `Do you buy desktops and mobile phones too?`,
-      answer: `Yes! Besides laptops, we also buy used desktop computers and mobile phones. Our process is the same - get an instant quote, schedule free pickup, and receive immediate payment.`,
-    },
-  ];
+  const faqs = sellingFaqs(locationText);
 
   return (
     <section className="py-10 sm:py-16 md:py-24 bg-muted/30">

@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Keep audit/build output separate from a running local development server.
+  distDir: process.env.LAPTAP_BUILD_DIR || ".next",
   reactStrictMode: true,
   images: {
     remotePatterns: [

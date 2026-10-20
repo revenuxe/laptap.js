@@ -37,7 +37,7 @@ const Admin = () => {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
-        <main className="flex-1 flex items-center justify-center">
+        <main id="main-content" className="flex-1 flex items-center justify-center">
           <p>Loading...</p>
         </main>
         <Footer />
@@ -53,7 +53,7 @@ const Admin = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       
-      <main className="flex-1 py-6 sm:py-10 md:py-16 bg-muted/10">
+      <main id="main-content" className="flex-1 py-6 sm:py-10 md:py-16 bg-muted/10">
         <div className="container px-4 sm:px-6 max-w-7xl">
           <div className="flex items-center justify-between mb-6 sm:mb-8">
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Admin Panel</h1>

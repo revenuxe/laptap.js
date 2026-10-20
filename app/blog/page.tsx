@@ -1,37 +1,32 @@
 import type { Metadata } from "next";
-import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { getBlogSummaries } from "@/lib/blog-server";
+import { jsonLd } from "@/lib/blog";
 import { BlogListClient } from "./blog-list-client";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "Laptap Blog - Laptop Buying Guides, Selling Tips & Tech Insights",
+  title: { absolute: "Laptap Blog - Laptop Buying Guides, Selling Tips & Tech Insights" },
   description:
-    "Read expert guides on buying refurbished laptops, selling tips, tech comparisons, and market insights from Laptap's technology experts.",
+    "Practical laptop selling guides, refurbished buying checklists, and upgrade comparisons. Get clear answers and plan your next step with Laptap.",
   keywords: ["laptop blog", "refurbished laptop guide", "selling laptop tips", "tech insights", "laptop comparisons"],
   alternates: { canonical: "https://www.laptap.in/blog" },
   openGraph: {
-    title: "Laptap Blog - Tech Guides & Insights",
+    title: { absolute: "Laptap Blog - Tech Guides & Insights" },
     url: "https://www.laptap.in/blog",
   },
 };
 
 export default async function BlogPage() {
-  const supabase = createServerSupabaseClient();
-
-  const { data: blogPosts } = await supabase
-    .from("blogs")
-    .select("id, title, excerpt, created_at, category, slug")
-    .eq("published", true)
-    .order("created_at", { ascending: false });
+  const blogPosts = await getBlogSummaries();
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
+          __html: jsonLd({
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
@@ -44,7 +39,7 @@ export default async function BlogPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
+          __html: jsonLd({
             "@context": "https://schema.org",
             "@type": "Blog",
             name: "Laptap Blog",
@@ -53,7 +48,7 @@ export default async function BlogPage() {
             publisher: {
               "@type": "Organization",
               name: "Laptap",
-              logo: { "@type": "ImageObject", url: "https://www.laptap.in/logo.png" },
+              logo: { "@type": "ImageObject", url: "https://www.laptap.in/assets/laptop_logo.webp" },
             },
           }),
         }}

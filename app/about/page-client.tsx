@@ -1,4 +1,5 @@
 "use client";
+import MobileBottomNav from "@/components/MobileBottomNav";
 
 
 import Header from "@/components/Header";
@@ -27,9 +28,9 @@ export const PageClient = () => {
   return <>
       
 
-      <div className="min-h-screen flex flex-col">
+      <div className="reference-home min-h-screen flex flex-col">
         <Header />
-        <main className="flex-1">
+        <main id="main-content" className="flex-1">
           {/* Hero Section */}
           <section className="py-16 md:py-24 bg-gradient-to-br from-primary/5 to-secondary/5">
             <div className="container">
@@ -148,6 +149,7 @@ export const PageClient = () => {
           </section>
         </main>
         <Footer />
+      <MobileBottomNav />
       </div>
     </>;
 };

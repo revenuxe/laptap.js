@@ -103,7 +103,7 @@ export const TrackClient = () => {
 
         <div className="min-h-screen flex flex-col">
           <Header />
-          <main className="flex-1 flex items-center justify-center">
+          <main id="main-content" className="flex-1 flex items-center justify-center">
             <p className="text-muted-foreground">Loading...</p>
           </main>
           <Footer />
@@ -119,7 +119,7 @@ export const TrackClient = () => {
 
         <div className="min-h-screen flex flex-col">
           <Header />
-          <main className="flex-1 flex items-center justify-center">
+          <main id="main-content" className="flex-1 flex items-center justify-center">
             <p className="text-muted-foreground">Request not found</p>
           </main>
           <Footer />
@@ -160,7 +160,7 @@ export const TrackClient = () => {
       <div className="min-h-screen flex flex-col">
       <Header />
       
-      <main className="flex-1 py-12 md:py-20">
+      <main id="main-content" className="flex-1 py-12 md:py-20">
         <div className="container max-w-4xl">
           <h1 className="text-3xl font-bold mb-2">Track Your Request</h1>
           <p className="text-muted-foreground mb-8">Booking ID: {sellRequest.id.slice(0, 8)}</p>

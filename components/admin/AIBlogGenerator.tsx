@@ -21,7 +21,8 @@ export const AIBlogGenerator = ({ onSuccess }: AIBlogGeneratorProps) => {
   const [progress, setProgress] = useState('');
 
   const handleGenerate = async () => {
-    if (!topic || !keywords || !category) {
+    const keywordArray = keywords.split(',').map(k => k.trim()).filter(Boolean);
+    if (!topic.trim() || !keywordArray.length || !category.trim()) {
       toast.error('Please fill in all fields');
       return;
     }
@@ -30,9 +31,7 @@ export const AIBlogGenerator = ({ onSuccess }: AIBlogGeneratorProps) => {
     setProgress('Initializing AI blog generator...');
 
     try {
-      const keywordArray = keywords.split(',').map(k => k.trim());
-
-      setProgress('Generating blog content with AI (2500-2700 words)...');
+      setProgress('Writing a detailed guide with checklists, FAQs, and relevant next steps...');
       
       const { data, error } = await supabase.functions.invoke('generate-blog', {
         body: {
@@ -43,8 +42,8 @@ export const AIBlogGenerator = ({ onSuccess }: AIBlogGeneratorProps) => {
       });
 
       if (error) throw error;
-
-      setProgress(`Generated ${data.wordCount} words. Creating images...`);
+      if (data?.error) throw new Error(data.error);
+      if (!data?.content || !data?.title || !data?.slug) throw new Error('The generator returned an incomplete article. Please try again.');
 
       // Save to database
       setProgress('Saving blog to database...');
@@ -89,7 +88,7 @@ export const AIBlogGenerator = ({ onSuccess }: AIBlogGeneratorProps) => {
         <Label htmlFor="topic">Blog Topic</Label>
         <Input
           id="topic"
-          placeholder="e.g., Best Ways to Sell Your Old Laptop in 2024"
+          placeholder="e.g., How to compare offers for your used laptop"
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
           disabled={isGenerating}
@@ -134,14 +133,15 @@ export const AIBlogGenerator = ({ onSuccess }: AIBlogGeneratorProps) => {
       <div className="bg-blue-50 dark:bg-blue-950 p-4 rounded-lg space-y-2">
         <p className="text-sm font-semibold">AI Will Generate:</p>
         <ul className="text-xs space-y-1 ml-4 list-disc">
-          <li>2500-2700 word blog post (human-like writing)</li>
+          <li>Detailed guide aiming for 1,500–2,200 useful words</li>
           <li>Proper H2 structure with bullet points and lists</li>
-          <li>1 AI-generated featured image</li>
-          <li>Real expertise, case studies, and examples</li>
+          <li>Quick answers, practical checklists, and relevant FAQs</li>
+          <li>Clearly labelled examples without invented claims</li>
           <li>Natural keyword integration (SEO-optimized)</li>
-          <li>Emotional meta title and description</li>
+          <li>Meta title, description, and useful internal links</li>
           <li>12-year-old reading level (clear and simple)</li>
         </ul>
+        <p className="text-xs text-muted-foreground">Saved as a draft. Review facts, source links, and service claims before publishing.</p>
       </div>
 
       <Button 

@@ -137,7 +137,7 @@ export const PageClient = () => {
       <div className="min-h-screen flex flex-col">
         <Header />
         
-        <main className="flex-1 py-12 md:py-20">
+        <main id="main-content" className="flex-1 py-12 md:py-20">
           <div className="container max-w-2xl">
             <h1 className="mb-4 text-3xl font-bold tracking-tight text-center">Book Repair Service</h1>
             <p className="mb-8 text-center text-muted-foreground">

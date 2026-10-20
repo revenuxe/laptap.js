@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { supabase } from "@/lib/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
+import { withTimeout } from '@/lib/request-timeout';
 
 const formSchema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters"),
@@ -39,10 +40,10 @@ const SimpleForm = ({ defaultSellingType, defaultModel, defaultModelId, onSucces
     if (isSellOrder && !data.pincode) { form.setError("pincode", { message: "Pincode is required for pickup" }); return; }
     setIsSubmitting(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const { data: { user } } = await withTimeout(supabase.auth.getUser());
       let orderNumber: string | undefined;
       if (isSellOrder) {
-        const { data: order, error } = await supabase.from("sell_requests").insert({
+        const { data: order, error } = await withTimeout(supabase.from("sell_requests").insert({
             user_id: user?.id || null,
             model_id: defaultModelId!,
             age_months: 0,
@@ -50,11 +51,11 @@ const SimpleForm = ({ defaultSellingType, defaultModel, defaultModelId, onSucces
             estimated_price: 0,
             pincode: data.pincode || null,
             config: { customer_name: data.name, customer_mobile: data.phone, booking_source: "model_selection" },
-          } as any).select("order_number").single();
+          } as any).select("order_number").single());
         if (error) throw error;
         orderNumber = order?.order_number;
       } else {
-        const { error } = await supabase.from("simple_forms").insert({ user_id: user?.id || null, name: data.name, phone: data.phone, selling_type: data.selling_type, model: data.model });
+        const { error } = await withTimeout(supabase.from("simple_forms").insert({ user_id: user?.id || null, name: data.name, phone: data.phone, selling_type: data.selling_type, model: data.model }));
         if (error) throw error;
       }
       toast({ title: isSellOrder ? "Pickup request received!" : "Form submitted successfully!", description: "We’ll contact you shortly." });

@@ -1,4 +1,5 @@
 "use client";
+import MobileBottomNav from "@/components/MobileBottomNav";
 
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from "next/navigation";
@@ -45,12 +46,13 @@ export const PageClient = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col">
+      <div className="reference-home min-h-screen flex flex-col">
         <Header />
-        <main className="flex-1 flex items-center justify-center">
+        <main id="main-content" className="flex-1 flex items-center justify-center">
           <Loader2 className="h-8 w-8 animate-spin" />
         </main>
         <Footer />
+      <MobileBottomNav />
       </div>
     );
   }
@@ -62,7 +64,7 @@ export const PageClient = () => {
       <div className="min-h-screen flex flex-col">
         <Header />
         
-        <main className="flex-1 py-12 md:py-20">
+        <main id="main-content" className="flex-1 py-12 md:py-20">
           <div className="container max-w-6xl">
             <h1 className="mb-4 text-3xl font-bold tracking-tight text-center">
               Select Your {category === 'laptop' ? 'Laptop' : 'Desktop'} Brand

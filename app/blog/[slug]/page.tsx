@@ -1,73 +1,29 @@
-import type { Metadata } from "next";
-import { createServerSupabaseClient } from "@/lib/supabase/server";
-import { notFound } from "next/navigation";
-import { BlogPostClient } from "./blog-post-client";
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { getBlogPost, relatedBlogPosts } from '@/lib/blog-server';
+import { BlogArticleSchema } from '@/components/blog/BlogArticleSchema';
+import { BlogPostClient } from './blog-post-client';
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const dynamic = 'force-dynamic';
 
-interface Props {
-  params: { slug: string };
-}
+interface Props { params: { slug: string } }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const supabase = createServerSupabaseClient();
-  const { data: post } = await supabase
-    .from("blogs")
-    .select("meta_title, meta_description, keywords, slug, featured_image")
-    .eq("slug", params.slug)
-    .eq("published", true)
-    .single();
-
-  if (!post) {
-    return { title: "Blog Post Not Found" };
-  }
-
+  const post = await getBlogPost(params.slug);
+  if (!post) return { title: 'Blog Post Not Found', robots: { index: false } };
+  const title = post.meta_title || post.title;
+  const description = post.meta_description || post.excerpt;
+  const url = `https://www.laptap.in/blog/${post.slug}`;
   return {
-    title: post.meta_title,
-    description: post.meta_description,
-    keywords: post.keywords ?? [],
-    alternates: { canonical: `https://www.laptap.in/blog/${post.slug}` },
-    openGraph: {
-      title: post.meta_title,
-      description: post.meta_description,
-      url: `https://www.laptap.in/blog/${post.slug}`,
-      images: post.featured_image ? [{ url: post.featured_image }] : [],
-    },
+    title: { absolute: title.endsWith('Laptap') ? title : `${title} | Laptap` }, description, keywords: post.keywords || [], alternates: { canonical: url },
+    openGraph: { type: 'article', title, description, url, publishedTime: post.created_at || undefined, modifiedTime: post.updated_at || undefined, images: post.featured_image ? [{ url: post.featured_image }] : [] },
+    twitter: { card: post.featured_image ? 'summary_large_image' : 'summary', title, description },
   };
 }
 
 export default async function BlogPostPage({ params }: Props) {
-  const supabase = createServerSupabaseClient();
-  const { data: post } = await supabase
-    .from("blogs")
-    .select("*")
-    .eq("slug", params.slug)
-    .eq("published", true)
-    .single();
-
-  if (!post) {
-    notFound();
-  }
-
-  return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BlogPosting",
-            headline: post.title,
-            description: post.excerpt,
-            datePublished: post.created_at,
-            dateModified: post.updated_at,
-            author: { "@type": "Person", name: post.author },
-            keywords: post.keywords?.join(", "),
-          }),
-        }}
-      />
-      <BlogPostClient post={post} />
-    </>
-  );
+  const post = await getBlogPost(params.slug);
+  if (!post) notFound();
+  const relatedPosts = await relatedBlogPosts(post.slug, post.category);
+  return <><BlogArticleSchema post={post} /><BlogPostClient post={post} relatedPosts={relatedPosts} /></>;
 }

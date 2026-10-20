@@ -3,12 +3,12 @@
 import { Shield, Zap, DollarSign, Truck, CheckCircle, Clock } from "lucide-react";
 
 const features = [
-  { icon: Zap, title: "Instant Quotes", description: "Get real-time pricing for your device in seconds with our smart pricing engine" },
-  { icon: DollarSign, title: "Best Prices", description: "We offer competitive market rates ensuring you get the maximum value for your device" },
-  { icon: Truck, title: "Free Pickup", description: "Convenient doorstep pickup at your preferred time - completely free of charge" },
-  { icon: Shield, title: "100% Secure", description: "Your data is wiped securely and all transactions are protected and encrypted" },
-  { icon: Clock, title: "Instant Payment", description: "Receive instant payment after device verification directly to your account" },
-  { icon: CheckCircle, title: "Quality Check", description: "Professional device inspection to ensure fair and accurate pricing" },
+  { icon: Zap, title: "Model Selection", description: "Start with the exact model and configuration of the computer you own" },
+  { icon: DollarSign, title: "Clear Assessment", description: "Discuss specifications and condition before agreeing to an offer" },
+  { icon: Truck, title: "Pickup Planning", description: "Check collection availability with your complete address and pincode" },
+  { icon: Shield, title: "Data Preparation", description: "Back up your files and remove personal accounts before handover" },
+  { icon: Clock, title: "Payment Clarity", description: "Confirm the amount, payment method, and timing before completing the sale" },
+  { icon: CheckCircle, title: "Device Review", description: "Share faults, repairs, and included accessories for an accurate assessment" },
 ];
 
 const Features = () => {
@@ -18,7 +18,7 @@ const Features = () => {
         <div className="text-center mb-8 sm:mb-12">
           <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">Why Choose Laptap?</h2>
           <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
-            Experience the easiest and most secure way to sell your old laptops and desktops
+            Clear steps and useful details for selling your laptop or desktop
           </p>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6 md:gap-8">

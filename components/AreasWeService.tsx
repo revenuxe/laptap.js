@@ -1,6 +1,8 @@
 "use client";
 
 import { MapPin } from "lucide-react";
+import Link from "next/link";
+import { areas as areaGuides, areaUrl } from "@/lib/areas";
 
 interface AreasWeServiceProps {
   city: string;
@@ -9,33 +11,35 @@ interface AreasWeServiceProps {
 
 const AreasWeService = ({ city, areas }: AreasWeServiceProps) => {
   return (
-    <section className="py-16 md:py-24 bg-muted/30">
+    <section id="service-areas" className="py-16 md:py-24 bg-muted/30">
       <div className="container">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Areas We Service in {city}
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Free doorstep pickup service available across all localities in {city}. 
-            Our verified technicians reach your location within 24 hours.
+            Explore your local selling guide and check collection availability using your complete address and pincode.
           </p>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 max-w-6xl mx-auto">
-          {areas.map((area, index) => (
-            <div
-              key={index}
+          {areas.map((area) => {
+            const guide = areaGuides.find(item => item.name === area);
+            return <Link
+              href={guide ? areaUrl(guide.slug) : "/bangalore/areas"}
+              key={area}
               className="flex items-center gap-2 p-4 rounded-xl bg-card border border-border hover:border-primary transition-all hover:shadow-md"
             >
               <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
               <span className="text-sm font-medium">{area}</span>
-            </div>
-          ))}
+            </Link>;
+          })}
         </div>
 
         <div className="mt-12 text-center">
           <p className="text-sm text-muted-foreground">
-            Don't see your area? <span className="text-primary font-medium">We service all areas in {city}!</span> Contact us for immediate pickup.
+            <Link href="/bangalore/areas" className="text-primary font-medium underline underline-offset-4">Browse all areas &rarr;</Link>
+            <span className="mt-3 block">Don't see your area? Contact our team with your pincode to check collection.</span>
           </p>
         </div>
       </div>

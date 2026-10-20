@@ -1,4 +1,5 @@
 "use client";
+import MobileBottomNav from "@/components/MobileBottomNav";
 
 
 import Header from "@/components/Header";
@@ -10,9 +11,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { toast } from "sonner";
 import { contactFormSchema } from "@/lib/validationSchemas";
+import { withTimeout } from "@/lib/request-timeout";
 import { supabase } from "@/lib/supabase/client";
 
 export const PageClient = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,18 +25,22 @@ export const PageClient = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     
     // Validate form data
     try {
       const validatedData = contactFormSchema.parse(formData);
       
-      const { error } = await (supabase as any).from("contact_submissions").insert(validatedData);
+      const { error } = await withTimeout((supabase as any).from("contact_submissions").insert(validatedData)) as { error: unknown };
       if (error) throw error;
       setFormData({ name: "", email: "", phone: "", message: "" });
       toast.success("Thanks! Your message has been sent.");
     } catch (error: any) {
       const errorMessage = error.errors?.[0]?.message || "Please check your input and try again";
       toast.error(errorMessage);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -41,9 +48,9 @@ export const PageClient = () => {
     <>
       
 
-      <div className="min-h-screen flex flex-col">
+      <div className="reference-home min-h-screen flex flex-col">
         <Header />
-        <main className="flex-1">
+        <main id="main-content" className="flex-1">
           {/* Hero Section */}
           <section className="py-16 md:py-24 bg-gradient-to-br from-primary/5 to-secondary/5">
             <div className="container">
@@ -190,8 +197,8 @@ export const PageClient = () => {
                       />
                     </div>
 
-                    <Button type="submit" size="lg" className="w-full">
-                      Send Message
+                    <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
+                      {isSubmitting ? "Sending?" : "Send Message"}
                     </Button>
                   </form>
                 </div>
@@ -200,6 +207,7 @@ export const PageClient = () => {
           </section>
         </main>
         <Footer />
+      <MobileBottomNav />
       </div>
     </>
   );

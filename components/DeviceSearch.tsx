@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useId } from 'react';
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from '@/lib/supabase/client';
@@ -62,11 +62,15 @@ const POPULAR_BRANDS = [
   },
 ];
 
-export function DeviceSearch() {
+export function DeviceSearch({ referenceStyle = false }: { referenceStyle?: boolean }) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [models, setModels] = useState<Model[]>([]);
-  const [filteredModels, setFilteredModels] = useState<Model[]>([]);
+  const resultsId = useId();
+  const filteredModels = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+    return query ? models.filter(model => model.name.toLowerCase().includes(query) || model.series.name.toLowerCase().includes(query) || model.series.brands.name.toLowerCase().includes(query)).slice(0, 5) : [];
+  }, [models, searchQuery]);
   const [showResults, setShowResults] = useState(false);
 
   useEffect(() => {
@@ -95,7 +99,7 @@ export function DeviceSearch() {
         .eq('active', true);
       
       if (data) {
-        const sortedModels = (data as Model[]).sort((a, b) => {
+        const sortedModels = (data as Model[]).filter(model => model.series?.brands).sort((a, b) => {
           const yearA = parseInt(a.name.match(/\b(19|20)\d{2}\b/)?.[0] || '0');
           const yearB = parseInt(b.name.match(/\b(19|20)\d{2}\b/)?.[0] || '0');
           return yearB - yearA;
@@ -109,19 +113,7 @@ export function DeviceSearch() {
 
   const handleSearch = (value: string) => {
     setSearchQuery(value);
-    if (value.trim() && models.length > 0) {
-      const query = value.toLowerCase();
-      const filtered = models.filter(model => 
-        model.name.toLowerCase().includes(query) ||
-        model.series.name.toLowerCase().includes(query) ||
-        model.series.brands.name.toLowerCase().includes(query)
-      ).slice(0, 5);
-      setFilteredModels(filtered);
-      setShowResults(true);
-    } else {
-      setShowResults(false);
-      setFilteredModels([]);
-    }
+    setShowResults(Boolean(value.trim()));
   };
 
   const handleModelClick = (model: Model) => {
@@ -135,6 +127,10 @@ export function DeviceSearch() {
       <div className="relative">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
         <Input
+          aria-label="Search for your device brand or model"
+          aria-expanded={showResults}
+          aria-controls={showResults ? resultsId : undefined}
+          onKeyDown={event => { if (event.key === 'Escape') setShowResults(false); }}
           type="text"
           placeholder="Search for your device brand, model..."
           value={searchQuery}
@@ -144,16 +140,17 @@ export function DeviceSearch() {
       </div>
 
       {showResults && (
-        <Card className="absolute top-full mt-2 w-full z-50 max-h-96 overflow-auto shadow-lg">
+        <Card id={resultsId} className="absolute top-full mt-2 w-full z-50 max-h-96 overflow-auto shadow-lg">
           <div className="p-4">
             {filteredModels.length > 0 ? (
               <div className="space-y-2">
                 <p className="text-sm font-semibold text-muted-foreground mb-3">Models</p>
                 {filteredModels.map(model => (
-                  <div
+                  <button
+                    type="button"
                     key={model.id}
                     onClick={() => handleModelClick(model)}
-                    className="flex items-center gap-3 p-3 rounded-lg hover:bg-accent cursor-pointer transition-colors"
+                    className="flex w-full items-center gap-3 p-3 rounded-lg text-left hover:bg-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary cursor-pointer transition-colors"
                   >
                     <div className="w-10 h-10 flex items-center justify-center bg-primary/10 rounded">
                       <Laptop className="h-5 w-5 text-primary" />
@@ -164,40 +161,30 @@ export function DeviceSearch() {
                         {model.series.brands.name} {model.series.name}
                       </p>
                     </div>
-                  </div>
+                  </button>
                 ))}
               </div>
             ) : (
-              <p className="text-center text-muted-foreground py-6">No models found</p>
+              <p role="status" className="text-center text-muted-foreground py-6">No matching models yet. Choose a brand below or ask our team for help.</p>
             )}
           </div>
         </Card>
       )}
 
-      {/* Popular Brands (Static for instant rendering) */}
-      <div className="mt-5 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-        <span className="w-full text-center text-xs sm:text-sm font-medium text-muted-foreground mb-1">
-          Popular Brands:
-        </span>
-        {POPULAR_BRANDS.map(brand => (
-          <Link
-            key={brand.slug}
-            href={`/sell/laptop/${brand.slug}`}
-            className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-border bg-card/80 hover:bg-accent hover:border-primary/50 shadow-sm transition-all text-xs sm:text-sm font-medium hover:scale-105"
-          >
-            <img
-              src={brand.logo_url}
-              alt={brand.name}
-              className="h-4 w-4 sm:h-5 sm:w-5 object-contain"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-              }}
-            />
-            <span>{brand.name}</span>
-          </Link>
-        ))}
+      <div className={referenceStyle ? "reference-brands" : "mt-5 flex flex-wrap items-center justify-center gap-2 sm:gap-3"}>
+        <div className={referenceStyle ? "reference-brands-heading" : "w-full text-center text-sm text-muted-foreground"}>
+          <span>Popular Brands</span>
+          {referenceStyle && <Link href="/sell/laptop">View all</Link>}
+        </div>
+        <div className={referenceStyle ? "reference-brand-track" : "flex flex-wrap justify-center gap-2 sm:gap-3"}>
+          {POPULAR_BRANDS.map(brand => (
+            <Link key={brand.slug} href={`/sell/laptop/${brand.slug}`} className={referenceStyle ? "reference-brand-card" : "inline-flex items-center gap-2 px-3 py-2 rounded-full border bg-card shadow-sm text-sm"}>
+              <img src={brand.logo_url} alt="" className={referenceStyle ? "" : "h-5 w-5 object-contain"} />
+              <span>{brand.name}</span>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
 }
-

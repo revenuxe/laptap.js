@@ -10,6 +10,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 const PageLoader = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const searchKey = searchParams.toString();
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
 
@@ -21,13 +22,14 @@ const PageLoader = () => {
     // Hide after the page has rendered
     const hideTimer = setTimeout(() => {
       setVisible(false);
-      // Remove from DOM after fade-out animation completes
-      const removeTimer = setTimeout(() => setLoading(false), 300);
-      return () => clearTimeout(removeTimer);
     }, 400);
+    const removeTimer = setTimeout(() => setLoading(false), 700);
 
-    return () => clearTimeout(hideTimer);
-  }, [pathname, searchParams]);
+    return () => {
+      clearTimeout(hideTimer);
+      clearTimeout(removeTimer);
+    };
+  }, [pathname, searchKey]);
 
   if (!loading) return null;
 

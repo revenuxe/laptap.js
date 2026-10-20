@@ -3,11 +3,11 @@ import { Facebook, Linkedin, Instagram } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="border-t bg-muted/30 py-8 sm:py-12 md:py-16">
+    <footer className="site-footer border-t bg-muted/30 py-8 sm:py-12 md:py-16">
       <div className="container">
-        <div className="grid grid-cols-2 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-7">
+        <div className="footer-menu-grid grid grid-cols-2 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-7">
           {/* Logo - full width on mobile */}
-          <div className="col-span-2 sm:col-span-1 space-y-3 sm:space-y-4">
+          <div className="footer-intro col-span-2 sm:col-span-1 space-y-3 sm:space-y-4">
             <img src="/assets/laptop_logo.webp" alt="Laptap Logo" className="h-8 sm:h-10" />
             <p className="text-xs sm:text-sm text-muted-foreground">
               India's most trusted platform for selling used laptops and desktops.
@@ -27,6 +27,7 @@ const Footer = () => {
             <h3 className="mb-3 sm:mb-4 text-xs sm:text-sm font-semibold">Quick Links</h3>
             <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
               <li><Link href="/sell" className="text-muted-foreground hover:text-foreground transition-colors">Sell Device</Link></li>
+              <li><Link href="/repair" className="text-muted-foreground hover:text-foreground transition-colors">Repair Laptops</Link></li>
               <li><Link href="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors">My Dashboard</Link></li>
               <li><Link href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">Terms</Link></li>
               <li><Link href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">Privacy</Link></li>
@@ -48,11 +49,12 @@ const Footer = () => {
           <div>
             <h3 className="mb-3 sm:mb-4 text-xs sm:text-sm font-semibold">Areas We Serve</h3>
             <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
-              <li><span className="text-muted-foreground">Koramangala</span></li>
-              <li><span className="text-muted-foreground">Indiranagar</span></li>
-              <li><span className="text-muted-foreground">Whitefield</span></li>
-              <li><span className="text-muted-foreground">Electronic City</span></li>
-              <li><span className="text-muted-foreground">HSR Layout</span></li>
+              <li><Link href="/bangalore/areas/koramangala" className="text-muted-foreground hover:text-foreground transition-colors">Koramangala</Link></li>
+              <li><Link href="/bangalore/areas/indiranagar" className="text-muted-foreground hover:text-foreground transition-colors">Indiranagar</Link></li>
+              <li><Link href="/bangalore/areas/whitefield" className="text-muted-foreground hover:text-foreground transition-colors">Whitefield</Link></li>
+              <li><Link href="/bangalore/areas/electronic-city" className="text-muted-foreground hover:text-foreground transition-colors">Electronic City</Link></li>
+              <li><Link href="/bangalore/areas/hsr-layout" className="text-muted-foreground hover:text-foreground transition-colors">HSR Layout</Link></li>
+              <li className="footer-browse"><Link href="/bangalore/areas">Browse all areas &rarr;</Link></li>
             </ul>
           </div>
 
@@ -68,7 +70,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-8 sm:mt-12 border-t pt-6 sm:pt-8">
+        <div className="footer-bottom mt-8 sm:mt-12 border-t pt-6 sm:pt-8">
           <div className="flex flex-col items-center justify-between gap-3 sm:gap-4 text-xs sm:text-sm text-muted-foreground md:flex-row">
             <p>&copy; {new Date().getFullYear()} Laptap. All rights reserved.</p>
             <div className="flex items-center gap-4">

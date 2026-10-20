@@ -18,6 +18,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   let description = `Get the best price for your used ${categoryName.toLowerCase()} on Laptap. Free doorstep pickup, instant evaluation, and immediate payment in Bangalore.`;
   let canonicalUrl = `https://www.laptap.in/sell/${category}`;
 
+  if (urlSegments.length === 0) {
+    title = 'Sell Your Laptop or Desktop | Laptap';
+    description = 'Choose whether you want to sell a laptop or desktop. Explore device selection, request a callback, and discuss the next steps with Laptap.';
+    canonicalUrl = 'https://www.laptap.in/sell';
+  }
+
   if (brandSlug) {
     const supabase = createServerSupabaseClient();
     const { data: brand } = await supabase
@@ -59,7 +65,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title,
+    title: { absolute: title },
     description,
     keywords: [
       `sell ${categoryName.toLowerCase()}`,

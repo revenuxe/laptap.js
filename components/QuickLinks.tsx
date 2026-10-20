@@ -28,11 +28,12 @@ const QuickLinks = () => {
     { text: "Sell Lenovo Desktop", url: "/models/lenovo-desktop" },
     { text: "Sell Old Laptop Online", url: "/sell" },
     { text: "Laptop Repair Services", url: "/repair" },
-    { text: "Track Order", url: "/track/order" },
+    { text: "Order Help", url: "/contact" },
     { text: "Selling Guide", url: "/blog/sell-used-laptop-bangalore" },
     { text: "About Laptap", url: "/about" },
     { text: "Contact Us", url: "/contact" },
     { text: "Blog", url: "/blog" },
+    { text: "Browse Bangalore Areas", url: "/bangalore/areas" },
   ];
 
   return (

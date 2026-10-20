@@ -138,6 +138,9 @@ export const BlogsTab = () => {
       </div>
 
       <Tabs defaultValue="all">
+        <p className="mb-4 rounded-xl border bg-muted/40 p-4 text-sm text-muted-foreground">
+          The six core buying and selling guides are maintained in <code>lib/blog-content.ts</code> and take precedence over their older database copies. Edit those guides in the site code. Other articles are managed here. The older Bangalore guide URL redirects to the main Bangalore guide.
+        </p>
         <TabsList>
           <TabsTrigger value="all">All Blogs</TabsTrigger>
           <TabsTrigger value="published">Published</TabsTrigger>

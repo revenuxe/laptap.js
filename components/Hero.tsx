@@ -16,12 +16,13 @@ import {
 import SimpleForm from "./SimpleForm";
 
 interface HeroProps {
+  referenceStyle?: boolean;
   location?: string;
   title?: React.ReactNode;
   description?: string;
 }
 
-const Hero = ({ location, title, description }: HeroProps = {}) => {
+const Hero = ({ location, title, description, referenceStyle = false }: HeroProps = {}) => {
   const [formOpen, setFormOpen] = useState(false);
   
   const defaultTitle = (
@@ -36,7 +37,7 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
   const defaultDescription = "Get the best price for your device with instant quotes, free doorstep pickup, and instant secure payment.";
   
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-background via-muted/20 to-background py-6 sm:py-8 md:py-12">
+    <section className={`${referenceStyle ? "reference-hero" : ""} relative overflow-hidden bg-gradient-to-b from-background via-muted/20 to-background py-6 sm:py-8 md:py-12`}>
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-10 left-10 h-60 w-60 rounded-full bg-primary/5 blur-3xl" />
@@ -55,12 +56,12 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
           </p>
 
           {/* Search bar */}
-          <div className="mb-5 sm:mb-6">
-            <DeviceSearch />
+          <div className="hero-search mb-5 sm:mb-6">
+            <DeviceSearch referenceStyle={referenceStyle} />
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-6 sm:mb-8 px-4 sm:px-0">
+          <div className="hero-actions flex flex-col sm:flex-row gap-3 justify-center items-center mb-6 sm:mb-8 px-4 sm:px-0">
             <Button variant="cta" size="lg" asChild className="w-full sm:w-auto sm:min-w-[220px] h-11 sm:h-12 text-sm sm:text-base">
               <Link href="/sell/laptop">Sell Now</Link>
             </Button>
@@ -70,7 +71,7 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
           </div>
 
           {/* Trust indicators */}
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mb-6 sm:mb-8 text-xs sm:text-sm text-muted-foreground">
+          <div className="hero-trust flex flex-wrap justify-center gap-4 sm:gap-6 mb-6 sm:mb-8 text-xs sm:text-sm text-muted-foreground">
             <div className="flex items-center gap-1.5 sm:gap-2">
               <Shield className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
               <span>100% Secure</span>
@@ -86,7 +87,7 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
           </div>
 
           {/* Category cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto">
+          <div className="hero-categories grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto">
             <Link href="/sell/laptop" className="group block overflow-hidden rounded-2xl border border-slate-200 bg-white p-0 shadow-[0_8px_22px_-14px_rgba(15,23,42,0.42)] ring-1 ring-slate-100 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_18px_32px_-16px_rgba(37,99,235,0.45)] dark:border-slate-700 dark:bg-card dark:ring-slate-800">
               <div className="flex h-28 items-center justify-center bg-[#e9f5f3] sm:h-36"><img src="/assets/sell-laptop-cutout.webp" alt="Laptop" className="h-full w-full object-contain p-2" /></div>
               <div className="p-3 text-center"><h3 className="text-sm font-bold text-slate-900 sm:text-base dark:text-white">Sell Laptops</h3><p className="mt-1 text-[11px] text-muted-foreground">Select your model</p></div>
@@ -104,11 +105,11 @@ const Hero = ({ location, title, description }: HeroProps = {}) => {
 
             <Dialog open={formOpen} onOpenChange={setFormOpen}>
               <DialogTrigger asChild>
-                <div className="group cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white p-0 shadow-[0_8px_22px_-14px_rgba(15,23,42,0.42)] ring-1 ring-slate-100 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-400/50 hover:shadow-[0_18px_32px_-16px_rgba(5,150,105,0.45)] dark:border-slate-700 dark:bg-card dark:ring-slate-800">
+                <div role="button" tabIndex={0} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); setFormOpen(true); } }} className="group cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white p-0 shadow-[0_8px_22px_-14px_rgba(15,23,42,0.42)] ring-1 ring-slate-100 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-400/50 hover:shadow-[0_18px_32px_-16px_rgba(5,150,105,0.45)] dark:border-slate-700 dark:bg-card dark:ring-slate-800">
                   <div className="flex h-28 items-center justify-center bg-[#e7f6ee] sm:h-36">
                     <FileText className="h-12 w-12 text-emerald-600 transition-transform duration-300 group-hover:scale-110" />
                   </div>
-                  <div className="p-3 text-center"><h3 className="text-sm font-bold text-slate-900 sm:text-base dark:text-white">Simple Form</h3><p className="mt-1 text-[11px] text-muted-foreground">We’ll call you back</p></div>
+                  <div className="p-3 text-center"><h3 className="text-sm font-bold text-slate-900 sm:text-base dark:text-white">Simple Form</h3><p className="mt-1 text-[11px] text-muted-foreground">We'll call you back</p></div>
                 </div>
               </DialogTrigger>
               <DialogContent>
