@@ -11,8 +11,8 @@ begin
  terms:=public.marketplace_managed_policy();
  terms:=public.admin_marketplace_save_policy(terms||'{"service_pincodes":["560001"],"hub_address":"QA Laptap Hub, Bangalore 560001","hub_instructions":"Wait for ready notification"}');
  if (public.marketplace_commission_quote(9999,terms)->>'rate')::integer<>1200 or(public.marketplace_commission_quote(10000,terms)->>'rate')::integer<>1000 or(public.marketplace_commission_quote(20000,terms)->>'rate')::integer<>900 or(public.marketplace_commission_quote(40000,terms)->>'rate')::integer<>800 or(public.marketplace_commission_quote(70000,terms)->>'rate')::integer<>700 or(public.marketplace_commission_quote(1000,terms)->>'commission')::numeric<>799 then raise exception 'FAILED tier boundaries';end if;
- select to_jsonb(l)||jsonb_build_object('title','QA Managed Laptop','price',30000,'verified_at',null) into p from public.marketplace_listings l where id='9af8d415-26e1-4b7d-9f2c-0d7a7e988001';
- intake:='{"serial_number":"QA-SERIAL-001","ownership_confirmed":true,"accepted_terms":true,"collection_address":"QA private seller collection 560001","diagnostic_notes":"QA SSD battery keyboard diagnostics checked","evidence_paths":[]}';
+ select to_jsonb(l)||jsonb_build_object('title','QA Managed Laptop','price',30000,'year',null,'verified_at',null) into p from public.marketplace_listings l where id='9af8d415-26e1-4b7d-9f2c-0d7a7e988001';
+ intake:='{"serial_number":"","ownership_confirmed":true,"accepted_terms":true,"collection_address":"QA private seller collection 560001","diagnostic_notes":"","evidence_paths":[]}';
  execute 'set local role authenticated';perform set_config('request.jwt.claim.sub',s::text,true);
  begin perform public.marketplace_save_device(d,p,intake||'{"accepted_terms":false}',true,(terms->>'version')::integer);raise exception 'FAILED missing consent';exception when others then if SQLERRM not like '%accept the commission%' then raise;end if;end;
  begin perform public.marketplace_save_device(gen_random_uuid(),p||'{"category":"desktop"}',intake,true,(terms->>'version')::integer);raise exception 'FAILED desktop submission';exception when others then if SQLERRM not like '%laptop listings only%' then raise;end if;end;
@@ -53,7 +53,8 @@ begin
  perform set_config('request.jwt.claim.sub',s::text,true);
  begin perform public.marketplace_seller_order_action(o,'confirmed','','','');raise exception 'FAILED seller fulfilment';exception when others then if SQLERRM not like '%Laptap manages%' then raise;end if;end;
  begin update public.marketplace_listings set title='Illegal ordered edit' where id=d;raise exception 'FAILED active edit';exception when others then if SQLERRM not like '%managed order%' then raise;end if;end;
- checks:=checks||jsonb_build_object('test','Admin review publishes, private data stays private, checkout includes buyer fee and preserves agreed commission; sellers cannot fulfil or edit reserved devices','passed',true);
+ if not exists(select 1 from public.marketplace_listings where id=d and year is null and seo_path is not null) then raise exception 'FAILED unknown year/SEO';end if;
+ checks:=checks||jsonb_build_object('test','Optional seller serial/diagnostics and unknown year accepted; Laptap records serial at inspection. Admin review publishes, private data stays private, checkout includes buyer fee and preserves agreed commission; sellers cannot fulfil or edit reserved devices','passed',true);
  perform public.marketplace_save_payout_profile('{"recipient_name":"QA Seller","method":"upi","upi_id":"qaseller@bank"}');
  perform set_config('request.jwt.claim.sub',a::text,true);
  if not exists(select 1 from public.marketplace_orders where id=o and commission_amount=2700 and seller_net=27300 and acceptance_hours=48) then raise exception 'FAILED locked seller terms';end if;
@@ -61,8 +62,10 @@ begin
  begin update public.marketplace_orders set status='shipped',courier='QA',tracking_number='QA-123' where id=o;raise exception 'FAILED bypass fulfilment';exception when others then if SQLERRM not like '%Invalid order status transition%' and SQLERRM not like '%inspection%' then raise;end if;end;
  perform public.admin_marketplace_operation(o,'confirm','{"note":"Confirmed device availability with seller"}');
  perform public.admin_marketplace_operation(o,'schedule_inspection',jsonb_build_object('assigned_to','QA Inspector','inspection_at',now()+interval '1 hour'));
- begin perform public.admin_marketplace_operation(o,'inspection_passed','{"checks":{},"report":"QA report missing required checks"}');raise exception 'FAILED missing checklist';exception when others then if SQLERRM not like '%Every inspection check%' then raise;end if;end;
- perform public.admin_marketplace_operation(o,'inspection_passed',jsonb_build_object('checks',passed,'report','QA physical inspection passed all diagnostic checks. Serial and ownership match.'));
+ begin perform public.admin_marketplace_operation(o,'inspection_passed','{"checks":{},"report":"QA report missing required checks","serial_number":"QA-SERIAL-001"}');raise exception 'FAILED missing checklist';exception when others then if SQLERRM not like '%Every inspection check%' then raise;end if;end;
+ begin perform public.admin_marketplace_operation(o,'inspection_passed',jsonb_build_object('checks',passed,'report','QA inspection without recording the serial number.'));raise exception 'FAILED missing Laptap serial';exception when others then if SQLERRM not like '%physical serial number%' then raise;end if;end;
+ perform public.admin_marketplace_operation(o,'inspection_passed',jsonb_build_object('checks',passed,'serial_number','QA-SERIAL-001','report','QA physical inspection passed all diagnostic checks. Serial and ownership match.'));
+ if not exists(select 1 from public.marketplace_listing_intake where listing_id=d and serial_number='QA-SERIAL-001') then raise exception 'FAILED inspector serial persistence';end if;
  perform public.admin_marketplace_operation(o,'schedule_pickup',jsonb_build_object('collection_at',now()+interval '2 hours'));
  perform public.admin_marketplace_operation(o,'collect','{"reference":"QA-COLLECTION-PROOF"}');
  begin perform public.admin_marketplace_operation(o,'pack','{"reference":"QA-PACK","wipe_confirmed":false,"packed":true}');raise exception 'FAILED wipe';exception when others then if SQLERRM not like '%actual data wipe%' then raise;end if;end;

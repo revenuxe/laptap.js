@@ -17,7 +17,7 @@ export type Listing = {
     brand: string;
     category: 'laptop' | 'desktop';
     price: number;
-    year: number;
+    year: number | null;
     condition: 'Like new' | 'Excellent' | 'Good' | 'Fair';
     description: string;
     processor: string;

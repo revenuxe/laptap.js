@@ -113,7 +113,7 @@ export default function ProductDetail({ id, initialProduct }: { id: string; init
       <div className="pd-main">
         <ProductGallery key={id} product={p} />
         <section className="pd-summary" aria-label="Product summary">
-          <div className="pd-brand-row"><span>{p.brand} <i /> {p.year} model</span>{p.verified_at && <span className="pd-verified-badge"><BadgeCheck size={14} />Laptap verified</span>}</div>
+          <div className="pd-brand-row"><span>{p.brand}{p.year&&<> <i /> {p.year} model</>}</span>{p.verified_at && <span className="pd-verified-badge"><BadgeCheck size={14} />Laptap verified</span>}</div>
           <h1>{title}</h1>
           <p className="pd-title-specs">{p.processor} <span>/</span> {p.ram} <span>/</span> {p.storage}</p>
           <div className="pd-price-block"><div className="pd-price">{money(p.price)}</div><p>{p.is_demo ? 'Sample price for this demonstration' : 'Any inspection/support and fulfilment charges are shown before you order.'}</p></div>
@@ -140,7 +140,7 @@ export default function ProductDetail({ id, initialProduct }: { id: string; init
         <DialogTitle>{sent ? 'Enquiry sent' : enquiry === 'buy' ? 'Enquire to buy' : 'Ask the seller'}</DialogTitle>
         <DialogDescription id="pd-enquiry-description">{sent ? 'The seller can now review your request and contact you.' : 'Confirm availability and the final total with the seller. No payment is taken here.'}</DialogDescription>
         {sent ? <div className="pd-enquiry-success"><span><Check size={27} /></span><h3>Request received</h3><p>Your enquiry has been saved for {p.seller_name}. The seller can contact you using the details you provided.</p><button className="pd-primary" onClick={() => setEnquiry(null)}>Continue browsing</button></div> : <>
-          <div className="pd-enquiry-product"><img src={p.images[0]} alt="" /><div><b>{title}</b><span>{p.condition} / {p.year}</span></div><strong>{money(p.price)}</strong></div>
+          <div className="pd-enquiry-product"><img src={p.images[0]} alt="" /><div><b>{title}</b><span>{p.condition}{p.year?` / ${p.year}`:''}</span></div><strong>{money(p.price)}</strong></div>
           <form className="store-form" onSubmit={inquire}><div className="store-form-grid"><label>Your name<input name="name" required maxLength={100} autoComplete="name" /></label><label>Email address<input name="email" type="email" required maxLength={200} autoComplete="email" /></label></div><label>Phone number<input name="phone" type="tel" required minLength={7} maxLength={25} autoComplete="tel" /></label><label>Message<textarea name="message" required minLength={10} maxLength={2000} defaultValue={enquiry === 'buy' ? `Hi, I would like to buy the ${title}. Please confirm availability, the final price, and delivery options.` : `Hi, I have a question about the ${title}. Please share more about its condition and warranty.`} /></label><p className="pd-form-privacy">Your contact details will be shared with this seller and Laptap admins to respond to your enquiry.</p>{message && <p role="alert" className="store-error">{message}</p>}<button className="pd-primary" disabled={busy}>{busy ? 'Sending...' : 'Send enquiry'}</button></form>
         </>}
       </DialogContent>

@@ -14,7 +14,7 @@ export default function ProductInformation({ product: p, tab, onTab, onAsk }: {
 }) {
   const buttons = useRef<Array<HTMLButtonElement | null>>([]);
   const specs = [
-    ['Brand', p.brand], ['Model year', String(p.year)], ['Processor', p.processor], ['Memory', p.ram],
+    ['Brand', p.brand], ['Model year', p.year?String(p.year):'Not provided'], ['Processor', p.processor], ['Memory', p.ram],
     ['Storage', p.storage], ['Graphics', p.graphics], ['Display', p.display], ['Battery / power', p.battery],
     ['Condition', p.condition], ['Device type', p.category === 'laptop' ? 'Laptop' : 'Desktop'],
   ];
