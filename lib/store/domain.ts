@@ -1,4 +1,6 @@
 export type Listing = {
+    stock_quantity?:number;
+    stock_available?:number;
     seo_path?: string;
     review_status?:import('@/lib/managed/domain').ReviewStatus;
     commission_terms?:{version:number;price:number;rate_bps:number;commission:number;seller_net:number;acceptance_hours:number};

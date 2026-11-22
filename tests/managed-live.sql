@@ -65,7 +65,7 @@ begin
  begin perform public.admin_marketplace_operation(o,'inspection_passed','{"checks":{},"report":"QA report missing required checks","serial_number":"QA-SERIAL-001"}');raise exception 'FAILED missing checklist';exception when others then if SQLERRM not like '%Every inspection check%' then raise;end if;end;
  begin perform public.admin_marketplace_operation(o,'inspection_passed',jsonb_build_object('checks',passed,'report','QA inspection without recording the serial number.'));raise exception 'FAILED missing Laptap serial';exception when others then if SQLERRM not like '%physical serial number%' then raise;end if;end;
  perform public.admin_marketplace_operation(o,'inspection_passed',jsonb_build_object('checks',passed,'serial_number','QA-SERIAL-001','report','QA physical inspection passed all diagnostic checks. Serial and ownership match.'));
- if not exists(select 1 from public.marketplace_listing_intake where listing_id=d and serial_number='QA-SERIAL-001') then raise exception 'FAILED inspector serial persistence';end if;
+ if not exists(select 1 from public.marketplace_order_operations where order_id=o and serial_number='QA-SERIAL-001') then raise exception 'FAILED inspector serial persistence';end if;
  perform public.admin_marketplace_operation(o,'schedule_pickup',jsonb_build_object('collection_at',now()+interval '2 hours'));
  perform public.admin_marketplace_operation(o,'collect','{"reference":"QA-COLLECTION-PROOF"}');
  begin perform public.admin_marketplace_operation(o,'pack','{"reference":"QA-PACK","wipe_confirmed":false,"packed":true}');raise exception 'FAILED wipe';exception when others then if SQLERRM not like '%actual data wipe%' then raise;end if;end;

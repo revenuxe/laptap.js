@@ -1,0 +1,57 @@
+﻿-- Rollback-only quantity and admin approval validation. No real purchases or money movement.
+create temp table stock_results(checks jsonb);
+do $$
+declare a uuid;s uuid:=gen_random_uuid();b uuid:=gen_random_uuid();b2 uuid:=gen_random_uuid();d uuid:=gen_random_uuid();p jsonb;policy jsonb;intake jsonb;addr jsonb;items jsonb;r jsonb;retry jsonb;o uuid;other_o uuid;checks jsonb:='[]';passed jsonb:='{"display":true,"keyboard":true,"battery":true,"storage":true,"ports":true,"performance":true,"bios":true,"ownership":true,"serial_match":true}';cid uuid:=gen_random_uuid();
+begin
+ select user_id into a from public.user_roles where role='admin' limit 1;
+ begin
+ insert into auth.users(id,email,email_confirmed_at,aud,role,raw_user_meta_data) values(s,'stock-seller-'||s||'@example.invalid',now(),'authenticated','authenticated',jsonb_build_object('seller_application',true,'full_name','QA Seller','shop_name','QA Stock Shop','phone','9000000000','city','Bangalore','business_address','QA private address Bangalore 560001')),(b,'stock-buyer-'||b||'@example.invalid',now(),'authenticated','authenticated','{}'),(b2,'stock-other-'||b2||'@example.invalid',now(),'authenticated','authenticated','{}');
+ perform set_config('request.jwt.claim.sub',a::text,true);update public.marketplace_sellers set status='active' where id=s;
+ policy:=public.admin_marketplace_save_policy(public.marketplace_managed_policy()||'{"service_pincodes":["560001"],"hub_address":"QA Laptap hub Bangalore 560001"}');
+ select to_jsonb(l)||'{"title":"QA identical laptop stock","price":30000,"stock_quantity":3}' into p from public.marketplace_listings l where id='9af8d415-26e1-4b7d-9f2c-0d7a7e988001';
+ intake:='{"ownership_confirmed":true,"accepted_terms":true,"collection_address":"QA private collection Bangalore 560001","serial_number":"","diagnostic_notes":"","evidence_paths":[]}';addr:='{"name":"QA Buyer","phone":"9000000001","line1":"QA Buyer house street","city":"Bangalore","state":"Karnataka","pincode":"560001"}';
+ execute 'set local role authenticated';perform set_config('request.jwt.claim.sub',s::text,true);
+ perform public.marketplace_save_device(d,p,intake,true,(policy->>'version')::integer);
+ perform set_config('request.jwt.claim.sub',a::text,true);
+ begin perform public.admin_marketplace_review_listing(d,'rejected','',true);raise exception 'FAILED rejection without reason';exception when others then if SQLERRM not like '%clear reason%' then raise;end if;end;
+ perform public.admin_marketplace_review_listing(d,'approved','',true);
+ if not exists(select 1 from public.marketplace_listings where id=d and stock_quantity=3 and stock_available=3 and status='published') then raise exception 'FAILED approve quantity';end if;
+ perform set_config('request.jwt.claim.sub',b::text,true);
+ items:=jsonb_build_array(jsonb_build_object('listing_id',d,'fulfillment_method','delivery','quantity',2));
+ begin perform public.marketplace_place_order(cid,items,addr,30299,true);raise exception 'FAILED quantity price';exception when others then if SQLERRM not like '%price or delivery%' then raise;end if;end;
+ begin perform public.marketplace_place_order(cid,jsonb_build_array(jsonb_build_object('listing_id',d,'fulfillment_method','delivery','quantity',4)),addr,121196,true);raise exception 'FAILED excessive stock';exception when others then if SQLERRM not like '%Not enough stock%' then raise;end if;end;
+ begin perform public.marketplace_place_order(cid,jsonb_build_array(jsonb_build_object('listing_id',d,'fulfillment_method','delivery','quantity',1.5)),addr,45448.5,true);raise exception 'FAILED fractional quantity';exception when others then if SQLERRM not like '%whole quantity%' then raise;end if;end;
+ r:=public.marketplace_place_order(cid,items,addr,60598,true);retry:=public.marketplace_place_order(cid,items,addr,60598,true);
+ if r<>retry or jsonb_array_length(r->'order_ids')<>2 then raise exception 'FAILED multi-unit/idempotency';end if;
+ o:=(r->'order_ids'->>0)::uuid;other_o:=(r->'order_ids'->>1)::uuid;
+ if jsonb_array_length(public.marketplace_buyer_orders())<>2 then raise exception 'FAILED buyer projection';end if;
+ perform set_config('request.jwt.claim.sub',a::text,true);
+ if not exists(select 1 from public.marketplace_listings where id=d and stock_quantity=3 and stock_available=1 and status='published' and review_status='approved') then raise exception 'FAILED remaining stock';end if;
+ if(select sum(amount) from public.marketplace_orders where checkout_id=cid)<>60598 or(select sum(seller_net) from public.marketplace_settlements where order_id in(o,other_o))<>54600 then raise exception 'FAILED per-unit finance';end if;
+ checks:=checks||jsonb_build_object('test','Blank approval note accepted; rejection needs reason. Quantity pricing, per-unit finance, remaining stock and idempotent checkout verified','passed',true);
+ perform set_config('request.jwt.claim.sub',s::text,true);
+ begin update public.marketplace_listings set stock_quantity=10 where id=d;raise exception 'FAILED stock mutation after order';exception when others then if SQLERRM not like '%already has orders%' then raise;end if;end;
+ update public.marketplace_listings set stock_available=99 where id=d;
+ if not exists(select 1 from public.marketplace_listings where id=d and stock_available=1) then raise exception 'FAILED available stock tampering';end if;
+ perform set_config('request.jwt.claim.sub',b::text,true);perform public.marketplace_cancel_buyer_order(o,'QA cancelled one unit only');
+ perform set_config('request.jwt.claim.sub',a::text,true);
+ if not exists(select 1 from public.marketplace_listings where id=d and stock_available=1) or not exists(select 1 from public.marketplace_orders where id=other_o and status='pending') then raise exception 'FAILED cancellation isolation';end if;
+ perform set_config('request.jwt.claim.sub',b2::text,true);
+ begin perform public.marketplace_place_order(gen_random_uuid(),items,addr,60598,true);raise exception 'FAILED second buyer oversell';exception when others then if SQLERRM not like '%Not enough stock%' then raise;end if;end;
+ r:=public.marketplace_place_order(gen_random_uuid(),jsonb_build_array(jsonb_build_object('listing_id',d,'fulfillment_method','pickup','quantity',1)),addr,30299,true);
+ perform set_config('request.jwt.claim.sub',a::text,true);
+ if not exists(select 1 from public.marketplace_listings where id=d and status='sold' and stock_available=0) then raise exception 'FAILED last unit sold';end if;
+ perform set_config('request.jwt.claim.sub',b::text,true);
+ begin perform public.marketplace_place_order(gen_random_uuid(),jsonb_build_array(jsonb_build_object('listing_id',d,'fulfillment_method','pickup')),addr,30299,true);raise exception 'FAILED sold out';exception when others then if SQLERRM not like '%no longer available%' then raise;end if;end;
+ perform set_config('request.jwt.claim.sub',a::text,true);
+ perform public.admin_marketplace_operation(other_o,'confirm','{"note":"QA confirmed second unit"}');perform public.admin_marketplace_operation(other_o,'schedule_inspection',jsonb_build_object('assigned_to','QA inspector','inspection_at',now()));perform public.admin_marketplace_operation(other_o,'inspection_passed',jsonb_build_object('checks',passed,'serial_number','QA-UNIT-TWO','report','QA individual physical laptop inspection passed.'));
+ if not exists(select 1 from public.marketplace_listings where id=d and verified_at is null) then raise exception 'FAILED batch-wide verification';end if;
+ o:=(r->'order_ids'->>0)::uuid;
+ perform public.admin_marketplace_operation(o,'confirm','{"note":"QA confirmed third unit"}');perform public.admin_marketplace_operation(o,'schedule_inspection',jsonb_build_object('assigned_to','QA inspector','inspection_at',now()));
+ begin perform public.admin_marketplace_operation(o,'inspection_passed',jsonb_build_object('checks',passed,'serial_number','QA-UNIT-TWO','report','QA third laptop serial incorrectly reused.'));raise exception 'FAILED duplicate serial';exception when others then if SQLERRM not like '%already assigned%' then raise;end if;end;
+ perform public.admin_marketplace_operation(o,'inspection_passed',jsonb_build_object('checks',passed,'serial_number','QA-UNIT-THREE','report','QA third physical laptop inspection passed.'));
+ checks:=checks||jsonb_build_object('test','Stock tampering, fractional quantities, over-ordering and second-buyer oversell rejected. Cancellation isolates units; each unit requires a distinct physical serial and does not verify the whole batch','passed',true);
+ raise exception using errcode='PZ008',message='Rollback stock fixtures';exception when sqlstate 'PZ008' then null;end;
+ insert into pg_temp.stock_results values(checks);
+end $$;
+select checks as passed_checks from pg_temp.stock_results;
