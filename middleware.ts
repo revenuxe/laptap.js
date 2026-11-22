@@ -1,6 +1,8 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { supabaseUrl, supabasePublishableKey } from '@/lib/supabase/config';
 export async function middleware(request: NextRequest) {
+ const category=request.nextUrl.searchParams.get('category');
+ if(request.nextUrl.pathname==='/store'&&(category==='laptop'||category==='desktop')){const destination=request.nextUrl.clone();destination.pathname='/store/'+category;destination.searchParams.delete('category');return NextResponse.redirect(destination,308);}
  const id = request.nextUrl.pathname.slice('/store/'.length);
  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) return NextResponse.next();
  try {

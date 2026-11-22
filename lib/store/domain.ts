@@ -1,5 +1,11 @@
 export type Listing = {
     seo_path?: string;
+    delivery_available?: boolean;
+    pickup_available?: boolean;
+    delivery_fee?: number;
+    delivery_pincodes?: string[];
+    pickup_address?: string;
+    pickup_instructions?: string;
     is_demo?: boolean;
     id: string;
     seller_id: string;

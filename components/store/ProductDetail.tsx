@@ -3,8 +3,10 @@ import ProductImage from './ProductImage';
 import { productUrl } from '@/lib/store/domain';
 
 import Link from 'next/link';
+import {useRouter} from 'next/navigation';
+import {useStoreCart} from './StoreCart';
 import { useEffect, useState } from 'react';
-import { BadgeCheck, CalendarDays, Check, ChevronRight, Cpu, Heart, HardDrive, MemoryStick, MessagesSquare, Package, Share2, ShieldCheck, Store } from 'lucide-react';
+import { BadgeCheck, CalendarDays, Check, ChevronRight, Cpu, Heart, HardDrive, MemoryStick, MessagesSquare, ShoppingBag, Truck, Package, Share2, ShieldCheck, Store } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { Listing, money, warrantyActive } from '@/lib/store/domain';
 import { storeDb, storeError } from '@/lib/store/client';
@@ -13,6 +15,7 @@ import ProductInformation, { type ProductTab } from './ProductInformation';
 import './product-detail.css';
 
 export default function ProductDetail({ id, initialProduct }: { id: string; initialProduct?: Listing }) {
+  const router=useRouter(),cart=useStoreCart();
   const [product, setProduct] = useState<Listing | null>(initialProduct || null);
   const [related, setRelated] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(!initialProduct);
@@ -98,13 +101,13 @@ export default function ProductDetail({ id, initialProduct }: { id: string; init
 
   const p = product;
   const title = p.is_demo ? p.title.replace(/^Demo\s*-\s*/i, '') : p.title;
-  const available = p.status === 'published' && !p.is_demo;
+  const available = p.status === 'published' && !p.is_demo && !!(p.delivery_available||p.pickup_available);
   const officialWarranty = warrantyActive(p.official_warranty_until);
 
   return <div className="pd-page">
     <div className="store-wrap">
       <div className="pd-topline">
-        <nav aria-label="Breadcrumb"><Link href="/store">Store</Link><ChevronRight size={13} /><Link href="/store">{p.category === 'laptop' ? 'Laptops' : 'Desktops'}</Link><ChevronRight size={13} /><span aria-current="page">{title}</span></nav>
+        <nav aria-label="Breadcrumb"><Link href="/store">Store</Link><ChevronRight size={13} /><Link href={`/store/${p.category}`}>{p.category === 'laptop' ? 'Laptops' : 'Desktops'}</Link><ChevronRight size={13} /><span aria-current="page">{title}</span></nav>
         <div className="pd-page-actions"><button onClick={share} aria-label="Share product"><Share2 size={17} /><span>Share</span></button><button onClick={toggleSave} aria-label={saved ? 'Remove from saved devices' : 'Save device'} aria-pressed={saved} className={saved ? 'saved' : ''}><Heart size={18} /><span>{saved ? 'Saved' : 'Save'}</span></button></div>
       </div>
       <div className="pd-main">
@@ -113,7 +116,7 @@ export default function ProductDetail({ id, initialProduct }: { id: string; init
           <div className="pd-brand-row"><span>{p.brand} <i /> {p.year} model</span>{p.verified_at && <span className="pd-verified-badge"><BadgeCheck size={14} />Laptap verified</span>}</div>
           <h1>{title}</h1>
           <p className="pd-title-specs">{p.processor} <span>/</span> {p.ram} <span>/</span> {p.storage}</p>
-          <div className="pd-price-block"><div className="pd-price">{money(p.price)}</div><p>{p.is_demo ? 'Sample price for this demonstration' : 'Listed price. Confirm taxes and delivery with the seller.'}</p></div>
+          <div className="pd-price-block"><div className="pd-price">{money(p.price)}</div><p>{p.is_demo ? 'Sample price for this demonstration' : 'Listed price. Any delivery charge is shown at checkout.'}</p></div>
           <div className="pd-configuration" aria-label="Device configuration">
             <div><Cpu size={19} strokeWidth={1.5} /><span>Processor</span><b>{p.processor}</b></div>
             <div><MemoryStick size={19} strokeWidth={1.5} /><span>Memory</span><b>{p.ram}</b></div>
@@ -122,15 +125,15 @@ export default function ProductDetail({ id, initialProduct }: { id: string; init
           <button className="pd-condition-preview" onClick={() => viewTab('Condition')}><span className="pd-condition-mark"><Check size={17} /></span><span><b>{p.condition} condition</b><small>See wear, battery & repair disclosures</small></span><ChevronRight size={16} /></button>
           <div className="pd-coverage-row"><button onClick={() => viewTab('Warranty')}><ShieldCheck size={20} strokeWidth={1.5} /><span><b>{p.seller_warranty_months ? `${p.seller_warranty_months}-month seller warranty` : 'Seller warranty not included'}</b><small>View coverage & terms</small></span></button><button onClick={() => viewTab('Warranty')}><CalendarDays size={20} strokeWidth={1.5} /><span><b>{officialWarranty ? 'Official warranty declared' : p.official_warranty_until ? 'Official warranty expired' : 'Official warranty not declared'}</b><small>{p.official_warranty_until && !officialWarranty ? 'Declared coverage has expired' : 'Manufacturer coverage'}</small></span></button></div>
           {p.is_demo && <div className="pd-demo-note"><Package size={16} /><p>Demo listing. Photos, specifications, and warranties are examples. This device is not for sale.</p></div>}
-          <div className="pd-buy-actions"><button className="pd-primary" disabled={!available} onClick={() => openEnquiry('buy')}>Buy Now</button><button className="pd-secondary" disabled={!available} onClick={() => openEnquiry('question')}><MessagesSquare size={17} />Ask seller</button></div>
-          <p className="pd-purchase-note">{p.is_demo ? 'Purchases and messages are disabled for this sample.' : available ? 'Send a purchase enquiry. No payment is collected here.' : 'This device is no longer available.'}</p>
+          <div className="pd-buy-actions"><button className="pd-primary" disabled={!available} onClick={() => router.push(`/store/checkout?buy=${id}`)}>Buy Now</button><button className="pd-secondary" disabled={!available||!cart.ready} onClick={()=>cart.add(p)}><ShoppingBag size={17}/>Add to cart</button></div>
+          <div className="pd-fulfilment-summary">{p.delivery_available&&<span><Truck size={15}/>Cash on delivery{Number(p.delivery_fee)?` · ${money(Number(p.delivery_fee))} delivery`: ' · Free delivery'}</span>}{p.pickup_available&&<span><Store size={15}/>Store pickup · Pay at store</span>}<button onClick={()=>openEnquiry('question')} disabled={p.is_demo||p.status!=='published'}><MessagesSquare size={16}/>Ask seller</button></div><p className="pd-purchase-note">{p.is_demo ? 'Purchases and messages are disabled for this sample.' : available ? 'Choose delivery or pickup at checkout. Pay when you receive your device.' : p.status==='published'?'Ask the seller about purchasing options.':'This device is no longer available.'}</p>
           <div className="pd-seller-line"><span className="pd-small-avatar"><Store size={16} /></span><span>Sold by <Link href={`/store/sellers/${p.seller_id}`}>{p.seller_name}</Link></span><button onClick={() => viewTab('Seller')} aria-label="View seller details"><ChevronRight size={17} /></button></div>
         </section>
       </div>
       <ProductInformation product={p} tab={tab} onTab={setTab} onAsk={() => openEnquiry('question')} />
       {related.length > 0 && <section className="pd-related"><div><h2>More to consider</h2><Link href="/store">Explore the store</Link></div><div className="pd-related-grid">{related.map(item => <Link href={productUrl(item)} key={item.id}><div><ProductImage src={item.images[0]} alt={item.title} sizes="(max-width: 767px) 44vw, 260px"/><span>{item.condition}</span></div><h3>{item.is_demo ? item.title.replace(/^Demo\s*-\s*/i, '') : item.title}</h3><p>{item.ram} / {item.storage}</p><strong>{money(item.price)}</strong></Link>)}</div></section>}
     </div>
-    <div className="pd-mobile-purchase"><div><small>{p.is_demo ? 'Demo listing' : available ? p.condition : 'Unavailable'}</small><strong>{money(p.price)}</strong></div><button className="pd-mobile-question" aria-label="Ask the seller" disabled={!available} onClick={() => openEnquiry('question')}><MessagesSquare size={20} /></button><button className="pd-primary" disabled={!available} onClick={() => openEnquiry('buy')}>Buy Now</button></div>
+    <div className="pd-mobile-purchase"><div><small>{p.is_demo ? 'Demo listing' : available ? p.condition : 'Unavailable'}</small><strong>{money(p.price)}</strong></div><button className="pd-mobile-question" aria-label="Add to cart" disabled={!available||!cart.ready} onClick={() => cart.add(p)}><ShoppingBag size={20} /></button><button className="pd-primary" disabled={!available} onClick={() => router.push(`/store/checkout?buy=${id}`)}>Buy Now</button></div>
     {notice && <div className="pd-toast" role="status"><Check size={16} />{notice}</div>}
     <Dialog open={!!enquiry} onOpenChange={open => { if (!open && !busy) setEnquiry(null); }}>
       <DialogContent className="pd-enquiry-dialog" aria-describedby="pd-enquiry-description">

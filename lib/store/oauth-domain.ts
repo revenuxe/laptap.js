@@ -1,0 +1,2 @@
+﻿export const GOOGLE_RETURN_KEY='laptap-google-return';
+export function safeStoreReturn(value:string|null){if(typeof value!=='string'||!value.startsWith('/store/')||value.includes('\\')||/[\r\n]/.test(value))return '/store/orders';try{const url=new URL(value,'https://www.laptap.in');return url.origin==='https://www.laptap.in'&&url.pathname.startsWith('/store/')?url.pathname+url.search+url.hash:'/store/orders';}catch{return '/store/orders';}}
