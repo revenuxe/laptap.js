@@ -3,9 +3,8 @@ import ProductImage from './ProductImage';
 import { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 const slides = [
- { title: 'Your next laptop.\nFor a lot less.', text: 'Shop pre-owned laptops with the specs and condition that work for you.', button: 'Shop laptops', category: 'laptop', image: '/assets/sell-laptop-cutout.webp', alt: 'Pre-owned laptop', theme: 'blue' },
- { title: 'More power.\nMore desk space.', text: 'Explore desktops for your home office, studies, and everyday work.', button: 'Shop desktops', category: 'desktop', image: '/assets/sell-desktop-cutout.webp', alt: 'Desktop computer', theme: 'lavender' },
- { title: 'Know your device.\nBefore you buy.', text: 'Check condition, warranty details, and recorded Laptap inspections.', button: 'Explore verified devices', category: 'verified', image: '/assets/sell-laptop-cutout.webp', alt: 'Laptop with detailed condition information', theme: 'ice' },
+ { title: 'Pre-owned\nlaptops.', text: 'More value. Less spend.', button: 'Shop laptops', category: 'laptop', image: '/assets/sell-laptop-cutout.webp', alt: 'Pre-owned laptop', theme: 'blue' },
+ { title: 'Your next\nlaptop.', text: 'Compare condition, specs and warranty.', button: 'Explore laptops', category: 'laptop', image: '/assets/sell-laptop-cutout.webp', alt: 'Laptop ready for your next upgrade', theme: 'ice' },
 ];
 export default function StoreCarousel({ onShop }: { onShop: (category: string) => void }) {
  const [active,setActive]=useState(0),[paused,setPaused]=useState(false),[hovered,setHovered]=useState(false);const touch=useRef<number|null>(null);

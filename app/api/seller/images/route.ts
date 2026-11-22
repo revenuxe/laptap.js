@@ -26,8 +26,8 @@ export async function POST(request: NextRequest) {
   if (authError || !user) return reply({ error: 'Your session has expired. Sign in again.' }, 401);
   const { data: allowed, error: permissionError } = await db.rpc('marketplace_can_upload');
   if (permissionError || !allowed) return reply({ error: 'Your seller account cannot upload photos right now.' }, 403);
-  const form = await boundedForm(request); const file = form.get('photo');
-  if (!(file instanceof File) || [...form.keys()].length !== 1) return reply({ error: 'Choose one product photo per upload.' }, 400);
+  const form = await boundedForm(request); const file = form.get('photo');const purpose=form.get('purpose');const bucket=purpose==='evidence'?'marketplace-evidence':'marketplace-images';
+  if ((purpose!==null&&purpose!=='evidence'&&purpose!=='product') || !(file instanceof File) || [...form.keys()].some(key=>!['photo','purpose'].includes(key)) || form.getAll('photo').length!==1 || form.getAll('purpose').length>1) return reply({ error: 'Choose one product photo per upload.' }, 400);
   if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) return reply({ error: 'Use JPG, PNG, or WebP photos.' }, 422);
   if (file.size > MAX_SOURCE_BYTES) return reply({ error: 'Each source photo must be 5 MB or smaller.' }, 413);
   const { data: reserved, error: quotaError } = await db.rpc('marketplace_claim_image_upload');
@@ -35,9 +35,10 @@ export async function POST(request: NextRequest) {
   if (!reserved) return reply({ error: 'Photo upload limit reached. Please try again later.' }, 429);
   const image = await optimizeProductImage(Buffer.from(await file.arrayBuffer()));
   const path = `${user.id}/${reserved}.webp`;
-  const { error } = await db.storage.from('marketplace-images').upload(path, image.data, { contentType: 'image/webp', cacheControl: '31536000', upsert: false });
+  const { error } = await db.storage.from(bucket).upload(path, image.data, { contentType: 'image/webp', cacheControl: '31536000', upsert: false });
   if (error) return reply({ error: 'The optimized photo could not be stored. Please try again.' }, 502);
-  return reply({ path, url: db.storage.from('marketplace-images').getPublicUrl(path).data.publicUrl, bytes: image.data.length, originalBytes: image.originalBytes, width: image.width, height: image.height });
+  const privateUrl=bucket==='marketplace-evidence'?await db.storage.from(bucket).createSignedUrl(path,3600):null;if(privateUrl?.error){await db.storage.from(bucket).remove([path]);return reply({error:'Private photo preview could not be created. Please try again.'},502);}
+  return reply({ path, url: privateUrl?.data?.signedUrl||db.storage.from(bucket).getPublicUrl(path).data.publicUrl, bytes: image.data.length, originalBytes: image.originalBytes, width: image.width, height: image.height });
  } catch (error) {
   if (error instanceof ImageUploadError) return reply({ error: error.message }, error.status);
   return reply({ error: 'The photo could not be processed. Please try again.' }, 500);

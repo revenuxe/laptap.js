@@ -1,0 +1,1 @@
+﻿export type PublicOperations={stage:string;inspection_at:string|null;inspection_status:'pending'|'passed'|'failed';checks:Record<string,boolean>;report:string;collection_at:string|null;collected_at:string|null;delivered_at:string|null;events:{stage:string;created_at:string}[]};

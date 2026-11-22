@@ -14,6 +14,6 @@ export function applicationError(data: Application) {
 }
 export function sellerMetrics(products: Listing[], orders: SellerOrder[], enquiries: {status:string}[]) {
  const real=products.filter(p=>!p.is_demo);
- return { published: real.filter(p=>p.status==='published').length, drafts:real.filter(p=>p.status==='draft').length, toShip: orders.filter(o=>o.status==='confirmed').length, openEnquiries:enquiries.filter(q=>q.status==='new').length, recordedSales:orders.filter(o=>o.payment_status==='paid'&&!['cancelled','refunded'].includes(o.status)).reduce((sum,o)=>sum+Number(o.amount),0) };
+ return { published: real.filter(p=>p.status==='published').length, drafts:real.filter(p=>p.status==='draft').length, toShip: orders.filter(o=>o.status==='confirmed').length, openEnquiries:enquiries.filter(q=>q.status==='new').length, recordedSales:orders.filter(o=>o.payment_status==='paid'&&!['cancelled','refunded'].includes(o.status)).reduce((sum,o)=>sum+Number(o.managed_by_laptap?o.seller_net||0:o.amount),0) };
 }
 export const photoError = (file: Pick<File, 'type' | 'size'>) => !['image/jpeg','image/png','image/webp'].includes(file.type) ? 'Use JPG, PNG, or WebP photos.' : file.size > 5*1024*1024 ? 'Each photo must be 5 MB or smaller.' : '';
