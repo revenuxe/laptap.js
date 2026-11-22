@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { supabaseUrl, supabasePublishableKey } from '@/lib/supabase/config';
 export async function middleware(request: NextRequest) {
- if(request.nextUrl.pathname==='/store/desktop'){const destination=request.nextUrl.clone();destination.pathname='/store/laptop';destination.searchParams.delete('category');return NextResponse.redirect(destination,307);}
+ if(request.nextUrl.pathname==='/store/desktop')return new NextResponse('This store category is no longer available.',{status:410,headers:{'X-Robots-Tag':'noindex','Content-Type':'text/plain; charset=utf-8'}});
  const category=request.nextUrl.searchParams.get('category');
  if(request.nextUrl.pathname==='/store'&&(category==='laptop'||category==='desktop')){const destination=request.nextUrl.clone();destination.pathname='/store/laptop';destination.searchParams.delete('category');return NextResponse.redirect(destination,category==='desktop'?307:308);}
  const id = request.nextUrl.pathname.slice('/store/'.length);
