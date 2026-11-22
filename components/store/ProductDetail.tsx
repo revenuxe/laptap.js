@@ -7,7 +7,7 @@ import { productUrl } from '@/lib/store/domain';
 import Link from 'next/link';
 import {useRouter} from 'next/navigation';
 import {useStoreCart} from './StoreCart';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { BadgeCheck, CalendarDays, Check, ChevronRight, Cpu, Heart, HardDrive, MemoryStick, MessagesSquare, ShoppingBag, Truck, Package, Share2, ShieldCheck, Store } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { Listing, money, warrantyActive } from '@/lib/store/domain';
@@ -18,6 +18,8 @@ import './product-detail.css';
 
 export default function ProductDetail({ id, initialProduct }: { id: string; initialProduct?: Listing }) {
   const router=useRouter(),cart=useStoreCart();
+  const actionsRef=useRef<HTMLDivElement>(null);
+  const [inlineActionsVisible,setInlineActionsVisible]=useState(false);
   const [quantity,setQuantity]=useState(1);
   const [product, setProduct] = useState<Listing | null>(initialProduct || null);
   const [related, setRelated] = useState<Listing[]>([]);
@@ -58,6 +60,8 @@ export default function ProductDetail({ id, initialProduct }: { id: string; init
     const timer = setTimeout(() => setNotice(''), 3500);
     return () => clearTimeout(timer);
   }, [notice]);
+
+  useEffect(()=>{const node=actionsRef.current;if(!node||typeof IntersectionObserver==='undefined')return;const observer=new IntersectionObserver(([entry])=>setInlineActionsVisible(entry.isIntersecting),{threshold:0});observer.observe(node);return()=>observer.disconnect();},[product?.id]);
 
   function toggleSave() {
     try {
@@ -119,24 +123,29 @@ export default function ProductDetail({ id, initialProduct }: { id: string; init
           <div className="pd-brand-row"><span>{p.brand}{p.year&&<> <i /> {p.year} model</>}</span>{p.verified_at && <span className="pd-verified-badge"><BadgeCheck size={14} />Laptap verified</span>}</div>
           <h1>{title}</h1>
           <p className="pd-title-specs">{p.processor} <span>/</span> {p.ram} <span>/</span> {p.storage}</p>
-          <div className="pd-price-block"><div className="pd-price">{money(p.price)}</div><p>{p.is_demo ? 'Sample price for this demonstration' : 'Any inspection/support and fulfilment charges are shown before you order.'}</p></div>
+          <div className="pd-price-block"><div className="pd-price">{money(p.price)}</div><p>{p.is_demo ? 'Sample price for this demonstration' : 'Price per laptop. Any additional charges are shown at checkout.'}</p></div>
           <div className="pd-configuration" aria-label="Device configuration">
             <div><Cpu size={19} strokeWidth={1.5} /><span>Processor</span><b>{p.processor}</b></div>
             <div><MemoryStick size={19} strokeWidth={1.5} /><span>Memory</span><b>{p.ram}</b></div>
             <div><HardDrive size={19} strokeWidth={1.5} /><span>Storage</span><b>{p.storage}</b></div>
           </div>
           <button className="pd-condition-preview" onClick={() => viewTab('Condition')}><span className="pd-condition-mark"><Check size={17} /></span><span><b>{p.condition} condition</b><small>See wear, battery & repair disclosures</small></span><ChevronRight size={16} /></button>
-          <div className="pd-coverage-row"><button onClick={() => viewTab('Warranty')}><ShieldCheck size={20} strokeWidth={1.5} /><span><b>{p.seller_warranty_months ? `${p.seller_warranty_months}-month seller warranty` : 'Seller warranty not included'}</b><small>View coverage & terms</small></span></button><button onClick={() => viewTab('Warranty')}><CalendarDays size={20} strokeWidth={1.5} /><span><b>{officialWarranty ? 'Official warranty declared' : p.official_warranty_until ? 'Official warranty expired' : 'Official warranty not declared'}</b><small>{p.official_warranty_until && !officialWarranty ? 'Declared coverage has expired' : 'Manufacturer coverage'}</small></span></button></div>
-          {p.is_demo && <div className="pd-demo-note"><Package size={16} /><p>Demo listing. Photos, specifications, and warranties are examples. This device is not for sale.</p></div>}
-          {p.review_status==='approved'&&!p.is_demo&&<div className="mm-managed-note"><ShieldCheck size={18}/><span>Listing reviewed by Laptap. Physical inspection follows order confirmation.</span></div>}{!p.is_demo&&stockAvailable(p)>1&&<QuantitySelect product={p} value={quantity} onChange={setQuantity}/>}<div className="pd-buy-actions"><button className="pd-primary" disabled={!available} onClick={() => router.push(`/store/checkout?buy=${id}${quantity>1?`&quantity=${quantity}`:''}`)}>Buy Now</button><button className="pd-secondary" disabled={!available||!cart.ready} onClick={()=>cart.add(p,quantity)}><ShoppingBag size={17}/>Add to cart</button></div>
-          <div className="pd-fulfilment-summary">{p.delivery_available&&<span><Truck size={15}/>Cash on delivery{Number(p.delivery_fee)?` · ${money(Number(p.delivery_fee))} delivery`: ' · Free delivery'}</span>}{p.pickup_available&&<span><Store size={15}/>Store pickup · Pay at store</span>}<button onClick={()=>openEnquiry('question')} disabled={p.is_demo||p.status!=='published'}><MessagesSquare size={16}/>Ask seller</button></div><p className="pd-purchase-note">{p.is_demo ? 'Purchases and messages are disabled for this sample.' : available ? 'Laptap arranges inspection and collection from the seller. Choose delivery or hub pickup at checkout; pay when you receive.' : p.status==='published'?'Ask the seller about purchasing options.':'This device is no longer available.'}</p>
+          <button className="pd-warranty-link" onClick={()=>viewTab('Warranty')}><ShieldCheck size={18}/><span>{p.seller_warranty_months?`${p.seller_warranty_months}-month seller warranty`:officialWarranty?'Manufacturer warranty':'Warranty details'}</span><small>View terms</small><ChevronRight size={15}/></button>
+          {p.is_demo&&<div className="pd-demo-note"><Package size={16}/><p>Demo listing. Photos, specifications and warranties are examples. This laptop is not for sale.</p></div>}
+          <div className="pd-purchase-panel">
+            {!p.is_demo&&stockAvailable(p)>1&&<QuantitySelect product={p} value={quantity} onChange={setQuantity}/>}
+            <div ref={actionsRef} className="pd-buy-actions"><button className="pd-primary" disabled={!available} onClick={()=>router.push(`/store/checkout?buy=${id}${quantity>1?`&quantity=${quantity}`:''}`)}>Buy Now</button><button className="pd-secondary" disabled={!available||!cart.ready} onClick={()=>cart.add(p,quantity)}><ShoppingBag size={17}/>Add to cart</button></div>
+            <div className="pd-purchase-support"><span>{p.delivery_available?<Truck size={16}/>:<Store size={16}/>}{p.delivery_available&&p.pickup_available?'Delivery or store pickup':p.delivery_available?'Cash on delivery':p.pickup_available?'Store pickup ? Pay at store':'Not available to order'}</span><button onClick={()=>openEnquiry('question')} disabled={p.is_demo||p.status!=='published'}><MessagesSquare size={16}/>Ask seller</button></div>
+            {!available&&!p.is_demo&&<p className="pd-unavailable-note">{p.status!=='published'||!stockAvailable(p)?'This laptop is currently unavailable.':'Delivery and pickup are not configured yet.'}</p>}
+          </div>
+          {p.review_status==='approved'&&!p.is_demo&&<details className="pd-review-details"><summary><ShieldCheck size={16}/><span>{p.verified_at?'Laptap inspection recorded':'Listing reviewed by Laptap'}</span><ChevronRight size={14}/></summary><p>{p.verified_at?'Read the recorded findings in the inspection details.': 'Listing approval is complete. Laptap physically inspects each laptop after order confirmation, before fulfilment.'}</p></details>}
           <div className="pd-seller-line"><span className="pd-small-avatar"><Store size={16} /></span><span>Sold by <Link href={`/store/sellers/${p.seller_id}`}>{p.seller_name}</Link></span><button onClick={() => viewTab('Seller')} aria-label="View seller details"><ChevronRight size={17} /></button></div>
         </section>
       </div>
       <ProductInformation product={p} tab={tab} onTab={setTab} onAsk={() => openEnquiry('question')} />
       {related.length > 0 && <section className="pd-related"><div><h2>More to consider</h2><Link href="/store">Explore the store</Link></div><div className="pd-related-grid">{related.map(item => <Link href={productUrl(item)} key={item.id}><div><ProductImage src={item.images[0]} alt={item.title} sizes="(max-width: 767px) 44vw, 260px"/><span>{item.condition}</span></div><h3>{item.is_demo ? item.title.replace(/^Demo\s*-\s*/i, '') : item.title}</h3><p>{item.ram} / {item.storage}</p><strong>{money(item.price)}</strong></Link>)}</div></section>}
     </div>
-    <div className="pd-mobile-purchase"><div><small>{p.is_demo ? 'Demo listing' : available ? p.condition : 'Unavailable'}</small><strong>{money(p.price)}</strong></div><button className="pd-mobile-question" aria-label="Add to cart" disabled={!available||!cart.ready} onClick={() => cart.add(p,quantity)}><ShoppingBag size={20} /></button><button className="pd-primary" disabled={!available} onClick={() => router.push(`/store/checkout?buy=${id}${quantity>1?`&quantity=${quantity}`:''}`)}>Buy Now</button></div>
+    <div className="pd-mobile-purchase" data-inline-visible={inlineActionsVisible}><div><small>{p.is_demo ? 'Demo listing' : available ? p.condition : 'Unavailable'}</small><strong>{money(p.price)}</strong></div><button className="pd-mobile-question" aria-label="Add to cart" disabled={!available||!cart.ready} onClick={() => cart.add(p,quantity)}><ShoppingBag size={20} /></button><button className="pd-primary" disabled={!available} onClick={() => router.push(`/store/checkout?buy=${id}${quantity>1?`&quantity=${quantity}`:''}`)}>Buy Now</button></div>
     {notice && <div className="pd-toast" role="status"><Check size={16} />{notice}</div>}
     <Dialog open={!!enquiry} onOpenChange={open => { if (!open && !busy) setEnquiry(null); }}>
       <DialogContent className="pd-enquiry-dialog" aria-describedby="pd-enquiry-description">
