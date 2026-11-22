@@ -15,6 +15,7 @@ const PageLoader = () => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    if (pathname === '/store' || pathname.startsWith('/store/')) { setLoading(false); setVisible(false); return; }
     // Show loader
     setLoading(true);
     setVisible(true);

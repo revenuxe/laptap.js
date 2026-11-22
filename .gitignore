@@ -5,6 +5,7 @@ node_modules
 
 # next.js
 /.next/
+/.next-dev/
 /.next-audit/
 /out/
 
@@ -31,3 +32,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Supabase CLI local connection state
+/supabase/.temp/

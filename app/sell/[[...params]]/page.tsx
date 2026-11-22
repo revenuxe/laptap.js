@@ -3,11 +3,11 @@ import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { SellClient } from "./sell-client";
 
 interface Props {
-  params: { params?: string[] };
+  params: Promise<{ params?: string[] }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const urlSegments = params?.params || [];
+  const urlSegments = (await params).params || [];
   const category = urlSegments[0] || "laptop";
   const brandSlug = urlSegments[1];
   const seriesSlug = urlSegments[2];

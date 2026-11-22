@@ -37,7 +37,7 @@ export const PageClient = () => {
       setFormData({ name: "", email: "", phone: "", message: "" });
       toast.success("Thanks! Your message has been sent.");
     } catch (error: any) {
-      const errorMessage = error.errors?.[0]?.message || "Please check your input and try again";
+      const errorMessage = error.issues?.[0]?.message || "Please check your input and try again";
       toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);

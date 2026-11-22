@@ -318,7 +318,7 @@ export function ModelsManager() {
       sku 
     });
     if (!validation.success) {
-      const errors = validation.error.errors.map(e => e.message).join(', ');
+      const errors = validation.error.issues.map(e => e.message).join(', ');
       toast.error(errors);
       return;
     }

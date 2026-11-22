@@ -8,19 +8,19 @@ import SimpleFormCard from '@/components/areas/SimpleFormCard';
 import { DeviceSearch } from '@/components/DeviceSearch';
 import { areas, findArea, areaUrl, areaWhatsApp } from '@/lib/areas';
 
-type Props = { params: { area: string } };
+type Props = { params: Promise<{ area: string }> };
 export const dynamicParams = false;
 export function generateStaticParams() { return areas.map(area => ({ area: area.slug })); }
-export function generateMetadata({ params }: Props): Metadata {
-  const area = findArea(params.area);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const area = findArea((await params).area);
   if (!area) return {};
   const title = `Sell Used Laptop & Desktop in ${area.name}, Bangalore`;
   const description = `Sell your used laptop or desktop in ${area.name}. Explore device selection, assessment, preparation, and pickup checks by pincode with Laptap.`;
   return { title, description, alternates: { canonical: `https://www.laptap.in${areaUrl(area.slug)}` }, openGraph: { title, description, url: `https://www.laptap.in${areaUrl(area.slug)}`, type: 'website' } };
 }
 
-export default function AreaPage({ params }: Props) {
-  const area = findArea(params.area);
+export default async function AreaPage({ params }: Props) {
+  const area = findArea((await params).area);
   if (!area) notFound();
   const whatsapp = areaWhatsApp(area.name);
   const faqs = [

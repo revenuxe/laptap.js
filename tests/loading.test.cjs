@@ -74,6 +74,9 @@ test('page loader finishes despite rerenders with equivalent search params', () 
   assert.equal(timers.size, 2);
   cleanup();
   assert.equal(timers.size, 0);
+  path = '/store'; render();
+  assert.equal(timers.size, 0, 'store navigation must not add an artificial loading delay');
+  assert.equal(render(), null);
 });
 
 test('auth loading recovers when session restoration never resolves', async () => {

@@ -1,3 +1,4 @@
+import { getStoreSitemapProducts } from '@/lib/store/server';
 import { withTimeout } from "@/lib/request-timeout";
 import { areas, areaUrl } from "@/lib/areas";
 import type { MetadataRoute } from "next";
@@ -59,5 +60,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   const areaEntries: MetadataRoute.Sitemap = areas.map(area => ({ url: `https://www.laptap.in${areaUrl(area.slug)}`, changeFrequency: "monthly", priority: 0.75 }));
-  return [...staticPages, { url: "https://www.laptap.in/bangalore/areas", changeFrequency: "monthly", priority: 0.85 }, ...areaEntries, ...blogEntries];
+  const storeProducts = await getStoreSitemapProducts().catch(() => []);
+  const storeEntries: MetadataRoute.Sitemap = storeProducts.filter(p => p.seo_path).map(p => ({ url: `https://www.laptap.in/store/${p.seo_path}`, lastModified: new Date(p.created_at), changeFrequency: "daily", priority: 0.8 }));
+  return [...staticPages, { url: "https://www.laptap.in/store", changeFrequency: "daily", priority: 0.9 }, ...storeEntries, { url: "https://www.laptap.in/bangalore/areas", changeFrequency: "monthly", priority: 0.85 }, ...areaEntries, ...blogEntries];
 }

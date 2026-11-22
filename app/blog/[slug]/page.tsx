@@ -6,10 +6,10 @@ import { BlogPostClient } from './blog-post-client';
 
 export const dynamic = 'force-dynamic';
 
-interface Props { params: { slug: string } }
+interface Props { params: Promise<{ slug: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = await getBlogPost(params.slug);
+  const post = await getBlogPost((await params).slug);
   if (!post) return { title: 'Blog Post Not Found', robots: { index: false } };
   const title = post.meta_title || post.title;
   const description = post.meta_description || post.excerpt;
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function BlogPostPage({ params }: Props) {
-  const post = await getBlogPost(params.slug);
+  const post = await getBlogPost((await params).slug);
   if (!post) notFound();
   const relatedPosts = await relatedBlogPosts(post.slug, post.category);
   return <><BlogArticleSchema post={post} /><BlogPostClient post={post} relatedPosts={relatedPosts} /></>;
