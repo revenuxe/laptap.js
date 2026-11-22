@@ -21,7 +21,7 @@ export default function Catalog({sellerId,initialCategory,initialProducts}:{sell
   if(more)setMoreBusy(true);else {setLoading(true);nextOffset.current=0;}setError('');
   try{
    if(savedOnly&&!saved.length){setItems([]);setHasMore(false);return;}
-   let request=storeDb.from('marketplace_listings').select(CATALOG_COLUMNS).eq('status','published').eq('category','laptop').lte('price',budget);
+   let request=storeDb.from('marketplace_listings').select(CATALOG_COLUMNS).is('deleted_at',null).eq('status','published').eq('category','laptop').lte('price',budget);
    if(sellerId)request=request.eq('seller_id',sellerId);if(condition)request=request.eq('condition',condition as Listing['condition']);if(verified)request=request.not('verified_at','is',null);
    if(savedOnly)request=request.in('id',saved.slice(0,500));const search=catalogSearch(query);if(search)request=request.textSearch('catalog_search',search,{config:'simple'});
    request=request.order(sort==='new'?'created_at':'price',{ascending:sort==='low'}).order('id',{ascending:true});

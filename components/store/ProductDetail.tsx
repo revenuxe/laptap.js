@@ -37,13 +37,13 @@ export default function ProductDetail({ id, initialProduct }: { id: string; init
     try { const ids = JSON.parse(localStorage.getItem('laptap-saved') || '[]'); setSaved(Array.isArray(ids) && ids.includes(id)); } catch { setSaved(false); }
     async function load() {
       try {
-        const result = initialProduct ? { data: initialProduct, error: null } : await storeDb.from('marketplace_listings').select('*').eq('id', id).maybeSingle();
+        const result = initialProduct ? { data: initialProduct, error: null } : await storeDb.from('marketplace_listings').select('*').is('deleted_at',null).eq('id', id).maybeSingle();
         if (result.error) throw result.error;
         if (!active) return;
         setProduct(result.data); setLoading(false);
         if (result.data) {
           try {
-            const suggestions = await storeDb.from('marketplace_listings').select('*').eq('status', 'published').eq('category', result.data.category).neq('id', id).order('created_at', { ascending: false }).limit(4);
+            const suggestions = await storeDb.from('marketplace_listings').select('*').is('deleted_at',null).eq('status', 'published').eq('category', result.data.category).neq('id', id).order('created_at', { ascending: false }).limit(4);
             if (active && !suggestions.error) setRelated(suggestions.data || []);
           } catch { /* Related products must not prevent viewing the selected device. */ }
         }

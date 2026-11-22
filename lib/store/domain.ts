@@ -1,4 +1,6 @@
 export type Listing = {
+    deleted_at?:string|null;
+    deleted_by?:string|null;
     stock_quantity?:number;
     stock_available?:number;
     seo_path?: string;
