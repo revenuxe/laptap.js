@@ -18,11 +18,12 @@ import SimpleForm from "./SimpleForm";
 interface HeroProps {
   referenceStyle?: boolean;
   location?: string;
+  sellHref?: string;
   title?: React.ReactNode;
   description?: string;
 }
 
-const Hero = ({ location, title, description, referenceStyle = false }: HeroProps = {}) => {
+const Hero = ({ location, title, description, referenceStyle = false, sellHref = "/sell/laptop" }: HeroProps = {}) => {
   const [formOpen, setFormOpen] = useState(false);
   
   const defaultTitle = (
@@ -63,10 +64,10 @@ const Hero = ({ location, title, description, referenceStyle = false }: HeroProp
           {/* CTA Buttons */}
           <div className="hero-actions flex flex-col sm:flex-row gap-3 justify-center items-center mb-6 sm:mb-8 px-4 sm:px-0">
             <Button variant="cta" size="lg" asChild className="w-full sm:w-auto sm:min-w-[220px] h-11 sm:h-12 text-sm sm:text-base">
-              <Link href="/sell/laptop">Sell Now</Link>
+              <Link href={sellHref}>Sell Now</Link>
             </Button>
             <Button variant="outline" size="lg" asChild className="w-full sm:w-auto sm:min-w-[220px] h-11 sm:h-12 text-sm sm:text-base">
-              <Link href="/sell/laptop">Get Instant Quote</Link>
+              <Link href={sellHref}>Get Instant Quote</Link>
             </Button>
           </div>
 

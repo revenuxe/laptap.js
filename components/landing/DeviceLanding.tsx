@@ -2,8 +2,9 @@
 import SellingGuides from "@/components/SellingGuides";
 
 import Link from 'next/link';
-import { ArrowRight, ArrowUpRight, Check, ChevronRight, ClipboardCheck, Laptop, MapPin, Monitor, PackageCheck } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Check, ClipboardCheck, Laptop, Monitor, PackageCheck } from 'lucide-react';
 import Header from '@/components/Header';
+import Hero from '@/components/Hero';
 import Footer from '@/components/Footer';
 import MobileBottomNav from '@/components/MobileBottomNav';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
@@ -12,7 +13,7 @@ import { landingContent } from './content';
 
 export default function DeviceLanding({ contentKey }: { contentKey: string }) {
   const content = landingContent[contentKey];
-  const { name, desktop, brand, families, advice, condition, description } = content;
+  const { name, desktop, brand, families, advice, condition } = content;
   const choose = `/sell/${desktop ? 'desktop' : 'laptop'}${brand ? `/${brand}` : ''}`;
   const whatsapp = `https://wa.me/919886579923?text=${encodeURIComponent(`Hi Laptap, I would like to sell my ${name}. Can you help with the model, assessment, and pickup availability?`)}`;
   const DeviceIcon = desktop ? Monitor : Laptop;
@@ -40,25 +41,14 @@ export default function DeviceLanding({ contentKey }: { contentKey: string }) {
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema).replace(/</g, '\\u003c') }} />
     <Header />
     <main id="main-content" className="flex-1">
-      <section className="landing-hero">
-        <div className="landing-container">
-          <nav className="landing-breadcrumb" aria-label="Breadcrumb"><Link href="/">Home</Link><ChevronRight aria-hidden="true" /><Link href={choose}>{desktop ? 'Sell Desktop' : 'Sell Laptop'}</Link><ChevronRight aria-hidden="true" /><span aria-current="page">{name}</span></nav>
-          <div className="landing-hero-grid">
-            <div>
-              <h1>Sell your {name.replace(/ Laptop$/, '')}<span>in Bangalore.</span></h1>
-              <p className="landing-intro">{description}</p>
-              {actions()}
-              <div className="landing-assurances"><span><ClipboardCheck />Model-specific assessment</span><span><MapPin />Pickup by pincode</span></div>
-            </div>
-            <Link href={choose} className="landing-device-card" aria-label={`Choose your ${name}`}>
-              <div className="landing-card-caption"><span><DeviceIcon />Your next upgrade starts here</span><ArrowUpRight /></div>
-              <div className="landing-device-image"><img src={desktop ? '/assets/sell-desktop-cutout.webp' : '/assets/sell-laptop-cutout.webp'} alt={`${desktop ? 'Desktop computer' : 'Laptop'} illustration`} /></div>
-              <div className="landing-device-name"><h2>Your {name}</h2><span><PackageCheck /></span></div>
-              <ol className="landing-mini-steps">{['Select model', 'Share details', 'Confirm pickup'].map((step, index) => <li key={step}><b>{index + 1}</b>{step}</li>)}</ol>
-            </Link>
-          </div>
-        </div>
-      </section>
+      <Hero
+        referenceStyle
+        sellHref={choose}
+        title={<>
+          Sell your {name.replace(/ Laptop$/, '')}{' '}
+          <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">in Bangalore.</span>
+        </>}
+      />
 
       <section className="landing-section landing-container">
         <h2>Explore {name} models</h2>
