@@ -314,7 +314,7 @@ export const generateInvoice = async (data: InvoiceData) => {
             Sales invoice will be shared once the device is picked up.
           </p>
           <p><strong>Laptap.in</strong> - Your Trusted Device Selling Platform</p>
-          <p>Contact: laptap.in@gmail.com</p>
+          <p>Contact: Currently offline. Please check back later.</p>
           <p>This is a computer-generated invoice and does not require a signature.</p>
         </div>
       </div>

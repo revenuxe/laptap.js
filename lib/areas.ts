@@ -32,4 +32,4 @@ export const areas = [
 export type Area = (typeof areas)[number];
 export const findArea = (slug: string) => areas.find(area => area.slug === slug);
 export const areaUrl = (slug: string) => `/bangalore/areas/${slug}`;
-export const areaWhatsApp = (name: string) => `https://wa.me/919886579923?text=${encodeURIComponent(`Hi Laptap, I want to sell a laptop or desktop in ${name}. Can you help with the assessment and check pickup availability for my pincode?`)}`;
+export const areaWhatsApp = (name: string) => "/contact";

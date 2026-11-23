@@ -69,7 +69,7 @@ export const PageClient = () => {
                 <div className="space-y-4 text-muted-foreground">
                   <p>
                     Founded in 2018, Laptap began with a simple mission: to make quality technology accessible to everyone. 
-                    Starting from our location in HBR Layout, Bangalore, we've grown to become one of the most trusted names 
+                    Starting in Bangalore, we've grown to become one of the most trusted names
                     in refurbished and pre-owned laptops and desktops.
                   </p>
                   <p>

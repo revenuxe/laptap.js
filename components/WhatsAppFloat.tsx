@@ -6,7 +6,7 @@ import { X } from "lucide-react";
 
 const WhatsAppFloat = () => {
   const [showPopup, setShowPopup] = useState(false);
-  const whatsappNumber = "919886579923";
+  const whatsappNumber = "";
   const message = "Hi! I want to sell my device.";
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const WhatsAppFloat = () => {
   }, []);
 
   const handleWhatsAppClick = () => {
-    window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
+    window.location.assign('/contact');
   };
 
   return (
@@ -29,15 +29,15 @@ const WhatsAppFloat = () => {
             >
               <X className="h-3 w-3" />
             </button>
-            <p className="text-xs sm:text-sm font-semibold mb-0.5">Need Help?</p>
-            <p className="text-[10px] sm:text-xs text-muted-foreground">Book Now on WhatsApp!</p>
+            <p className="text-xs sm:text-sm font-semibold mb-0.5">Currently offline</p>
+            <p className="text-[10px] sm:text-xs text-muted-foreground">Currently offline. Back soon.</p>
           </div>
         )}
 
         <button
           onClick={handleWhatsAppClick}
           className="bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-full p-3 sm:p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group relative"
-          aria-label="Contact us on WhatsApp"
+          aria-label="Currently offline"
         >
           <img src={"/assets/whatsapp.svg"} alt="WhatsApp" className="h-5 w-5 sm:h-6 sm:w-6" />
           <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-20"></span>

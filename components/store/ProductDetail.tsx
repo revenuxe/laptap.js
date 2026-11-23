@@ -7,7 +7,7 @@ import { productUrl } from '@/lib/store/domain';
 import Link from 'next/link';
 import {useRouter} from 'next/navigation';
 import {useStoreCart} from './StoreCart';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BadgeCheck, CalendarDays, Check, ChevronRight, Cpu, Heart, HardDrive, MemoryStick, MessagesSquare, ShoppingBag, Truck, Package, Share2, ShieldCheck, Store } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { Listing, money, warrantyActive } from '@/lib/store/domain';
@@ -18,8 +18,6 @@ import './product-detail.css';
 
 export default function ProductDetail({ id, initialProduct }: { id: string; initialProduct?: Listing }) {
   const router=useRouter(),cart=useStoreCart();
-  const actionsRef=useRef<HTMLDivElement>(null);
-  const [inlineActionsVisible,setInlineActionsVisible]=useState(false);
   const [quantity,setQuantity]=useState(1);
   const [product, setProduct] = useState<Listing | null>(initialProduct || null);
   const [related, setRelated] = useState<Listing[]>([]);
@@ -61,8 +59,6 @@ export default function ProductDetail({ id, initialProduct }: { id: string; init
     return () => clearTimeout(timer);
   }, [notice]);
 
-  useEffect(()=>{const node=actionsRef.current;if(!node||typeof IntersectionObserver==='undefined')return;const observer=new IntersectionObserver(([entry])=>setInlineActionsVisible(entry.isIntersecting),{threshold:0});observer.observe(node);return()=>observer.disconnect();},[product?.id]);
-
   function toggleSave() {
     try {
       const stored = JSON.parse(localStorage.getItem('laptap-saved') || '[]');
@@ -92,15 +88,7 @@ export default function ProductDetail({ id, initialProduct }: { id: string; init
 
   async function inquire(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!product || product.is_demo || product.status !== 'published' || busy) return;
-    const data = new FormData(event.currentTarget);
-    setBusy(true); setMessage('');
-    try {
-      const result = await storeDb.from('marketplace_inquiries').insert({ listing_id: id, buyer_name: String(data.get('name')).trim(), email: String(data.get('email')).trim(), phone: String(data.get('phone')).trim(), message: String(data.get('message')).trim() });
-      if (result.error) throw result.error;
-      setSent(true);
-    } catch { setMessage('Your enquiry was not sent. Please try again.'); }
-    finally { setBusy(false); }
+    setMessage("We're currently offline and are not accepting enquiries. We'll be back soon.");
   }
 
   if (loading) return <div className="store-wrap pd-loading" aria-busy="true" role="status"><div /><div /><span>Loading device details...</span></div>;
@@ -134,7 +122,7 @@ export default function ProductDetail({ id, initialProduct }: { id: string; init
           {p.is_demo&&<div className="pd-demo-note"><Package size={16}/><p>Demo listing. Photos, specifications and warranties are examples. This laptop is not for sale.</p></div>}
           <div className="pd-purchase-panel">
             {!p.is_demo&&stockAvailable(p)>1&&<QuantitySelect product={p} value={quantity} onChange={setQuantity}/>}
-            <div ref={actionsRef} className="pd-buy-actions"><button className="pd-primary" disabled={!available} onClick={()=>router.push(`/store/checkout?buy=${id}${quantity>1?`&quantity=${quantity}`:''}`)}>Buy Now</button><button className="pd-secondary" disabled={!available||!cart.ready} onClick={()=>cart.add(p,quantity)}><ShoppingBag size={17}/>Add to cart</button></div>
+            <div className="pd-buy-actions"><button className="pd-primary" disabled={!available} onClick={()=>router.push(`/store/checkout?buy=${id}${quantity>1?`&quantity=${quantity}`:''}`)}>Buy Now</button><button className="pd-secondary" disabled={!available||!cart.ready} onClick={()=>cart.add(p,quantity)}><ShoppingBag size={17}/>Add to cart</button></div>
             <div className="pd-purchase-support"><span>{p.delivery_available?<Truck size={16}/>:<Store size={16}/>}{p.delivery_available&&p.pickup_available?'Delivery or store pickup':p.delivery_available?'Cash on delivery':p.pickup_available?'Store pickup ? Pay at store':'Not available to order'}</span><button onClick={()=>openEnquiry('question')} disabled={p.is_demo||p.status!=='published'}><MessagesSquare size={16}/>Ask seller</button></div>
             {!available&&!p.is_demo&&<p className="pd-unavailable-note">{p.status!=='published'||!stockAvailable(p)?'This laptop is currently unavailable.':'Delivery and pickup are not configured yet.'}</p>}
           </div>
@@ -145,7 +133,7 @@ export default function ProductDetail({ id, initialProduct }: { id: string; init
       <ProductInformation product={p} tab={tab} onTab={setTab} onAsk={() => openEnquiry('question')} />
       {related.length > 0 && <section className="pd-related"><div><h2>More to consider</h2><Link href="/store">Explore the store</Link></div><div className="pd-related-grid">{related.map(item => <Link href={productUrl(item)} key={item.id}><div><ProductImage src={item.images[0]} alt={item.title} sizes="(max-width: 767px) 44vw, 260px"/><span>{item.condition}</span></div><h3>{item.is_demo ? item.title.replace(/^Demo\s*-\s*/i, '') : item.title}</h3><p>{item.ram} / {item.storage}</p><strong>{money(item.price)}</strong></Link>)}</div></section>}
     </div>
-    <div className="pd-mobile-purchase" data-inline-visible={inlineActionsVisible}><div><small>{p.is_demo ? 'Demo listing' : available ? p.condition : 'Unavailable'}</small><strong>{money(p.price)}</strong></div><button className="pd-mobile-question" aria-label="Add to cart" disabled={!available||!cart.ready} onClick={() => cart.add(p,quantity)}><ShoppingBag size={20} /></button><button className="pd-primary" disabled={!available} onClick={() => router.push(`/store/checkout?buy=${id}${quantity>1?`&quantity=${quantity}`:''}`)}>Buy Now</button></div>
+    <div className="pd-mobile-purchase"><div><small>{p.is_demo ? 'Demo listing' : available ? p.condition : 'Unavailable'}</small><strong>{money(p.price)}</strong></div><button className="pd-mobile-question" aria-label="Add to cart" disabled={!available||!cart.ready} onClick={() => cart.add(p,quantity)}><ShoppingBag size={20} /></button><button className="pd-primary" disabled={!available} onClick={() => router.push(`/store/checkout?buy=${id}${quantity>1?`&quantity=${quantity}`:''}`)}>Buy Now</button></div>
     {notice && <div className="pd-toast" role="status"><Check size={16} />{notice}</div>}
     <Dialog open={!!enquiry} onOpenChange={open => { if (!open && !busy) setEnquiry(null); }}>
       <DialogContent className="pd-enquiry-dialog" aria-describedby="pd-enquiry-description">
@@ -153,7 +141,7 @@ export default function ProductDetail({ id, initialProduct }: { id: string; init
         <DialogDescription id="pd-enquiry-description">{sent ? 'The seller can now review your request and contact you.' : 'Confirm availability and the final total with the seller. No payment is taken here.'}</DialogDescription>
         {sent ? <div className="pd-enquiry-success"><span><Check size={27} /></span><h3>Request received</h3><p>Your enquiry has been saved for {p.seller_name}. The seller can contact you using the details you provided.</p><button className="pd-primary" onClick={() => setEnquiry(null)}>Continue browsing</button></div> : <>
           <div className="pd-enquiry-product"><img src={p.images[0]} alt="" /><div><b>{title}</b><span>{p.condition}{p.year?` / ${p.year}`:''}</span></div><strong>{money(p.price)}</strong></div>
-          <form className="store-form" onSubmit={inquire}><div className="store-form-grid"><label>Your name<input name="name" required maxLength={100} autoComplete="name" /></label><label>Email address<input name="email" type="email" required maxLength={200} autoComplete="email" /></label></div><label>Phone number<input name="phone" type="tel" required minLength={7} maxLength={25} autoComplete="tel" /></label><label>Message<textarea name="message" required minLength={10} maxLength={2000} defaultValue={enquiry === 'buy' ? `Hi, I would like to buy the ${title}. Please confirm availability, the final price, and delivery options.` : `Hi, I have a question about the ${title}. Please share more about its condition and warranty.`} /></label><p className="pd-form-privacy">Your contact details will be shared with this seller and Laptap admins to respond to your enquiry.</p>{message && <p role="alert" className="store-error">{message}</p>}<button className="pd-primary" disabled={busy}>{busy ? 'Sending...' : 'Send enquiry'}</button></form>
+          <p role="status">We're currently offline and are not accepting orders or enquiries. We'll be back soon.</p>
         </>}
       </DialogContent>
     </Dialog>

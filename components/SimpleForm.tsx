@@ -1,4 +1,5 @@
 "use client";
+import OfflineNotice from './OfflineNotice';
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -31,6 +32,10 @@ interface SimpleFormProps {
 }
 
 const SimpleForm = ({ defaultSellingType, defaultModel, defaultModelId, onSuccess }: SimpleFormProps) => {
+  return <OfflineNotice />;
+};
+
+const ActiveSimpleForm = ({ defaultSellingType, defaultModel, defaultModelId, onSuccess }: SimpleFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const isSellOrder = Boolean(defaultModelId);
