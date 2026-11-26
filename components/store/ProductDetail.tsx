@@ -124,7 +124,7 @@ export default function ProductDetail({ id, initialProduct }: { id: string; init
           <div className="pd-brand-row"><span>{p.brand}{p.year&&<> <i /> {p.year} model</>}</span>{p.verified_at && <span className="pd-verified-badge"><BadgeCheck size={14} />Laptap verified</span>}</div>
           <h1>{title}</h1>
           <p className="pd-title-specs">{p.processor} <span>/</span> {p.ram} <span>/</span> {p.storage}</p>
-          <div className="pd-price-block"><div className="pd-price"><ProductPrice price={p.price} regularPrice={p.regular_price} showSaving/></div><p>{p.is_demo ? 'Sample price for this demonstration' : 'Price per laptop. Any additional charges are shown at checkout.'}</p></div>
+          <div className="pd-price-block"><span className="pd-price-label">{p.is_demo ? 'Demo price' : 'Your price'}<span>Per {p.category === 'desktop' ? 'desktop' : 'laptop'}</span></span><div className="pd-price"><ProductPrice price={p.price} regularPrice={p.regular_price} showSaving/></div><p>{p.is_demo ? 'Sample price for this demonstration' : 'Any additional charges are shown at checkout.'}</p></div>
           <div className="pd-configuration" aria-label="Device configuration">
             <div><Cpu size={19} strokeWidth={1.5} /><span>Processor</span><b>{p.processor}</b></div>
             <div><MemoryStick size={19} strokeWidth={1.5} /><span>Memory</span><b>{p.ram}</b></div>
