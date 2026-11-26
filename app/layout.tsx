@@ -5,7 +5,6 @@ import { Providers } from "./providers";
 import Script from "next/script";
 import { Suspense } from "react";
 import PageLoader from "@/components/PageLoader";
-import OfflineNotice from '@/components/OfflineNotice';
 import ScrollToTop from "@/components/ScrollToTop";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -27,6 +26,8 @@ export const metadata: Metadata = {
     "instant quote",
     "doorstep pickup",
     "laptop buyback",
+    "hbr layout",
+    "nagawara",
   ],
   authors: [{ name: "Laptap" }],
   openGraph: {
@@ -70,7 +71,74 @@ export default function RootLayout({
   return (
     <html lang="en-IN">
       <head>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@type': 'Organization', name: 'Laptap', url: 'https://www.laptap.in', logo: 'https://www.laptap.in/assets/laptop_logo.webp', description: "We're currently offline and are not accepting orders or enquiries. We'll be back soon." }) }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Laptap",
+              url: "https://www.laptap.in",
+              logo: "https://www.laptap.in/assets/laptop_logo.webp",
+              description: "India's most trusted platform for selling used laptops and desktops",
+              telephone: "+919886579923",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "HBR Layout, Nagawara Main Road",
+                addressLocality: "Bangalore",
+                addressRegion: "Karnataka",
+                postalCode: "560045",
+                addressCountry: "IN",
+              },
+              contactPoint: {
+                "@type": "ContactPoint",
+                telephone: "+919886579923",
+                email: "laptap.in@gmail.com",
+                contactType: "Customer Service",
+                areaServed: "IN",
+                availableLanguage: ["English", "Hindi"],
+              },
+              sameAs: [],
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              name: "Laptap",
+              image: "https://www.laptap.in/assets/laptop_logo.webp",
+              telephone: "+919886579923",
+              priceRange: "₹₹",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "HBR Layout, Nagawara Main Road",
+                addressLocality: "Bangalore",
+                addressRegion: "Karnataka",
+                postalCode: "560045",
+                addressCountry: "IN",
+              },
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: "13.0358",
+                longitude: "77.6431",
+              },
+              url: "https://www.laptap.in",
+              email: "laptap.in@gmail.com",
+              openingHoursSpecification: [
+                {
+                  "@type": "OpeningHoursSpecification",
+                  dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                  opens: "10:00",
+                  closes: "19:00",
+                },
+              ],
+
+            }),
+          }}
+        />
         {/* Google Analytics 4 */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
@@ -91,7 +159,7 @@ export default function RootLayout({
           <PageLoader />
         </Suspense>
         <ScrollToTop />
-        <Providers><OfflineNotice />{children}</Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

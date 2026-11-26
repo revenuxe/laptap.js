@@ -140,7 +140,8 @@ export const PageClient = () => {
                   For questions about these Terms and Conditions, please <Link href="/contact" className="text-primary hover:underline">contact us</Link> at:
                 </p>
                 <p className="mt-2">
-                  <strong>Email:</strong> Currently offline. Please check back later.<br />
+                  <strong>Email:</strong> laptap.in@gmail.com<br />
+                  <strong>Address:</strong> HBR Layout, Nagawara Main Road, Bangalore – 560045
                 </p>
               </section>
 

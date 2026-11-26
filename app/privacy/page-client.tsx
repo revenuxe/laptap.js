@@ -115,7 +115,7 @@ export const PageClient = () => {
                   <li><strong>Withdraw Consent:</strong> Opt-out of marketing communications</li>
                 </ul>
                 <p className="mt-4">
-                  To exercise these rights, please contact us at Currently offline. Please check back later.
+                  To exercise these rights, please contact us at laptap.in@gmail.com
                 </p>
               </section>
 
@@ -165,7 +165,8 @@ export const PageClient = () => {
                   If you have questions or concerns about this Privacy Policy or our data practices, please <Link href="/contact" className="text-primary hover:underline">contact us</Link>:
                 </p>
                 <p className="mt-2">
-                  <strong>Email:</strong> Currently offline. Please check back later.<br />
+                  <strong>Email:</strong> laptap.in@gmail.com<br />
+                  <strong>Address:</strong> HBR Layout, Nagawara Main Road, Bangalore – 560045
                 </p>
               </section>
 

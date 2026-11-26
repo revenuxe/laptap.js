@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card";
 interface Props { category: "laptop" | "desktop"; onEvaluate: () => void; onForm: () => void; }
 
 export function SellMethodSelector({ category, onEvaluate, onForm }: Props) {
-  const url = "/contact";
+  const url = `https://wa.me/919886579923?text=${encodeURIComponent(`Hi! I want to sell my ${category}.`)}`;
   return <div className="mx-auto max-w-2xl space-y-4 md:space-y-6">
     <div className="text-center"><h2 className="text-xl font-bold md:text-2xl">Choose your selling method</h2><p className="mt-1 text-sm text-muted-foreground">Pick the option that works best for you</p></div>
     <a href={url} target="_blank" rel="noreferrer" className="block">
@@ -15,8 +15,8 @@ export function SellMethodSelector({ category, onEvaluate, onForm }: Props) {
         <span className="absolute right-3 top-3 rounded-full bg-[#25D366] px-2 py-0.5 text-[10px] font-bold text-white">RECOMMENDED</span>
         <div className="flex flex-col items-center gap-4 p-5 sm:flex-row sm:gap-6 sm:p-7">
           <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-[#25D366]/10 transition group-hover:bg-[#25D366]/20"><img src="/assets/whatsapp.svg" alt="WhatsApp" className="h-10 w-10" /></div>
-          <div className="flex-1 text-center sm:text-left"><h3 className="text-lg font-bold">Sell through WhatsApp</h3><p className="text-sm font-medium text-[#25D366]">Currently offline · Fastest way to sell</p><p className="mt-1 text-xs text-muted-foreground">Chat directly with our team and get help booking your pickup.</p></div>
-          <Button className="w-full bg-[#168a45] font-semibold text-white hover:bg-[#116b35] sm:w-auto">Currently offline</Button>
+          <div className="flex-1 text-center sm:text-left"><h3 className="text-lg font-bold">Sell through WhatsApp</h3><p className="text-sm font-medium text-[#25D366]">Instant response · Fastest way to sell</p><p className="mt-1 text-xs text-muted-foreground">Chat directly with our team and get help booking your pickup.</p></div>
+          <Button className="w-full bg-[#168a45] font-semibold text-white hover:bg-[#116b35] sm:w-auto">Chat now</Button>
         </div>
       </Card>
     </a>

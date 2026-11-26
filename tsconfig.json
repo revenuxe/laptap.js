@@ -32,10 +32,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next-audit/types/**/*.ts",
-    ".next-dev/types/**/*.ts",
     ".next/types/**/*.ts",
     "next-env.d.ts",
-    ".next-audit/pdp-spacing-build/types/**/*.ts"
+    ".next-dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

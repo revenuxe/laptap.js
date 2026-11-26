@@ -15,7 +15,7 @@ export default function DeviceLanding({ contentKey }: { contentKey: string }) {
   const content = landingContent[contentKey];
   const { name, desktop, brand, families, advice, condition } = content;
   const choose = `/sell/${desktop ? 'desktop' : 'laptop'}${brand ? `/${brand}` : ''}`;
-  const whatsapp = "/contact";
+  const whatsapp = `https://wa.me/919886579923?text=${encodeURIComponent(`Hi Laptap, I would like to sell my ${name}. Can you help with the model, assessment, and pickup availability?`)}`;
   const DeviceIcon = desktop ? Monitor : Laptop;
   const pagePath = contentKey === 'bangalore' ? '/bangalore' : contentKey.startsWith('bangalore-') ? `/bangalore/${contentKey.slice(10)}` : ['asus-rog', 'acer-predator'].includes(contentKey) ? `/gaming/${contentKey}` : `/models/${contentKey}`;
   const pageUrl = `https://www.laptap.in${pagePath}`;

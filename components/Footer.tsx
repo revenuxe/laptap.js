@@ -76,13 +76,13 @@ const Footer = () => {
           <div className="flex flex-col items-center justify-between gap-3 sm:gap-4 text-xs sm:text-sm text-muted-foreground md:flex-row">
             <p>&copy; {new Date().getFullYear()} Laptap. All rights reserved.</p>
             <div className="flex items-center gap-4">
-              <a href="/contact" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors" aria-label="Facebook">
+              <a href="https://www.facebook.com/ilaptap/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors" aria-label="Facebook">
                 <Facebook className="h-4 w-4 sm:h-5 sm:w-5" />
               </a>
-              <a href="/contact" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors" aria-label="Instagram">
+              <a href="https://www.instagram.com/ilaptap?igsh=MWt3NHU3YzdoemJmcA==" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors" aria-label="Instagram">
                 <Instagram className="h-4 w-4 sm:h-5 sm:w-5" />
               </a>
-              <a href="/contact" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors" aria-label="LinkedIn">
+              <a href="https://www.linkedin.com/company/laptap/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors" aria-label="LinkedIn">
                 <Linkedin className="h-4 w-4 sm:h-5 sm:w-5" />
               </a>
             </div>

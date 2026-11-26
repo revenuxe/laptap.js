@@ -1,5 +1,4 @@
 "use client";
-import OfflineNotice from "@/components/OfflineNotice";
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from "next/navigation";
@@ -45,9 +44,7 @@ const formSchema = z.object({
   preferredDate: z.date().optional(),
 });
 
-export const PageClient = () => <div className="min-h-screen flex flex-col"><Header /><main id="main-content" className="container flex-1 py-16"><h1 className="mb-6 text-3xl font-bold">Repair requests are paused</h1><OfflineNotice /></main><Footer /></div>;
-
-const ActivePageClient = () => {
+export const PageClient = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const brandId = searchParams.get('brand');
