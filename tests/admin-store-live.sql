@@ -13,9 +13,12 @@ begin
  insert into storage.objects(bucket_id,name,metadata) values('marketplace-images',bucket_path,'{"mimetype":"image/webp","size":1000}');
  photo:='https://pdwdonojugtersushxtv.supabase.co/storage/v1/object/public/marketplace-images/'||bucket_path;
  payload:=jsonb_build_object('title','QA Latitude','brand','Dell','category','laptop','price',18000,'year',null,'condition','Good','description','QA laptop with complete specifications and disclosed condition.','processor','Intel Core i5','ram','8 GB','storage','256 GB SSD','graphics','Integrated','display','14 inch','battery','Works','defects','Normal cosmetic wear','accessories','Charger','seller_warranty_months',0,'warranty_terms','','images',jsonb_build_array(photo),'stock_quantity',2,'status','draft');
+ payload:=payload||'{"regular_price":25000}';
  execute 'set local role authenticated';
  if not public.marketplace_can_upload() then raise exception 'Admin image upload denied';end if;
  device:=public.admin_save_store_product(null,payload);
+ if not exists(select 1 from public.marketplace_listings where id=device and regular_price=25000 and price=18000) then raise exception 'Regular and sale prices were not saved';end if;
+ blocked:=false;begin perform public.admin_save_store_product(device,payload||'{"regular_price":17000}');exception when check_violation then blocked:=true;end;if not blocked then raise exception 'Regular price below sale price accepted';end if;
  if not exists(select 1 from public.marketplace_listings where id=device and store_owned and status='draft') then raise exception 'Draft failed';end if;
  perform public.admin_save_store_product(device,payload||'{"status":"published"}');
  if not exists(select 1 from public.marketplace_listings where id=device and review_status='approved' and status='published' and verified_at is null and (commission_terms->>'seller_net')::numeric=0) then raise exception 'Direct publication failed';end if;
@@ -34,6 +37,8 @@ begin
  if not exists(select 1 from public.marketplace_orders where listing_id=device and amount=19000 and seller_net=0) then raise exception 'Checkout total failed';end if;
  if not exists(select 1 from public.marketplace_listings where id=device and stock_available=1) then raise exception 'Stock reservation failed';end if;
  perform set_config('request.jwt.claim.sub',a::text,true);
+ update public.marketplace_listings set regular_price=26000 where id=device;
+ if not exists(select 1 from public.marketplace_orders where listing_id=device and amount=19000) then raise exception 'Display price changed the charged sale price';end if;
  select to_jsonb(s) into config from public.store_settings s where id;
  perform public.admin_save_store_settings(config||'{"delivery_fee":150,"pickup_hours":"Monday to Saturday, 10am to 6pm","delivery_estimate":"2â€“4 working days","delivery_terms":"We call before delivery."}');
  if not exists(select 1 from public.marketplace_listings where id=device and delivery_fee=150 and status='published') then raise exception 'Global fulfilment edit lost publication';end if;

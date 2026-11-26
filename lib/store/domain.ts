@@ -1,4 +1,5 @@
 export type Listing = {
+    regular_price?: number | null;
     deleted_at?:string|null;
     deleted_by?:string|null;
     stock_quantity?:number;

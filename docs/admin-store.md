@@ -11,3 +11,5 @@ Applied Supabase migrations: `20261127000000_admin_owned_store.sql` and `2026112
 Validation: `npx tsc --noEmit`, `node --test tests/*.test.cjs`, `npm run build`, and Supabase database lint. Run `npx --yes supabase db query --remote --file tests/admin-store-live.sql --yes` for rollback-only checks of publication, editing, store-wide fulfilment inheritance and updates, permissions, checkout, stock, rename and deletion preserving order history.
 
 Pickup and delivery changes update existing admin-owned listings, including those with active orders. Placed order amounts and pickup snapshots remain fixed. Hours and delivery terms are visible in Shopping help.
+
+Listing fields offer dropdown choices for model year, screen, battery, included accessories, condition notes and warranty duration. Use Other to preserve custom specifications. Sale price is the amount charged; optional regular price must be at least the sale price. A higher regular price appears crossed out with computed savings on cards and product pages. Leaving it blank displays a single price. Migration: `20261127000300_store_regular_price.sql`.

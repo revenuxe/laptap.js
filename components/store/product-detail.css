@@ -1,4 +1,4 @@
-﻿.pd-page { background: #fff; color: #15283f; padding-bottom: 56px; }
+.pd-page { background: #fff; color: #15283f; padding-bottom: 56px; }
 .pd-page > .store-wrap { max-width: 1280px; }
 .pd-topline { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 22px 0 28px; }
 .pd-topline nav { display: flex; align-items: center; gap: 9px; color: #8490a0; font-size: 12px; min-width: 0; }
@@ -135,9 +135,9 @@
 .pd-related > div:first-child > a { font-size: 12px; color: #4e83d2; }
 .pd-related-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 20px; }
 .pd-related-grid > a { min-width: 0; }
-.pd-related-grid > a > div { position: relative; aspect-ratio: 1.4; background: #f6f8fb; border-radius: 11px; overflow: hidden; }
+.pd-related-grid > a > div:first-child { position: relative; aspect-ratio: 1.4; background: #f6f8fb; border-radius: 11px; overflow: hidden; }
 .pd-related-grid img { width: 100%; height: 100%; object-fit: contain; padding: 24px 15px 12px; }
-.pd-related-grid > a > div > span { position: absolute; top: 10px; left: 10px; background: #fff; padding: 5px 8px; border-radius: 5px; font-size: 9px; color: #849cb9; text-transform: capitalize; }
+.pd-related-grid > a > div:first-child > span { position: absolute; top: 10px; left: 10px; background: #fff; padding: 5px 8px; border-radius: 5px; font-size: 9px; color: #849cb9; text-transform: capitalize; }
 .pd-related-grid h3 { font-size: 14px; font-weight: 600; margin: 14px 0 8px; color: #536e92; }
 .pd-related-grid p { font-size: 11px; color: #92a6c2; margin-bottom: 9px; }
 .pd-related-grid strong { font-size: 20px; letter-spacing: -.5px; font-weight: 650; color: #244970; }
@@ -284,8 +284,8 @@
   .pd-related-grid h3 { font-size: 13px; line-height: 1.5; }
   .pd-related-grid p { font-size: 10px; }
   .pd-related-grid strong { font-size: 19px; }
-  .pd-related-grid > a > div { border-radius: 9px; }
-  .pd-related-grid > a > div > span { font-size: 8px; padding: 4px 6px; }
+  .pd-related-grid > a > div:first-child { border-radius: 9px; }
+  .pd-related-grid > a > div:first-child > span { font-size: 8px; padding: 4px 6px; }
   .pd-mobile-purchase { position: fixed; z-index: 40; bottom: 0; left: 0; right: 0; display: flex; align-items: center; gap: 10px; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); background: #ffffffef; backdrop-filter: blur(15px); border-top: 1px solid #e4ebf5; box-shadow: 0 -5px 20px #1b3c6805; }
   .pd-mobile-purchase > div { flex: 1; }
   .pd-mobile-purchase small { display: block; font-size: 9px; line-height: 1.4; color: #8a9db8; margin-bottom: 4px; text-transform: capitalize; }

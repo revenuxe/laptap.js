@@ -27,6 +27,6 @@ export async function getStoreSitemapProducts(): Promise<Pick<Listing, 'seo_path
 }
 export const getStoreCategoryProducts=cache(async(category:'laptop'|'desktop'):Promise<Listing[]>=>{
  const url=new URL(`${supabaseUrl}/rest/v1/marketplace_listings`);url.searchParams.set('deleted_at','is.null');
- url.searchParams.set('select','stock_quantity,stock_available,id,seo_path,seller_id,seller_name,title,brand,category,price,year,condition,processor,ram,storage,location,images,status,verified_at,created_at,is_demo');url.searchParams.set('category',`eq.${category}`);url.searchParams.set('status','eq.published');url.searchParams.set('order','created_at.desc,id.asc');url.searchParams.set('limit','25');
+ url.searchParams.set('select','stock_quantity,stock_available,id,seo_path,seller_id,seller_name,title,brand,category,price,regular_price,year,condition,processor,ram,storage,location,images,status,verified_at,created_at,is_demo');url.searchParams.set('category',`eq.${category}`);url.searchParams.set('status','eq.published');url.searchParams.set('order','created_at.desc,id.asc');url.searchParams.set('limit','25');
  const response=await fetch(url,{headers:{apikey:supabasePublishableKey},cache:'no-store',signal:AbortSignal.timeout(8000)});if(!response.ok)throw new Error('Category products could not be loaded');return response.json();
 });

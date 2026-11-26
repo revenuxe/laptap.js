@@ -1,4 +1,5 @@
 ﻿"use client";
+import ProductPrice from './ProductPrice';
 import QuantitySelect from './QuantitySelect';
 import {stockAvailable} from '@/lib/store/stock';
 import ProductImage from './ProductImage';
@@ -123,7 +124,7 @@ export default function ProductDetail({ id, initialProduct }: { id: string; init
           <div className="pd-brand-row"><span>{p.brand}{p.year&&<> <i /> {p.year} model</>}</span>{p.verified_at && <span className="pd-verified-badge"><BadgeCheck size={14} />Laptap verified</span>}</div>
           <h1>{title}</h1>
           <p className="pd-title-specs">{p.processor} <span>/</span> {p.ram} <span>/</span> {p.storage}</p>
-          <div className="pd-price-block"><div className="pd-price">{money(p.price)}</div><p>{p.is_demo ? 'Sample price for this demonstration' : 'Price per laptop. Any additional charges are shown at checkout.'}</p></div>
+          <div className="pd-price-block"><div className="pd-price"><ProductPrice price={p.price} regularPrice={p.regular_price} showSaving/></div><p>{p.is_demo ? 'Sample price for this demonstration' : 'Price per laptop. Any additional charges are shown at checkout.'}</p></div>
           <div className="pd-configuration" aria-label="Device configuration">
             <div><Cpu size={19} strokeWidth={1.5} /><span>Processor</span><b>{p.processor}</b></div>
             <div><MemoryStick size={19} strokeWidth={1.5} /><span>Memory</span><b>{p.ram}</b></div>
@@ -143,9 +144,9 @@ export default function ProductDetail({ id, initialProduct }: { id: string; init
         </section>
       </div>
       <ProductInformation product={p} tab={tab} onTab={setTab} onAsk={() => openEnquiry('question')} />
-      {related.length > 0 && <section className="pd-related"><div><h2>More to consider</h2><Link href="/store">Explore the store</Link></div><div className="pd-related-grid">{related.map(item => <Link href={productUrl(item)} key={item.id}><div><ProductImage src={item.images[0]} alt={item.title} sizes="(max-width: 767px) 44vw, 260px"/><span>{item.condition}</span></div><h3>{item.is_demo ? item.title.replace(/^Demo\s*-\s*/i, '') : item.title}</h3><p>{item.ram} / {item.storage}</p><strong>{money(item.price)}</strong></Link>)}</div></section>}
+      {related.length > 0 && <section className="pd-related"><div><h2>More to consider</h2><Link href="/store">Explore the store</Link></div><div className="pd-related-grid">{related.map(item => <Link href={productUrl(item)} key={item.id}><div><ProductImage src={item.images[0]} alt={item.title} sizes="(max-width: 767px) 44vw, 260px"/><span>{item.condition}</span></div><h3>{item.is_demo ? item.title.replace(/^Demo\s*-\s*/i, '') : item.title}</h3><p>{item.ram} / {item.storage}</p><ProductPrice price={item.price} regularPrice={item.regular_price}/></Link>)}</div></section>}
     </div>
-    <div className="pd-mobile-purchase" data-inline-visible={inlineActionsVisible}><div><small>{p.is_demo ? 'Demo listing' : available ? p.condition : 'Unavailable'}</small><strong>{money(p.price)}</strong></div><button className="pd-mobile-question" aria-label="Add to cart" disabled={!available||!cart.ready} onClick={() => cart.add(p,quantity)}><ShoppingBag size={20} /></button><button className="pd-primary" disabled={!available} onClick={() => router.push(`/store/checkout?buy=${id}${quantity>1?`&quantity=${quantity}`:''}`)}>Buy Now</button></div>
+    <div className="pd-mobile-purchase" data-inline-visible={inlineActionsVisible}><div><small>{p.is_demo ? 'Demo listing' : available ? p.condition : 'Unavailable'}</small><ProductPrice price={p.price} regularPrice={p.regular_price}/></div><button className="pd-mobile-question" aria-label="Add to cart" disabled={!available||!cart.ready} onClick={() => cart.add(p,quantity)}><ShoppingBag size={20} /></button><button className="pd-primary" disabled={!available} onClick={() => router.push(`/store/checkout?buy=${id}${quantity>1?`&quantity=${quantity}`:''}`)}>Buy Now</button></div>
     {notice && <div className="pd-toast" role="status"><Check size={16} />{notice}</div>}
     <Dialog open={!!enquiry} onOpenChange={open => { if (!open && !busy) setEnquiry(null); }}>
       <DialogContent className="pd-enquiry-dialog" aria-describedby="pd-enquiry-description">
