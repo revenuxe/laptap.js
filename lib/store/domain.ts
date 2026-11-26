@@ -49,4 +49,4 @@ export function filterListings(items: Listing[], query: string, category: string
     return items.filter(p => `${p.title} ${p.brand} ${p.processor} ${p.location}`.toLowerCase().includes(query.toLowerCase()) && (category === 'all' || p.category === category) && (!condition || p.condition === condition) && (!verified || !!p.verified_at) && p.price <= budget).sort((a, b) => sort === 'low' ? a.price - b.price : sort === 'high' ? b.price - a.price : b.created_at.localeCompare(a.created_at));
 }
 
-export const productUrl = (product: Pick<Listing, "id" | "seo_path">) => `/store/${product.seo_path || product.id}`;
+export const productUrl = (product: Pick<Listing, "id" | "seo_path">) => `/store/laptop/${product.seo_path || product.id}`;
