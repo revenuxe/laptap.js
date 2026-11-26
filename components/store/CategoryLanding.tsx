@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+﻿import Link from './StoreNavigation';
 import {Suspense} from 'react';
 import {ChevronRight} from 'lucide-react';
 import {storeCategories,type StoreCategory} from '@/lib/store/category-domain';

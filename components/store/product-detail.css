@@ -339,7 +339,7 @@
 .pd-title-specs{font-size:15px;color:#526780}
 .pd-price-block{padding:22px;border:1px solid #dbe6f6;border-radius:18px;background:linear-gradient(120deg,#f0f6ff,#fff);box-shadow:0 5px 18px #163e7705;margin-top:24px}
 .pd-price-label{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:14px;font-weight:600;color:#425d80;margin-bottom:10px;letter-spacing:0}
-.pd-price-label>span{font-size:12px;font-weight:400;color:#657b97}
+.pd-price-label>.product-price-discount{font-size:13px;font-weight:600;color:#14663e;background:#e1f4e9;border-color:#bde1cd;padding:4px 9px;border-radius:7px}
 .pd-price{font-size:42px;letter-spacing:-1.5px}
 .pd-price .product-price{gap:15px}
 .pd-price .product-price-line{gap:8px 12px}

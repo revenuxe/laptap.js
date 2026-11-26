@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import Link from 'next/link';
+import Link from './StoreNavigation';
 import { useRef } from 'react';
 import { BadgeCheck, BatteryMedium, Box, CalendarDays, CircleHelp, MapPin, ShieldCheck, Store, Wrench } from 'lucide-react';
 import type { Listing } from '@/lib/store/domain';

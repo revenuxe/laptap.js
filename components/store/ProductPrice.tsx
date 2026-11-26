@@ -7,3 +7,5 @@ export default function ProductPrice({price,regularPrice,showSaving=false,showDi
 }
 
 export function ProductDiscountBadge({price,regularPrice}:{price:number;regularPrice?:number|null}){const reduction=priceReduction(price,regularPrice);return reduction&&reduction.percent>0?<span className="product-price-discount store-photo-discount">{reduction.percent}% off</span>:null;}
+
+export function ProductPriceDiscount({price,regularPrice}:{price:number;regularPrice?:number|null}){const reduction=priceReduction(price,regularPrice);return reduction&&reduction.percent>0?<span className="product-price-discount">{reduction.percent}% off</span>:null;}

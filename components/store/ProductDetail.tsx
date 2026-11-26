@@ -1,12 +1,13 @@
 ﻿"use client";
-import ProductPrice from './ProductPrice';
+import ProductPrice, {ProductPriceDiscount} from './ProductPrice';
+import StoreLoading, {StoreSpinner} from './StoreLoading';
 import QuantitySelect from './QuantitySelect';
 import {stockAvailable} from '@/lib/store/stock';
 import ProductImage from './ProductImage';
 import { productUrl } from '@/lib/store/domain';
 
-import Link from 'next/link';
-import {useRouter} from 'next/navigation';
+import Link from './StoreNavigation';
+import {useStoreRouter as useRouter} from './StoreNavigation';
 import {useStoreCart} from './StoreCart';
 import { useEffect, useRef, useState } from 'react';
 import { BadgeCheck, CalendarDays, Check, ChevronRight, Cpu, Heart, HardDrive, MemoryStick, MessagesSquare, ShoppingBag, Truck, Package, Share2, ShieldCheck, Store } from 'lucide-react';
@@ -104,7 +105,7 @@ export default function ProductDetail({ id, initialProduct }: { id: string; init
     finally { setBusy(false); }
   }
 
-  if (loading) return <div className="store-wrap pd-loading" aria-busy="true" role="status"><div /><div /><span>Loading device details...</span></div>;
+  if (loading) return <StoreLoading label="Loading device details?"/>;
   if (!product || error) return <div className="store-wrap pd-unavailable"><Package size={36} strokeWidth={1.5} /><h1>{error ? 'Unable to load this device' : 'This device is unavailable'}</h1><p>{error || 'The listing may have been removed or is no longer public.'}</p><Link className="pd-primary" href="/store">Back to the store</Link></div>;
 
   const p = product;
@@ -124,7 +125,7 @@ export default function ProductDetail({ id, initialProduct }: { id: string; init
           <div className="pd-brand-row"><span>{p.brand}{p.year&&<> <i /> {p.year} model</>}</span>{p.verified_at && <span className="pd-verified-badge"><BadgeCheck size={14} />Laptap verified</span>}</div>
           <h1>{title}</h1>
           <p className="pd-title-specs">{p.processor} <span>/</span> {p.ram} <span>/</span> {p.storage}</p>
-          <div className="pd-price-block"><span className="pd-price-label">{p.is_demo ? 'Demo price' : 'Your price'}<span>Per {p.category === 'desktop' ? 'desktop' : 'laptop'}</span></span><div className="pd-price"><ProductPrice price={p.price} regularPrice={p.regular_price} showSaving/></div><p>{p.is_demo ? 'Sample price for this demonstration' : 'Any additional charges are shown at checkout.'}</p></div>
+          <div className="pd-price-block"><span className="pd-price-label">{p.is_demo ? 'Demo price' : 'Your price'}<ProductPriceDiscount price={p.price} regularPrice={p.regular_price}/></span><div className="pd-price"><ProductPrice price={p.price} regularPrice={p.regular_price} showSaving showDiscount={false}/></div><p>{p.is_demo ? 'Sample price for this demonstration' : 'Any additional charges are shown at checkout.'}</p></div>
           <div className="pd-configuration" aria-label="Device configuration">
             <div><Cpu size={19} strokeWidth={1.5} /><span>Processor</span><b>{p.processor}</b></div>
             <div><MemoryStick size={19} strokeWidth={1.5} /><span>Memory</span><b>{p.ram}</b></div>
@@ -154,7 +155,7 @@ export default function ProductDetail({ id, initialProduct }: { id: string; init
         <DialogDescription id="pd-enquiry-description">{sent ? 'The seller can now review your request and contact you.' : 'Confirm availability and the final total with the seller. No payment is taken here.'}</DialogDescription>
         {sent ? <div className="pd-enquiry-success"><span><Check size={27} /></span><h3>Request received</h3><p>Your enquiry has been saved for {p.seller_name}. The seller can contact you using the details you provided.</p><button className="pd-primary" onClick={() => setEnquiry(null)}>Continue browsing</button></div> : <>
           <div className="pd-enquiry-product"><img src={p.images[0]} alt="" /><div><b>{title}</b><span>{p.condition}{p.year?` / ${p.year}`:''}</span></div><strong>{money(p.price)}</strong></div>
-          <form className="store-form" onSubmit={inquire}><div className="store-form-grid"><label>Your name<input name="name" required maxLength={100} autoComplete="name" /></label><label>Email address<input name="email" type="email" required maxLength={200} autoComplete="email" /></label></div><label>Phone number<input name="phone" type="tel" required minLength={7} maxLength={25} autoComplete="tel" /></label><label>Message<textarea name="message" required minLength={10} maxLength={2000} defaultValue={enquiry === 'buy' ? `Hi, I would like to buy the ${title}. Please confirm availability, the final price, and delivery options.` : `Hi, I have a question about the ${title}. Please share more about its condition and warranty.`} /></label><p className="pd-form-privacy">Your contact details will be shared with the store team to respond to your enquiry.</p>{message && <p role="alert" className="store-error">{message}</p>}<button className="pd-primary" disabled={busy}>{busy ? 'Sending...' : 'Send enquiry'}</button></form>
+          <form className="store-form" onSubmit={inquire}><div className="store-form-grid"><label>Your name<input name="name" required maxLength={100} autoComplete="name" /></label><label>Email address<input name="email" type="email" required maxLength={200} autoComplete="email" /></label></div><label>Phone number<input name="phone" type="tel" required minLength={7} maxLength={25} autoComplete="tel" /></label><label>Message<textarea name="message" required minLength={10} maxLength={2000} defaultValue={enquiry === 'buy' ? `Hi, I would like to buy the ${title}. Please confirm availability, the final price, and delivery options.` : `Hi, I have a question about the ${title}. Please share more about its condition and warranty.`} /></label><p className="pd-form-privacy">Your contact details will be shared with the store team to respond to your enquiry.</p>{message && <p role="alert" className="store-error">{message}</p>}<button className="pd-primary" aria-busy={busy} disabled={busy}>{busy && <StoreSpinner/>}{busy ? 'Sending...' : 'Send enquiry'}</button></form>
         </>}
       </DialogContent>
     </Dialog>
