@@ -18,14 +18,14 @@ import './admin-store.css';
 const Admin = () => {
   const router = useRouter();
   const { isAdmin, loading } = useAuth();
-  const [mode, setMode] = useState<"pick" | "store">("pick");
+  const [mode, setMode] = useState<"pick" | "store">("store");
   const [activeTab, setActiveTab] = useState("orders");
 
   useEffect(() => {
     try {
       const savedTab = window.localStorage.getItem("laptap-admin-active-tab");
       if (savedTab && ["orders", "catalog", "forms", "blogs", "analytics"].includes(savedTab)) setActiveTab(savedTab);
-      if (window.localStorage.getItem("laptap-admin-mode") === "store") setMode("store");
+      if (window.localStorage.getItem("laptap-admin-mode") === "pick") setMode("pick");
     } catch {}
   }, []);
 
@@ -63,7 +63,7 @@ const Admin = () => {
       <main id="main-content" className={`flex-1 ${mode === "store" ? "store-admin-page" : "py-6 sm:py-10 md:py-16 bg-muted/10"}`}>
         <div className={mode === "store" ? "store-admin-container" : "container px-4 sm:px-6 max-w-7xl"}>
           <div className="admin-workspace-header">
-            <div><h1>{mode === 'store' ? 'Store administration' : 'Pick administration'}</h1><p>{mode === 'store' ? 'Manage the marketplace, sellers, and customer orders.' : 'Manage device pickups, catalog, forms, and content.'}</p></div>
+            <div><h1>{mode === 'store' ? 'Store administration' : 'Pick administration'}</h1><p>{mode === 'store' ? 'List laptops, update your store, and manage customer orders.' : 'Manage device pickups, catalog, forms, and content.'}</p></div>
             <div className="admin-mode-toggle" role="group" aria-label="Admin workspace">{(['pick', 'store'] as const).map(value => <button key={value} aria-pressed={mode === value} className={mode === value ? 'selected' : ''} onClick={() => { setMode(value); try { window.localStorage.setItem('laptap-admin-mode', value); } catch {} }}>{value === 'store' ? <Store size={17} /> : <PackageCheck size={17} />}{value === 'store' ? 'Store' : 'Pick'}</button>)}</div>
           </div>
           {mode === 'store' ? <StoreAdmin /> : <>

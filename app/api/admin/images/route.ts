@@ -18,14 +18,14 @@ async function boundedForm(request: NextRequest) {
 export async function POST(request: NextRequest) {
  try {
   const origin = request.headers.get('origin');
-  if (origin && origin !== request.nextUrl.origin && origin !== 'https://www.laptap.in' && origin !== 'https://laptap.in') return reply({ error: 'Upload from the Laptap seller dashboard.' }, 403);
+  if (origin && origin !== request.nextUrl.origin && origin !== 'https://www.laptap.in' && origin !== 'https://laptap.in') return reply({ error: 'Upload from the Laptap admin dashboard.' }, 403);
   const authorization = request.headers.get('authorization');
   if (!authorization?.startsWith('Bearer ')) return reply({ error: 'Sign in to upload product photos.' }, 401);
   const db = createClient(supabaseUrl, supabasePublishableKey, { global: { headers: { Authorization: authorization }, fetch: fetchWithTimeout }, auth: { persistSession: false, autoRefreshToken: false } });
   const { data: { user }, error: authError } = await db.auth.getUser(authorization.slice(7));
   if (authError || !user) return reply({ error: 'Your session has expired. Sign in again.' }, 401);
   const { data: allowed, error: permissionError } = await db.rpc('marketplace_can_upload');
-  if (permissionError || !allowed) return reply({ error: 'Your seller account cannot upload photos right now.' }, 403);
+  if (permissionError || !allowed) return reply({ error: 'Administrator access is required to upload photos.' }, 403);
   const form = await boundedForm(request); const file = form.get('photo');const purpose=form.get('purpose');const bucket=purpose==='evidence'?'marketplace-evidence':'marketplace-images';
   if ((purpose!==null&&purpose!=='evidence'&&purpose!=='product') || !(file instanceof File) || [...form.keys()].some(key=>!['photo','purpose'].includes(key)) || form.getAll('photo').length!==1 || form.getAll('purpose').length>1) return reply({ error: 'Choose one product photo per upload.' }, 400);
   if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) return reply({ error: 'Use JPG, PNG, or WebP photos.' }, 422);

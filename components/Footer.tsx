@@ -29,7 +29,6 @@ const Footer = () => {
               <li><Link href="/sell" className="text-muted-foreground hover:text-foreground transition-colors">Sell Device</Link></li>
               <li><Link href="/repair" className="text-muted-foreground hover:text-foreground transition-colors">Repair Laptops</Link></li>
               <li><Link href="/store" className="text-muted-foreground hover:text-foreground transition-colors">Shop Laptops &amp; Desktops</Link></li>
-              <li><Link href="/seller/login" className="text-muted-foreground hover:text-foreground transition-colors">Become a Seller / Seller Login</Link></li>
               <li><Link href="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors">My Dashboard</Link></li>
               <li><Link href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">Terms</Link></li>
               <li><Link href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">Privacy</Link></li>

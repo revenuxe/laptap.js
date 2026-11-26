@@ -10,10 +10,6 @@ additional_redirect_urls = [
   "https://www.laptap.in/store/account?reset=1",
   "https://laptap.in/store/account",
   "https://laptap.in/store/account?reset=1",
-  "https://www.laptap.in/seller/dashboard",
-  "https://www.laptap.in/seller/login?reset=1",
-  "https://laptap.in/seller/dashboard",
-  "https://laptap.in/seller/login?reset=1",
   "http://localhost:3000/**",
   "http://127.0.0.1:3000/**",
   "http://localhost:3100/**"
